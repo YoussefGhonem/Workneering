@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Workneering.Base.Infrastructure.Extension;
 using Workneering.Base.Infrastructure.Persistence.Interceptors;
@@ -12,7 +13,12 @@ public class ApplicationDbContext : DbContext
     {
         _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     }
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
+    public ApplicationDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options)
+    {
+        _httpContextAccessor = httpContextAccessor;
+    }
     #region override methods
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

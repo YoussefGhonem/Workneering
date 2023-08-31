@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Workneering.Identity.Infrastructure.Persistence;
+namespace Workneering.User.Infrastructure.Persistence;
 
-public class IdentityDbContextFactory : IDesignTimeDbContextFactory<IdentityDatabaseContext>
+public class UserDbContextFactory : IDesignTimeDbContextFactory<UserDatabaseContext>
 {
-    public IdentityDatabaseContext CreateDbContext(string[] args)
+    public UserDatabaseContext CreateDbContext(string[] args)
     {
         var configBuilder = new ConfigurationBuilder();
         configBuilder.AddJsonFile("appsettings.json");
         var config = configBuilder.Build();
         var connectionString = config.GetValue<string>("ConnectionStrings:DefaultConnection");
-        var optionsBuilder = new DbContextOptionsBuilder<IdentityDatabaseContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<UserDatabaseContext>();
         optionsBuilder.UseSqlServer(connectionString);
         var httpContextAccessor = new HttpContextAccessor();
-        return new IdentityDatabaseContext(optionsBuilder.Options, httpContextAccessor, null);
+        return new UserDatabaseContext(optionsBuilder.Options, httpContextAccessor);
     }
 }
