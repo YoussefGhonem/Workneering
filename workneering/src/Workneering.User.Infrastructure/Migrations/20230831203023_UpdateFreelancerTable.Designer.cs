@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using Workneering.User.Infrastructure.Persistence;
 namespace Workneering.User.Infrastructure.Migrations
 {
     [DbContext(typeof(UserDatabaseContext))]
-    partial class UserDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230831203023_UpdateFreelancerTable")]
+    partial class UpdateFreelancerTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -652,13 +654,13 @@ namespace Workneering.User.Infrastructure.Migrations
                             b1.Property<Guid>("FreelancerId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<bool?>("ContractToHire")
+                            b1.Property<bool>("ContractToHire")
                                 .HasColumnType("bit");
 
                             b1.Property<DateTimeOffset?>("DateForNewWork")
                                 .HasColumnType("datetimeoffset");
 
-                            b1.Property<int?>("HoursPerWeek")
+                            b1.Property<int>("HoursPerWeek")
                                 .HasColumnType("int");
 
                             b1.HasKey("FreelancerId");
@@ -675,9 +677,10 @@ namespace Workneering.User.Infrastructure.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("LinkYoutube")
+                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<int?>("TypeOfVideo")
+                            b1.Property<int>("TypeOfVideo")
                                 .HasColumnType("int");
 
                             b1.HasKey("FreelancerId");

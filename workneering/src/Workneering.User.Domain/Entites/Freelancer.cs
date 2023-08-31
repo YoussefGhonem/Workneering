@@ -6,13 +6,13 @@ namespace Workneering.User.Domain.Entites
 {
     public record Freelancer : BaseEntity
     {
-        private decimal _hourlyRate;
-        private string _title;
-        private string _overviewDescription;
-        private ExperienceLevelEnum _experienceLevel;
-        private VisibilityEnum _visibility;
-        private VideoIntroduction _videoIntroduction;
-        private Availability _availability;
+        private decimal? _hourlyRate;
+        private string? _title;
+        private string? _overviewDescription;
+        private ExperienceLevelEnum? _experienceLevel;
+        private VisibilityEnum? _visibility;
+        private VideoIntroduction? _videoIntroduction;
+        private Availability? _availability;
         private readonly List<Education> _educations = new();
         private List<Portfolio> _portfolios = new();
         private List<FreelancerSkill> _freelancerSkills = new();
@@ -30,11 +30,11 @@ namespace Workneering.User.Domain.Entites
         }
 
         #region public fields
-        public decimal HourlyRate { get => _hourlyRate; private set => _hourlyRate = value; }
-        public string Title { get => _title; private set => _title = value; }
-        public string OverviewDescription { get => _overviewDescription; private set => _overviewDescription = value; }
-        public VisibilityEnum Visibility { get => _visibility; private set => _visibility = value; }
-        public ExperienceLevelEnum ExperienceLevel { get => _experienceLevel; private set => _experienceLevel = value; }
+        public decimal? HourlyRate { get => _hourlyRate; private set => _hourlyRate = value; }
+        public string? Title { get => _title; private set => _title = value; }
+        public string? OverviewDescription { get => _overviewDescription; private set => _overviewDescription = value; }
+        public VisibilityEnum? Visibility { get => _visibility; private set => _visibility = value; }
+        public ExperienceLevelEnum? ExperienceLevel { get => _experienceLevel; private set => _experienceLevel = value; }
         public VideoIntroduction VideoIntroduction { get => _videoIntroduction; private set => _videoIntroduction = value; }
         public Availability Availability { get => _availability; private set => _availability = value; }
         public List<Experience> Experiences => _experiences;

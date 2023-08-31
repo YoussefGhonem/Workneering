@@ -34,9 +34,9 @@ public static class CurrentUser
     }
     private static string GetClaimValue(string key)
     {
-        var user = _httpContextAccessor.HttpContext.User;
-        var value = user.Claims.FirstOrDefault(c => c.Value == key).Value;
-        return value ?? string.Empty;
+        //var user = _httpContextAccessor.HttpContext.User ?? null;
+        //var value = user.Claims.FirstOrDefault(c => c.Value == key).Value;
+        return string.Empty;
     }
     #endregion
 

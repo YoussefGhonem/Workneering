@@ -27,6 +27,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
 
             var userBuilder = new CreateUserFactory(request.FirstName, request.LastName, request.Email, request.CountryName)
                 .WithRoles(rolesFromDb, request.Role);
+
             var user = userBuilder.Build();
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded) throw new Exception(result.Errors.ToString());

@@ -39,9 +39,9 @@ public static class ConfigureServicesExtention
         services.AddBaseApplication()
                 .AdBaseInfrastructure(builder.Configuration)
                 .AddBaseSwagger(builder.Configuration)
-                .AddApiVersioningService()
-                .AddExceptionHandling()
-                .AddHealthCheckApplication(builder.Configuration);
+                .AddApiVersioningService();
+        //.AddExceptionHandling()
+        //.AddHealthCheckApplication(builder.Configuration);
 
         #endregion
 
@@ -67,13 +67,12 @@ public static class ConfigureServicesExtention
     {
         #region Using Base Packages
 
-        app.UseExceptionHandling()
-           .UseHealthCheckApplication()
+        app
+           //.UseExceptionHandling()
+           //.UseHealthCheckApplication()
            .UseBaseSwagger(app.Configuration);
 
         #endregion
-
-
 
         app.MapControllers();
 

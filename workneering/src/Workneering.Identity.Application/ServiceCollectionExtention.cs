@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Workneering.Identity.Domain.Entities;
 using Workneering.Identity.Infrastructure.Persistence;
 using Workneering.Base.Application.Extensions;
+using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Identity.Application;
 
@@ -86,6 +87,7 @@ public static class DependencyInjection
             c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
         });
         #endregion
+
         return services;
     }
 
@@ -95,6 +97,7 @@ public static class DependencyInjection
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseCurrentUser();
 
         return app;
     }

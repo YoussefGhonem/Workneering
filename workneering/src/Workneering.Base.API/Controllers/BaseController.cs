@@ -12,6 +12,9 @@ public abstract class BaseController : ControllerBase
 {
     private ISender _mediator = null!;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public ISender Mediator { get; protected set; } = null;
 
     protected IHttpContextAccessor? Accessor =>
@@ -19,6 +22,10 @@ public abstract class BaseController : ControllerBase
             ? null
             : HttpContext.RequestServices.GetRequiredService<IHttpContextAccessor>();
 
+    // public ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
+    /// <summary>
+    /// 
+    /// </summary>
     protected CancellationToken CancellationToken
     {
         get
