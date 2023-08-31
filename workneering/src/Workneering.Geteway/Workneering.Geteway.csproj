@@ -19,7 +19,6 @@
 		<ProjectReference Include="..\Workneering.Base.API\Workneering.Base.API.csproj" />
 		<ProjectReference Include="..\Workneering.Base.Application\Workneering.Base.Application.csproj" />
 		<ProjectReference Include="..\Workneering.Base.Infrastructure\Workneering.Base.Infrastructure.csproj" />
-		<ProjectReference Include="..\Workneering.Packages.MessageQueuing.RabbitMQ\Workneering.Packages.MessageQueuing.RabbitMQ\Workneering.Packages.MessageQueuing.RabbitMQ.csproj" />
 	</ItemGroup>
 
 </Project>
