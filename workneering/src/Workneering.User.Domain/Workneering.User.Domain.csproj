@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -7,11 +7,9 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Ardalis.GuardClauses" Version="4.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Workneering.Base.Domain\Workneering.Base.Domain.csproj" />
-		<ProjectReference Include="..\Workneering.Base.Helpers\Workneering.Base.Helpers.csproj" />
 		<ProjectReference Include="..\Workneering.Shared.Core\Workneering.Shared.Core.csproj" />
 	</ItemGroup>
 </Project>

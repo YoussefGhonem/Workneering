@@ -5,7 +5,6 @@ using System.Reflection;
 using Workneering.Base.Domain.Interfaces;
 
 namespace Workneering.Base.Infrastructure.Extension;
-
 public static class SoftDeleteQueryExtension
 {
     public static void GetOnlyNotDeletedEntities(this ModelBuilder builder)

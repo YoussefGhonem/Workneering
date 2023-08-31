@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Workneering.Base.Domain.Common;
 
-namespace Workneering.Identity.Domain.Entities.Activity
+namespace Workneering.User.Domain.Entites
 {
-    internal class UserActivity
+    public record PortfolioFile : BaseEntity
     {
+
     }
 }

@@ -27,7 +27,7 @@ public static class ConfigureServicesExtention
         services.AddControllersWithViews();
         services.AddControllers();
         services.AddEndpointsApiExplorer();
-        services.AddDatabaseDeveloperPageExceptionFilter();
+
         services.AddHttpContextAccessor();
         services.AddHealthChecksUI()
                 .AddInMemoryStorage();
@@ -56,7 +56,7 @@ public static class ConfigureServicesExtention
     }
 
     // Introduced the middleware components to define a request pipeline, which will be executed on every request.
-    public static WebApplication Configure(this WebApplication app, IWebHostEnvironment env)
+    public static async Task<WebApplication> Configure(this WebApplication app, IWebHostEnvironment env)
     {
         #region Using Base Packages
 
@@ -65,18 +65,19 @@ public static class ConfigureServicesExtention
            .UseBaseSwagger(app.Configuration);
 
         #endregion
-        //// Configure the HTTP request pipeline.
-        //if (app.Environment.IsDevelopment())
-        //{
-        //    app.UseSwagger();
-        //    app.UseSwaggerUI();
-        //}
 
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
 
         app.MapControllers();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            await scope.MigrateDatabase();
+            await scope.SeedDatabase();
+        }
+
         return app;
     }
 }
