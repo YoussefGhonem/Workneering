@@ -1,9 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="Hangfire.Core" Version="1.7.28" />
+		<PackageReference Include="RestSharp" Version="106.12.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Workneering.Base.Application\Workneering.Base.Application.csproj" />
+		<ProjectReference Include="..\Workneering.Identity.Domain\Workneering.Identity.Domain.csproj" />
+		<ProjectReference Include="..\Workneering.Identity.Infrastructure\Workneering.Identity.Infrastructure.csproj" />
+	</ItemGroup>
 </Project>
