@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Geteway", "src\Workneering.Geteway\Workneering.Geteway.csproj", "{ACA3A89D-2354-4803-8638-6F56B22F4A17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workneering.Base", "Workneering.Base", "{41EB3396-4B79-4448-BC99-6ECCCB3723A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Base.API", "src\Workneering.Base.API\Workneering.Base.API.csproj", "{71C95F04-91A7-40B9-AA80-B8880D6A5D43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Base.Application", "src\Workneering.Base.Application\Workneering.Base.Application.csproj", "{78E2E7CB-FF08-4191-8D59-89579C4275F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Base.Domain", "src\Workneering.Base.Domain\Workneering.Base.Domain.csproj", "{E331DB9B-DBB4-4B61-B375-E8859C4F5FF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Base.Helpers", "src\Workneering.Base.Helpers\Workneering.Base.Helpers.csproj", "{034B0536-18DA-43B5-8102-9445C010E314}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Base.Infrastructure", "src\Workneering.Base.Infrastructure\Workneering.Base.Infrastructure.csproj", "{02CD3F06-1414-4ECF-AF37-47ABD8888849}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workneering.Packages", "Workneering.Packages", "{F6C93FD1-C8FE-4EEC-AD21-C5A7A3127998}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workneering.Modulars", "Workneering.Modulars", "{162983B8-BB33-43D9-BBFB-F4CD03BA5E0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Packages.MessageQueuing.RabbitMQ", "src\Workneering.Packages.MessageQueuing.RabbitMQ\Workneering.Packages.MessageQueuing.RabbitMQ\Workneering.Packages.MessageQueuing.RabbitMQ.csproj", "{2A68C49F-3F0C-409A-A006-EAA6B427D883}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Packages.Hangfire", "src\Elearninig.Packages.Hangfire\Workneering.Packages.Hangfire\Workneering.Packages.Hangfire.csproj", "{7C4EB231-48AE-42A3-8920-DBFA4377CA55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACA3A89D-2354-4803-8638-6F56B22F4A17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA3A89D-2354-4803-8638-6F56B22F4A17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA3A89D-2354-4803-8638-6F56B22F4A17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA3A89D-2354-4803-8638-6F56B22F4A17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71C95F04-91A7-40B9-AA80-B8880D6A5D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71C95F04-91A7-40B9-AA80-B8880D6A5D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71C95F04-91A7-40B9-AA80-B8880D6A5D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71C95F04-91A7-40B9-AA80-B8880D6A5D43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78E2E7CB-FF08-4191-8D59-89579C4275F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E2E7CB-FF08-4191-8D59-89579C4275F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E2E7CB-FF08-4191-8D59-89579C4275F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E2E7CB-FF08-4191-8D59-89579C4275F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E331DB9B-DBB4-4B61-B375-E8859C4F5FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E331DB9B-DBB4-4B61-B375-E8859C4F5FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E331DB9B-DBB4-4B61-B375-E8859C4F5FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E331DB9B-DBB4-4B61-B375-E8859C4F5FF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{034B0536-18DA-43B5-8102-9445C010E314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{034B0536-18DA-43B5-8102-9445C010E314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{034B0536-18DA-43B5-8102-9445C010E314}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{034B0536-18DA-43B5-8102-9445C010E314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02CD3F06-1414-4ECF-AF37-47ABD8888849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02CD3F06-1414-4ECF-AF37-47ABD8888849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02CD3F06-1414-4ECF-AF37-47ABD8888849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02CD3F06-1414-4ECF-AF37-47ABD8888849}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A68C49F-3F0C-409A-A006-EAA6B427D883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A68C49F-3F0C-409A-A006-EAA6B427D883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A68C49F-3F0C-409A-A006-EAA6B427D883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A68C49F-3F0C-409A-A006-EAA6B427D883}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C4EB231-48AE-42A3-8920-DBFA4377CA55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C4EB231-48AE-42A3-8920-DBFA4377CA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C4EB231-48AE-42A3-8920-DBFA4377CA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C4EB231-48AE-42A3-8920-DBFA4377CA55}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{71C95F04-91A7-40B9-AA80-B8880D6A5D43} = {41EB3396-4B79-4448-BC99-6ECCCB3723A2}
+		{78E2E7CB-FF08-4191-8D59-89579C4275F1} = {41EB3396-4B79-4448-BC99-6ECCCB3723A2}
+		{E331DB9B-DBB4-4B61-B375-E8859C4F5FF6} = {41EB3396-4B79-4448-BC99-6ECCCB3723A2}
+		{034B0536-18DA-43B5-8102-9445C010E314} = {41EB3396-4B79-4448-BC99-6ECCCB3723A2}
+		{02CD3F06-1414-4ECF-AF37-47ABD8888849} = {41EB3396-4B79-4448-BC99-6ECCCB3723A2}
+		{2A68C49F-3F0C-409A-A006-EAA6B427D883} = {F6C93FD1-C8FE-4EEC-AD21-C5A7A3127998}
+		{7C4EB231-48AE-42A3-8920-DBFA4377CA55} = {F6C93FD1-C8FE-4EEC-AD21-C5A7A3127998}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C64C2BEE-DEEE-46D8-A36D-F0C68C595E8D}
+	EndGlobalSection
+EndGlobal

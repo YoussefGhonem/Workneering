@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Controllers\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Elearninig.Packages.Hangfire\Workneering.Packages.Hangfire\Workneering.Packages.Hangfire.csproj" />
+		<ProjectReference Include="..\Workneering.Base.API\Workneering.Base.API.csproj" />
+		<ProjectReference Include="..\Workneering.Base.Application\Workneering.Base.Application.csproj" />
+		<ProjectReference Include="..\Workneering.Base.Infrastructure\Workneering.Base.Infrastructure.csproj" />
+		<ProjectReference Include="..\Workneering.Packages.MessageQueuing.RabbitMQ\Workneering.Packages.MessageQueuing.RabbitMQ\Workneering.Packages.MessageQueuing.RabbitMQ.csproj" />
+	</ItemGroup>
+
+</Project>
