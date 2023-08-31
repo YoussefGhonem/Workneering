@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Workneering.Identity.Domain.Entities;
 using Workneering.Identity.Infrastructure.Persistence;
+using Workneering.User.Infrastructure;
 
 namespace Workneering.Geteway.Helpers;
 public static class DatabaseExtension
@@ -11,12 +11,16 @@ public static class DatabaseExtension
     {
         var identityDbContext = scope.ServiceProvider.GetRequiredService<IdentityDatabaseContext>();
         await identityDbContext.Database.MigrateAsync();
+
+        var userDbContext = scope.ServiceProvider.GetRequiredService<UserDatabaseContext>();
+        await userDbContext.Database.MigrateAsync();
     }
 
     public static async Task SeedDatabase(this IServiceScope scope)
     {
         var identityDbContext = scope.ServiceProvider.GetRequiredService<IdentityDatabaseContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Identity.Domain.Entities.User>>();
         await IdentityDbContextSeed.SeedDataAsync(identityDbContext, userManager);
+
     }
 }

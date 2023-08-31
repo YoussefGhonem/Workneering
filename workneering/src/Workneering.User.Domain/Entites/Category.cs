@@ -7,6 +7,10 @@ namespace Workneering.User.Domain.Entites
         private string _name;
         private string _description;
 
+        public Category()
+        {
+
+        }
         public Category(string name)
         {
             _name = name;

@@ -10,6 +10,10 @@ namespace Workneering.User.Domain.Entites
         private int? _yearGraduated;
         private string? _degree;
         private string? _description;
+        public Education()
+        {
+            // Parameterless constructor
+        }
         public Education(string school, int yearAttended, int yearGraduated, string degree, string description)
         {
             _schoolName = school;

@@ -12,7 +12,10 @@ namespace Workneering.User.Domain.Entites
         private DateTimeOffset _startDate;
         private DateTimeOffset? _endDate;
         private bool _isCurrentlyWork;
+        public EmploymentHistory()
+        {
 
+        }
         public EmploymentHistory(string companyName, string title, Location location, DateTimeOffset startDate, DateTimeOffset endDate, bool currentlyWork, string? description)
         {
             _companyName = companyName;

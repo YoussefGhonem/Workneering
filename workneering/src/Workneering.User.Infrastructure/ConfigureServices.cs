@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Infrastructure
 {

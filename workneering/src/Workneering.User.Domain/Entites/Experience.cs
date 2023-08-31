@@ -6,7 +6,10 @@ namespace Workneering.User.Domain.Entites
     {
         private string _subject;
         private string _description;
+        public Experience()
+        {
 
+        }
         public Experience(string name, string description)
         {
             _subject = name;

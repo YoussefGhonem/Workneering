@@ -11,7 +11,7 @@ namespace Workneering.Base.Infrastructure
         public static IServiceCollection AdBaseInfrastructure(this IServiceCollection services,
         IConfiguration configuration)
         {
-            services.AddScoped<AuditableEntitySaveChangesInterceptor>();
+            //services.AddScoped<AuditableEntitySaveChangesInterceptor>();
             services.AddDbContext<ApplicationDbContext>(opt =>
             opt.UseSqlServer(
                 configuration.GetConnectionString("DefaultConnection"),

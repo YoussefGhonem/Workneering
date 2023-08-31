@@ -5,7 +5,7 @@ using Workneering.Base.Infrastructure.Persistence;
 using Workneering.Base.Infrastructure.Persistence.Interceptors;
 using Workneering.User.Domain.Entites;
 
-namespace Workneering.User.Infrastructure.Persistence;
+namespace Workneering.User.Infrastructure;
 
 public class UserDatabaseContext : ApplicationDbContext
 {

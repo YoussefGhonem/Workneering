@@ -10,7 +10,10 @@ public record FreelancerSkill : BaseEntity
     {
         _name = name;
     }
+    public FreelancerSkill()
+    {
 
+    }
     public string Name { get => _name; private set => _name = value; }
     public string Description { get => _description; private set => _description = value; }
 

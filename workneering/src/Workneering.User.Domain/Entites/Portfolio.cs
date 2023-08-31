@@ -25,7 +25,10 @@ namespace Workneering.User.Domain.Entites
         private string _projectTaskDescription;
         private string _projectSolutionDescription;
         #endregion
+        public Portfolio()
+        {
 
+        }
         public Portfolio(TemplateEnum templateEnum, string projectTitle, SpecialtyEnum relatedSpecializedProfile)
         {
             _template = templateEnum;

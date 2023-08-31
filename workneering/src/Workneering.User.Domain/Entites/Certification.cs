@@ -1,6 +1,12 @@
-﻿namespace Workneering.User.Domain.Entites
+﻿using Workneering.Base.Domain.Common;
+
+namespace Workneering.User.Domain.Entites
 {
-    public class Certification
+    public record Certification : BaseEntity
     {
+        public Certification()
+        {
+
+        }
     }
 }

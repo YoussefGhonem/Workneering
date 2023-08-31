@@ -13,13 +13,17 @@ namespace Workneering.User.Domain.Entites
         private VisibilityEnum _visibility;
         private VideoIntroduction _videoIntroduction;
         private Availability _availability;
-        private List<Education> _educations = new();
+        private readonly List<Education> _educations = new();
         private List<Portfolio> _portfolios = new();
         private List<FreelancerSkill> _freelancerSkills = new();
         private List<Certification> _certification = new();
         private List<EmploymentHistory> _employmentHistory = new();
         private List<Experience> _experiences = new();
         private List<Category> _categories = new();
+        public Freelancer()
+        {
+
+        }
         public Freelancer(Guid id)
         {
             Id = id;

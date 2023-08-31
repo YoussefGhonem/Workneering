@@ -7,12 +7,12 @@ using Workneering.Base.Infrastructure.Persistence.Interceptors;
 namespace Workneering.Base.Infrastructure.Persistence;
 public class ApplicationDbContext : DbContext
 {
-    private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
+    //private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
-    public ApplicationDbContext(DbContextOptions options, AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
-    {
-        _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
-    }
+    //public ApplicationDbContext(DbContextOptions options, AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
+    //{
+    //    _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
+    //}
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public ApplicationDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options)
@@ -50,7 +50,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
+        //optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
     }
     #endregion
 

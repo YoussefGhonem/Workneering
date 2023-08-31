@@ -11,7 +11,9 @@ namespace Workneering.User.Domain.Entites
         {
             _name = name;
         }
-
+        public PortfolioSkill()
+        {
+        }
         public string Name { get => _name; private set => _name = value; }
         public string Description { get => _description; private set => _description = value; }
 

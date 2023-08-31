@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Workneering.User.Infrastructure.Persistence;
+namespace Workneering.User.Infrastructure;
 
 public class UserDbContextFactory : IDesignTimeDbContextFactory<UserDatabaseContext>
 {

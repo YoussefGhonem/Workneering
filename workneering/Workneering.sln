@@ -45,11 +45,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Shared.Core", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workneering.Settings", "Workneering.Settings", "{FF11D1BE-CE56-461A-8C69-7FF9A393E17B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.User.Application", "src\Workneering.User.Application\Workneering.User.Application.csproj", "{F5AEDC3A-6C98-4FFD-A124-EADFDB2C8E83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.User.Application", "src\Workneering.User.Application\Workneering.User.Application.csproj", "{F5AEDC3A-6C98-4FFD-A124-EADFDB2C8E83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.User.Domain", "src\Workneering.User.Domain\Workneering.User.Domain.csproj", "{0E663DDC-F83A-4493-983A-DA8B0D1CE9CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.User.Domain", "src\Workneering.User.Domain\Workneering.User.Domain.csproj", "{0E663DDC-F83A-4493-983A-DA8B0D1CE9CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.User.Infrastructure", "src\Workneering.User.Infrastructure\Workneering.User.Infrastructure.csproj", "{19F36621-F7FF-47D5-A211-D6CE345A24B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.User.Infrastructure", "src\Workneering.User.Infrastructure\Workneering.User.Infrastructure.csproj", "{ED597241-7E0E-4652-88E1-6406974C3040}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,10 +121,10 @@ Global
 		{0E663DDC-F83A-4493-983A-DA8B0D1CE9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E663DDC-F83A-4493-983A-DA8B0D1CE9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E663DDC-F83A-4493-983A-DA8B0D1CE9CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19F36621-F7FF-47D5-A211-D6CE345A24B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19F36621-F7FF-47D5-A211-D6CE345A24B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19F36621-F7FF-47D5-A211-D6CE345A24B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19F36621-F7FF-47D5-A211-D6CE345A24B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED597241-7E0E-4652-88E1-6406974C3040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED597241-7E0E-4652-88E1-6406974C3040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED597241-7E0E-4652-88E1-6406974C3040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED597241-7E0E-4652-88E1-6406974C3040}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,7 +148,7 @@ Global
 		{FF11D1BE-CE56-461A-8C69-7FF9A393E17B} = {162983B8-BB33-43D9-BBFB-F4CD03BA5E0A}
 		{F5AEDC3A-6C98-4FFD-A124-EADFDB2C8E83} = {C89D68C4-1CE9-4A89-BE6A-BAC5E1E420EF}
 		{0E663DDC-F83A-4493-983A-DA8B0D1CE9CD} = {C89D68C4-1CE9-4A89-BE6A-BAC5E1E420EF}
-		{19F36621-F7FF-47D5-A211-D6CE345A24B1} = {C89D68C4-1CE9-4A89-BE6A-BAC5E1E420EF}
+		{ED597241-7E0E-4652-88E1-6406974C3040} = {C89D68C4-1CE9-4A89-BE6A-BAC5E1E420EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C64C2BEE-DEEE-46D8-A36D-F0C68C595E8D}

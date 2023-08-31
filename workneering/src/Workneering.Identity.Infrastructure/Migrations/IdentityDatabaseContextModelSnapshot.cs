@@ -317,7 +317,7 @@ namespace Workneering.Identity.Infrastructure.Migrations
 
             modelBuilder.Entity("Workneering.Identity.Domain.Entities.User", b =>
                 {
-                    b.OwnsOne("Workneering.Base.Helpers.Models.FileDto", "Image", b1 =>
+                    b.OwnsOne("Workneering.Identity.Domain.Entities.User.Image#Workneering.Base.Helpers.Models.FileDto", "Image", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
