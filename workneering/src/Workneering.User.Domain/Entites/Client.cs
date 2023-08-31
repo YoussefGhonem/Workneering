@@ -6,9 +6,9 @@ namespace Workneering.User.Domain.Entites
 {
     public record Client : BaseEntity
     {
-        public Client()
+        public Client(Guid id)
         {
-
+            Id = id;
         }
     }
 }

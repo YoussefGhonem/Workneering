@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Workneering.Base.Infrastructure.Persistence;
-using Workneering.Base.Infrastructure.Persistence.Interceptors;
 using Workneering.User.Domain.Entites;
 
 namespace Workneering.User.Infrastructure;
@@ -18,6 +17,7 @@ public class UserDatabaseContext : ApplicationDbContext
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
-
     public DbSet<Freelancer> Freelancers => Set<Freelancer>();
+    public DbSet<Client> Clients => Set<Client>();
+    public DbSet<Company> Companies => Set<Company>();
 }

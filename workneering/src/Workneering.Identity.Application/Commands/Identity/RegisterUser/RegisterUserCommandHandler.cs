@@ -2,20 +2,23 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Identity.Domain.Builders;
-using Workneering.Identity.Domain.Entities;
+using Workneering.User.Application.Commands.CreateUser;
 using Workneering.Identity.Infrastructure.Persistence;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid?>
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<Workneering.Identity.Domain.Entities.User> _userManager;
         private readonly IdentityDatabaseContext _identityDbContext;
+        private readonly IMediator _mediator;
 
-        public RegisterUserCommandHandler(UserManager<User> userManager, IdentityDatabaseContext identityDatabase)
+        public RegisterUserCommandHandler(IMediator mediator, UserManager<Workneering.Identity.Domain.Entities.User> userManager, IdentityDatabaseContext identityDatabase)
         {
             _userManager = userManager;
             _identityDbContext = identityDatabase;
+            _mediator = mediator;
         }
 
         public async Task<Guid?> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -28,6 +31,9 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded) throw new Exception(result.Errors.ToString());
             await _identityDbContext.SaveChangesAsync(user.Id, cancellationToken);
+
+            var command = new CreateUserCommand(user.Id, request.Role);
+            await _mediator.Send(command, cancellationToken);
 
             return user.Id;
         }
