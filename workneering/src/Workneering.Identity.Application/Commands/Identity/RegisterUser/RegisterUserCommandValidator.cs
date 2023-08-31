@@ -9,9 +9,9 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
 {
     public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<Workneering.Identity.Domain.Entities.User> _userManager;
 
-        public RegisterUserCommandValidator(UserManager<User> userManager)
+        public RegisterUserCommandValidator(UserManager<Workneering.Identity.Domain.Entities.User> userManager)
         {
             _userManager = userManager;
             CascadeMode = CascadeMode.Stop;

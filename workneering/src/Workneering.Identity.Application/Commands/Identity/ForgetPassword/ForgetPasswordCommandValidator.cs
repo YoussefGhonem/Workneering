@@ -8,7 +8,7 @@ namespace Workneering.Identity.Application.Commands.Identity.ForgetPassword;
 public class ForgetPasswordCommandValidator : AbstractValidator<ForgetPasswordCommand>
 {
     private readonly IdentityDatabaseContext _context;
-    private User? _user;
+    private Workneering.Identity.Domain.Entities.User? _user;
 
     public ForgetPasswordCommandValidator(IdentityDatabaseContext context)
     {

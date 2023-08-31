@@ -10,7 +10,7 @@ namespace Workneering.Base.API.ServiceCollections.HealthCheckApplication;
 // هو هنا بيغير شكل الريسبونس بتاعك وبيخليه يطلعلك شكل الاريرور اوضح وملهوش
 public static class ServiceCollectionExtension
 {
-    public static IServiceCollection AddHealthCheckApplication(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration)
+    public static IServiceCollection AddHealthCheckApplication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHealthChecks()
             .AddSqlServer(configuration.GetConnectionString("DefaultConnection")!);

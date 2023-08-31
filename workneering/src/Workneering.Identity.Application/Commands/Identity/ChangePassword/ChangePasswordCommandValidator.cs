@@ -7,11 +7,11 @@ namespace Workneering.Identity.Application.Commands.Identity.ChangePassword;
 
 public class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCommand>
 {
-    private readonly UserManager<User> _userManager;
-    private readonly IPasswordHasher<User> _passwordHasher;
-    private User? _user;
+    private readonly UserManager<Workneering.Identity.Domain.Entities.User> _userManager;
+    private readonly IPasswordHasher<Workneering.Identity.Domain.Entities.User> _passwordHasher;
+    private Workneering.Identity.Domain.Entities.User? _user;
 
-    public ChangePasswordCommandValidator(UserManager<User> userManager, IPasswordHasher<User> passwordHasher)
+    public ChangePasswordCommandValidator(UserManager<Workneering.Identity.Domain.Entities.User> userManager, IPasswordHasher<Workneering.Identity.Domain.Entities.User> passwordHasher)
     {
         _userManager = userManager;
         _passwordHasher = passwordHasher;

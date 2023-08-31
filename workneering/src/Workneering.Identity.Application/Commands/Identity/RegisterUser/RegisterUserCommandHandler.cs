@@ -14,7 +14,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
         private readonly IdentityDatabaseContext _identityDbContext;
         private readonly IMediator _mediator;
 
-        public RegisterUserCommandHandler(IMediator mediator, UserManager<Workneering.Identity.Domain.Entities.User> userManager, IdentityDatabaseContext identityDatabase)
+        public RegisterUserCommandHandler(IMediator mediator, UserManager<Domain.Entities.User> userManager, IdentityDatabaseContext identityDatabase)
         {
             _userManager = userManager;
             _identityDbContext = identityDatabase;

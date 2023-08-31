@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Identity;
-using TicketManagement.Identity.Setup.Constants;
+using Workneering.Base.Application.FluentValidation.Helpers;
 
 namespace Workneering.Base.Application.FluentValidation.Validators
 {

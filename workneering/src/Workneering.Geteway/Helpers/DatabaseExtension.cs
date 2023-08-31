@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Identity.Infrastructure.Persistence;
-using Workneering.User.Infrastructure;
+using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.Geteway.Helpers;
 public static class DatabaseExtension

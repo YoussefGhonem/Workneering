@@ -1,3 +1,5 @@
+using ServiceStack;
+using Workneering.Base.Application;
 using Workneering.Geteway.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);

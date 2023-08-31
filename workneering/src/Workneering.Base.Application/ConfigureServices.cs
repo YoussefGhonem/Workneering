@@ -13,17 +13,16 @@ public static class ConfigureServices
     {
         // This line registers validators from the executing assembly in the dependency injection container.
         // It scans the assembly for classes that implement the IValidator<T> interface and registers them.
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-        //services.AddMediatR(typeof(IStartup));
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(IStartup).Assembly));
+        //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        //services.AddMediatR(Assembly.GetExecutingAssembly());
 
         // These behaviors are added to the MediatR pipeline and will be executed in the specified order when processing requests.
+
+
+
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationBehavior<,>));
-        //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RedisCachingBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ResetCacheBehaviour<,>));
         return services;
     }
 }

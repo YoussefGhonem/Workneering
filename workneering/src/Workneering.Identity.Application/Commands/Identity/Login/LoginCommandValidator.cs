@@ -10,13 +10,13 @@ namespace Workneering.Identity.Application.Commands.Identity.Login
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
         private readonly IdentityDatabaseContext _context;
-        private readonly UserManager<User> _userManager;
-        private readonly IPasswordHasher<User> _passwordHasher;
-        private User? _user;
+        private readonly UserManager<Workneering.Identity.Domain.Entities.User> _userManager;
+        private readonly IPasswordHasher<Workneering.Identity.Domain.Entities.User> _passwordHasher;
+        private Workneering.Identity.Domain.Entities.User? _user;
 
         public LoginCommandValidator(IdentityDatabaseContext context,
-            UserManager<User> userManager,
-            IPasswordHasher<User> passwordHasher)
+            UserManager<Workneering.Identity.Domain.Entities.User> userManager,
+            IPasswordHasher<Workneering.Identity.Domain.Entities.User> passwordHasher)
         {
             _context = context;
             _userManager = userManager;

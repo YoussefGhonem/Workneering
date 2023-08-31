@@ -4,6 +4,8 @@ using Workneering.Base.API.ServiceCollections.HealthCheckApplication;
 using Workneering.Base.API.ServiceCollections.Swagger;
 using Workneering.Base.Application;
 using Workneering.Base.Infrastructure;
+using Workneering.Identity.API;
+using Workneering.User.API;
 
 namespace Workneering.Geteway.Helpers;
 public static class ConfigureServicesExtention
@@ -27,7 +29,6 @@ public static class ConfigureServicesExtention
         services.AddControllersWithViews();
         services.AddControllers();
         services.AddEndpointsApiExplorer();
-
         services.AddHttpContextAccessor();
         services.AddHealthChecksUI()
                 .AddInMemoryStorage();
@@ -37,7 +38,6 @@ public static class ConfigureServicesExtention
 
         services.AddBaseApplication()
                 .AdBaseInfrastructure(builder.Configuration)
-                //  .AddElasticSearch(builder.Configuration)
                 .AddBaseSwagger(builder.Configuration)
                 .AddApiVersioningService()
                 .AddExceptionHandling()
@@ -52,6 +52,13 @@ public static class ConfigureServicesExtention
         #endregion
 
         #endregion
+
+        #region Solution Extensions
+        services.AddIdentityExtension(builder.Configuration);
+        services.AddUserExtension(builder.Configuration);
+        #endregion
+
+
         return services;
     }
 
@@ -66,9 +73,7 @@ public static class ConfigureServicesExtention
 
         #endregion
 
-        app.UseHttpsRedirection();
 
-        app.UseAuthorization();
 
         app.MapControllers();
 

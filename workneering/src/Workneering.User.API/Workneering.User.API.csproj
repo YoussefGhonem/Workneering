@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Workneering.Base.API\Workneering.Base.API.csproj" />
+    <ProjectReference Include="..\Workneering.User.Application\Workneering.User.Application.csproj" />
+  </ItemGroup>
+
 </Project>

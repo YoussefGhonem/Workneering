@@ -4,7 +4,7 @@ using System.Reflection;
 using Workneering.Base.Infrastructure.Persistence;
 using Workneering.User.Domain.Entites;
 
-namespace Workneering.User.Infrastructure;
+namespace Workneering.User.Infrastructure.Persistence;
 
 public class UserDatabaseContext : ApplicationDbContext
 {

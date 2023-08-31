@@ -1,16 +1,15 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Workneering.Identity.Domain.Entities;
 using Workneering.Identity.Infrastructure.Persistence;
 
 namespace Workneering.Identity.Application.Commands.Identity.ChangePassword;
 
 public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, Unit>
 {
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<Workneering.Identity.Domain.Entities.User> _userManager;
     private readonly IdentityDatabaseContext _context;
 
-    public ChangePasswordCommandHandler(UserManager<User> userManager, IdentityDatabaseContext context)
+    public ChangePasswordCommandHandler(UserManager<Workneering.Identity.Domain.Entities.User> userManager, IdentityDatabaseContext context)
     {
         _userManager = userManager;
         _context = context;

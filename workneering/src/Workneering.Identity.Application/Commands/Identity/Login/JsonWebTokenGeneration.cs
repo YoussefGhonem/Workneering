@@ -2,8 +2,6 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text.Json;
-using Workneering.Identity.Domain.Entities;
 using Workneering.Base.Application.Extensions;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
@@ -11,7 +9,7 @@ namespace Workneering.Identity.Application.Commands.Identity.Login
 {
     public static class JsonWebTokenGeneration
     {
-        public static string GenerateJwtToken(IConfiguration configuration, User user)
+        public static string GenerateJwtToken(IConfiguration configuration, Workneering.Identity.Domain.Entities.User user)
         {
             var jwtConfig = configuration.GetJwtConfig();
             var signingKey = Convert.FromBase64String(jwtConfig.Key);
@@ -53,7 +51,7 @@ namespace Workneering.Identity.Application.Commands.Identity.Login
             claims.Add(new Claim(propKey, propValue));
         }
 
-        private static string? GetClaimValue(this User user, string claimType)
+        private static string? GetClaimValue(this Workneering.Identity.Domain.Entities.User user, string claimType)
         {
             var userClaim = user.Claims.FirstOrDefault(u => u.ClaimType == claimType);
             return userClaim?.ClaimValue;
