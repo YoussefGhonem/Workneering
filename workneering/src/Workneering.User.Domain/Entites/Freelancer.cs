@@ -85,10 +85,6 @@ namespace Workneering.User.Domain.Entites
         {
             _portfolios.AddRange(data);
         }
-        public void AddExperiences(List<Experience> data)
-        {
-            _experiences.AddRange(data);
-        }
 
 
         #region Employment History
@@ -103,12 +99,13 @@ namespace Workneering.User.Domain.Entites
         public void RemoveEmploymentHistory(Guid id)
         {
             var data = _employmentHistory.FirstOrDefault(x => x.Id == id);
+            if (data is null) return;
             data.MarkAsDeleted(id);
         }
         public void UpdateEmploymentHistory(Guid id, EmploymentHistory employmentHistory)
         {
             var data = _employmentHistory.FirstOrDefault(x => x.Id == id);
-
+            if (data is null) return;
             data.UpdateDescription(employmentHistory.Description);
             data.UpdateEndDate(employmentHistory.EndDate);
             data.UpdateStartDate(employmentHistory.StartDate);
@@ -116,6 +113,29 @@ namespace Workneering.User.Domain.Entites
             data.UpdateTitle(employmentHistory.Title);
             data.UpdateLocation(employmentHistory.Location);
             data.UpdateIsCurrentlyWork(employmentHistory.IsCurrentlyWork);
+        }
+        #endregion
+
+        #region Experience
+        public void AddEExperience(List<Experience> data)
+        {
+            _experiences.AddRange(data);
+        }
+        public void AddExperience(Experience data)
+        {
+            _experiences.Add(data);
+        }
+        public void RemoveExperience(Guid id)
+        {
+            var data = _experiences.FirstOrDefault(x => x.Id == id);
+            data.MarkAsDeleted(id);
+        }
+        public void UpdateExperience(Guid id, Experience obj)
+        {
+            var data = _experiences.FirstOrDefault(x => x.Id == id);
+            if (data is null) return;
+            data.UpdateDescription(obj.Description);
+            data.UpdateSubject(obj.Subject);
         }
         #endregion
 
