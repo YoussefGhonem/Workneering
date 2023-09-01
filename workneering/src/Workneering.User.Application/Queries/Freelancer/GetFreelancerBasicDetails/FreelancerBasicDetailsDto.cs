@@ -2,7 +2,7 @@
 
 namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails
 {
-    public class EducationDetailsDto
+    public class FreelancerBasicDetailsDto
     {
         public decimal? HourlyRate { get; set; }
         public string? Title { get; set; }

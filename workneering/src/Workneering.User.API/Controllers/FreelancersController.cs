@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
+using Workneering.User.Application.Queries.Freelancer.GetFreelancerEducationDetails;
 
 namespace Workneering.User.API.Controllers
 {
@@ -37,8 +37,19 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EducationDetailsDto))]
-        public async Task<ActionResult<EducationDetailsDto>> GetFreelancerBasicDetailsQuery(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FreelancerBasicDetailsDto))]
+        public async Task<ActionResult<FreelancerBasicDetailsDto>> GetFreelancerBasicDetailsQuery(Guid id)
+        {
+            var query = new GetFreelancerBasicDetailsQuery { Id = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        //[Authorize]
+        [HttpGet("{id}/profile/educations")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EducationDetailsDto>))]
+        public async Task<ActionResult<List<EducationDetailsDto>>> GetFreelancerEducationDetailsQuery(Guid id)
         {
             var query = new GetFreelancerEducationDetailsQuery { Id = id };
             return Ok(await Mediator.Send(query, CancellationToken));
