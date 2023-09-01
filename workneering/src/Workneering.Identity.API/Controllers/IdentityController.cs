@@ -41,28 +41,28 @@ namespace Workneering.Identity.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [AllowAnonymous]
-        [HttpPost("{email}/forgot-password")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> ForgotPassword(string email)
-        {
-            return Ok(await Mediator.Send(new ForgetPasswordCommand(email), CancellationToken));
-        }
+        //[AllowAnonymous]
+        //[HttpPost("{email}/forgot-password")]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        //public async Task<ActionResult<Unit>> ForgotPassword(string email)
+        //{
+        //    return Ok(await Mediator.Send(new ForgetPasswordCommand(email), CancellationToken));
+        //}
 
-        [Authorize]
-        [HttpPut("change-password")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> ChangeMyPassword(ChangePasswordCommand command)
-        {
-            command.UserId = CurrentUser.Id ?? Guid.Empty;
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
+        //[Authorize]
+        //[HttpPut("change-password")]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        //public async Task<ActionResult<Unit>> ChangeMyPassword(ChangePasswordCommand command)
+        //{
+        //    command.UserId = CurrentUser.Id ?? Guid.Empty;
+        //    return Ok(await Mediator.Send(command, CancellationToken));
+        //}
 
         #endregion
     }
