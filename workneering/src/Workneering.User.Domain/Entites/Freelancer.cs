@@ -61,6 +61,15 @@ namespace Workneering.User.Domain.Entites
         {
             _overviewDescription = field;
         }
+        public void UpdateVideoIntroduction(string linkYoutube, TypeOfVideoEnum TypeOfVideo)
+        {
+            _videoIntroduction.TypeOfVideo = TypeOfVideo;
+            _videoIntroduction.LinkYoutube = linkYoutube;
+        }
+        public void UpdateVisibility(VisibilityEnum field)
+        {
+            _visibility = field;
+        }
         public void UpdateExperienceLevel(ExperienceLevelEnum field)
         {
             _experienceLevel = field;

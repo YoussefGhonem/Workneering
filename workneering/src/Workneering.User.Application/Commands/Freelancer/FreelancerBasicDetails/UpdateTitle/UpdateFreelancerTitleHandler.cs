@@ -18,6 +18,8 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
 
             var query = _userDatabaseContext.Freelancers.FirstOrDefault(x => x.Id == CurrentUser.Id);
             query.UpdateTitle(request.Title);
+            _userDatabaseContext.Freelancers.Attach(query);
+            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }
