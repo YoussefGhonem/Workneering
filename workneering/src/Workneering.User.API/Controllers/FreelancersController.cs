@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
+using Workneering.User.Application.Queries.Freelancer.GetExperiences;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
+using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategories;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerEducationDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerPortfolios;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerSkills;
@@ -88,6 +90,28 @@ namespace Workneering.User.API.Controllers
         public async Task<ActionResult<List<EmploymentHistoryDto>>> GetEmploymentHistoryQuery(Guid id)
         {
             var query = new GetEmploymentHistoryQuery { Id = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        //[Authorize]
+        [HttpGet("{id}/profile/experiences")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerExperienceDto>))]
+        public async Task<ActionResult<List<FreelancerExperienceDto>>> GetExperiencesQuery(Guid id)
+        {
+            var query = new GetExperiencesQuery { Id = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        //[Authorize]
+        [HttpGet("{id}/profile/experiences")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerCategoryDto>))]
+        public async Task<ActionResult<List<FreelancerCategoryDto>>> GetFreelancerCategoriesQuery(Guid id)
+        {
+            var query = new GetFreelancerCategoriesQuery { Id = id };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
