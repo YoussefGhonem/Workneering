@@ -9,6 +9,13 @@ using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateE
 using Workneering.User.Application.Commands.Freelancer.Experiences.CreateExperience;
 using Workneering.User.Application.Commands.Freelancer.Experiences.DeleteExperiences;
 using Workneering.User.Application.Commands.Freelancer.Experiences.UpdateExperiences;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailabilityHoursPerWeek;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateExperienceLevel;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateHourlyRate;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateOverviewDescription;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateTitle;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVideoIntroduction;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVisibility;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetExperiences;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
@@ -28,6 +35,74 @@ namespace Workneering.User.API.Controllers
         }
 
         #region Commands
+
+        #region Update Basic Details
+        [HttpPut("profile/availability")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateAvailabilityHoursPerWeekCommand(UpdateAvailabilityHoursPerWeekCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/experience-level")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateExperienceLevelCommand(UpdateExperienceLevelCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/hourly-rate")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateHourlyRateCommand(UpdateHourlyRateCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/description")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateOverviewDescriptionCommand(UpdateOverviewDescriptionCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/title")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateFreelancerTitleCommand(UpdateFreelancerTitleCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/video-introduction")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateVideoIntroductionCommand(UpdateVideoIntroductionCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPut("profile/visibility")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateVisibilityCommand(UpdateVisibilityCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        #endregion
 
         #region employment-history
         [HttpPost("{id}/profile/employment-history")] // id : EmploymentHistoryId

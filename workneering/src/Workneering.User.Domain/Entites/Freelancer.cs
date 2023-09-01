@@ -57,6 +57,12 @@ namespace Workneering.User.Domain.Entites
         {
             _hourlyRate = field;
         }
+        public void UpdateAvailability(HoursPerWeekEnum? hoursPerWeek, DateTimeOffset? dateForNewWork, bool? contractToHire)
+        {
+            _availability.DateForNewWork = dateForNewWork;
+            _availability.HoursPerWeek = hoursPerWeek;
+            _availability.ContractToHire = contractToHire;
+        }
         public void UpdateOverviewDescription(string field)
         {
             _overviewDescription = field;
