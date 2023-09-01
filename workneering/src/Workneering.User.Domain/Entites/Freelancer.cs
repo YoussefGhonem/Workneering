@@ -103,7 +103,7 @@ namespace Workneering.User.Domain.Entites
         public void RemoveEmploymentHistory(Guid id)
         {
             var data = _employmentHistory.FirstOrDefault(x => x.Id == id);
-            _employmentHistory.Remove(data);
+            data.MarkAsDeleted(id);
         }
         public void UpdateEmploymentHistory(Guid id, EmploymentHistory employmentHistory)
         {

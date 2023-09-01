@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateEmploymentHistory;
+using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.DeleteEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetExperiences;
@@ -41,6 +42,16 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> UpdateEmploymentHistoryCommand(UpdateEmploymentHistoryCommand command, Guid id)
+        {
+            command.EmploymentHistoryId = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpDelete("{id}/profile/employment-history")] // id : EmploymentHistoryId
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> DeleteEmploymentHistoryCommand(DeleteEmploymentHistoryCommand command, Guid id)
         {
             command.EmploymentHistoryId = id;
             return Ok(await Mediator.Send(command, CancellationToken));
