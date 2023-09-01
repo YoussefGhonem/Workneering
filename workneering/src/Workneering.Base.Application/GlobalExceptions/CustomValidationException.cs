@@ -15,6 +15,7 @@ public sealed class CustomValidationException : ApplicationException
 
     // This property allows access to the dictionary passed in through the constructor, providing information about the validation errors.
     public IReadOnlyDictionary<string, string[]> ErrorsDictionary { get; }
+    public string ErrorMessage { get; }
 
 
     // It accepts an IReadOnlyDictionary<string, string[]> as a parameter, storing it in the ErrorsDictionary property
@@ -22,6 +23,31 @@ public sealed class CustomValidationException : ApplicationException
     public CustomValidationException(IReadOnlyDictionary<string, string[]> errorsDictionary)
             : base()
             => ErrorsDictionary = errorsDictionary;
+
+    public CustomValidationException(string error)
+            : base()
+    {
+        IReadOnlyDictionary<string, string[]> errors = new Dictionary<string, string[]>();
+
+        // Define the key and values you want to append
+        string key = "Validation Error";
+        string[] newValues = { error };
+
+        // Create a new dictionary and copy existing values
+        var updatedErrors = new Dictionary<string, string[]>(errors);
+
+        // Add or append the new values
+        if (updatedErrors.ContainsKey(key))
+        {
+            updatedErrors[key] = updatedErrors[key].Concat(newValues).ToArray();
+        }
+        else
+        {
+            updatedErrors[key] = newValues;
+        }
+        ErrorsDictionary = updatedErrors;
+    }
+
     public CustomValidationException(IList<ValidationFailure> validationFailures) : base()
     {
         ErrorsDictionary = validationFailures

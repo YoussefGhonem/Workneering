@@ -1,0 +1,49 @@
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Workneering.Base.API.Controllers;
+using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
+
+namespace Workneering.User.API.Controllers
+{
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    public class FreelancersController : BaseController
+    {
+        public FreelancersController(ISender mediator) : base(mediator)
+        {
+        }
+
+        #region Commands
+
+        //[Authorize]
+        //[HttpPut("change-password")]
+        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        //public async Task<ActionResult<Unit>> ChangeMyPassword(ChangePasswordCommand command)
+        //{
+        //    command.UserId = CurrentUser.Id ?? Guid.Empty;
+        //    return Ok(await Mediator.Send(command, CancellationToken));
+        //}
+
+        #endregion
+
+        #region Queries
+        //[Authorize]
+        [HttpGet("{id}/profile/basic-details")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EducationDetailsDto))]
+        public async Task<ActionResult<EducationDetailsDto>> GetFreelancerBasicDetailsQuery(Guid id)
+        {
+            var query = new GetFreelancerEducationDetailsQuery { Id = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        #endregion
+    }
+}

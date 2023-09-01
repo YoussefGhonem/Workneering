@@ -14,12 +14,12 @@ namespace Workneering.User.Domain.Entites
         private VideoIntroduction? _videoIntroduction;
         private Availability? _availability;
         private readonly List<Education> _educations = new();
-        private List<Portfolio> _portfolios = new();
-        private List<FreelancerSkill> _freelancerSkills = new();
-        private List<Certification> _certification = new();
-        private List<EmploymentHistory> _employmentHistory = new();
-        private List<Experience> _experiences = new();
-        private List<Category> _categories = new();
+        private readonly List<Portfolio> _portfolios = new();
+        private readonly List<FreelancerSkill> _freelancerSkills = new();
+        private readonly List<Certification> _certification = new();
+        private readonly List<EmploymentHistory> _employmentHistory = new();
+        private readonly List<Experience> _experiences = new();
+        private readonly List<Category> _categories = new();
         public Freelancer()
         {
 
@@ -35,8 +35,8 @@ namespace Workneering.User.Domain.Entites
         public string? OverviewDescription { get => _overviewDescription; private set => _overviewDescription = value; }
         public VisibilityEnum? Visibility { get => _visibility; private set => _visibility = value; }
         public ExperienceLevelEnum? ExperienceLevel { get => _experienceLevel; private set => _experienceLevel = value; }
-        public VideoIntroduction VideoIntroduction { get => _videoIntroduction; private set => _videoIntroduction = value; }
-        public Availability Availability { get => _availability; private set => _availability = value; }
+        public VideoIntroduction? VideoIntroduction { get => _videoIntroduction; private set => _videoIntroduction = value; }
+        public Availability? Availability { get => _availability; private set => _availability = value; }
         public List<Experience> Experiences => _experiences;
         public List<Education> Educations => _educations;
         public List<Portfolio> Portfolios => _portfolios;
