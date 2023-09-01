@@ -7,12 +7,12 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
 
         public UpdateVideoIntroductionCommandValidator()
         {
-            RuleFor(r => r.VideoIntroductionTypeOfVideo)
+            RuleFor(r => r.LinkYoutube)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
 
-            RuleFor(r => r.VideoIntroductionLinkYoutube)
+            RuleFor(r => r.TypeOfVideo)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();

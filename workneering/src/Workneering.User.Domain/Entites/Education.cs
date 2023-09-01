@@ -35,11 +35,11 @@ namespace Workneering.User.Domain.Entites
 
             _schoolName = field;
         }
-        public void UpdateYearAttended(int field)
+        public void UpdateYearAttended(int? field)
         {
             _yearAttended = field;
         }
-        public void UpdateYearGraduated(int field)
+        public void UpdateYearGraduated(int? field)
         {
             _yearGraduated = field;
         }

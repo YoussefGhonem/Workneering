@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.User.Application.Commands.Freelancer.Category.CreateCategory;
+using Workneering.User.Application.Commands.Freelancer.Category.DeleteCategory;
+using Workneering.User.Application.Commands.Freelancer.Category.UpdateCategory;
+using Workneering.User.Application.Commands.Freelancer.Education.CreateEducation;
+using Workneering.User.Application.Commands.Freelancer.Education.DeleteEducation;
+using Workneering.User.Application.Commands.Freelancer.Education.UpdateEducation;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.DeleteEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory;
@@ -173,6 +179,77 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
         #endregion
+
+        #region Category
+
+        [HttpPost("profile/categories")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreateExperienceCommand(CreateCategoryCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPut("{id}/profile/categories")] // id : EmploymentHistoryId
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateCategoryCommand(UpdateCategoryCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpDelete("{id}/profile/categories")] // id : EmploymentHistoryId
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> DeleteCategoryCommand(DeleteCategoryCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        #endregion
+
+        #region Education
+
+        [HttpPost("profile/educations")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreateEducationCommand(CreateEducationCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPut("{id}/profile/educations")] // id : EmploymentHistoryId
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateEducationCommand(UpdateEducationCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpDelete("{id}/profile/educations")] // id : EmploymentHistoryId
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> DeleteEducationCommand(DeleteEducationCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        #endregion
+
 
         #endregion
 

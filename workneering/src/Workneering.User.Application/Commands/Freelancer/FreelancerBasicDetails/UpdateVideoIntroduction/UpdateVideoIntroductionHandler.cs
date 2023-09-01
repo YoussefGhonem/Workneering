@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using Mapster;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.User.Domain.valueobjects;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVideoIntroduction
@@ -17,7 +19,8 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
         {
             if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
             var query = await _userDatabaseContext.Freelancers.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
-            query!.UpdateVideoIntroduction(request.VideoIntroductionLinkYoutube, request.VideoIntroductionTypeOfVideo);
+            var map = request.Adapt<VideoIntroduction>();
+            query!.UpdateVideoIntroduction(map);
             _userDatabaseContext.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;

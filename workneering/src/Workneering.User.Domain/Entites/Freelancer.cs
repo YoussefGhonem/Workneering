@@ -11,8 +11,8 @@ namespace Workneering.User.Domain.Entites
         private string? _overviewDescription;
         private ExperienceLevelEnum? _experienceLevel;
         private VisibilityEnum? _visibility;
-        private VideoIntroduction? _videoIntroduction;
-        private Availability? _availability;
+        private VideoIntroduction? _videoIntroduction = new();
+        private Availability? _availability = new();
         private readonly List<Education> _educations = new();
         private readonly List<Portfolio> _portfolios = new();
         private readonly List<FreelancerSkill> _freelancerSkills = new();
@@ -57,20 +57,18 @@ namespace Workneering.User.Domain.Entites
         {
             _hourlyRate = field;
         }
-        public void UpdateAvailability(HoursPerWeekEnum? hoursPerWeek, DateTimeOffset? dateForNewWork, bool? contractToHire)
+
+        public void UpdateAvailability(Availability availability)
         {
-            _availability.DateForNewWork = dateForNewWork;
-            _availability.HoursPerWeek = hoursPerWeek;
-            _availability.ContractToHire = contractToHire;
+            _availability = availability;
         }
         public void UpdateOverviewDescription(string field)
         {
             _overviewDescription = field;
         }
-        public void UpdateVideoIntroduction(string linkYoutube, TypeOfVideoEnum TypeOfVideo)
+        public void UpdateVideoIntroduction(VideoIntroduction videoIntroduction)
         {
-            _videoIntroduction.TypeOfVideo = TypeOfVideo;
-            _videoIntroduction.LinkYoutube = linkYoutube;
+            _videoIntroduction = videoIntroduction;
         }
         public void UpdateVisibility(VisibilityEnum field)
         {
@@ -82,10 +80,7 @@ namespace Workneering.User.Domain.Entites
         }
         #endregion
 
-        public void AddCategory(List<Category> data)
-        {
-            _categories.AddRange(data);
-        }
+
 
         public void AddCertifications(List<Certification> data)
         {
@@ -134,6 +129,29 @@ namespace Workneering.User.Domain.Entites
         }
         #endregion
 
+        #region Category
+        public void AddCategory(List<Category> data)
+        {
+            _categories.AddRange(data);
+        }
+        public void AddCategory(Category data)
+        {
+            _categories.Add(data);
+        }
+        public void RemoveCategory(Guid id)
+        {
+            var data = _categories.FirstOrDefault(x => x.Id == id);
+            data.MarkAsDeleted(id);
+        }
+        public void UpdateCategory(Guid id, Category obj)
+        {
+            var data = _categories.FirstOrDefault(x => x.Id == id);
+            if (data is null) return;
+            data.UpdateDescription(obj.Description);
+            data.UpdateName(obj.Name);
+        }
+        #endregion
+
         #region Experience
         public void AddEExperience(List<Experience> data)
         {
@@ -158,6 +176,31 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
 
+        #region Education
+        public void AddEducation(List<Education> data)
+        {
+            _educations.AddRange(data);
+        }
+        public void AddEducation(Education data)
+        {
+            _educations.Add(data);
+        }
+        public void RemoveEducation(Guid id)
+        {
+            var data = _educations.FirstOrDefault(x => x.Id == id);
+            data.MarkAsDeleted(id);
+        }
+        public void UpdateEducation(Guid id, Education obj)
+        {
+            var data = _educations.FirstOrDefault(x => x.Id == id);
+            if (data is null) return;
+            data.UpdateDescription(obj.Description);
+            data.UpdateSchool(obj.SchoolName);
+            data.UpdateDegree(obj.Degree);
+            data.UpdateYearAttended(obj.YearAttended);
+            data.UpdateYearGraduated(obj.YearGraduated);
+        }
+        #endregion
         #endregion
     }
 }

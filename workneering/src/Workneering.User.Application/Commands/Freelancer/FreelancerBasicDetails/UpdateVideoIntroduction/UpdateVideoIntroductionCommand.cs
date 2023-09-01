@@ -5,8 +5,8 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
 {
     public class UpdateVideoIntroductionCommand : IRequest<Unit>
     {
-        public string VideoIntroductionLinkYoutube { get; set; }
-        public TypeOfVideoEnum VideoIntroductionTypeOfVideo { get; set; }
+        public string? LinkYoutube { get; set; }
+        public TypeOfVideoEnum? TypeOfVideo { get; set; }
 
     }
 }

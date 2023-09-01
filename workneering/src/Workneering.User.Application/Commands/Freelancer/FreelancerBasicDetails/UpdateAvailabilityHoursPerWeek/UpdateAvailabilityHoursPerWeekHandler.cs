@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using Mapster;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.User.Domain.valueobjects;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailabilityHoursPerWeek
@@ -17,7 +19,9 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
         {
             if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
             var query = await _userDatabaseContext.Freelancers.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
-            query!.UpdateAvailability(request.HoursPerWeek, request.DateForNewWork, request.ContractToHire);
+            var map = request.Adapt<Availability>();
+            //query!.UpdateAvailability(request.HoursPerWeek, request.DateForNewWork, request.ContractToHire);
+            query!.UpdateAvailability(map);
             _userDatabaseContext.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;
