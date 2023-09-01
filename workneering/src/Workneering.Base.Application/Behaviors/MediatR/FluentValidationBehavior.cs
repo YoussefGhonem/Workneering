@@ -24,11 +24,11 @@ public class FluentValidationBehavior<TRequest, TResponse> : IPipelineBehavior<T
     {
         if (!_validators.Any())
             return await next();
-
+        // this for the incoming request. This context will be used to perform validation on the request object.
         var context = new ValidationContext<TRequest>(request);
-
+        // It initializes a list to collect validation results.
         var validationResults = new List<ValidationResult>();
-
+        // This line asynchronously runs validation logic for the request using all registered validators
         var validatorsResult = await Task.WhenAll(_validators.Select(x => x.ValidateAsync(context, cancellationToken)));
 
         var errorsDictionary = validatorsResult
