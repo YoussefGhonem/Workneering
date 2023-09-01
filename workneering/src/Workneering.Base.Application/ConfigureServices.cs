@@ -19,7 +19,7 @@ public static class ConfigureServices
         // These behaviors are added to the MediatR pipeline and will be executed in the specified order when processing requests.
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationBehavior<,>));
-        //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(SecurityValidationBehaviour<,>));
         //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ResetCacheBehaviour<,>));
         return services;
     }
