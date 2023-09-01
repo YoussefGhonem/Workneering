@@ -20,17 +20,12 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerPortfolio
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
                 .ThenInclude(x => x.PortfolioFiles).Include(x => x.Portfolios).ThenInclude(x => x.PortfolioSkills)
                 .FirstOrDefault(x => x.Id == request.Id);
-            try
-            {
-                Mapper.ApplyMapping();
-                var result = query!.Portfolios.Adapt<List<FreelancerPortfolioDto>>();
-                return result;
 
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            Mapper.ApplyMapping();
+            var result = query!.Portfolios.Adapt<List<FreelancerPortfolioDto>>();
+            return result;
+
+
         }
     }
 }

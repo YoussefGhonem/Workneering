@@ -1,4 +1,5 @@
-﻿using Workneering.Base.Domain.Common;
+﻿using System.Linq;
+using Workneering.Base.Domain.Common;
 using Workneering.User.Domain.Enums;
 
 namespace Workneering.User.Domain.Entites
@@ -61,6 +62,25 @@ namespace Workneering.User.Domain.Entites
         {
             _portfolioFiles.AddRange(portfolioSkills);
         }
+        public void UpdatePortfolioSkills(List<PortfolioSkill> portfolioSkills)
+        {
+            var addNewItems = portfolioSkills.Where(x => x.Id == null);
+            var removeItems = _portfolioSkills.Select(x => x.Id).Except(portfolioSkills.Select(x => x.Id));
+            var removItemsObj = _portfolioSkills.Where(x => removeItems.Contains(x.Id));
+            var newItemsObj = _portfolioSkills.Where(x => removeItems.Contains(x.Id));
+            _portfolioSkills.AddRange(addNewItems);
+            foreach (var item in removItemsObj)
+            {
+                var data = _portfolioSkills.FirstOrDefault(x => x.Id == item.Id);
+                data.MarkAsDeleted(null);
+            }
+        }
+        public void UpdatePortfolioFiles(List<PortfolioFile> portfolioSkills)
+        {
+            _portfolioFiles.AddRange(portfolioSkills);
+        }
+
+
         public void RemovePortfolioFile(Guid id)
         {
             var obj = _portfolioFiles.FirstOrDefault(x => x.Id == id);
@@ -79,7 +99,7 @@ namespace Workneering.User.Domain.Entites
         {
             _projectURL = field;
         }
-        public void UpdateRrole(string field)
+        public void UpdateRole(string field)
         {
             _role = field;
         }

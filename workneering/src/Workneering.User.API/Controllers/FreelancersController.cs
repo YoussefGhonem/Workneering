@@ -22,6 +22,9 @@ using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.Up
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateTitle;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVideoIntroduction;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVisibility;
+using Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortfolio;
+using Workneering.User.Application.Commands.Freelancer.Portfolio.DeletePortfolio;
+using Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetExperiences;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
@@ -250,7 +253,40 @@ namespace Workneering.User.API.Controllers
         }
         #endregion
 
+        #region Portfolios
 
+        [HttpPost("profile/portfolios")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreatePortfolioCommand(CreatePortfolioCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPut("{id}/profile/portfolios")] // id : EmploymentHistoryId
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateFreelancerPortfolioCommand(UpdateFreelancerPortfolioCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpDelete("{id}/profile/portfolios")] // id : EmploymentHistoryId
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> DeletePortfolioCommand(DeletePortfolioCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        #endregion
         #endregion
 
         #region Queries

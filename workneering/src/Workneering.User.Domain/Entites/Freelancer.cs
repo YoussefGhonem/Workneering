@@ -94,10 +94,6 @@ namespace Workneering.User.Domain.Entites
         {
             _educations.AddRange(data);
         }
-        public void AddPortfolios(List<Portfolio> data)
-        {
-            _portfolios.AddRange(data);
-        }
 
 
         #region Employment History
@@ -173,7 +169,7 @@ namespace Workneering.User.Domain.Entites
             data.UpdateDescription(obj.Description);
             data.UpdateSubject(obj.Subject);
         }
-        #endregion
+        #endregion        #region Experience
 
 
         #region Education
@@ -201,6 +197,39 @@ namespace Workneering.User.Domain.Entites
             data.UpdateYearGraduated(obj.YearGraduated);
         }
         #endregion
+
+        #region Portfolio
+        public void AddPortfolio(Portfolio data, List<PortfolioSkill> portfolioSkills, List<PortfolioFile> portfolioFiles)
+        {
+            data.AddPortfolioFiles(portfolioFiles);
+            data.AddPortfolioSkills(portfolioSkills);
+
+            _portfolios.Add(data);
+        }
+        public void RemovePortfolio(Guid id)
+        {
+            var data = _portfolios.FirstOrDefault(x => x.Id == id);
+            data.MarkAsDeleted(id);
+        }
+        public void UpdatePortfolio(Guid id, Portfolio obj, List<PortfolioSkill> portfolioSkills, List<PortfolioFile> portfolioFiles)
+        {
+            var data = _portfolios.FirstOrDefault(x => x.Id == id);
+            if (data is null) return;
+
+            data.UpdateCompletionDate(obj.CompletionDate.Value);
+            data.UpdateRelatedSpecializedProfile(obj.RelatedSpecializedProfile);
+            data.UpdateFileCaption(obj.FileCaption);
+            data.UpdateYouTubeLink(obj.YouTubeLink);
+            data.UpdateProjectDescription(obj.ProjectDescription);
+            data.UpdateProjectSolutionDescription(obj.ProjectSolutionDescription);
+            data.UpdateProjectTaskDescription(obj.ProjectTaskDescription);
+            data.UpdateRole(obj.Role);
+            data.UpdateProjectURL(obj.ProjectURL);
+            data.UpdateProjectTitle(obj.ProjectTitle);
+            // list
+            data.UpdatePortfolioSkills(portfolioSkills);
+        }
+        #endregion        
         #endregion
     }
 }

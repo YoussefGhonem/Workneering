@@ -1,15 +1,15 @@
-﻿using Workneering.User.Domain.Entites;
+﻿using MediatR;
 using Workneering.User.Domain.Enums;
 
-namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerPortfolios
+namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio
 {
-    public class FreelancerPortfolioDto
+    public class UpdateFreelancerPortfolioCommand : IRequest<Unit>
     {
         public SpecialtyEnum RelatedSpecializedProfile { get; set; }
         public DateTimeOffset? CompletionDate { get; set; }
         public TemplateEnum Template { get; set; }
-        public List<FreelancerPortfolioSkillDto> PortfolioSkills { get; set; }
-        public List<FreelancerPortfolioFileDto> PortfolioFiles { get; set; }
+        public List<FreelancerPortfolioSkillUpdateDto> PortfolioSkills { get; set; }
+        public List<FreelancerPortfolioFileUpdateDto> PortfolioFiles { get; set; }
         public string? ProjectTitle { get; set; }
         public string? ProjectURL { get; set; }
         public string? Role { get; set; }
@@ -18,16 +18,14 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerPortfolio
         public string? ProjectDescription { get; set; }
         public string? YouTubeLink { get; set; }
         public string? FileCaption { get; set; }
-
     }
-
-    public class FreelancerPortfolioSkillDto
+    public class FreelancerPortfolioSkillUpdateDto
     {
         public Guid? Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
     }
-    public class FreelancerPortfolioFileDto
+    public class FreelancerPortfolioFileUpdateDto
     {
 
     }
