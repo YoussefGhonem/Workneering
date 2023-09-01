@@ -21,9 +21,9 @@ namespace Workneering.User.Domain.Entites
         private List<PortfolioFile> _portfolioFiles = new();
 
         // template case study
-        private string _role;
-        private string _projectTaskDescription;
-        private string _projectSolutionDescription;
+        private string? _role;
+        private string? _projectTaskDescription;
+        private string? _projectSolutionDescription;
         #endregion
         public Portfolio()
         {
@@ -41,12 +41,12 @@ namespace Workneering.User.Domain.Entites
         public virtual List<PortfolioFile> PortfolioFiles => _portfolioFiles;
         public string ProjectTitle { get => _projectTitle; private set => _projectTitle = value; }
         public string ProjectURL { get => _projectURL; private set => _projectURL = value; }
-        public string Rrole { get => _role; private set => _role = value; }
-        public string ProjectTaskDescription { get => _projectTaskDescription; private set => _projectTaskDescription = value; }
-        public string ProjectSolutionDescription { get => _projectSolutionDescription; private set => _projectSolutionDescription = value; }
-        public string ProjectDescription { get => _projectDescription; private set => _projectDescription = value; }
-        public string YouTubeLink { get => _youTubeLink; private set => _youTubeLink = value; }
-        public string FileCaption { get => _fileCaption; private set => _fileCaption = value; }
+        public string Role { get => _role; private set => _role = value; }
+        public string? ProjectTaskDescription { get => _projectTaskDescription; private set => _projectTaskDescription = value; }
+        public string? ProjectSolutionDescription { get => _projectSolutionDescription; private set => _projectSolutionDescription = value; }
+        public string? ProjectDescription { get => _projectDescription; private set => _projectDescription = value; }
+        public string? YouTubeLink { get => _youTubeLink; private set => _youTubeLink = value; }
+        public string? FileCaption { get => _fileCaption; private set => _fileCaption = value; }
         public SpecialtyEnum RelatedSpecializedProfile { get => _relatedSpecializedProfile; private set => _relatedSpecializedProfile = value; }
         public DateTimeOffset? CompletionDate { get => _completionDate; private set => _completionDate = value; }
         public TemplateEnum Template { get => _template; private set => _template = value; }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerEducationDetails;
+using Workneering.User.Application.Queries.Freelancer.GetFreelancerPortfolios;
 
 namespace Workneering.User.API.Controllers
 {
@@ -52,6 +53,17 @@ namespace Workneering.User.API.Controllers
         public async Task<ActionResult<List<EducationDetailsDto>>> GetFreelancerEducationDetailsQuery(Guid id)
         {
             var query = new GetFreelancerEducationDetailsQuery { Id = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        //[Authorize]
+        [HttpGet("{id}/profile/portfolios")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerPortfolioDto>))]
+        public async Task<ActionResult<List<FreelancerPortfolioDto>>> GetFreelancerPortfoliosQuery(Guid id)
+        {
+            var query = new GetFreelancerPortfoliosQuery { Id = id };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 

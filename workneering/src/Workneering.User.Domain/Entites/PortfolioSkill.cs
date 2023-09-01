@@ -5,7 +5,7 @@ namespace Workneering.User.Domain.Entites
     public record PortfolioSkill : BaseEntity
     {
         private string _name;
-        private string _description;
+        private string? _description;
 
         public PortfolioSkill(string name)
         {
@@ -15,7 +15,7 @@ namespace Workneering.User.Domain.Entites
         {
         }
         public string Name { get => _name; private set => _name = value; }
-        public string Description { get => _description; private set => _description = value; }
+        public string? Description { get => _description; private set => _description = value; }
 
 
         public void UpdateName(string field)
