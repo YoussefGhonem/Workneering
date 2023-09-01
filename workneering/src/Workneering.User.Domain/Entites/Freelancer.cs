@@ -48,22 +48,25 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region public methods
-        public void UpdateOverviewDescription(string field)
-        {
-            _overviewDescription = field;
-        }
+        #region Basic Details
         public void UpdateTitle(string field)
         {
             _title = field;
         }
-        public void UpdateHourlyRate(VisibilityEnum field)
+        public void UpdateHourlyRate(decimal field)
         {
-            _visibility = field;
+            _hourlyRate = field;
         }
-        public void UpdateOverviewDescription(ExperienceLevelEnum field)
+        public void UpdateOverviewDescription(string field)
+        {
+            _overviewDescription = field;
+        }
+        public void UpdateExperienceLevel(ExperienceLevelEnum field)
         {
             _experienceLevel = field;
         }
+        #endregion
+
         public void AddCategory(List<Category> data)
         {
             _categories.AddRange(data);
