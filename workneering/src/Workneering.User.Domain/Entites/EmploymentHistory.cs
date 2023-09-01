@@ -58,7 +58,7 @@ namespace Workneering.User.Domain.Entites
         {
             _startDate = field;
         }
-        public void UpdateEndDate(DateTimeOffset field)
+        public void UpdateEndDate(DateTimeOffset? field)
         {
             _endDate = field;
         }

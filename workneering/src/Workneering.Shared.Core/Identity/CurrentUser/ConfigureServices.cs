@@ -7,8 +7,7 @@ public static class ConfigureServices
 {
     public static IApplicationBuilder UseCurrentUser(this IApplicationBuilder app)
     {
-        CurrentUser.Initializer(
-            app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
+        CurrentUser.InitializeHttpContextAccessor(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
         return app;
     }
 }

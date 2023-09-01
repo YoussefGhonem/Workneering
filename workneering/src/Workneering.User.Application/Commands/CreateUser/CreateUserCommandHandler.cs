@@ -28,7 +28,7 @@ namespace Workneering.User.Application.Commands.CreateUser
             }
             else
             {
-                var user = new Freelancer(request.Id);
+                var user = new Workneering.User.Domain.Entites.Freelancer(request.Id);
                 await _userDatabaseContext.Freelancers.AddAsync(user);
             }
 

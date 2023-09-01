@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
+using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateEmploymentHistory;
+using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetExperiences;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
@@ -22,17 +24,27 @@ namespace Workneering.User.API.Controllers
 
         #region Commands
 
-        //[Authorize]
-        //[HttpPut("change-password")]
-        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        //public async Task<ActionResult<Unit>> ChangeMyPassword(ChangePasswordCommand command)
-        //{
-        //    command.UserId = CurrentUser.Id ?? Guid.Empty;
-        //    return Ok(await Mediator.Send(command, CancellationToken));
-        //}
+        [HttpPost("{id}/profile/employment-history")] // id : EmploymentHistoryId
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreateEmploymentHistoryCommand(CreateEmploymentHistoryCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPut("{id}/profile/employment-history")] // id : EmploymentHistoryId
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateEmploymentHistoryCommand(UpdateEmploymentHistoryCommand command, Guid id)
+        {
+            command.EmploymentHistoryId = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
 
         #endregion
 
@@ -92,7 +104,6 @@ namespace Workneering.User.API.Controllers
             var query = new GetEmploymentHistoryQuery { Id = id };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
-        //[Authorize]
         [HttpGet("{id}/profile/experiences")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -104,7 +115,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         //[Authorize]
-        [HttpGet("{id}/profile/experiences")]
+        [HttpGet("{id}/profile/categories")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -1,10 +1,9 @@
 ﻿using Workneering.Base.API.ServiceCollections.ApiVersioning;
-using Workneering.Base.API.ServiceCollections.ExceptionHandling;
-using Workneering.Base.API.ServiceCollections.HealthCheckApplication;
 using Workneering.Base.API.ServiceCollections.Swagger;
 using Workneering.Base.Application;
 using Workneering.Base.Infrastructure;
 using Workneering.Identity.API;
+using Workneering.Identity.Application;
 using Workneering.User.API;
 
 namespace Workneering.Geteway.Helpers;
@@ -68,6 +67,7 @@ public static class ConfigureServicesExtention
         #region Using Base Packages
 
         app
+            .UseIdentityApplication()
            //.UseExceptionHandling()
            //.UseHealthCheckApplication()
            .UseBaseSwagger(app.Configuration);

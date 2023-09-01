@@ -68,10 +68,7 @@ namespace Workneering.User.Domain.Entites
         {
             _categories.AddRange(data);
         }
-        public void AddEmploymentHistory(List<EmploymentHistory> data)
-        {
-            _employmentHistory.AddRange(data);
-        }
+
         public void AddCertifications(List<Certification> data)
         {
             _certification.AddRange(data);
@@ -92,6 +89,37 @@ namespace Workneering.User.Domain.Entites
         {
             _experiences.AddRange(data);
         }
+
+
+        #region Employment History
+        public void AddEmploymentHistory(List<EmploymentHistory> data)
+        {
+            _employmentHistory.AddRange(data);
+        }
+        public void AddEmploymentHistory(EmploymentHistory data)
+        {
+            _employmentHistory.Add(data);
+        }
+        public void RemoveEmploymentHistory(Guid id)
+        {
+            var data = _employmentHistory.FirstOrDefault(x => x.Id == id);
+            _employmentHistory.Remove(data);
+        }
+        public void UpdateEmploymentHistory(Guid id, EmploymentHistory employmentHistory)
+        {
+            var data = _employmentHistory.FirstOrDefault(x => x.Id == id);
+
+            data.UpdateDescription(employmentHistory.Description);
+            data.UpdateEndDate(employmentHistory.EndDate);
+            data.UpdateStartDate(employmentHistory.StartDate);
+            data.UpdateCompanyName(employmentHistory.CompanyName);
+            data.UpdateTitle(employmentHistory.Title);
+            data.UpdateLocation(employmentHistory.Location);
+            data.UpdateIsCurrentlyWork(employmentHistory.IsCurrentlyWork);
+        }
+        #endregion
+
+
         #endregion
     }
 }
