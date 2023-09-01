@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
+using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerEducationDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerPortfolios;
@@ -76,6 +77,17 @@ namespace Workneering.User.API.Controllers
         public async Task<ActionResult<List<FreelancerSkillDto>>> GetFreelancerSkillsQuery(Guid id)
         {
             var query = new GetFreelancerSkillsQuery { Id = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        //[Authorize]
+        [HttpGet("{id}/profile/employment-history")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EmploymentHistoryDto>))]
+        public async Task<ActionResult<List<EmploymentHistoryDto>>> GetEmploymentHistoryQuery(Guid id)
+        {
+            var query = new GetEmploymentHistoryQuery { Id = id };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
