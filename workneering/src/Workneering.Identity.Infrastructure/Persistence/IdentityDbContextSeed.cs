@@ -38,8 +38,7 @@ namespace Workneering.Identity.Infrastructure.Persistence
 
         private static async Task SeedSuperAdmin(IdentityDatabaseContext databaseContext, UserManager<User> userManager)
         {
-            const string firstName = "Super";
-            const string lastName = "Admin";
+            const string name = "Super Admin";
             const string email = "admin@gmail.com";
             const string password = "Admin@2010";
             var user = await userManager.FindByNameAsync(email);
@@ -48,7 +47,7 @@ namespace Workneering.Identity.Infrastructure.Persistence
 
             var rolesFromDb = databaseContext.Roles.ToList();
 
-            var newUser = new CreateUserFactory(firstName, lastName, email, null)
+            var newUser = new CreateUserFactory(name, email, null)
                 .WithRoles(rolesFromDb, RolesEnum.SuperAdmin)
                 .Build();
 

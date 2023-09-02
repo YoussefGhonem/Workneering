@@ -70,7 +70,7 @@ public class CreateUserFactory
     {
         // User Aggregate
         var user = new User(
-            name,
+            _name,
         _email,
          _countryId);
 
