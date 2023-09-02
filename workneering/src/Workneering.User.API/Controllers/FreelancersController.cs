@@ -394,14 +394,13 @@ namespace Workneering.User.API.Controllers
         }
 
 
-        [HttpDelete("{id}/profile/languages")]
+        [HttpDelete("profile/languages")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> DeleteLanguageCommand(DeleteLanguageCommand command, Guid id)
+        public async Task<ActionResult<Unit>> DeleteLanguageCommand(DeleteLanguageCommand command)
         {
-            command.Id = id;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
         #endregion

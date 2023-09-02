@@ -1,9 +1,13 @@
-﻿using Workneering.User.Domain.Enums;
+﻿using Workneering.Shared.Core.Models;
+using Workneering.User.Domain.Enums;
 
 namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails
 {
     public class FreelancerBasicDetailsDto
     {
+        public string? TitleOverview { get; set; }
+        public string? Name { get; set; }
+        public Location? Location { get; set; }
         public decimal? HourlyRate { get; set; }
         public string? Title { get; set; }
         public string? OverviewDescription { get; set; }

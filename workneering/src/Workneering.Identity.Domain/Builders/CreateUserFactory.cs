@@ -11,7 +11,7 @@ public class CreateUserFactory
     // Basic Info
     private readonly string _firstName;
     private readonly string _lastName;
-    private readonly string _countryName;
+    private readonly Guid? _countryId;
     private readonly string _email;
     private FileDto? _imageDetails;
     private string? _phoneNumber;
@@ -26,12 +26,12 @@ public class CreateUserFactory
         string firstName,
         string lastName,
         string email,
-        string countryName)
+        Guid? countryName)
     {
         _firstName = firstName;
         _lastName = lastName;
         _email = email;
-        _countryName = countryName;
+        _countryId = countryName;
     }
 
     public CreateUserFactory WithImage(FileDto? imageDetails)
@@ -76,7 +76,7 @@ public class CreateUserFactory
          _firstName,
          _lastName,
          _email,
-         _countryName);
+         _countryId);
 
         // Roles
         foreach (var userRole in _newUserRoles)

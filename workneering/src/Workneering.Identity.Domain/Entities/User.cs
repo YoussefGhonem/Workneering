@@ -14,7 +14,7 @@ namespace Workneering.Identity.Domain.Entities
         private UserStatusEnum? _status;
         private string? _firstName;
         private string? _lastName;
-        private string? _countryName;
+        private Guid? _countryId;
         private string? _phoneNumber;
         private FileDto? _Image;
         // Audit
@@ -29,11 +29,11 @@ namespace Workneering.Identity.Domain.Entities
         private readonly HashSet<UserToken> _tokens = new();
 
         #endregion
-        public User(string firstName, string lastName, string email, string? countryName = null)
+        public User(string firstName, string lastName, string email, Guid? countryId = null)
         {
             _firstName = Guard.Against.NullOrWhiteSpace(firstName, nameof(firstName));
             _lastName = Guard.Against.NullOrWhiteSpace(lastName, nameof(lastName));
-            _countryName = countryName;
+            _countryId = countryId;
             Email = Guard.Against.NullOrWhiteSpace(email, nameof(email));
             UserName = Email;
 
@@ -52,10 +52,10 @@ namespace Workneering.Identity.Domain.Entities
             get => _status;
             private set => _status = value;
         }
-        public string? CountryName
+        public Guid? CountryId
         {
-            get => _countryName;
-            private set => _countryName = value;
+            get => _countryId;
+            private set => _countryId = value;
         }
         public string? FirstName
         {
@@ -139,6 +139,10 @@ namespace Workneering.Identity.Domain.Entities
 
 
             _firstName = Guard.Against.NullOrWhiteSpace(firstName, nameof(firstName));
+        }
+        public void SetCountryId(Guid? field)
+        {
+            _countryId = field;
         }
 
         public void SetLastName(string? lastName)
