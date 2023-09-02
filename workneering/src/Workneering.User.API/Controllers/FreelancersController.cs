@@ -6,6 +6,9 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Freelancer.Category.CreateCategory;
 using Workneering.User.Application.Commands.Freelancer.Category.DeleteCategory;
 using Workneering.User.Application.Commands.Freelancer.Category.UpdateCategory;
+using Workneering.User.Application.Commands.Freelancer.Certification.CreateCertification;
+using Workneering.User.Application.Commands.Freelancer.Certification.DeleteCertification;
+using Workneering.User.Application.Commands.Freelancer.Certification.UpdateCertification;
 using Workneering.User.Application.Commands.Freelancer.Education.CreateEducation;
 using Workneering.User.Application.Commands.Freelancer.Education.DeleteEducation;
 using Workneering.User.Application.Commands.Freelancer.Education.UpdateEducation;
@@ -343,6 +346,40 @@ namespace Workneering.User.API.Controllers
         }
         #endregion
 
+        #region Certifications
+
+        [HttpPost("profile/certifications")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreateCertificationCommand(CreateCertificationCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPut("{id}/profile/certifications")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateCertificationCommand(UpdateCertificationCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpDelete("{id}/profile/certifications")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> DeleteCertificationCommand(DeleteCertificationCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        #endregion
 
         #region Language
 
