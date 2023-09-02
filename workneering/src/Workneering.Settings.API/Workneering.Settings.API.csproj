@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Workneering.Base.API\Workneering.Base.API.csproj" />
+    <ProjectReference Include="..\Workneering.Settings.Application\Workneering.Settings.Application.csproj" />
+    <ProjectReference Include="..\Workneering.Settings.Infrastructure\Workneering.Settings.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -5,6 +5,7 @@ using Workneering.Base.Infrastructure;
 using Workneering.Identity.API;
 using Workneering.Identity.Application;
 using Workneering.User.API;
+using Workneering.Settings.API;
 
 namespace Workneering.Geteway.Helpers;
 public static class ConfigureServicesExtention
@@ -53,8 +54,10 @@ public static class ConfigureServicesExtention
         #endregion
 
         #region Solution Extensions
-        services.AddIdentityExtension(builder.Configuration);
-        services.AddUserExtension(builder.Configuration);
+
+        services.AddIdentityExtension(builder.Configuration)
+                .AddUserExtension(builder.Configuration)
+                .AddSettings(builder.Configuration);
         #endregion
 
 
@@ -64,7 +67,7 @@ public static class ConfigureServicesExtention
     // Introduced the middleware components to define a request pipeline, which will be executed on every request.
     public static async Task<WebApplication> Configure(this WebApplication app, IWebHostEnvironment env)
     {
-        #region Using Base Packages
+        #region Using Base Packages 
 
         app
             .UseIdentityApplication()

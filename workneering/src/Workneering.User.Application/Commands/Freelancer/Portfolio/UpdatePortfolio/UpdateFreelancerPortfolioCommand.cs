@@ -5,6 +5,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
 {
     public class UpdateFreelancerPortfolioCommand : IRequest<Unit>
     {
+        public Guid Id { get; set; }
         public SpecialtyEnum RelatedSpecializedProfile { get; set; }
         public DateTimeOffset? CompletionDate { get; set; }
         public TemplateEnum Template { get; set; }

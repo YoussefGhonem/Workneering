@@ -20,6 +20,7 @@ namespace Workneering.User.Domain.Entites
         private readonly List<EmploymentHistory> _employmentHistory = new();
         private readonly List<Experience> _experiences = new();
         private readonly List<Category> _categories = new();
+        private readonly List<Language> Languages = new();
         public Freelancer()
         {
 
