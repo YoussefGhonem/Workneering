@@ -32,8 +32,8 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded) throw new Exception(result.Errors.ToString());
             await _identityDbContext.SaveChangesAsync(user.Id, cancellationToken);
-
-            var command = new CreateUserCommand(user.Id, request.Role);
+            var name = request.FirstName + " " + request.LastName;
+            var command = new CreateUserCommand(user.Id, request.Role, name);
             await _mediator.Send(command, cancellationToken);
 
             return user.Id;

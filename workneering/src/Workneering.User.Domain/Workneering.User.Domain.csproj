@@ -10,6 +10,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Workneering.Base.Domain\Workneering.Base.Domain.csproj" />
+		<ProjectReference Include="..\Workneering.Base.Helpers\Workneering.Base.Helpers.csproj" />
 		<ProjectReference Include="..\Workneering.Shared.Core\Workneering.Shared.Core.csproj" />
 	</ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Workneering.Base.Domain.Common;
+using Workneering.Base.Helpers.Enums;
 using Workneering.User.Domain.Enums;
 using Workneering.User.Domain.valueobjects;
 
@@ -6,6 +7,12 @@ namespace Workneering.User.Domain.Entites
 {
     public record Freelancer : BaseEntity
     {
+        private string? _titleOverview;
+        private string _name;
+        private GenderEnum? _gender;
+        private decimal? _yearsOfExperience;
+        private decimal? _reviews; // 4.3 of 5 stars
+        private int? _numOfReviews; // 100 clients for example
         private decimal? _hourlyRate;
         private string? _title;
         private string? _overviewDescription;
@@ -26,12 +33,19 @@ namespace Workneering.User.Domain.Entites
         {
 
         }
-        public Freelancer(Guid id)
+        public Freelancer(Guid id, string name)
         {
             Id = id;
+            _name = name;
         }
 
         #region public fields
+        public string? TitleOverview { get => _titleOverview; private set => _titleOverview = value; }
+        public string? Name { get => _name; private set => _name = value; }
+        public GenderEnum? Gender { get => _gender; private set => _gender = value; }
+        public decimal? Reviews { get => _reviews; private set => _reviews = value; }
+        public int? NumOfReviews { get => _numOfReviews; private set => _numOfReviews = value; }
+        public decimal? YearsOfExperience { get => _yearsOfExperience; private set => _yearsOfExperience = value; }
         public decimal? HourlyRate { get => _hourlyRate; private set => _hourlyRate = value; }
         public string? Title { get => _title; private set => _title = value; }
         public string? OverviewDescription { get => _overviewDescription; private set => _overviewDescription = value; }
@@ -53,9 +67,27 @@ namespace Workneering.User.Domain.Entites
 
         #region public methods
         #region Basic Details
+        public void UpdateReviews(decimal field)
+        {
+            _numOfReviews++;
+            var summ = _reviews + field;
+            _reviews = summ / _numOfReviews;
+        }
+        public void UpdateYearsOfExperience(decimal field)
+        {
+            _yearsOfExperience = field;
+        }
         public void UpdateTitle(string field)
         {
             _title = field;
+        }
+        public void UpdateTitleOverview(string field)
+        {
+            _titleOverview = field;
+        }
+        public void UpdateGender(GenderEnum? field)
+        {
+            _gender = field;
         }
         public void UpdateHourlyRate(decimal field)
         {
