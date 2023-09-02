@@ -9,8 +9,7 @@ public class CreateUserFactory
     #region Private members
 
     // Basic Info
-    private readonly string _firstName;
-    private readonly string _lastName;
+    private readonly string _name;
     private readonly Guid? _countryId;
     private readonly string _email;
     private FileDto? _imageDetails;
@@ -23,13 +22,11 @@ public class CreateUserFactory
     #endregion
 
     public CreateUserFactory(
-        string firstName,
-        string lastName,
+        string name,
         string email,
         Guid? countryName)
     {
-        _firstName = firstName;
-        _lastName = lastName;
+        _name = name;
         _email = email;
         _countryId = countryName;
     }
@@ -73,9 +70,8 @@ public class CreateUserFactory
     {
         // User Aggregate
         var user = new User(
-         _firstName,
-         _lastName,
-         _email,
+            name,
+        _email,
          _countryId);
 
         // Roles

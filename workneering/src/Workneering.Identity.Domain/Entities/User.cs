@@ -12,8 +12,7 @@ namespace Workneering.Identity.Domain.Entities
     {
         #region Backing Fields 
         private UserStatusEnum? _status;
-        private string? _firstName;
-        private string? _lastName;
+        private string? _name;
         private Guid? _countryId;
         private string? _phoneNumber;
         private FileDto? _Image;
@@ -29,10 +28,9 @@ namespace Workneering.Identity.Domain.Entities
         private readonly HashSet<UserToken> _tokens = new();
 
         #endregion
-        public User(string firstName, string lastName, string email, Guid? countryId = null)
+        public User(string name, string email, Guid? countryId = null)
         {
-            _firstName = Guard.Against.NullOrWhiteSpace(firstName, nameof(firstName));
-            _lastName = Guard.Against.NullOrWhiteSpace(lastName, nameof(lastName));
+            _name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
             _countryId = countryId;
             Email = Guard.Against.NullOrWhiteSpace(email, nameof(email));
             UserName = Email;
@@ -57,21 +55,17 @@ namespace Workneering.Identity.Domain.Entities
             get => _countryId;
             private set => _countryId = value;
         }
-        public string? FirstName
+        public string Name
         {
-            get => _firstName;
-            private set => _firstName = value;
+            get => _name;
+            private set => _name = value;
         }
         public string? PhoneNumber
         {
             get => _phoneNumber;
             private set => _phoneNumber = value;
         }
-        public string? LastName
-        {
-            get => _lastName;
-            private set => _lastName = value;
-        }
+
         public bool IsDeleted { get; private set; }
         public DateTimeOffset? DeletedDate { get; private set; }
         public Guid? DeletedBy { get; private set; }
@@ -131,26 +125,18 @@ namespace Workneering.Identity.Domain.Entities
             _userRoles.Add(userRole);
         }
 
-        public void SetFirstName(string? firstName)
+        public void SetName(string? firstName)
         {
             if (string.IsNullOrEmpty(firstName) ||
-                string.Equals(_firstName, firstName, StringComparison.CurrentCultureIgnoreCase)) return;
-
-
-
-            _firstName = Guard.Against.NullOrWhiteSpace(firstName, nameof(firstName));
+                string.Equals(_name, firstName, StringComparison.CurrentCultureIgnoreCase)) return;
+            _name = Guard.Against.NullOrWhiteSpace(firstName, nameof(firstName));
         }
         public void SetCountryId(Guid? field)
         {
             _countryId = field;
         }
 
-        public void SetLastName(string? lastName)
-        {
-            if (string.IsNullOrEmpty(lastName) ||
-                string.Equals(_lastName, lastName, StringComparison.CurrentCultureIgnoreCase)) return;
-            _lastName = Guard.Against.NullOrWhiteSpace(lastName, nameof(lastName));
-        }
+
         public void MarkAsNotDeleted()
         {
             IsDeleted = false;

@@ -5,7 +5,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
     public class FreelancerBasicDetailsDto
     {
         public string? TitleOverview { get; set; }
-        public string? LocationFlag { get; set; }
+        public CountryInfo? Location { get; set; }
         public int? NumberOfLanguages { get; set; }
         public int? NumberOfCertification { get; set; }
         public string? Name { get; set; }
@@ -23,5 +23,12 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
         public string? AvailabilityHoursPerWeek { get; set; }
         public DateTimeOffset? AvailabilityDateForNewWork { get; set; }
         public bool? AvailabilityContractToHire { get; set; } = false;
+    }
+    public class CountryInfo
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Flag { get; set; }
+        public string Language { get; set; }
     }
 }

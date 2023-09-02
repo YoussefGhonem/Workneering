@@ -7,6 +7,7 @@ namespace Workneering.User.Domain.Entites
 {
     public record Freelancer : BaseEntity
     {
+        private bool _isMarked;
         private string? _titleOverview;
         private string _name;
         private GenderEnum? _gender;
@@ -40,6 +41,7 @@ namespace Workneering.User.Domain.Entites
         }
 
         #region public fields
+        public bool IsMarked { get => _isMarked; private set => _isMarked = value; }
         public string? TitleOverview { get => _titleOverview; private set => _titleOverview = value; }
         public string? Name { get => _name; private set => _name = value; }
         public GenderEnum? Gender { get => _gender; private set => _gender = value; }
@@ -72,6 +74,10 @@ namespace Workneering.User.Domain.Entites
             _numOfReviews++;
             var summ = _reviews + field;
             _reviews = summ / _numOfReviews;
+        }
+        public void UpdateIsMarked(bool field)
+        {
+            _isMarked = field;
         }
         public void UpdateYearsOfExperience(decimal field)
         {

@@ -33,7 +33,10 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
             var result = query?.Adapt<FreelancerBasicDetailsDto>();
             result.NumberOfCertification = query?.Certifications.Count();
             result.NumberOfLanguages = query?.Languages.Count();
-            result.LocationFlag = countruservice?.Flag;
+            result.Location.Id = countruservice.Id;
+            result.Location.Name = countruservice?.Name;
+            result.Location.Language = countruservice?.Language;
+            result.Location.Flag = countruservice?.Flag;
 
             return result;
         }

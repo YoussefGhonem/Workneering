@@ -24,15 +24,15 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
         public async Task<Guid?> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var rolesFromDb = await _identityDbContext.Roles.ToListAsync(cancellationToken);
+            var name = request.FirstName + " " + request.LastName;
 
-            var userBuilder = new CreateUserFactory(request.FirstName, request.LastName, request.Email, request.CountryId)
+            var userBuilder = new CreateUserFactory(name, request.Email, request.CountryId)
                 .WithRoles(rolesFromDb, request.Role);
 
             var user = userBuilder.Build();
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded) throw new Exception(result.Errors.ToString());
             await _identityDbContext.SaveChangesAsync(user.Id, cancellationToken);
-            var name = request.FirstName + " " + request.LastName;
             var command = new CreateUserCommand(user.Id, request.Role, name);
             await _mediator.Send(command, cancellationToken);
 
