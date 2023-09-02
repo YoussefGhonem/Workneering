@@ -22,9 +22,15 @@ using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.Up
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateTitle;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVideoIntroduction;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVisibility;
+using Workneering.User.Application.Commands.Freelancer.Language.CreateLanguage;
+using Workneering.User.Application.Commands.Freelancer.Language.DeleteLanguage;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.DeletePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio;
+using Workneering.User.Application.Commands.Freelancer.Skills.UpdateFreelancerSkills;
+using Workneering.User.Application.Commands.Freelancer.Testimonial.CreateTestimonial;
+using Workneering.User.Application.Commands.Freelancer.Testimonial.DeleteTestimonial;
+using Workneering.User.Application.Commands.Freelancer.Testimonial.UpdateTestimonial;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetExperiences;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
@@ -114,7 +120,7 @@ namespace Workneering.User.API.Controllers
         #endregion
 
         #region employment-history
-        [HttpPost("{id}/profile/employment-history")] // id : EmploymentHistoryId
+        [HttpPost("{id}/profile/employment-history")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -125,7 +131,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("{id}/profile/employment-history")] // id : EmploymentHistoryId
+        [HttpPut("{id}/profile/employment-history")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -136,7 +142,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/employment-history")] // id : EmploymentHistoryId
+        [HttpDelete("{id}/profile/employment-history")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -160,7 +166,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("{id}/profile/experiences")] // id : EmploymentHistoryId
+        [HttpPut("{id}/profile/experiences")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -171,7 +177,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/experiences")] // id : EmploymentHistoryId
+        [HttpDelete("{id}/profile/experiences")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -190,12 +196,12 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateExperienceCommand(CreateCategoryCommand command)
+        public async Task<ActionResult<Unit>> CreateCategoryCommand(CreateCategoryCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("{id}/profile/categories")] // id : EmploymentHistoryId
+        [HttpPut("{id}/profile/categories")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -206,7 +212,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/categories")] // id : EmploymentHistoryId
+        [HttpDelete("{id}/profile/categories")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -230,7 +236,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("{id}/profile/educations")] // id : EmploymentHistoryId
+        [HttpPut("{id}/profile/educations")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -241,7 +247,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/educations")] // id : EmploymentHistoryId
+        [HttpDelete("{id}/profile/educations")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -265,7 +271,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("{id}/profile/portfolios")] // id : EmploymentHistoryId
+        [HttpPut("{id}/profile/portfolios")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -276,7 +282,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/portfolios")] // id : EmploymentHistoryId
+        [HttpDelete("{id}/profile/portfolios")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -287,6 +293,82 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
         #endregion
+
+        #region skills
+
+        [HttpPut("profile/skills")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateFreelancerSkillsCommand(UpdateFreelancerSkillsCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        #endregion
+
+        #region Testimonials
+
+        [HttpPost("profile/testimonials")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreateTestimonialCommand(CreateTestimonialCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPut("{id}/profile/testimonials")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateTestimonialCommand(UpdateTestimonialCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpDelete("{id}/profile/testimonials")] // id : testimonials
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> DeleteTestimonialCommand(DeleteTestimonialCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        #endregion
+
+
+        #region Language
+
+        [HttpPost("profile/languages")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreateLanguageCommand(CreateLanguageCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+
+        [HttpDelete("{id}/profile/languages")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> DeleteLanguageCommand(DeleteLanguageCommand command, Guid id)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        #endregion
+
         #endregion
 
         #region Queries

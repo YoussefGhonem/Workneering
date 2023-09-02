@@ -15,12 +15,13 @@ namespace Workneering.User.Domain.Entites
         private Availability? _availability = new();
         private readonly List<Education> _educations = new();
         private readonly List<Portfolio> _portfolios = new();
-        private readonly List<FreelancerSkill> _freelancerSkills = new();
-        private readonly List<Certification> _certification = new();
         private readonly List<EmploymentHistory> _employmentHistory = new();
         private readonly List<Experience> _experiences = new();
         private readonly List<Category> _categories = new();
-        private readonly List<Language> Languages = new();
+        private readonly List<FreelancerSkill> _freelancerSkills = new();
+        private readonly List<Language> _languages = new();
+        private readonly List<Certification> _certifications = new();
+        private readonly List<Testimonial> _testimonials = new();
         public Freelancer()
         {
 
@@ -42,9 +43,11 @@ namespace Workneering.User.Domain.Entites
         public List<Education> Educations => _educations;
         public List<Portfolio> Portfolios => _portfolios;
         public List<FreelancerSkill> FreelancerSkills => _freelancerSkills;
-        public List<Certification> Certifications => _certification;
+        public List<Certification> Certifications => _certifications;
+        public List<Language> Languages => _languages;
         public List<EmploymentHistory> EmploymentHistory => _employmentHistory;
         public List<Category> Categories => _categories;
+        public List<Testimonial> Testimonials => _testimonials;
 
         #endregion
 
@@ -58,7 +61,6 @@ namespace Workneering.User.Domain.Entites
         {
             _hourlyRate = field;
         }
-
         public void UpdateAvailability(Availability availability)
         {
             _availability = availability;
@@ -80,22 +82,6 @@ namespace Workneering.User.Domain.Entites
             _experienceLevel = field;
         }
         #endregion
-
-
-
-        public void AddCertifications(List<Certification> data)
-        {
-            _certification.AddRange(data);
-        }
-        public void AddFreelancerSkills(List<FreelancerSkill> data)
-        {
-            _freelancerSkills.AddRange(data);
-        }
-        public void AdEducations(List<Education> data)
-        {
-            _educations.AddRange(data);
-        }
-
 
         #region Employment History
         public void AddEmploymentHistory(List<EmploymentHistory> data)
@@ -126,6 +112,27 @@ namespace Workneering.User.Domain.Entites
         }
         #endregion
 
+        #region Certification
+        public void AddCertification(Certification data)
+        {
+            _certifications.Add(data);
+        }
+        public void RemoveCertification(Guid id)
+        {
+            var data = _certifications.FirstOrDefault(x => x.Id == id);
+            if (data is null) return;
+            data.MarkAsDeleted(id);
+        }
+        public void UpdateCertification(Guid id, Certification employmentHistory)
+        {
+            var data = _certifications.FirstOrDefault(x => x.Id == id);
+            if (data is null) return;
+            data.UpdateDescription(employmentHistory.Description);
+            data.UpdatePassedDate(employmentHistory.PassedDate);
+            data.UpdatName(employmentHistory.Name);
+        }
+        #endregion
+
         #region Category
         public void AddCategory(List<Category> data)
         {
@@ -146,6 +153,54 @@ namespace Workneering.User.Domain.Entites
             if (data is null) return;
             data.UpdateDescription(obj.Description);
             data.UpdateName(obj.Name);
+        }
+        #endregion
+
+        #region Testimonial
+
+        public void AddTestimonial(Testimonial data)
+        {
+            _testimonials.Add(data);
+        }
+        public void RemoveTestimonial(Guid id)
+        {
+            var data = _testimonials.FirstOrDefault(x => x.Id == id);
+            data.MarkAsDeleted(id);
+        }
+        public void UpdateTestimonial(Guid id, Testimonial obj)
+        {
+            var data = _testimonials.FirstOrDefault(x => x.Id == id);
+            if (data is null) return;
+            data.UpdateBusinessEmail(obj.BusinessEmail);
+            data.UpdateClientTitle(obj.ClientTitle);
+            data.UpdateLastName(obj.LastName);
+            data.UpdateLinkedInProfile(obj.LinkedInProfile);
+            data.UpdateMessageToClient(obj.MessageToClient);
+            data.UpdateProjectType(obj.ProjectType);
+        }
+        public void UpdateTestimonialReplyClient(Guid id, string message)
+        {
+            var data = _testimonials.FirstOrDefault(x => x.Id == id);
+            if (data is null) return;
+            data.UpdateReplayClient(message);
+
+        }
+        #endregion
+
+        #region Freelancer Skills
+        public void UpdateFreelancerSkills(List<FreelancerSkill>? freelancerSkills)
+        {
+            var addNewItems = freelancerSkills?.Where(x => x.Id == null);
+            var removeItems = _freelancerSkills.Select(x => x.Id).Except(freelancerSkills.Select(x => x.Id));
+            var removItemsObj = _freelancerSkills.Where(x => removeItems.Contains(x.Id));
+            var newItemsObj = _freelancerSkills.Where(x => removeItems.Contains(x.Id));
+            _freelancerSkills.AddRange(addNewItems);
+
+            foreach (var item in removItemsObj)
+            {
+                var data = _freelancerSkills.FirstOrDefault(x => x.Id == item.Id);
+                data.MarkAsDeleted(null);
+            }
         }
         #endregion
 
@@ -172,7 +227,6 @@ namespace Workneering.User.Domain.Entites
         }
         #endregion        #region Experience
 
-
         #region Education
         public void AddEducation(List<Education> data)
         {
@@ -196,6 +250,27 @@ namespace Workneering.User.Domain.Entites
             data.UpdateDegree(obj.Degree);
             data.UpdateYearAttended(obj.YearAttended);
             data.UpdateYearGraduated(obj.YearGraduated);
+        }
+        #endregion
+
+        #region Language
+
+        public void AddLanguage(Language data)
+        {
+            _languages.Add(data);
+        }
+        public void RemoveLanguage(Guid id)
+        {
+            var data = _languages.FirstOrDefault(x => x.Id == id);
+            data.MarkAsDeleted(id);
+        }
+        public void RemoveLanguages(List<Guid>? ids)
+        {
+            var removItemsObj = _languages.Where(x => ids.Contains(x.Id));
+            foreach (var item in removItemsObj)
+            {
+                RemoveLanguage(item.Id);
+            }
         }
         #endregion
 
@@ -231,6 +306,7 @@ namespace Workneering.User.Domain.Entites
             data.UpdatePortfolioSkills(portfolioSkills);
         }
         #endregion        
+
         #endregion
     }
 }

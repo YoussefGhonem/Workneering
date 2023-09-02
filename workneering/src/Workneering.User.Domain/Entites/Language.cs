@@ -1,12 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Workneering.Base.Domain.Common;
 
 namespace Workneering.User.Domain.Entites
 {
-    internal class Language
+    public record Language : BaseEntity
     {
+        private string _name;
+        private string _level;
+
+        public Language(string name, string level)
+        {
+            _name = name;
+            _level = level;
+        }
+        public Language()
+        {
+
+        }
+        public string Name { get => _name; private set => _name = value; }
+        public string Level { get => _level; private set => _level = value; }
+
+
+        public void UpdateName(string field)
+        {
+            _name = field;
+        }
+        public void UpdateLevel(string field)
+        {
+            _level = field;
+        }
     }
 }
