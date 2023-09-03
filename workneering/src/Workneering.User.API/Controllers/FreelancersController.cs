@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
@@ -48,6 +49,7 @@ using Workneering.User.Application.Queries.Freelancer.Portfolio.GetPortfolioById
 namespace Workneering.User.API.Controllers
 {
     [ApiVersion("1.0")]
+    [Authorize]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class FreelancersController : BaseController
     {

@@ -11,6 +11,7 @@ using Workneering.Settings.Application.Queries.GetCountriesDropdown;
 namespace Workneering.Settings.API.Controllers
 {
     [ApiVersion("1.0")]
+    [Authorize]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class SettingsController : BaseController
     {

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Identity.Application.Commands.Identity.Login;
 using Workneering.Identity.Application.Commands.Identity.RegisterUser;
+using Workneering.Identity.Application.Commands.Identity.UpdateProfile;
+using Workneering.Identity.Application.Queries.GetProfileDetails;
 
 namespace Workneering.Identity.API.Controllers
 {
@@ -17,7 +19,6 @@ namespace Workneering.Identity.API.Controllers
         }
 
         #region Commands
-
         [AllowAnonymous]
         [HttpPost("login"), Produces("text/plain")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -34,6 +35,16 @@ namespace Workneering.Identity.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Guid?))]
         public async Task<ActionResult<Guid?>> RegisterUser(RegisterUserCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [AllowAnonymous]
+        [HttpPut("profile")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Guid?))]
+        public async Task<ActionResult<Guid?>> UpdateProfileCommand(UpdateProfileCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
@@ -61,6 +72,18 @@ namespace Workneering.Identity.API.Controllers
         //    return Ok(await Mediator.Send(command, CancellationToken));
         //}
 
+        #endregion
+
+        #region Queries
+        [AllowAnonymous]
+        [HttpGet("profile-details")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProfileDetailsDto))]
+        public async Task<ActionResult<GetProfileDetailsDto>> GetProfileDetailsQuery(GetProfileDetailsQuery command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
         #endregion
     }
 }
