@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Identity.Domain.Builders;
-using Workneering.User.Application.Commands.CreateUser;
 using Workneering.Identity.Infrastructure.Persistence;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Workneering.User.Application.Commands.CreateUser;
 
 namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
 {

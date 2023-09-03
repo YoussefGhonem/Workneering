@@ -1,7 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Identity;
 using Workneering.Base.Domain.Interfaces;
-using Workneering.Base.Domain.ValueObjects;
 using Workneering.Base.Helpers.Models;
 using Workneering.Identity.Domain.Entities.Claims;
 using Workneering.Identity.Domain.Entities.ValueObjects;

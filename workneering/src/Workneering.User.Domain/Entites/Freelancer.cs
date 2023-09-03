@@ -166,8 +166,11 @@ namespace Workneering.User.Domain.Entites
             var data = _certifications.FirstOrDefault(x => x.Id == id);
             if (data is null) return;
             data.UpdateDescription(employmentHistory.Description);
-            data.UpdatePassedDate(employmentHistory.PassedDate);
+            data.UpdateStartYear(employmentHistory.StartYear);
+            data.UpdateEndYear(employmentHistory.EndYear);
             data.UpdatName(employmentHistory.Name);
+            data.UpdateGivenBy(employmentHistory.GivenBy);
+            data.UpdateAwardAreaOfStudy(employmentHistory.AwardAreaOfStudy);
         }
         #endregion
 

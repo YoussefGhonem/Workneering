@@ -5,13 +5,19 @@ namespace Workneering.User.Domain.Entites
     public record Certification : BaseEntity
     {
         private string _name;
-        private string _passedDate;
+        private int _startYear;
+        private int _endYear;
+        private string _awardAreaOfStudy;
+        private string _givenBy;
         private string _description;
         // here we will add attachments
-        public Certification(string subject, string passedDate)
+        public Certification(string subject, int startDate, int endDate = 0, string awardAreaOfStudy = null, string givenBy = null)
         {
             _name = subject;
-            _passedDate = passedDate;
+            _startYear = startDate;
+            _endYear = endDate;
+            _awardAreaOfStudy = awardAreaOfStudy;
+            _givenBy = givenBy;
         }
         public Certification()
         {
@@ -20,7 +26,10 @@ namespace Workneering.User.Domain.Entites
 
         public string Name { get => _name; private set => _name = value; }
         public string Description { get => _description; private set => _description = value; }
-        public string PassedDate { get => _passedDate; private set => _passedDate = value; }
+        public int StartYear { get => _startYear; private set => _startYear = value; }
+        public int EndYear { get => _endYear; private set => _endYear = value; }
+        public string AwardAreaOfStudy { get => _awardAreaOfStudy; private set => _awardAreaOfStudy = value; }
+        public string GivenBy { get => _givenBy; private set => _givenBy = value; }
 
         public void UpdatName(string field)
         {
@@ -30,9 +39,21 @@ namespace Workneering.User.Domain.Entites
         {
             _description = field;
         }
-        public void UpdatePassedDate(string field)
+        public void UpdateAwardAreaOfStudy(string field)
         {
-            _passedDate = field;
+            _awardAreaOfStudy = field;
+        }
+        public void UpdateGivenBy(string field)
+        {
+            _awardAreaOfStudy = field;
+        }
+        public void UpdateStartYear(int field)
+        {
+            _startYear = field;
+        }
+        public void UpdateEndYear(int field)
+        {
+            _endYear = field;
         }
 
     }

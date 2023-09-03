@@ -3,11 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
-using Workneering.Identity.Application.Commands.Identity.ChangePassword;
-using Workneering.Identity.Application.Commands.Identity.ForgetPassword;
 using Workneering.Identity.Application.Commands.Identity.Login;
 using Workneering.Identity.Application.Commands.Identity.RegisterUser;
-using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Identity.API.Controllers
 {

@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Queries.Freelancer.GetExperiences
@@ -15,9 +16,9 @@ namespace Workneering.User.Application.Queries.Freelancer.GetExperiences
         }
         public async Task<List<FreelancerExperienceDto>> Handle(GetExperiencesQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != request.Id)) return new List<FreelancerExperienceDto>();
+            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<FreelancerExperienceDto>();
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Experiences).FirstOrDefault(x => x.Id == request.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Experiences).FirstOrDefault(x => x.Id == CurrentUser.Id);
             var result = query!.Experiences.Adapt<List<FreelancerExperienceDto>>();
             return result;
         }

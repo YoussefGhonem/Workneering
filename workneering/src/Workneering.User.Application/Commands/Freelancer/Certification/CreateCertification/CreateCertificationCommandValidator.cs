@@ -13,11 +13,19 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateC
                 .NotNull()
                 .NotEmpty();
 
-            RuleFor(r => r.PassedDate)
+            RuleFor(r => r.StartYear)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(r => r.EndYear)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
             RuleFor(r => r.Description)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(r => r.AwardAreaOfStudy)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();

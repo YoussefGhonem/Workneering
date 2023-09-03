@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory
@@ -15,9 +16,9 @@ namespace Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory
         }
         public async Task<List<EmploymentHistoryDto>> Handle(GetEmploymentHistoryQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != request.Id)) return new List<EmploymentHistoryDto>();
+            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<EmploymentHistoryDto>();
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.EmploymentHistory).FirstOrDefault(x => x.Id == request.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.EmploymentHistory).FirstOrDefault(x => x.Id == CurrentUser.Id);
             var result = query!.EmploymentHistory.Adapt<List<EmploymentHistoryDto>>();
             return result;
         }

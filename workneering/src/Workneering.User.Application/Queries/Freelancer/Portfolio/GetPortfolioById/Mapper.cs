@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Workneering.User.Domain.Entites;
 
-namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerPortfolios
+namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetPortfolioById
 {
 
     public static class Mapper

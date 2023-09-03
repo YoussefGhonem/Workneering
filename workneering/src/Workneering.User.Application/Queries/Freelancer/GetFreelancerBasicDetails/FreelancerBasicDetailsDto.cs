@@ -4,6 +4,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
 {
     public class FreelancerBasicDetailsDto
     {
+        public bool? TotalJobs { get; set; }
         public bool? IsMarked { get; set; }
         public string? TitleOverview { get; set; }
         public LocationInfo? Location { get; set; }

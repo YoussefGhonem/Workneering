@@ -1,9 +1,10 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Infrastructure.Persistence;
 
-namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerPortfolios
+namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios
 {
     public class GetFreelancerPortfoliosQueryHandler : IRequestHandler<GetFreelancerPortfoliosQuery, List<FreelancerPortfolioDto>>
     {
@@ -15,11 +16,11 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerPortfolio
         }
         public async Task<List<FreelancerPortfolioDto>> Handle(GetFreelancerPortfoliosQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != request.Id)) return new List<FreelancerPortfolioDto>();
+            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<FreelancerPortfolioDto>();
 
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
                 .ThenInclude(x => x.PortfolioFiles).Include(x => x.Portfolios).ThenInclude(x => x.PortfolioSkills)
-                .FirstOrDefault(x => x.Id == request.Id);
+                .FirstOrDefault(x => x.Id == CurrentUser.Id);
 
             Mapper.ApplyMapping();
             var result = query!.Portfolios.Adapt<List<FreelancerPortfolioDto>>();

@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerCategories
@@ -15,9 +16,9 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorie
         }
         public async Task<List<FreelancerCategoryDto>> Handle(GetFreelancerCategoriesQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != request.Id)) return new List<FreelancerCategoryDto>();
+            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<FreelancerCategoryDto>();
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Categories).FirstOrDefault(x => x.Id == request.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Categories).FirstOrDefault(x => x.Id == CurrentUser.Id);
             var result = query!.Categories.Adapt<List<FreelancerCategoryDto>>();
             return result;
         }

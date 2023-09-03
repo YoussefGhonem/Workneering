@@ -4,6 +4,5 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
 {
     public class GetFreelancerBasicDetailsQuery : IRequest<FreelancerBasicDetailsDto>
     {
-        public Guid Id { get; set; }
     }
 }
