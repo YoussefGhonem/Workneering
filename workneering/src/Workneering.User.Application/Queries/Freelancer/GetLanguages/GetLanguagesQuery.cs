@@ -1,8 +1,9 @@
 ﻿using MediatR;
 
-namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerCategories
+namespace Workneering.User.Application.Queries.Freelancer.GetLanguages
 {
-    public class GetFreelancerCategoriesQuery : IRequest<List<FreelancerCategoryDto>>
+    public class GetLanguagesQuery : IRequest<List<LanguagesListDto>>
     {
+
     }
 }

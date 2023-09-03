@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Workneering.Shared.Core.Models;
 
-namespace Workneering.User.Application.Commands.Freelancer.Language.CreateLanguage
+namespace Workneering.User.Application.Commands.Freelancer.Language.UpdateLanguage
 {
-    public class CreateLanguageCommand : IRequest<Unit>
+    public class UpdateLanguageCommand : IRequest<Unit>
     {
         public string? Name { get; set; }
         public string? Level { get; set; }

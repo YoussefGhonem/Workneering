@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Workneering.User.Application.Commands.Freelancer.Language.CreateLanguage
+namespace Workneering.User.Application.Commands.Freelancer.Language.UpdateLanguage
 {
-    public class CreateLanguageCommandValidator : AbstractValidator<UpdateLanguageCommand>
+    public class UpdateLanguageCommandValidator : AbstractValidator<UpdateLanguageCommand>
     {
 
-        public CreateLanguageCommandValidator()
+        public UpdateLanguageCommandValidator()
         {
 
             RuleFor(r => r.Name)

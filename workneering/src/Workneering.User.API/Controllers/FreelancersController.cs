@@ -449,10 +449,10 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EducationDetailsDto>))]
-        public async Task<ActionResult<List<EducationDetailsDto>>> GetFreelancerEducationDetailsQuery()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EducationListDto>))]
+        public async Task<ActionResult<List<EducationListDto>>> GetFreelancerEducationDetailsQuery()
         {
-            var query = new GetFreelancerEducationDetailsQuery();
+            var query = new GetEducationsQuery();
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         //[Authorize]

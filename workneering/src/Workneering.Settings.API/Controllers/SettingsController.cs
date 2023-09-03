@@ -22,10 +22,6 @@ namespace Workneering.Settings.API.Controllers
 
         #region Queries
 
-
-
-
-
         /// <summary>
         /// Get settings
         /// </summary>
