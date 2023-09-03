@@ -2,7 +2,7 @@
 {
     public class Location
     {
-        public string CountryName { get; set; }
-        public string City { get; set; }
+        public string? CountryName { get; set; }
+        public string? City { get; set; }
     }
 }
