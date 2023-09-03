@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
-namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails
+namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
 {
-    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetFreelancerBasicDetailsQuery, FreelancerBasicDetailsDto>
+    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetCompanyBasicDetailsQuery, CompanyBasicDetailsDto>
     {
         private readonly UserDatabaseContext _userDatabaseContext;
         private readonly IDbQueryService _dbQueryService;
@@ -18,18 +18,17 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
             _userDatabaseContext = userDatabaseContext;
             _dbQueryService = dbQueryService;
         }
-        public async Task<FreelancerBasicDetailsDto> Handle(GetFreelancerBasicDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<CompanyBasicDetailsDto> Handle(GetCompanyBasicDetailsQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new FreelancerBasicDetailsDto();
+            if (_userDatabaseContext.Companies.Any(x => x.Id != CurrentUser.Id)) return new CompanyBasicDetailsDto();
 
-            var query = _userDatabaseContext.Freelancers.FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Companies
+                .FirstOrDefault(x => x.Id == CurrentUser.Id);
 
             var userservice = await _dbQueryService.GetUserBasicInfo(CurrentUser.Id.Value, cancellationToken);
             var countruservice = await _dbQueryService.GetCountryInfo(userservice.CountryId, cancellationToken);
 
-            var result = query?.Adapt<FreelancerBasicDetailsDto>();
-            result.NumberOfCertification = query?.Certifications.Count();
-            result.NumberOfLanguages = query?.Languages.Count();
+            var result = query?.Adapt<CompanyBasicDetailsDto>();
             result.Location.Id = countruservice.Id;
             result.Location.Name = countruservice?.Name;
             result.Location.Language = countruservice?.Language;

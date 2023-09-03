@@ -1,4 +1,4 @@
-﻿namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerEducationDetails
+﻿namespace Workneering.User.Application.Queries.Freelancer.GetEducations
 {
     public class EducationListDto
     {

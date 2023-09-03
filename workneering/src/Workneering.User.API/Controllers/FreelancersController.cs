@@ -36,11 +36,11 @@ using Workneering.User.Application.Commands.Freelancer.Testimonial.CreateTestimo
 using Workneering.User.Application.Commands.Freelancer.Testimonial.DeleteTestimonial;
 using Workneering.User.Application.Commands.Freelancer.Testimonial.UpdateTestimonial;
 using Workneering.User.Application.Queries.Freelancer.GetCertifications;
+using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetExperiences;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategories;
-using Workneering.User.Application.Queries.Freelancer.GetFreelancerEducationDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerSkills;
 using Workneering.User.Application.Queries.Freelancer.GetLanguages;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios;
@@ -50,7 +50,7 @@ namespace Workneering.User.API.Controllers
 {
     [ApiVersion("1.0")]
     [Authorize]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/freelancers")]
     public class FreelancersController : BaseController
     {
         public FreelancersController(ISender mediator) : base(mediator)
