@@ -52,6 +52,7 @@ namespace Workneering.Identity.Infrastructure.Persistence
                 .Build();
 
             await userManager.CreateAsync(newUser, password);
+
         }
     }
 }

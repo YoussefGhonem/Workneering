@@ -22,23 +22,6 @@ public class UpdateProfileCommandValidator : AbstractValidator<UpdateProfileComm
             .NotNull()
             .NotEmpty()
             .MustAsync(BeExitUser);
-
-
-        RuleFor(c => c.CurrentPassword)
-            .Cascade(CascadeMode.Stop)
-            .NotNull()
-            .NotEmpty()
-            .Must(BeCorrectPassword).WithMessage("Old password is incorrect.");
-
-        RuleFor(c => c.NewPassword)
-            .SetValidator(new PasswordValidator())
-            .Must(BeDifferentPassword).WithMessage("The new password shouldn't be equal to the old one.");
-
-        RuleFor(c => c.ConfirmPassword)
-            .Cascade(CascadeMode.Stop)
-            .NotNull()
-            .NotEmpty()
-            .Must(IsMatch).WithMessage("Your confirm password doesn't match the new password.");
     }
 
     private async Task<bool> BeExitUser(Guid id, CancellationToken cancellationToken)
@@ -46,18 +29,5 @@ public class UpdateProfileCommandValidator : AbstractValidator<UpdateProfileComm
         _user = await _userManager.FindByIdAsync(id.ToString());
         return _user is not null;
     }
-    private bool BeCorrectPassword(string currentPassword)
-    {
-        if (_user is null) return false;
-        return _passwordHasher.VerifyHashedPassword(_user, _user.PasswordHash, currentPassword) ==
-               PasswordVerificationResult.Success;
-    }
-    private bool BeDifferentPassword(string newPassword)
-    {
-        return !(_passwordHasher.VerifyHashedPassword(_user!, _user!.PasswordHash, newPassword) == PasswordVerificationResult.Success);
-    }
-    private bool IsMatch(UpdateProfileCommand command, string confirmPassword)
-    {
-        return confirmPassword == command.NewPassword;
-    }
+
 }

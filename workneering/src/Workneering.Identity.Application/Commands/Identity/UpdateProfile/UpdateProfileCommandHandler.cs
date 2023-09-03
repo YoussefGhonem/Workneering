@@ -26,8 +26,8 @@ public class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand,
         var user = await _identityDatabase.Users.FirstAsync(b => b.Id == CurrentUser.Id, cancellationToken);
 
         user.SetName(request.FirstName + request.LastName);
-        var command = new ChangePasswordCommand(user.Id, request.CurrentPassword, request.NewPassword, request.ConfirmPassword);
-        await _mediator.Send(command, cancellationToken);
+        //var command = new ChangePasswordCommand(user.Id, request.CurrentPassword, request.NewPassword, request.ConfirmPassword);
+        //await _mediator.Send(command, cancellationToken);
 
         await _identityDatabase.SaveChangesAsync(cancellationToken);
 
