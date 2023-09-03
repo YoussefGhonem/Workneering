@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Workneering.Settings.Domain;
+using Workneering.Settings.Domain.Entities;
 
 namespace Workneering.Settings.Infrastructure.Configurations;
 

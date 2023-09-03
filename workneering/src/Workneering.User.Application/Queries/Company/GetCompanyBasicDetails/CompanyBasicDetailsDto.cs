@@ -28,8 +28,15 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
 
         public CompanySizeEnum? CompanySize { get; set; }
 
-        public ReviewersStars? ReviewersStars { get; set; }
         public LocationInfo? Location { get; set; }
+        public SpecialtyDto? Specialty { get; set; }
+
+
+    }
+    public class SpecialtyDto
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
 
     }
     public class LocationInfo

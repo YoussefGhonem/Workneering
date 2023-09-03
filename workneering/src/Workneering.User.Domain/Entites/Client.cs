@@ -13,7 +13,7 @@ namespace Workneering.User.Domain.Entites
         private int? _numOfReviews; // 100 clients for example
         private decimal? _reviews; // 4.3 of 5 stars
         private ReviewersStars? _reviewersStars;
-        private Specialty _specialty = new(); //  spcialized Company // lookup
+        private Guid _specialty; //  spcialized Company // lookup
         private GenderEnum? _gender;
 
         public Client(Guid id)
@@ -46,15 +46,11 @@ namespace Workneering.User.Domain.Entites
 
         public ReviewersStars? ReviewersStars { get => _reviewersStars; set => _reviewersStars = value; }
 
-        public Specialty Specialty => _specialty;
 
         #endregion
 
         #region Public Methods
-        public void UpdateCompanyCategory(Specialty field)
-        {
-            _specialty = field;
-        }
+
         #region Basic Details
 
         public void UpdateReviews(decimal field)
@@ -66,6 +62,10 @@ namespace Workneering.User.Domain.Entites
         public void UpdateReviewersStars(ReviewersStars field)
         {
             _reviewersStars = field;
+        }
+        public void UpdateGender(GenderEnum field)
+        {
+            _gender = field;
         }
 
         public void UpdateTitle(string field)

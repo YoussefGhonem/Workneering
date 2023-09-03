@@ -1,6 +1,6 @@
 ﻿using Workneering.Base.Domain.Common;
 
-namespace Workneering.Settings.Domain
+namespace Workneering.Settings.Domain.Entities
 {
     public record Country : BaseEntity
     {

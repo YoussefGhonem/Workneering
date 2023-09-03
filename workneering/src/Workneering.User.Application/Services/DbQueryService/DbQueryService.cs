@@ -50,4 +50,21 @@ public class DbQueryService : IDbQueryService
         return data;
     }
 
+    public async Task<string?> UpdateOnAddressUser(Guid userId, UserAddressDetailsDto userAddressDetails, CancellationToken cancellationToken)
+    {
+        await using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync(cancellationToken);
+        string sql = "UPDATE Products SET Price = @NewPrice WHERE ProductId = @ProductId";
+
+        var data = con.Execute(
+                @$"
+                UPDATE IdentitySchema.Users SET
+                CountryId = {userAddressDetails.CountryId}, 
+                City = {userAddressDetails.City}, 
+                ZipCode = {userAddressDetails.ZipCode}, 
+                Address = {userAddressDetails.Address} 
+                WHERE Id = '{userId.ToString()}'");
+
+        return string.Empty;
+    }
 }

@@ -1,6 +1,5 @@
-using Workneering.Settings.Domain;
 using System.Linq.Dynamic.Core;
-
+using Workneering.Settings.Domain.Entities;
 
 namespace Workneering.Settings.Application.Queries.GetCountries;
 

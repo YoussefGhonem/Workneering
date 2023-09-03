@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
+using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyBasicDetails;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyDescription;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhoAreWe;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateOverviewDescription;
@@ -26,6 +27,15 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> UpdateCompanyDescriptionCommand(UpdateCompanyDescriptionCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/basic-details")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateCompanyBasicDetailsCommand(UpdateCompanyBasicDetailsCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }

@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using Workneering.Settings.Infrastructure.Models;
+﻿using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 using Workneering.Base.Helpers.Extensions;
-using Microsoft.AspNetCore.Hosting;
-using Workneering.Settings.Domain;
+using Workneering.Settings.Domain.Entities;
+using Workneering.Settings.Infrastructure.Models;
 
 namespace Workneering.Settings.Infrastructure.Persistence;
 

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Workneering.Base.Infrastructure.Persistence;
-using Workneering.Settings.Domain;
+using Workneering.Settings.Domain.Entities;
 
 namespace Workneering.Settings.Infrastructure.Persistence;
 

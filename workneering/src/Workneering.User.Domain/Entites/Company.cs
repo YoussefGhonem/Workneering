@@ -7,8 +7,8 @@ namespace Workneering.User.Domain.Entites
     public record Company : BaseEntity
     {
         private string _name;
-        private string _overviewDescription;
-        private string _websiteLink;
+        private string? _overviewDescription;
+        private string? _websiteLink;
         private string? _titleOverview;
         private string? _title;
         private string? _vatId;
@@ -19,7 +19,8 @@ namespace Workneering.User.Domain.Entites
         private DateTimeOffset? _foundedIn;
         private CompanySizeEnum? _companySize;
         private ReviewersStars? _reviewersStars;
-        private Specialty _specialty = new(); //  spcialized Company //lookup
+        private Guid? _specialtyId;
+
         public Company(Guid id)
         {
             Id = id;
@@ -31,22 +32,16 @@ namespace Workneering.User.Domain.Entites
 
         #region Public fields
         public string Name { get => _name; set => _name = value; }
-        public string VatId { get => _vatId; set => _vatId = value; }
-
-        public string Description { get => _overviewDescription; set => _overviewDescription = value; }
-
-        public string WebsiteLink { get => _websiteLink; set => _websiteLink = value; }
-
+        public string? VatId { get => _vatId; set => _vatId = value; }
+        public string? Description { get => _overviewDescription; set => _overviewDescription = value; }
+        public string? WebsiteLink { get => _websiteLink; set => _websiteLink = value; }
         public string? TitleOverview { get => _titleOverview; set => _titleOverview = value; }
-
         public string? WhoAreWe { get => _whoAreWe; set => _whoAreWe = value; }
-
         public string? WhatDoWeDo { get => _whatDoWeDo; set => _whatDoWeDo = value; }
         public string? Title { get => _title; set => _title = value; }
-
         public int? NumOfReviews { get => _numOfReviews; set => _numOfReviews = value; }
-
         public decimal? Reviews { get => _reviews; private set => _reviews = value; }
+        public Guid? SpecialtyId { get => _specialtyId; private set => _specialtyId = value; }
 
         public DateTimeOffset? FoundedIn { get => _foundedIn; set => _foundedIn = value; }
 
@@ -54,19 +49,29 @@ namespace Workneering.User.Domain.Entites
 
         public ReviewersStars? ReviewersStars { get => _reviewersStars; set => _reviewersStars = value; }
 
-        public Specialty Specialty => _specialty;
-
         #endregion
 
         #region Public Methods
-        public void UpdateCompanyCategory(Specialty field)
+        public void UpdateSpecialtyId(Guid? field)
         {
-            _specialty = field;
+            _specialtyId = field;
         }
         #region Basic Details
         public void UpdateWhoAreWe(string field)
         {
             _whoAreWe = field;
+        }
+        public void UpdateVatId(string field)
+        {
+            _vatId = field;
+        }
+        public void UpdateName(string field)
+        {
+            _name = field;
+        }
+        public void UpdateCompanySize(CompanySizeEnum field)
+        {
+            _companySize = field;
         }
 
         public void UpdateFoundedIn(DateTimeOffset field)

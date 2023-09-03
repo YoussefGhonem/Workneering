@@ -23,7 +23,7 @@ namespace Workneering.User.Application.Commands.CreateUser
             }
             else if (request.Role == Shared.Core.Identity.Enums.RolesEnum.Company)
             {
-                var user = new Company(request.Id);
+                var user = new Workneering.User.Domain.Entites.Company(request.Id);
                 await _userDatabaseContext.Companies.AddAsync(user);
             }
             else
