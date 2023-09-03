@@ -8,7 +8,13 @@ namespace Workneering.User.Application.Commands.Freelancer.Language.DeleteLangua
         public DeleteLanguageCommandValidator()
         {
 
+            RuleFor(r => r.Id)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
+
 
         }
+
     }
 }

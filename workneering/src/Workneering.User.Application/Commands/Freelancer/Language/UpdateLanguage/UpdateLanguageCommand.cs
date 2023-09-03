@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using Workneering.User.Domain.Enums;
+using Workneering.Shared.Core.Models;
 
 namespace Workneering.User.Application.Commands.Freelancer.Language.CreateLanguage
 {
     public class CreateLanguageCommand : IRequest<Unit>
     {
-        public string Name { get; set; }
-        public LanguageLevelEnum Level { get; set; }
+        public string? Name { get; set; }
+        public string? Level { get; set; }
     }
 }

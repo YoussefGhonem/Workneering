@@ -7,20 +7,20 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerEducationDetails
 {
-    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetFreelancerEducationDetailsQuery, List<EducationDetailsDto>>
+    public class GetEducationsQueryHandler : IRequestHandler<GetEducationsQuery, List<EducationListDto>>
     {
         private readonly UserDatabaseContext _userDatabaseContext;
 
-        public GetFreelancerEducationDetailsQueryHandler(UserDatabaseContext userDatabaseContext)
+        public GetEducationsQueryHandler(UserDatabaseContext userDatabaseContext)
         {
             _userDatabaseContext = userDatabaseContext;
         }
-        public async Task<List<EducationDetailsDto>> Handle(GetFreelancerEducationDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<List<EducationListDto>> Handle(GetEducationsQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<EducationDetailsDto>();
+            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<EducationListDto>();
 
             var query = _userDatabaseContext.Freelancers.Include(x => x.Educations).FirstOrDefault(x => x.Id == CurrentUser.Id);
-            var result = query!.Educations.Adapt<List<EducationDetailsDto>>();
+            var result = query!.Educations.Adapt<List<EducationListDto>>();
             return result;
         }
     }

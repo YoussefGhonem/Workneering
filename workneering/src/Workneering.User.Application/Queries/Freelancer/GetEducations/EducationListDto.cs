@@ -1,7 +1,8 @@
 ﻿namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerEducationDetails
 {
-    public class EducationDetailsDto
+    public class EducationListDto
     {
+        public Guid Id { get; set; }
         public int? YearAttended { get; set; }
         public int? YearGraduated { get; set; }
         public string? SchoolName { get; set; }

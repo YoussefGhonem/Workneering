@@ -4,21 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Infrastructure.Persistence;
 
-namespace Workneering.User.Application.Commands.Freelancer.Language.DeleteLanguage
+namespace Workneering.User.Application.Commands.Freelancer.Language.UpdateLanguage
 {
-    public class DeleteLanguageHandler : IRequestHandler<DeleteLanguageCommand, Unit>
+    public class UpdateLanguageeHandler : IRequestHandler<UpdateLanguageCommand, Unit>
     {
         private readonly UserDatabaseContext _userDatabaseContext;
 
-        public DeleteLanguageHandler(UserDatabaseContext userDatabaseContext)
+        public UpdateLanguageeHandler(UserDatabaseContext userDatabaseContext)
         {
             _userDatabaseContext = userDatabaseContext;
         }
-        public async Task<Unit> Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateLanguageCommand request, CancellationToken cancellationToken)
         {
             var query = _userDatabaseContext.Freelancers.Include(x => x.Languages).FirstOrDefault(x => x.Id == CurrentUser.Id);
-            query.RemoveLanguage(request.Id);
-            _userDatabaseContext.Freelancers.Attach(query);
+            var result = request.Adapt<Domain.Entites.Language>();
+            query!.AddLanguage(result);
+            _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }

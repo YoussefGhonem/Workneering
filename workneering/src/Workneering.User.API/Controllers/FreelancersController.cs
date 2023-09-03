@@ -34,12 +34,14 @@ using Workneering.User.Application.Commands.Freelancer.Skills.UpdateFreelancerSk
 using Workneering.User.Application.Commands.Freelancer.Testimonial.CreateTestimonial;
 using Workneering.User.Application.Commands.Freelancer.Testimonial.DeleteTestimonial;
 using Workneering.User.Application.Commands.Freelancer.Testimonial.UpdateTestimonial;
+using Workneering.User.Application.Queries.Freelancer.GetCertifications;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetExperiences;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategories;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerEducationDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerSkills;
+using Workneering.User.Application.Queries.Freelancer.GetLanguages;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetPortfolioById;
 
@@ -421,6 +423,26 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
+        [HttpGet("profile/certifications")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CertificationListDto>))]
+        public async Task<ActionResult<List<CertificationListDto>>> GetCertificationsQuery()
+        {
+            var query = new GetCertificationsQuery();
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet("profile/languages")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LanguagesListDto>))]
+        public async Task<ActionResult<List<LanguagesListDto>>> GetLanguagesQuery()
+        {
+            var query = new GetLanguagesQuery();
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
 
         //[Authorize]
         [HttpGet("profile/educations")]
