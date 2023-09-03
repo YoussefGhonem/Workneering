@@ -6,8 +6,8 @@ namespace Workneering.User.Domain.Entites
 {
     public record Client : BaseEntity
     {
-        private string _name;
-        private string _overviewDescription;
+        private string? _name;
+        private string? _overviewDescription;
         private string? _titleOverview;
         private string? _title;
         private int? _numOfReviews; // 100 clients for example
@@ -26,9 +26,9 @@ namespace Workneering.User.Domain.Entites
         }
 
         #region Public fields
-        public string Name { get => _name; set => _name = value; }
+        public string? Name { get => _name; set => _name = value; }
 
-        public string Description { get => _overviewDescription; set => _overviewDescription = value; }
+        public string? Description { get => _overviewDescription; set => _overviewDescription = value; }
         public GenderEnum? Gender { get => _gender; private set => _gender = value; }
         public void UpdateGender(GenderEnum? field)
         {
@@ -68,17 +68,17 @@ namespace Workneering.User.Domain.Entites
             _gender = field;
         }
 
-        public void UpdateTitle(string field)
+        public void UpdateTitle(string? field)
         {
             _titleOverview = field;
         }
 
-        public void UpdateTitleOverview(string field)
+        public void UpdateTitleOverview(string? field)
         {
             _titleOverview = field;
         }
 
-        public void UpdateOverviewDescription(string field)
+        public void UpdateOverviewDescription(string? field)
         {
             _overviewDescription = field;
         }

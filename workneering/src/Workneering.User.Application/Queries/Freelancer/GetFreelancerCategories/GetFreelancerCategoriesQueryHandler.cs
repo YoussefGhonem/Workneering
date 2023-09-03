@@ -16,9 +16,8 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorie
         }
         public async Task<List<FreelancerCategoryDto>> Handle(GetFreelancerCategoriesQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<FreelancerCategoryDto>();
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Categories).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Categories).FirstOrDefault(x => x.Id == request.FreelancerId);
             var result = query!.Categories.Adapt<List<FreelancerCategoryDto>>();
             return result;
         }

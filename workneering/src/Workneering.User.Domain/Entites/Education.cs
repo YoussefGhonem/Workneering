@@ -5,7 +5,7 @@ namespace Workneering.User.Domain.Entites
 {
     public record Education : BaseEntity
     {
-        private string _schoolName;
+        private string? _schoolName;
         private int? _yearAttended;
         private int? _yearGraduated;
         private string? _degree;
@@ -14,7 +14,7 @@ namespace Workneering.User.Domain.Entites
         {
             // Parameterless constructor
         }
-        public Education(string school, int yearAttended, int yearGraduated, string degree, string description)
+        public Education(string? school, int yearAttended, int yearGraduated, string? degree, string? description)
         {
             _schoolName = school;
             _yearAttended = yearAttended;
@@ -28,7 +28,7 @@ namespace Workneering.User.Domain.Entites
         public string? Degree { get => _degree; private set => _degree = value; }
         public string? Description { get => _description; private set => _description = value; }
 
-        public void UpdateSchool(string field)
+        public void UpdateSchool(string? field)
         {
             if (string.IsNullOrWhiteSpace(field)
                 || string.Equals(_schoolName, field, StringComparison.CurrentCultureIgnoreCase)) return;
@@ -43,11 +43,11 @@ namespace Workneering.User.Domain.Entites
         {
             _yearGraduated = field;
         }
-        public void UpdateDegree(string field)
+        public void UpdateDegree(string? field)
         {
             _degree = field;
         }
-        public void UpdateDescription(string field)
+        public void UpdateDescription(string? field)
         {
             _description = field;
         }

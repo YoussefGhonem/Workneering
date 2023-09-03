@@ -421,7 +421,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FreelancerBasicDetailsDto))]
         public async Task<ActionResult<FreelancerBasicDetailsDto>> GetFreelancerBasicDetailsQuery()
         {
-            var query = new GetFreelancerBasicDetailsQuery();
+            var query = new GetFreelancerBasicDetailsQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
@@ -432,7 +432,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CertificationListDto>))]
         public async Task<ActionResult<List<CertificationListDto>>> GetCertificationsQuery()
         {
-            var query = new GetCertificationsQuery();
+            var query = new GetCertificationsQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         [HttpGet("profile/languages")]
@@ -442,7 +442,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LanguagesListDto>))]
         public async Task<ActionResult<List<LanguagesListDto>>> GetLanguagesQuery()
         {
-            var query = new GetLanguagesQuery();
+            var query = new GetLanguagesQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
@@ -454,7 +454,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EducationListDto>))]
         public async Task<ActionResult<List<EducationListDto>>> GetFreelancerEducationDetailsQuery()
         {
-            var query = new GetEducationsQuery();
+            var query = new GetEducationsQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         //[Authorize]
@@ -465,7 +465,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerPortfolioDto>))]
         public async Task<ActionResult<List<FreelancerPortfolioDto>>> GetFreelancerPortfoliosQuery()
         {
-            var query = new GetFreelancerPortfoliosQuery();
+            var query = new GetFreelancerPortfoliosQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
@@ -476,7 +476,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PortfolioDetailsDto))]
         public async Task<ActionResult<PortfolioDetailsDto>> GetPortfolioById(Guid id)
         {
-            var query = new GetPortfolioByIdQuery() { Id = id };
+            var query = new GetPortfolioByIdQuery() { Id = id, FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         //[Authorize]
@@ -487,7 +487,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerSkillDto>))]
         public async Task<ActionResult<List<FreelancerSkillDto>>> GetFreelancerSkillsQuery()
         {
-            var query = new GetFreelancerSkillsQuery();
+            var query = new GetFreelancerSkillsQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         //[Authorize]
@@ -498,7 +498,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EmploymentHistoryDto>))]
         public async Task<ActionResult<List<EmploymentHistoryDto>>> GetEmploymentHistoryQuery()
         {
-            var query = new GetEmploymentHistoryQuery();
+            var query = new GetEmploymentHistoryQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         [HttpGet("profile/experiences")]
@@ -508,7 +508,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerExperienceDto>))]
         public async Task<ActionResult<List<FreelancerExperienceDto>>> GetExperiencesQuery()
         {
-            var query = new GetExperiencesQuery();
+            var query = new GetExperiencesQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         //[Authorize]
@@ -519,7 +519,120 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerCategoryDto>))]
         public async Task<ActionResult<List<FreelancerCategoryDto>>> GetFreelancerCategoriesQuery()
         {
-            var query = new GetFreelancerCategoriesQuery();
+            var query = new GetFreelancerCategoriesQuery() { FreelancerId = CurrentUser.Id.Value };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        #endregion
+
+        #region Queries profile by Id
+        //[Authorize]
+        [HttpGet("{id}/profile/basic-details")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FreelancerBasicDetailsDto))]
+        public async Task<ActionResult<FreelancerBasicDetailsDto>> GetFreelancerBasicDetailsQuery(Guid id)
+        {
+            var query = new GetFreelancerBasicDetailsQuery() { FreelancerId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        [HttpGet("{id}/profile/certifications")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CertificationListDto>))]
+        public async Task<ActionResult<List<CertificationListDto>>> GetCertificationsQuery(Guid id)
+        {
+            var query = new GetCertificationsQuery() { FreelancerId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet("{id}/profile/languages")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LanguagesListDto>))]
+        public async Task<ActionResult<List<LanguagesListDto>>> GetLanguagesQuery(Guid id)
+        {
+            var query = new GetLanguagesQuery() { FreelancerId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        //[Authorize]
+        [HttpGet("{id}/profile/educations")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EducationListDto>))]
+        public async Task<ActionResult<List<EducationListDto>>> GetFreelancerEducationDetailsQuery(Guid id)
+        {
+            var query = new GetEducationsQuery() { FreelancerId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        //[Authorize]
+        [HttpGet("{id}/profile/portfolios")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerPortfolioDto>))]
+        public async Task<ActionResult<List<FreelancerPortfolioDto>>> GetFreelancerPortfoliosQuery(Guid id)
+        {
+            var query = new GetFreelancerPortfoliosQuery() { FreelancerId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        [HttpGet("{userId}/profile/portfolios/{id}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PortfolioDetailsDto))]
+        public async Task<ActionResult<PortfolioDetailsDto>> GetPortfolioById(Guid id, Guid userId)
+        {
+            var query = new GetPortfolioByIdQuery() { Id = id, FreelancerId = userId };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        //[Authorize]
+        [HttpGet("{id}/profile/skills")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerSkillDto>))]
+        public async Task<ActionResult<List<FreelancerSkillDto>>> GetFreelancerSkillsQuery(Guid id)
+        {
+            var query = new GetFreelancerSkillsQuery() { FreelancerId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        //[Authorize]
+        [HttpGet("{id}/profile/employment-history")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EmploymentHistoryDto>))]
+        public async Task<ActionResult<List<EmploymentHistoryDto>>> GetEmploymentHistoryQuery(Guid id)
+        {
+            var query = new GetEmploymentHistoryQuery() { FreelancerId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet("{id}/profile/experiences")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerExperienceDto>))]
+        public async Task<ActionResult<List<FreelancerExperienceDto>>> GetExperiencesQuery(Guid id)
+        {
+            var query = new GetExperiencesQuery() { FreelancerId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        //[Authorize]
+        [HttpGet("{id}/profile/categories")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerCategoryDto>))]
+        public async Task<ActionResult<List<FreelancerCategoryDto>>> GetFreelancerCategoriesQuery(Guid id)
+        {
+            var query = new GetFreelancerCategoriesQuery() { FreelancerId = id };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 

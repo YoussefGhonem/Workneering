@@ -20,9 +20,8 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
         }
         public async Task<FreelancerBasicDetailsDto> Handle(GetFreelancerBasicDetailsQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new FreelancerBasicDetailsDto();
 
-            var query = _userDatabaseContext.Freelancers.FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers.FirstOrDefault(x => x.Id == request.FreelancerId);
 
             var userservice = await _dbQueryService.GetUserBasicInfo(CurrentUser.Id.Value, cancellationToken);
             var countruservice = await _dbQueryService.GetCountryInfo(userservice.CountryId, cancellationToken);

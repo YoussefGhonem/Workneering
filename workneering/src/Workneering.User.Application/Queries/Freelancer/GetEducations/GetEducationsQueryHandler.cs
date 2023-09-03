@@ -16,9 +16,8 @@ namespace Workneering.User.Application.Queries.Freelancer.GetEducations
         }
         public async Task<List<EducationListDto>> Handle(GetEducationsQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<EducationListDto>();
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Educations).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Educations).FirstOrDefault(x => x.Id == request.FreelancerId);
             var result = query!.Educations.Adapt<List<EducationListDto>>();
             return result;
         }

@@ -6,7 +6,7 @@ namespace Workneering.User.Domain.Entites
 {
     public record Company : BaseEntity
     {
-        private string _name;
+        private string? _name;
         private string? _overviewDescription;
         private string? _websiteLink;
         private string? _titleOverview;
@@ -21,9 +21,10 @@ namespace Workneering.User.Domain.Entites
         private ReviewersStars? _reviewersStars;
         private Guid? _specialtyId;
 
-        public Company(Guid id)
+        public Company(Guid id, string? name)
         {
             Id = id;
+            _name = name;
         }
         public Company()
         {
@@ -31,7 +32,7 @@ namespace Workneering.User.Domain.Entites
         }
 
         #region Public fields
-        public string Name { get => _name; set => _name = value; }
+        public string? Name { get => _name; set => _name = value; }
         public string? VatId { get => _vatId; set => _vatId = value; }
         public string? Description { get => _overviewDescription; set => _overviewDescription = value; }
         public string? WebsiteLink { get => _websiteLink; set => _websiteLink = value; }
@@ -57,57 +58,57 @@ namespace Workneering.User.Domain.Entites
             _specialtyId = field;
         }
         #region Basic Details
-        public void UpdateWhoAreWe(string field)
+        public void UpdateWhoAreWe(string? field)
         {
             _whoAreWe = field;
         }
-        public void UpdateVatId(string field)
+        public void UpdateVatId(string? field)
         {
             _vatId = field;
         }
-        public void UpdateName(string field)
+        public void UpdateName(string? field)
         {
             _name = field;
         }
-        public void UpdateCompanySize(CompanySizeEnum field)
+        public void UpdateCompanySize(CompanySizeEnum? field)
         {
             _companySize = field;
         }
 
-        public void UpdateFoundedIn(DateTimeOffset field)
+        public void UpdateFoundedIn(DateTimeOffset? field)
         {
             _foundedIn = field;
         }
-        public void UpdateWhatDoWeDo(string field)
+        public void UpdateWhatDoWeDo(string? field)
         {
             _whatDoWeDo = field;
         }
-        public void UpdateReviews(decimal field)
+        public void UpdateReviews(decimal? field)
         {
             _numOfReviews++;
             var summ = _reviews + field;
             _reviews = summ / _numOfReviews;
         }
-        public void UpdateReviewersStars(ReviewersStars field)
+        public void UpdateReviewersStars(ReviewersStars? field)
         {
             _reviewersStars = field;
         }
 
-        public void UpdateTitle(string field)
+        public void UpdateTitle(string? field)
         {
             _titleOverview = field;
         }
 
-        public void UpdateWebsiteLink(string field)
+        public void UpdateWebsiteLink(string? field)
         {
             _websiteLink = field;
         }
-        public void UpdateTitleOverview(string field)
+        public void UpdateTitleOverview(string? field)
         {
             _titleOverview = field;
         }
 
-        public void UpdateOverviewDescription(string field)
+        public void UpdateOverviewDescription(string? field)
         {
             _overviewDescription = field;
         }

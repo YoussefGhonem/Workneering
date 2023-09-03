@@ -16,9 +16,8 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerSkills
         }
         public async Task<List<FreelancerSkillDto>> Handle(GetFreelancerSkillsQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<FreelancerSkillDto>();
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.FreelancerSkills).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.FreelancerSkills).FirstOrDefault(x => x.Id == request.FreelancerId);
             var result = query!.FreelancerSkills.Adapt<List<FreelancerSkillDto>>();
             return result;
         }

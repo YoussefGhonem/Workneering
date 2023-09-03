@@ -16,9 +16,8 @@ namespace Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory
         }
         public async Task<List<EmploymentHistoryDto>> Handle(GetEmploymentHistoryQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<EmploymentHistoryDto>();
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.EmploymentHistory).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.EmploymentHistory).FirstOrDefault(x => x.Id == request.FreelancerId);
             var result = query!.EmploymentHistory.Adapt<List<EmploymentHistoryDto>>();
             return result;
         }

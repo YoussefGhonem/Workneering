@@ -16,11 +16,12 @@ namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetPortfolio
         }
         public async Task<PortfolioDetailsDto> Handle(GetPortfolioByIdQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new PortfolioDetailsDto();
 
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
-                .ThenInclude(x => x.PortfolioFiles).Include(x => x.Portfolios).ThenInclude(x => x.PortfolioSkills)
-                .FirstOrDefault(x => x.Id == request.Id);
+                .ThenInclude(x => x.PortfolioFiles)
+                .Include(x => x.Portfolios)
+                .ThenInclude(x => x.PortfolioSkills)
+                .FirstOrDefault(x => x.Id == request.FreelancerId);
 
             var portfolio = query.Portfolios.FirstOrDefault(x => x.Id == request.Id);
 

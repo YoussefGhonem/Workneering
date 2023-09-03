@@ -4,5 +4,6 @@ namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelance
 {
     public class GetFreelancerPortfoliosQuery : IRequest<List<FreelancerPortfolioDto>>
     {
+        public Guid? FreelancerId { get; set; }
     }
 }

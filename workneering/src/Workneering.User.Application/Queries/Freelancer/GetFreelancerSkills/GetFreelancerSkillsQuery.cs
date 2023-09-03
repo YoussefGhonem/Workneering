@@ -4,5 +4,6 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerSkills
 {
     public class GetFreelancerSkillsQuery : IRequest<List<FreelancerSkillDto>>
     {
+        public Guid? FreelancerId { get; set; }
     }
 }

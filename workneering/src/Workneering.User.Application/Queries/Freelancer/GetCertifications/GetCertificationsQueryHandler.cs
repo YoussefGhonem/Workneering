@@ -16,9 +16,8 @@ namespace Workneering.User.Application.Queries.Freelancer.GetCertifications
         }
         public async Task<List<CertificationListDto>> Handle(GetCertificationsQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<CertificationListDto>();
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Certifications).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Certifications).FirstOrDefault(x => x.Id == request.FreelancerId);
             var result = query!.Certifications.Adapt<List<CertificationListDto>>();
             return result;
         }

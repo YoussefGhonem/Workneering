@@ -10,7 +10,7 @@ namespace Workneering.User.Domain.Entites
         {
 
         }
-        public Experience(string name, string description)
+        public Experience(string? name, string description)
         {
             _subject = name;
             _description = description;
@@ -19,11 +19,11 @@ namespace Workneering.User.Domain.Entites
         public string Subject { get => _subject; private set => _subject = value; }
         public string Description { get => _description; private set => _description = value; }
 
-        public void UpdateSubject(string field)
+        public void UpdateSubject(string? field)
         {
             _subject = field;
         }
-        public void UpdateDescription(string field)
+        public void UpdateDescription(string? field)
         {
             _description = field;
         }

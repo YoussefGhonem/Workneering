@@ -69,7 +69,7 @@ namespace Workneering.User.Domain.Entites
 
         #region public methods
         #region Basic Details
-        public void UpdateReviews(decimal field)
+        public void UpdateReviews(decimal? field)
         {
             _numOfReviews++;
             var summ = _reviews + field;
@@ -79,15 +79,15 @@ namespace Workneering.User.Domain.Entites
         {
             _isMarked = field;
         }
-        public void UpdateYearsOfExperience(decimal field)
+        public void UpdateYearsOfExperience(decimal? field)
         {
             _yearsOfExperience = field;
         }
-        public void UpdateTitle(string field)
+        public void UpdateTitle(string? field)
         {
             _title = field;
         }
-        public void UpdateTitleOverview(string field)
+        public void UpdateTitleOverview(string? field)
         {
             _titleOverview = field;
         }
@@ -95,7 +95,7 @@ namespace Workneering.User.Domain.Entites
         {
             _gender = field;
         }
-        public void UpdateHourlyRate(decimal field)
+        public void UpdateHourlyRate(decimal? field)
         {
             _hourlyRate = field;
         }
@@ -103,7 +103,7 @@ namespace Workneering.User.Domain.Entites
         {
             _availability = availability;
         }
-        public void UpdateOverviewDescription(string field)
+        public void UpdateOverviewDescription(string? field)
         {
             _overviewDescription = field;
         }
@@ -111,11 +111,11 @@ namespace Workneering.User.Domain.Entites
         {
             _videoIntroduction = videoIntroduction;
         }
-        public void UpdateVisibility(VisibilityEnum field)
+        public void UpdateVisibility(VisibilityEnum? field)
         {
             _visibility = field;
         }
-        public void UpdateExperienceLevel(ExperienceLevelEnum field)
+        public void UpdateExperienceLevel(ExperienceLevelEnum? field)
         {
             _experienceLevel = field;
         }

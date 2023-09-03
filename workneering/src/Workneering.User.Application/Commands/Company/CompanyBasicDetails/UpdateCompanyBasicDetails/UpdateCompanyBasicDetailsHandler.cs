@@ -20,16 +20,15 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
         }
         public async Task<Unit> Handle(UpdateCompanyBasicDetailsCommand request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Companies.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
             var query = await _userDatabaseContext.Companies.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
 
             query!.UpdateWebsiteLink(request.WebsiteLink);
-            query!.UpdateCompanySize(request.CompanySize.Value);
-            query!.UpdateFoundedIn(request.FoundedIn.Value);
+            query!.UpdateCompanySize(request.CompanySize);
+            query!.UpdateFoundedIn(request.FoundedIn);
             query!.UpdateName(request.Name);
             query!.UpdateTitle(request.Title);
             query!.UpdateTitleOverview(request.TitleOverview);
-            query!.UpdateSpecialtyId(request.SpecialtyId.Value);
+            query!.UpdateSpecialtyId(request.SpecialtyId);
             query!.UpdateVatId(request.VatId);
 
             var mapping = request.Location.Adapt<UserAddressDetailsDto>();

@@ -35,17 +35,17 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
     }
     public class SpecialtyDto
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        public Guid? Id { get; set; }
+        public string? Name { get; set; }
 
     }
     public class LocationInfo
     {
-        public Guid Id { get; set; } // country Id
-        public string Name { get; set; }
+        public Guid? Id { get; set; } // country Id
+        public string? Name { get; set; }
         public string Flag { get; set; }
-        public string Language { get; set; }
-        public string City { get; set; }
-        public string ZipCode { get; set; }
+        public string? Language { get; set; }
+        public string? City { get; set; }
+        public string? ZipCode { get; set; }
     }
 }

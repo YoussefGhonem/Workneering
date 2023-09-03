@@ -16,9 +16,8 @@ namespace Workneering.User.Application.Queries.Freelancer.GetExperiences
         }
         public async Task<List<FreelancerExperienceDto>> Handle(GetExperiencesQuery request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return new List<FreelancerExperienceDto>();
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Experiences).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Experiences).FirstOrDefault(x => x.Id == request.FreelancerId);
             var result = query!.Experiences.Adapt<List<FreelancerExperienceDto>>();
             return result;
         }

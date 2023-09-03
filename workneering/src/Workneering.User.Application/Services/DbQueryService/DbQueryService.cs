@@ -23,10 +23,11 @@ public class DbQueryService : IDbQueryService
         var userBasicInfo = await con
             .QueryFirstOrDefaultAsync<UserBasicInfo>(
                 @$"SELECT 
-                    [Id],
-                    [Address_CountryId],
-                    [City],
-                    [CountryId],
+                       [Id],
+                       [CountryId]
+                      ,[City]
+                      ,[ZipCode]
+                      ,[Address] 
                 FROM IdentitySchema.Users 
                 WHERE Id = '{userId.ToString()}'");
 
@@ -49,21 +50,19 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
-
     public async Task<string?> UpdateOnAddressUser(Guid userId, UserAddressDetailsDto userAddressDetails, CancellationToken cancellationToken)
     {
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
-        string sql = "UPDATE Products SET Price = @NewPrice WHERE ProductId = @ProductId";
-
-        var data = con.Execute(
-                @$"
+        var sql = @$"
                 UPDATE IdentitySchema.Users SET
                 CountryId = {userAddressDetails.CountryId}, 
                 City = {userAddressDetails.City}, 
                 ZipCode = {userAddressDetails.ZipCode}, 
                 Address = {userAddressDetails.Address} 
-                WHERE Id = '{userId.ToString()}'");
+                WHERE Id = '{userId.ToString()}'";
+
+        var data = con.Execute(sql);
 
         return string.Empty;
     }

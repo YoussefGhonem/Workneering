@@ -16,7 +16,7 @@ namespace Workneering.User.Domain.Entites
         {
 
         }
-        public EmploymentHistory(string companyName, string title, Location location, DateTimeOffset startDate, DateTimeOffset endDate, bool currentlyWork, string? description)
+        public EmploymentHistory(string? companyName, string title, Location location, DateTimeOffset startDate, DateTimeOffset endDate, bool currentlyWork, string? description)
         {
             _companyName = companyName;
             _title = title;
@@ -38,15 +38,15 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region public methods
-        public void UpdateDescription(string field)
+        public void UpdateDescription(string? field)
         {
             _description = field;
         }
-        public void UpdateCompanyName(string field)
+        public void UpdateCompanyName(string? field)
         {
             _companyName = field;
         }
-        public void UpdateTitle(string field)
+        public void UpdateTitle(string? field)
         {
             _title = field;
         }

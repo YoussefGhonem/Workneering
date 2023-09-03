@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
+using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyBasicDetails;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyDescription;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhoAreWe;
@@ -58,7 +59,18 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CompanyBasicDetailsDto))]
         public async Task<ActionResult<CompanyBasicDetailsDto>> GetCompanyBasicDetailsQuery()
         {
-            var query = new GetCompanyBasicDetailsQuery();
+            var query = new GetCompanyBasicDetailsQuery() { CompanyId = CurrentUser.Id.Value };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        [HttpGet("{id}/profile/basic-details")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CompanyBasicDetailsDto))]
+        public async Task<ActionResult<CompanyBasicDetailsDto>> GetCompanyBasicDetailsQuery(Guid id)
+        {
+            var query = new GetCompanyBasicDetailsQuery() { CompanyId = id };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         #endregion
