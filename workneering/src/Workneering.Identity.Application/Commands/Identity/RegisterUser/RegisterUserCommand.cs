@@ -8,18 +8,17 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
         public RolesEnum Role { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Guid? CountryId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public RegisterUserCommand(string email, string password, RolesEnum role, string firstName, string lastName, Guid? countryId)
+        public RegisterUserCommand(string email, string password, RolesEnum role,
+            string firstName, string lastName)
         {
             Email = email;
             Password = password;
             Role = role;
             FirstName = firstName;
             LastName = lastName;
-            CountryId = countryId;
         }
     }
 }

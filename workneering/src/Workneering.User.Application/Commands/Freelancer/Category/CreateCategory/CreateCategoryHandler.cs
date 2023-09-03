@@ -17,7 +17,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Category.CreateCatego
         public async Task<Unit> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
             var query = _userDatabaseContext.Freelancers.Include(x => x.Categories).FirstOrDefault(x => x.Id == CurrentUser.Id);
-            var result = request.Adapt<Domain.Entites.Category>();
+            var result = request.Adapt<Domain.Entites.FreelancerCategory>();
             query!.AddCategory(result);
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);

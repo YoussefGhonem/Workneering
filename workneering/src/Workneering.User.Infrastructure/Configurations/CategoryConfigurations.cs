@@ -4,9 +4,9 @@ using Workneering.User.Domain.Entites;
 
 namespace Workneering.User.Infrastructure.Configurations;
 
-public class CategoryConfigurations : IEntityTypeConfiguration<Category>
+public class CategoryConfigurations : IEntityTypeConfiguration<FreelancerCategory>
 {
-    public void Configure(EntityTypeBuilder<Category> builder)
+    public void Configure(EntityTypeBuilder<FreelancerCategory> builder)
     {
         builder.ToTable("Categories", "User");
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Workneering.Identity.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,10 +40,12 @@ namespace Workneering.Identity.Infrastructure.Migrations
                     Image_FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image_FileSize = table.Column<long>(type: "bigint", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: true),
-                    CountryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),

@@ -25,7 +25,7 @@ namespace Workneering.User.Domain.Entites
         private readonly List<Portfolio> _portfolios = new();
         private readonly List<EmploymentHistory> _employmentHistory = new();
         private readonly List<Experience> _experiences = new();
-        private readonly List<Category> _categories = new();
+        private readonly List<FreelancerCategory> _categories = new();
         private readonly List<FreelancerSkill> _freelancerSkills = new();
         private readonly List<Language> _languages = new();
         private readonly List<Certification> _certifications = new();
@@ -62,7 +62,7 @@ namespace Workneering.User.Domain.Entites
         public List<Certification> Certifications => _certifications;
         public List<Language> Languages => _languages;
         public List<EmploymentHistory> EmploymentHistory => _employmentHistory;
-        public List<Category> Categories => _categories;
+        public List<FreelancerCategory> Categories => _categories;
         public List<Testimonial> Testimonials => _testimonials;
 
         #endregion
@@ -172,11 +172,11 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region Category
-        public void AddCategory(List<Category> data)
+        public void AddCategory(List<FreelancerCategory> data)
         {
             _categories.AddRange(data);
         }
-        public void AddCategory(Category data)
+        public void AddCategory(FreelancerCategory data)
         {
             _categories.Add(data);
         }
@@ -185,7 +185,7 @@ namespace Workneering.User.Domain.Entites
             var data = _categories.FirstOrDefault(x => x.Id == id);
             data.MarkAsDeleted(id);
         }
-        public void UpdateCategory(Guid id, Category obj)
+        public void UpdateCategory(Guid id, FreelancerCategory obj)
         {
             var data = _categories.FirstOrDefault(x => x.Id == id);
             if (data is null) return;

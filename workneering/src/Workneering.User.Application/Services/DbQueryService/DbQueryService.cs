@@ -24,19 +24,21 @@ public class DbQueryService : IDbQueryService
             .QueryFirstOrDefaultAsync<UserBasicInfo>(
                 @$"SELECT 
                     [Id],
-                    [CountryId]
+                    [Address_CountryId],
+                    [City],
+                    [CountryId],
                 FROM IdentitySchema.Users 
                 WHERE Id = '{userId.ToString()}'");
 
         return userBasicInfo;
     }
-    public async Task<CountryInfo?> GetCountryInfo(Guid id, CancellationToken cancellationToken)
+    public async Task<UserAddressDto?> GetCountryInfo(Guid id, CancellationToken cancellationToken)
     {
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
 
         var data = await con
-            .QueryFirstOrDefaultAsync<CountryInfo>(
+            .QueryFirstOrDefaultAsync<UserAddressDto>(
                 @$"SELECT 
                      [Id],
                      [Name],

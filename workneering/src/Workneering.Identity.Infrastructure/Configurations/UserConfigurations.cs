@@ -21,6 +21,13 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
             .IsRequired();
 
         builder.OwnsOne(i => i.Image);
+        builder.OwnsOne(i => i.Address, address =>
+        {
+            address.Property(a => a.City).HasColumnName("City");
+            address.Property(a => a.CountryId).HasColumnName("CountryId");
+            address.Property(a => a.ZipCode).HasColumnName("ZipCode");
+            address.Property(a => a.Address).HasColumnName("Address");
+        });
 
     }
 }

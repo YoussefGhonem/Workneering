@@ -23,12 +23,10 @@ public class CreateUserFactory
 
     public CreateUserFactory(
         string name,
-        string email,
-        Guid? countryName)
+        string email)
     {
         _name = name;
         _email = email;
-        _countryId = countryName;
     }
 
     public CreateUserFactory WithImage(FileDto? imageDetails)
@@ -71,8 +69,8 @@ public class CreateUserFactory
         // User Aggregate
         var user = new User(
             _name,
-        _email,
-         _countryId);
+        _email
+     );
 
         // Roles
         foreach (var userRole in _newUserRoles)

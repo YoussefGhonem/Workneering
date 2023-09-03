@@ -26,7 +26,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
             var rolesFromDb = await _identityDbContext.Roles.ToListAsync(cancellationToken);
             var name = request.FirstName + " " + request.LastName;
 
-            var userBuilder = new CreateUserFactory(name, request.Email, request.CountryId)
+            var userBuilder = new CreateUserFactory(name, request.Email)
                 .WithRoles(rolesFromDb, request.Role);
 
             var user = userBuilder.Build();

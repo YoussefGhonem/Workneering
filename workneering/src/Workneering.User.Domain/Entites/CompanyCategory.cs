@@ -2,16 +2,16 @@
 
 namespace Workneering.User.Domain.Entites
 {
-    public record Category : BaseEntity
+    public record Specialty : BaseEntity
     {
         private string _name;
         private string _description;
 
-        public Category()
+        public Specialty()
         {
 
         }
-        public Category(string name)
+        public Specialty(string name)
         {
             _name = name;
         }

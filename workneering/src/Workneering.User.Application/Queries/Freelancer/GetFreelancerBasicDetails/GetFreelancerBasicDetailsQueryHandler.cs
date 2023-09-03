@@ -37,6 +37,8 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
             result.Location.Name = countruservice?.Name;
             result.Location.Language = countruservice?.Language;
             result.Location.Flag = countruservice?.Flag;
+            result.Location.City = countruservice?.City;
+            result.Location.ZipCode = countruservice?.ZipCode;
 
             return result;
         }

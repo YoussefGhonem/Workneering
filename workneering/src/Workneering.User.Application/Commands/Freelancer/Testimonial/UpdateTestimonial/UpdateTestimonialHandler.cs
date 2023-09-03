@@ -19,7 +19,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Testimonial.UpdateTes
         public async Task<Unit> Handle(UpdateTestimonialCommand request, CancellationToken cancellationToken)
         {
             var query = _userDatabaseContext.Freelancers.Include(x => x.Categories).FirstOrDefault(x => x.Id == CurrentUser.Id);
-            var result = request.Adapt<Domain.Entites.Category>();
+            var result = request.Adapt<Domain.Entites.FreelancerCategory>();
             query.UpdateCategory(request.Id, result);
             _userDatabaseContext.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);

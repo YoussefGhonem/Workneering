@@ -47,7 +47,7 @@ namespace Workneering.Identity.Infrastructure.Persistence
 
             var rolesFromDb = databaseContext.Roles.ToList();
 
-            var newUser = new CreateUserFactory(name, email, null)
+            var newUser = new CreateUserFactory(name, email)
                 .WithRoles(rolesFromDb, RolesEnum.SuperAdmin)
                 .Build();
 

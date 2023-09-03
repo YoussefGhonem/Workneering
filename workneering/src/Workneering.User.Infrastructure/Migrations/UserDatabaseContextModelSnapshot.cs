@@ -22,52 +22,6 @@ namespace Workneering.User.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Workneering.User.Domain.Entites.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("CreatedDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset?>("DeletedDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("FreelancerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("LastModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset?>("LastModifiedDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FreelancerId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Categories", "User");
-                });
-
             modelBuilder.Entity("Workneering.User.Domain.Entites.Certification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -135,6 +89,13 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("DeletedDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -144,17 +105,36 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LastModifiedDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NumOfReviews")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Reviews")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TitleOverview")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", "User");
                 });
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Company", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("CompanySize")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -168,6 +148,13 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("DeletedDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("FoundedIn")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -177,11 +164,41 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LastModifiedDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NumOfReviews")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Reviews")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TitleOverview")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VatId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WebsiteLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WhatDoWeDo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WhoAreWe")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", "User");
                 });
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Education", b =>
@@ -408,6 +425,52 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Freelancers", "User");
+                });
+
+            modelBuilder.Entity("Workneering.User.Domain.Entites.FreelancerCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("DeletedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("FreelancerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("LastModifiedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FreelancerId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Categories", "User");
                 });
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.FreelancerSkill", b =>
@@ -731,18 +794,87 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.ToTable("Testimonial");
                 });
 
-            modelBuilder.Entity("Workneering.User.Domain.Entites.Category", b =>
-                {
-                    b.HasOne("Workneering.User.Domain.Entites.Freelancer", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("FreelancerId");
-                });
-
             modelBuilder.Entity("Workneering.User.Domain.Entites.Certification", b =>
                 {
                     b.HasOne("Workneering.User.Domain.Entites.Freelancer", null)
                         .WithMany("Certifications")
                         .HasForeignKey("FreelancerId");
+                });
+
+            modelBuilder.Entity("Workneering.User.Domain.Entites.Client", b =>
+                {
+                    b.OwnsOne("Workneering.User.Domain.valueobjects.ReviewersStars", "ReviewersStars", b1 =>
+                        {
+                            b1.Property<Guid>("ClientId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("NumberOfReviewersFiveStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersFiveStars");
+
+                            b1.Property<int>("NumberOfReviewersFourStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersFourStars");
+
+                            b1.Property<int>("NumberOfReviewersOneStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersOneStars");
+
+                            b1.Property<int>("NumberOfReviewersThreeStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersThreeStars");
+
+                            b1.Property<int>("NumberOfReviewersTowStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersTowStars");
+
+                            b1.HasKey("ClientId");
+
+                            b1.ToTable("Clients", "User");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ClientId");
+                        });
+
+                    b.Navigation("ReviewersStars");
+                });
+
+            modelBuilder.Entity("Workneering.User.Domain.Entites.Company", b =>
+                {
+                    b.OwnsOne("Workneering.User.Domain.valueobjects.ReviewersStars", "ReviewersStars", b1 =>
+                        {
+                            b1.Property<Guid>("CompanyId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("NumberOfReviewersFiveStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersFiveStars");
+
+                            b1.Property<int>("NumberOfReviewersFourStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersFourStars");
+
+                            b1.Property<int>("NumberOfReviewersOneStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersOneStars");
+
+                            b1.Property<int>("NumberOfReviewersThreeStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersThreeStars");
+
+                            b1.Property<int>("NumberOfReviewersTowStars")
+                                .HasColumnType("int")
+                                .HasColumnName("NumberOfReviewersTowStars");
+
+                            b1.HasKey("CompanyId");
+
+                            b1.ToTable("Companies", "User");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CompanyId");
+                        });
+
+                    b.Navigation("ReviewersStars");
                 });
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Education", b =>
@@ -836,6 +968,13 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Navigation("Availability");
 
                     b.Navigation("VideoIntroduction");
+                });
+
+            modelBuilder.Entity("Workneering.User.Domain.Entites.FreelancerCategory", b =>
+                {
+                    b.HasOne("Workneering.User.Domain.Entites.Freelancer", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("FreelancerId");
                 });
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.FreelancerSkill", b =>

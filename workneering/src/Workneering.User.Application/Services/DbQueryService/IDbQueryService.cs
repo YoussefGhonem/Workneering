@@ -6,5 +6,5 @@ namespace Workneering.User.Application.Services.DbQueryService;
 public interface IDbQueryService
 {
     public Task<UserBasicInfo?> GetUserBasicInfo(Guid userId, CancellationToken cancellationToken);
-    public Task<CountryInfo?> GetCountryInfo(Guid userId, CancellationToken cancellationToken);
+    public Task<UserAddressDto?> GetCountryInfo(Guid userId, CancellationToken cancellationToken);
 }

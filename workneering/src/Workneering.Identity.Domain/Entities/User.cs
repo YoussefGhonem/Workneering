@@ -1,8 +1,10 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Identity;
 using Workneering.Base.Domain.Interfaces;
+using Workneering.Base.Domain.ValueObjects;
 using Workneering.Base.Helpers.Models;
 using Workneering.Identity.Domain.Entities.Claims;
+using Workneering.Identity.Domain.Entities.ValueObjects;
 using Workneering.Shared.Core.Enums;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
@@ -13,9 +15,9 @@ namespace Workneering.Identity.Domain.Entities
         #region Backing Fields 
         private UserStatusEnum? _status;
         private string? _name;
-        private Guid? _countryId;
         private string? _phoneNumber;
         private FileDto? _Image;
+        private UserAddress? _address;
         // Audit
         private DateTimeOffset _createdDate;
         private Guid? _createdBy;
@@ -28,10 +30,9 @@ namespace Workneering.Identity.Domain.Entities
         private readonly HashSet<UserToken> _tokens = new();
 
         #endregion
-        public User(string name, string email, Guid? countryId = null)
+        public User(string name, string email)
         {
             _name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
-            _countryId = countryId;
             Email = Guard.Against.NullOrWhiteSpace(email, nameof(email));
             UserName = Email;
 
@@ -50,15 +51,16 @@ namespace Workneering.Identity.Domain.Entities
             get => _status;
             private set => _status = value;
         }
-        public Guid? CountryId
-        {
-            get => _countryId;
-            private set => _countryId = value;
-        }
+
         public string Name
         {
             get => _name;
             private set => _name = value;
+        }
+        public UserAddress Address
+        {
+            get => _address;
+            private set => _address = value;
         }
         public string? PhoneNumber
         {
@@ -106,6 +108,10 @@ namespace Workneering.Identity.Domain.Entities
             _createdDate = DateTimeOffset.UtcNow;
             _createdBy = userId;
         }
+        public void UpdateAddress(UserAddress? field)
+        {
+            _address = field;
+        }
 
         public void MarkAsModified(Guid? userId)
         {
@@ -131,11 +137,6 @@ namespace Workneering.Identity.Domain.Entities
                 string.Equals(_name, firstName, StringComparison.CurrentCultureIgnoreCase)) return;
             _name = Guard.Against.NullOrWhiteSpace(firstName, nameof(firstName));
         }
-        public void SetCountryId(Guid? field)
-        {
-            _countryId = field;
-        }
-
 
         public void MarkAsNotDeleted()
         {

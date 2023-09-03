@@ -125,9 +125,6 @@ namespace Workneering.Identity.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("CountryId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -343,6 +340,41 @@ namespace Workneering.Identity.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
                         });
+
+                    b.OwnsOne("Workneering.Identity.Domain.Entities.ValueObjects.UserAddress", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Address");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("City");
+
+                            b1.Property<Guid>("CountryId")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("CountryId");
+
+                            b1.Property<string>("ZipCode")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("ZipCode");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users", "IdentitySchema");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
 
                     b.Navigation("Image");
                 });
