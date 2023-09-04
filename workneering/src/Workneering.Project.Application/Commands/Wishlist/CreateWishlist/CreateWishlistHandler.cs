@@ -18,6 +18,7 @@ namespace Workneering.Project.Application.Commands.Wishlist.CreateWishlist
             var query = _context.Projects
                 .Include(x => x.Wishlist)
                 .FirstOrDefault(x => x.Id == request.ProjectId);
+            if (query.Wishlist.Any(x => x.FreelancerId == CurrentUser.Id)) return Unit.Value;
 
             query.AddIntoWishlist(CurrentUser.Id);
             _context.Projects.Attach(query);

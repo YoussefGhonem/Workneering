@@ -19,7 +19,7 @@ namespace Workneering.Project.Application.Commands.CreateProposal
                 .Include(x => x.Proposals)
                 .FirstOrDefault(x => x.Id == request.ProjectId);
 
-            query.AddProposal(CurrentUser.Id, request.CoverLetter, request.ProposalDuration, request.TotalBid);
+            query.AddProposal(CurrentUser.Id, request.CoverLetter, request.ProposalDuration, request.TotalBid, request.HourlyRate);
             _context.Projects.Attach(query);
             _context?.SaveChangesAsync(cancellationToken);
             return Unit.Value;

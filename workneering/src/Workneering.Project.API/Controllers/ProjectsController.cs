@@ -14,9 +14,9 @@ namespace Workneering.Project.API.Controllers
     [ApiVersion("1.0")]
     [Authorize]
     [Route("api/v{version:apiVersion}/projects")]
-    public class ProjectsConroller : BaseController
+    public class ProjectsController : BaseController
     {
-        public ProjectsConroller(ISender mediator) : base(mediator)
+        public ProjectsController(ISender mediator) : base(mediator)
         {
         }
 

@@ -85,7 +85,7 @@ namespace Workneering.Project.Domain.Entities
         {
             _activities.Add(new ProjectActivity(@$"You Make DueDate  '{field}'"));
 
-            _projectTitle = field;
+            _dueDate = field;
         }
         public void UpdateProjectBudgetPrice(decimal? field)
         {
@@ -152,9 +152,10 @@ namespace Workneering.Project.Domain.Entities
         #endregion
 
         #region Proposal
-        public void AddProposal(Guid? freelancerId, string? coverLetter, ProposalDurationEnum? proposalDuratio, decimal? totalBid = null)
+        public void AddProposal(Guid? freelancerId, string? coverLetter, ProposalDurationEnum? proposalDuratio,
+            decimal? totalBid, decimal? hourlyRate)
         {
-            _proposals.Add(new Proposal(freelancerId, coverLetter, proposalDuratio, totalBid));
+            _proposals.Add(new Proposal(freelancerId, coverLetter, proposalDuratio, totalBid, hourlyRate));
         }
         #endregion
         #endregion

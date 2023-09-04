@@ -9,6 +9,10 @@ namespace Workneering.Project.Domain.Entities
         {
             _freelancerId = freelancerId;
         }
+        public Wishlist()
+        {
+
+        }
         public Guid? FreelancerId { get => _freelancerId; private set => _freelancerId = value; }
     }
 }

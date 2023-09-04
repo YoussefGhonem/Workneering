@@ -10,12 +10,13 @@ namespace Workneering.Project.Application.Commands.UpdateProject
     {
         [JsonIgnore]
         public Guid Id { get; set; }
+        [JsonIgnore]
+        public Guid? ClientId { get; set; }
         public string? ProjectTitle { get; set; }
         public string? ProjectDescription { get; set; }
         public bool? IsOpenDueDate { get; set; }
         public string? DueDate { get; set; }
         public decimal? ProjectBudgetPrice { get; set; }
-        public Guid? ClientId { get; set; }
         public ProjectStatusEnum? ProjectStatus { get; set; }
         public ExperienceLevelEnum? ExperienceLevel { get; set; }
         public ProjectBudgetEnum? ProjectBudget { get; set; }

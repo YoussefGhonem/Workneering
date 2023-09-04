@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Identity.Infrastructure.Persistence;
+using Workneering.Project.Infrastructure.Persistence;
 using Workneering.Settings.Infrastructure.Persistence;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -20,6 +21,9 @@ public static class DatabaseExtension
 
         var SettingsDbContext = scope.ServiceProvider.GetRequiredService<SettingsDbContext>();
         await SettingsDbContext.Database.MigrateAsync();
+
+        var ProjectsDbContext = scope.ServiceProvider.GetRequiredService<ProjectsDbContext>();
+        await ProjectsDbContext.Database.MigrateAsync();
     }
 
     public static async Task SeedDatabase(this IServiceScope scope)

@@ -12,7 +12,10 @@ namespace Workneering.Project.Domain.Entities
             _description = description;
             Title = title;
         }
+        public ProjectActivity()
+        {
 
+        }
         public string Title { get => _title; private set => _title = value; }
         public string? Description { get => _description; private set => _description = value; }
 
