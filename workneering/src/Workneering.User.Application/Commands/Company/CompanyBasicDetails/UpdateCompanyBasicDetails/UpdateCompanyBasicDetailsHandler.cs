@@ -20,7 +20,8 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
         }
         public async Task<Unit> Handle(UpdateCompanyBasicDetailsCommand request, CancellationToken cancellationToken)
         {
-            var query = await _userDatabaseContext.Companies.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
+            var query = await _userDatabaseContext.Companies.Include(x => x.Categories)
+                                 .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
 
             query!.UpdateWebsiteLink(request.WebsiteLink);
             query!.UpdateCompanySize(request.CompanySize);
@@ -29,9 +30,10 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
             query!.UpdateTitleOverview(request.TitleOverview);
             query!.UpdateCategory(request.CategoryId);
 
-            var mapping = request.Location.Adapt<UserAddressDetailsDto>();
-            mapping.CountryId = request.Location.Id;
-            _dbQueryService!.UpdateOnAddressUser(CurrentUser.Id.Value, mapping, cancellationToken);
+            var mapping = request.Location?.Adapt<UserAddressDetailsDto>();
+            mapping.CountryId = request.Location?.Id;
+
+            await _dbQueryService!.UpdateOnAddressUser(CurrentUser.Id.Value, mapping, cancellationToken);
 
             _userDatabaseContext.Companies.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);

@@ -20,7 +20,7 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         }
         public async Task<Unit> Handle(UpdateClientBasicDetailsCommand request, CancellationToken cancellationToken)
         {
-            var query = await _userDatabaseContext.Clients.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
+            var query = await _userDatabaseContext.Clients.Include(x => x.Categories).FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
 
             query!.UpdateTitle(request.Title);
             query!.UpdateTitleOverview(request.TitleOverview);
