@@ -32,6 +32,7 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
             query!.UpdateVatId(request.VatId);
 
             var mapping = request.Location.Adapt<UserAddressDetailsDto>();
+            mapping.CountryId = request.Location.Id;
             _dbQueryService!.UpdateOnAddressUser(CurrentUser.Id.Value, mapping, cancellationToken);
 
             _userDatabaseContext.Companies.Attach(query);

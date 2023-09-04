@@ -8,16 +8,10 @@ namespace Workneering.User.Application.Commands.Freelancer.Category.CreateCatego
         public CreateCategoryCommandValidator()
         {
 
-            RuleFor(r => r.Name)
+            RuleFor(r => r.CategoryId)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
-
-            RuleFor(r => r.Description)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty();
-
         }
 
     }

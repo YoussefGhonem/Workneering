@@ -54,12 +54,16 @@ public class DbQueryService : IDbQueryService
     {
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
+        var countryId = userAddressDetails.CountryId == null ? null : @$"'{userAddressDetails.CountryId}'";
+        var City = userAddressDetails.City == null ? null : @$"'{userAddressDetails.City}'";
+        var ZipCode = userAddressDetails.ZipCode == null ? null : @$"'{userAddressDetails.ZipCode}'";
+        var Address = userAddressDetails.Address == null ? null : @$"'{userAddressDetails.Address}'";
         var sql = @$"
                 UPDATE IdentitySchema.Users SET
-                CountryId = {userAddressDetails.CountryId}, 
-                City = {userAddressDetails.City}, 
-                ZipCode = {userAddressDetails.ZipCode}, 
-                Address = {userAddressDetails.Address} 
+                CountryId = {countryId}, 
+                City = {City}, 
+                ZipCode = {ZipCode}, 
+                Address = {Address}
                 WHERE Id = '{userId.ToString()}'";
 
         var data = con.Execute(sql);

@@ -14,7 +14,6 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
         public CompanySizeEnum? CompanySize { get; set; }
         public Guid? SpecialtyId { get; set; }
         public LocationInfo? Location { get; set; }
-
     }
 
     public class LocationInfo

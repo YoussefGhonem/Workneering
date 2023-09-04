@@ -30,6 +30,7 @@ namespace Workneering.User.Domain.Entites
         private readonly List<Language> _languages = new();
         private readonly List<Certification> _certifications = new();
         private readonly List<Testimonial> _testimonials = new();
+
         public Freelancer()
         {
 
@@ -62,7 +63,8 @@ namespace Workneering.User.Domain.Entites
         public List<Certification> Certifications => _certifications;
         public List<Language> Languages => _languages;
         public List<EmploymentHistory> EmploymentHistory => _employmentHistory;
-        public List<FreelancerCategory> Categories => _categories;
+        public List<FreelancerCategory>? Categories => _categories;
+
         public List<Testimonial> Testimonials => _testimonials;
 
         #endregion
@@ -188,12 +190,11 @@ namespace Workneering.User.Domain.Entites
             var data = _categories.FirstOrDefault(x => x.Id == id);
             data.MarkAsDeleted(id);
         }
-        public void UpdateCategory(Guid id, FreelancerCategory obj)
+        public void UpdateCategory(Guid? id)
         {
-            var data = _categories.FirstOrDefault(x => x.Id == id);
-            if (data is null) return;
-            data.UpdateDescription(obj.Description);
-            data.UpdateName(obj.Name);
+            var data = _categories.FirstOrDefault();
+            data.UpdateCategoryId(id);
+
         }
         #endregion
 

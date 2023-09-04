@@ -20,6 +20,7 @@ namespace Workneering.User.Domain.Entites
         private CompanySizeEnum? _companySize;
         private ReviewersStars? _reviewersStars;
         private Guid? _specialtyId;
+        private List<CompanyCategory>? _categories = new();
 
         public Company(Guid id, string? name)
         {
@@ -49,10 +50,18 @@ namespace Workneering.User.Domain.Entites
         public CompanySizeEnum? CompanySize { get => _companySize; set => _companySize = value; }
 
         public ReviewersStars? ReviewersStars { get => _reviewersStars; set => _reviewersStars = value; }
+        public List<CompanyCategory>? Categories => _categories;
+
 
         #endregion
 
         #region Public Methods
+
+        public void UpdateCategory(CompanyCategory field)
+        {
+            if (field is not null)
+                _categories.Add(field);
+        }
         public void UpdateSpecialtyId(Guid? field)
         {
             _specialtyId = field;
@@ -113,6 +122,28 @@ namespace Workneering.User.Domain.Entites
             _overviewDescription = field;
         }
 
+        #endregion
+
+        #region Category
+        public void AddCategory(List<CompanyCategory> data)
+        {
+            _categories.AddRange(data);
+        }
+        public void AddCategory(CompanyCategory data)
+        {
+            _categories.Add(data);
+        }
+        public void RemoveCategory(Guid id)
+        {
+            var data = _categories.FirstOrDefault(x => x.Id == id);
+            data.MarkAsDeleted(id);
+        }
+        public void UpdateCategory(Guid categoryId)
+        {
+            var data = _categories.FirstOrDefault();
+            if (data is null) return;
+            data.UpdateCategoryId(categoryId);
+        }
         #endregion
         #endregion
 

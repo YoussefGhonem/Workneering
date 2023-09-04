@@ -10,6 +10,7 @@ namespace Workneering.User.Domain.Entites
         private string? _awardAreaOfStudy;
         private string? _givenBy;
         private string? _description;
+        private string? _licence;
         // here we will add attachments
         public Certification(string? subject, int startDate, int endDate = 0, string? awardAreaOfStudy = null, string? givenBy = null)
         {
@@ -25,6 +26,7 @@ namespace Workneering.User.Domain.Entites
         }
 
         public string? Name { get => _name; private set => _name = value; }
+        public string? Licence { get => _licence; private set => _licence = value; }
         public string? Description { get => _description; private set => _description = value; }
         public int StartYear { get => _startYear; private set => _startYear = value; }
         public int EndYear { get => _endYear; private set => _endYear = value; }
@@ -34,6 +36,10 @@ namespace Workneering.User.Domain.Entites
         public void UpdatName(string? field)
         {
             _name = field;
+        }
+        public void UpdatLicence(string? field)
+        {
+            _licence = field;
         }
         public void UpdateDescription(string? field)
         {

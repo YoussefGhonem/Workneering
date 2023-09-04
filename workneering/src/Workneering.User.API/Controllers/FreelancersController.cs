@@ -32,9 +32,6 @@ using Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortfolio
 using Workneering.User.Application.Commands.Freelancer.Portfolio.DeletePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Skills.UpdateFreelancerSkills;
-using Workneering.User.Application.Commands.Freelancer.Testimonial.CreateTestimonial;
-using Workneering.User.Application.Commands.Freelancer.Testimonial.DeleteTestimonial;
-using Workneering.User.Application.Commands.Freelancer.Testimonial.UpdateTestimonial;
 using Workneering.User.Application.Queries.Freelancer.GetCertifications;
 using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
@@ -199,37 +196,17 @@ namespace Workneering.User.API.Controllers
 
         #region Category
 
-        [HttpPost("profile/categories")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateCategoryCommand(CreateCategoryCommand command)
-        {
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
-
-        [HttpPut("{id}/profile/categories")]
+        [HttpPut("profile/categories/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> UpdateCategoryCommand(UpdateCategoryCommand command, Guid id)
         {
-            command.Id = id;
+            command.CategoryId = id;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/categories")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> DeleteCategoryCommand(DeleteCategoryCommand command, Guid id)
-        {
-            command.Id = id;
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
         #endregion
 
         #region Education
@@ -316,40 +293,7 @@ namespace Workneering.User.API.Controllers
 
         #endregion
 
-        #region Testimonials
 
-        [HttpPost("profile/testimonials")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateTestimonialCommand(CreateTestimonialCommand command)
-        {
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
-
-        [HttpPut("{id}/profile/testimonials")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateTestimonialCommand(UpdateTestimonialCommand command, Guid id)
-        {
-            command.Id = id;
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
-
-        [HttpDelete("{id}/profile/testimonials")] // id : testimonials
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> DeleteTestimonialCommand(DeleteTestimonialCommand command, Guid id)
-        {
-            command.Id = id;
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
-        #endregion
 
         #region Certifications
 
