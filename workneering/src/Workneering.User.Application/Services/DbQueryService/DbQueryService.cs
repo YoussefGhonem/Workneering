@@ -33,13 +33,13 @@ public class DbQueryService : IDbQueryService
 
         return userBasicInfo;
     }
-    public async Task<UserAddressDto?> GetCountryInfo(Guid id, CancellationToken cancellationToken)
+    public async Task<CountryDetailsDto?> GetCountryInfo(Guid id, CancellationToken cancellationToken)
     {
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
 
         var data = await con
-            .QueryFirstOrDefaultAsync<UserAddressDto>(
+            .QueryFirstOrDefaultAsync<CountryDetailsDto>(
                 @$"SELECT 
                      [Id],
                      [Name],
@@ -50,24 +50,36 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
-    public async Task<string?> UpdateOnAddressUser(Guid userId, UserAddressDetailsDto userAddressDetails, CancellationToken cancellationToken)
+    public async Task<string?> UpdateCountryUser(Guid userId, Guid? CountryId, CancellationToken cancellationToken)
     {
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
-        var countryId = userAddressDetails.CountryId == null ? null : @$"'{userAddressDetails.CountryId}'";
-        var City = userAddressDetails.City == null ? null : @$"'{userAddressDetails.City}'";
-        var ZipCode = userAddressDetails.ZipCode == null ? null : @$"'{userAddressDetails.ZipCode}'";
-        var Address = userAddressDetails.Address == null ? null : @$"'{userAddressDetails.Address}'";
+        var countryId = CountryId == null ? null : @$"'{CountryId}'";
         var sql = @$"
                 UPDATE IdentitySchema.Users SET
                 CountryId = {countryId}, 
-                City = {City}, 
-                ZipCode = {ZipCode}, 
-                Address = {Address}
                 WHERE Id = '{userId.ToString()}'";
 
         var data = con.Execute(sql);
 
         return string.Empty;
+    }
+
+    public async Task<UserAddressDetailsDto> GetAddressUser(Guid userId, CancellationToken cancellationToken)
+    {
+        await using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync(cancellationToken);
+
+        var data = await con
+            .QueryFirstOrDefaultAsync<UserAddressDetailsDto>(
+                @$"SELECT 
+                     [Id],
+                     [City],
+                     [Address],
+                     [ZipCode]
+                FROM IdentitySchema.Users 
+                WHERE Id = '{userId.ToString()}'");
+
+        return data;
     }
 }

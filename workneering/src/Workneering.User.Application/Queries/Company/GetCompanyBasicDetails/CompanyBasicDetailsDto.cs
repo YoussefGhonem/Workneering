@@ -27,16 +27,20 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
         public CompanySizeEnum? CompanySize { get; set; }
         public Guid? CategoryId { get; set; }
 
-        public LocationInfo? Location { get; set; }
+        public CountryInfo Location { get; set; } = new();
+        public UserAddressInfo Address { get; set; } = new();
 
     }
-    public class LocationInfo
+    public class CountryInfo
     {
         public Guid? Id { get; set; } // country Id
         public string? Name { get; set; }
-        public string Flag { get; set; }
-        public string? Language { get; set; }
+        public string? Flag { get; set; }
+    }
+    public class UserAddressInfo
+    {
         public string? City { get; set; }
         public string? ZipCode { get; set; }
+        public string? Address { get; set; }
     }
 }

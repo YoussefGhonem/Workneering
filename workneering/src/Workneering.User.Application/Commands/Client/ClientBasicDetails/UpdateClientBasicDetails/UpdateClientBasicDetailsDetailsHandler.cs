@@ -28,9 +28,7 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
             query!.UpdateTitleOverview(request.TitleOverview);
             query!.UpdateGender(request.Gender);
 
-            var mapping = request.Location.Adapt<UserAddressDetailsDto>();
-            mapping.CountryId = request.Location.Id;
-            _dbQueryService!.UpdateOnAddressUser(CurrentUser.Id.Value, mapping, cancellationToken);
+            await _dbQueryService!.UpdateCountryUser(CurrentUser.Id!.Value, request.CountryId, cancellationToken);
 
             _userDatabaseContext.Clients.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);

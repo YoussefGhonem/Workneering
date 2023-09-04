@@ -30,10 +30,7 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
             query!.UpdateTitleOverview(request.TitleOverview);
             query!.UpdateCategory(request.CategoryId);
 
-            var mapping = request.Location?.Adapt<UserAddressDetailsDto>();
-            mapping.CountryId = request.Location?.Id;
-
-            await _dbQueryService!.UpdateOnAddressUser(CurrentUser.Id.Value, mapping, cancellationToken);
+            await _dbQueryService!.UpdateCountryUser(CurrentUser.Id!.Value, request.CountryId, cancellationToken);
 
             _userDatabaseContext.Companies.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);

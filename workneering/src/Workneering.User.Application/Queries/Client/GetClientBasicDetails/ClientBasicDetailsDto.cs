@@ -12,15 +12,19 @@ namespace Workneering.User.Application.Queries.Client.GetClientBasicDetails
         public string? Title { get; set; }
         public int? NumOfReviews { get; set; }
         public decimal? Reviews { get; set; }
-        public LocationInfo? Location { get; set; }
+        public CountryInfo Location { get; set; } = new();
+        public UserAddressInfo Address { get; set; } = new();
     }
-    public class LocationInfo
+    public class CountryInfo
     {
         public Guid? Id { get; set; } // country Id
         public string? Name { get; set; }
         public string Flag { get; set; }
-        public string? Language { get; set; }
+    }
+    public class UserAddressInfo
+    {
         public string? City { get; set; }
         public string? ZipCode { get; set; }
+        public string? Address { get; set; }
     }
 }

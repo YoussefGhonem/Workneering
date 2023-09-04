@@ -7,32 +7,26 @@ namespace Workneering.Settings.Domain.Entities.Refrences
     {
         public Category(string name) : base(name) { }
 
-        private List<Skill> _skills = new();
-        private bool _isMain;
+        private List<SubCategory> _subCategories = new();
 
-        public bool IsMain { get => _isMain; private set => _isMain = value; }
-        public List<Skill> Skills => _skills;
+        public List<SubCategory> SubCategories => _subCategories;
 
-
-        public void UpdateIsMain(bool field)
+        public void UpdateSubCategory(Guid id, SubCategory field)
         {
-            _isMain = field;
-        }
-
-        #region Skills
-        public void UpdateSkills(Guid id, Skill field)
-        {
-            var skill = _skills.FirstOrDefault(x => x.Id == id);
+            var skill = _subCategories.FirstOrDefault(x => x.Id == id);
             skill.UpdateName(field.Name);
             skill.UpdateDescription(field.Description);
         }
-        public void RemoveSkills(Guid id)
+        public void AddSubCategory(SubCategory field)
         {
-            var skill = _skills.FirstOrDefault(x => x.Id == id);
-            skill.MarkAsDeleted(null);
+            _subCategories.Add(field);
         }
-        #endregion
-
+        public void RemoveSubCategory(Guid id)
+        {
+            var skill = _subCategories.FirstOrDefault(x => x.Id == id);
+            if (skill != null)
+                skill.MarkAsDeleted(null);
+        }
 
     }
 }

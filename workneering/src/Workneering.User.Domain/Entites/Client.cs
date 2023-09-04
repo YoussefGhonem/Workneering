@@ -79,7 +79,7 @@ namespace Workneering.User.Domain.Entites
         #region Category
         public void UpdateCategory(Guid? categoryId)
         {
-            _categories.FirstOrDefault().UpdateCategoryId(categoryId.Value);
+            _categories.FirstOrDefault()?.UpdateCategoryId(categoryId.Value);
 
         }
         #endregion

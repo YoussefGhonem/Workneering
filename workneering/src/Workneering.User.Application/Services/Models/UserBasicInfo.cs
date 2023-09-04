@@ -4,6 +4,7 @@
     {
         public Guid CountryId { get; set; }
     }
+
     public class UserAddressDetailsDto
     {
         public Guid? CountryId { get; set; }

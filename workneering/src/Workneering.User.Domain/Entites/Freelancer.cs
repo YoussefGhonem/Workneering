@@ -121,6 +121,7 @@ namespace Workneering.User.Domain.Entites
         {
             _employmentHistory.AddRange(data);
         }
+
         public void AddEmploymentHistory(EmploymentHistory data)
         {
             _employmentHistory.Add(data);

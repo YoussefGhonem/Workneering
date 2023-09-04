@@ -9,17 +9,6 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         public GenderEnum? Gender { get; set; }
         public string? TitleOverview { get; set; }
         public string? Title { get; set; }
-        public int? NumOfReviews { get; set; }
-        public LocationInfo? Location { get; set; }
-
+        public Guid CountryId { get; set; } = new();
     }
-
-    public class LocationInfo
-    {
-        public Guid Id { get; set; } // country Id
-        public string City { get; set; }
-        public string ZipCode { get; set; }
-        public string Address { get; set; }
-    }
-
 }

@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MediatR;
+using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -23,17 +24,20 @@ namespace Workneering.User.Application.Queries.Client.GetClientBasicDetails
             var userservice = await _dbQueryService.GetUserBasicInfo(request.ClientId, cancellationToken);
 
             var result = query?.Adapt<ClientBasicDetailsDto>();
-            result.CategoryId = query.Categories.FirstOrDefault().CategoryId;
+            result.CategoryId = query!.Categories?.FirstOrDefault()?.CategoryId;
+            // Country Info
             if (userservice.CountryId != Guid.Empty && userservice.CountryId != null)
             {
                 var countruservice = await _dbQueryService.GetCountryInfo(userservice.CountryId, cancellationToken);
-                result.Location.Id = countruservice.Id;
+                result.Location.Id = countruservice?.Id;
                 result.Location.Name = countruservice?.Name;
-                result.Location.Language = countruservice?.Language;
                 result.Location.Flag = countruservice?.Flag;
-                result.Location.City = countruservice?.City;
-                result.Location.ZipCode = countruservice?.ZipCode;
             }
+            // Address Info
+            var userAddress = await _dbQueryService.GetAddressUser(request.ClientId, cancellationToken);
+            result.Address.Address = userAddress?.Address;
+            result.Address.City = userAddress?.City;
+            result.Address.ZipCode = userAddress?.ZipCode;
 
             return result;
         }

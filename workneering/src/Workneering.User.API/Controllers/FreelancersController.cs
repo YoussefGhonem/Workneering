@@ -15,6 +15,7 @@ using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateE
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.DeleteEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailability;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateCountry;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateExperienceLevel;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateHourlyRate;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateOverviewDescription;
@@ -57,6 +58,15 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> UpdateExperienceLevelCommand(UpdateExperienceLevelCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/country")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateCountryCommand(UpdateCountryCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }

@@ -6,6 +6,7 @@ using Workneering.Base.API.Controllers;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyBasicDetails;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyDescription;
+using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhatDoWeDo;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhoAreWe;
 using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 
@@ -45,6 +46,16 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> UpdateWhoAreWeCommand(UpdateWhoAreWeCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPut("profile/what-do-we-do")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateWhatDoWeDoCommand(UpdateWhatDoWeDoCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }

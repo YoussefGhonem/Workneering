@@ -8,6 +8,6 @@ internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)
     {
-        builder.ToTable("Categories", "SettingsSchema");
+        builder.ToTable("Categories", "SettingsSchema.Refrences");
     }
 }

@@ -57,7 +57,7 @@ namespace Workneering.User.Domain.Entites
 
         public void UpdateCategory(Guid? categoryId)
         {
-            _categories.FirstOrDefault().UpdateCategoryId(categoryId.Value);
+            _categories.FirstOrDefault()?.UpdateCategoryId(categoryId.Value);
 
         }
         #region Basic Details
@@ -99,7 +99,7 @@ namespace Workneering.User.Domain.Entites
 
         public void UpdateTitle(string? field)
         {
-            _titleOverview = field;
+            _title = field;
         }
 
         public void UpdateWebsiteLink(string? field)

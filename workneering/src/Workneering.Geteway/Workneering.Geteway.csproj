@@ -26,6 +26,7 @@
 		<ProjectReference Include="..\Workneering.Identity.API\Workneering.Identity.API.csproj" />
 		<ProjectReference Include="..\Workneering.Identity.Domain\Workneering.Identity.Domain.csproj" />
 		<ProjectReference Include="..\Workneering.Identity.Infrastructure\Workneering.Identity.Infrastructure.csproj" />
+		<ProjectReference Include="..\Workneering.Project.API\Workneering.Project.API.csproj" />
 		<ProjectReference Include="..\Workneering.Settings.API\Workneering.Settings.API.csproj" />
 		<ProjectReference Include="..\Workneering.User.API\Workneering.User.API.csproj" />
 		<ProjectReference Include="..\Workneering.User.Application\Workneering.User.Application.csproj" />

@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -21,18 +22,23 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
 
             var query = _userDatabaseContext.Freelancers.FirstOrDefault(x => x.Id == request.FreelancerId);
 
-            var userservice = await _dbQueryService.GetUserBasicInfo(CurrentUser.Id.Value, cancellationToken);
-            var countruservice = await _dbQueryService.GetCountryInfo(userservice.CountryId, cancellationToken);
+            var userservice = await _dbQueryService.GetUserBasicInfo(request.FreelancerId, cancellationToken);
 
             var result = query?.Adapt<FreelancerBasicDetailsDto>();
-            result.NumberOfCertification = query?.Certifications.Count();
-            result.NumberOfLanguages = query?.Languages.Count();
-            result.Location.Id = countruservice.Id;
-            result.Location.Name = countruservice?.Name;
-            result.Location.Language = countruservice?.Language;
-            result.Location.Flag = countruservice?.Flag;
-            result.Location.City = countruservice?.City;
-            result.Location.ZipCode = countruservice?.ZipCode;
+            result.CategoryId = query!.Categories?.FirstOrDefault()?.CategoryId;
+            // Country Info
+            if (userservice.CountryId != Guid.Empty && userservice.CountryId != null)
+            {
+                var countruservice = await _dbQueryService.GetCountryInfo(userservice.CountryId, cancellationToken);
+                result.Location.Id = countruservice?.Id;
+                result.Location.Name = countruservice?.Name;
+                result.Location.Flag = countruservice?.Flag;
+            }
+            // Address Info
+            var userAddress = await _dbQueryService.GetAddressUser(request.FreelancerId, cancellationToken);
+            result.Address.Address = userAddress?.Address;
+            result.Address.City = userAddress?.City;
+            result.Address.ZipCode = userAddress?.ZipCode;
 
             return result;
         }

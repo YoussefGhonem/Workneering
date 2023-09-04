@@ -11,15 +11,6 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
         public DateTimeOffset? FoundedIn { get; set; }
         public CompanySizeEnum? CompanySize { get; set; }
         public Guid? CategoryId { get; set; }
-        public LocationInfo? Location { get; set; }
+        public Guid? CountryId { get; set; }
     }
-
-    public class LocationInfo
-    {
-        public Guid Id { get; set; } // country Id
-        public string City { get; set; }
-        public string ZipCode { get; set; }
-        public string Address { get; set; }
-    }
-
 }
