@@ -103,15 +103,15 @@ namespace Workneering.Project.Domain.Entities
 
             _projectStatus = field;
         }
-        public void UpdateExperienceLevel(ExperienceLevelEnum field)
+        public void UpdateExperienceLevel(ExperienceLevelEnum? field)
         {
             _experienceLevel = field;
         }
-        public void UpdateProjectBudget(ProjectBudgetEnum field)
+        public void UpdateProjectBudget(ProjectBudgetEnum? field)
         {
             _projectBudget = field;
         }
-        public void UpdateProjectType(ProjectTypeEnum field)
+        public void UpdateProjectType(ProjectTypeEnum? field)
         {
             _projectType = field;
         }
