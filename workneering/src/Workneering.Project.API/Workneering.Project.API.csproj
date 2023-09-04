@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Workneering.Base.API\Workneering.Base.API.csproj" />
-    <ProjectReference Include="..\Workneering.Base.Helpers\Workneering.Base.Helpers.csproj" />
-    <ProjectReference Include="..\Workneering.Identity.Infrastructure\Workneering.Identity.Infrastructure.csproj" />
-    <ProjectReference Include="..\Workneering.Project.Application\Workneering.Project.Application.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Workneering.Base.API\Workneering.Base.API.csproj" />
+		<ProjectReference Include="..\Workneering.Base.Helpers\Workneering.Base.Helpers.csproj" />
+		<ProjectReference Include="..\Workneering.Project.Application\Workneering.Project.Application.csproj" />
+		<ProjectReference Include="..\Workneering.Project.Infrastructure\Workneering.Project.Infrastructure.csproj" />
+	</ItemGroup>
 
 </Project>

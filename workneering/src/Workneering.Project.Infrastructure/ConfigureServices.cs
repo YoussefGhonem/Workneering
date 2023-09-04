@@ -7,7 +7,7 @@ namespace Workneering.Project.Infrastructure;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddSettingsInfrastructure(this IServiceCollection services,
+    public static IServiceCollection AddProjectsInfrastructure(this IServiceCollection services,
         IConfiguration configuration)
     {
         services.AddScoped<ProjectsDbContext>();

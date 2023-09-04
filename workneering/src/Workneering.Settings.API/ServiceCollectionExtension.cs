@@ -8,7 +8,7 @@ namespace Workneering.Settings.API
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSettingsExtension(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddApplicationSettings();
             services.AddSettingsInfrastructure(configuration);

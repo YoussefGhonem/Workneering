@@ -6,6 +6,7 @@ using Workneering.Identity.API;
 using Workneering.Identity.Application;
 using Workneering.User.API;
 using Workneering.Settings.API;
+using Workneering.Project.API;
 
 namespace Workneering.Geteway.Helpers;
 public static class ConfigureServicesExtention
@@ -57,7 +58,8 @@ public static class ConfigureServicesExtention
 
         services.AddIdentityExtension(builder.Configuration)
                 .AddUserExtension(builder.Configuration)
-                .AddSettings(builder.Configuration);
+                .AddProjectExtension(builder.Configuration)
+                .AddSettingsExtension(builder.Configuration);
         #endregion
 
 

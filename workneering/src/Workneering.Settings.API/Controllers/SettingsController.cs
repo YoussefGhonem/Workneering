@@ -19,14 +19,8 @@ namespace Workneering.Settings.API.Controllers
         {
         }
 
-
-
         #region Queries
 
-        /// <summary>
-        /// Get settings
-        /// </summary>
-        /// <returns>Return info of settings</returns>
         [HttpGet("countries/dropdown")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
