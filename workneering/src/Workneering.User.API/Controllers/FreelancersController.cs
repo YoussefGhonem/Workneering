@@ -14,13 +14,12 @@ using Workneering.User.Application.Commands.Freelancer.Education.UpdateEducation
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.DeleteEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory;
-using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailabilityHoursPerWeek;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailability;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateExperienceLevel;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateHourlyRate;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateOverviewDescription;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateTitle;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVideoIntroduction;
-using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVisibility;
 using Workneering.User.Application.Commands.Freelancer.Language.CreateLanguage;
 using Workneering.User.Application.Commands.Freelancer.Language.DeleteLanguage;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortfolio;
@@ -51,15 +50,7 @@ namespace Workneering.User.API.Controllers
         #region Commands
 
         #region Update Basic Details
-        [HttpPut("profile/availability")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateAvailabilityHoursPerWeekCommand(UpdateAvailabilityHoursPerWeekCommand command)
-        {
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
+
         [HttpPut("profile/experience-level")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -106,12 +97,12 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("profile/visibility")]
+        [HttpPut("profile/availability")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateVisibilityCommand(UpdateVisibilityCommand command)
+        public async Task<ActionResult<Unit>> UpdateAvailabilityCommand(UpdateAvailabilityCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
@@ -119,7 +110,7 @@ namespace Workneering.User.API.Controllers
         #endregion
 
         #region employment-history
-        [HttpPost("{profile/employment-history")]
+        [HttpPost("profile/employment-history")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

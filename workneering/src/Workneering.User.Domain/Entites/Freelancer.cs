@@ -1,4 +1,5 @@
-﻿using Workneering.Base.Domain.Common;
+﻿using System.Linq;
+using Workneering.Base.Domain.Common;
 using Workneering.Base.Helpers.Enums;
 using Workneering.User.Domain.Enums;
 using Workneering.User.Domain.valueobjects;
@@ -18,9 +19,8 @@ namespace Workneering.User.Domain.Entites
         private string? _title;
         private string? _overviewDescription;
         private ExperienceLevelEnum? _experienceLevel;
-        private VisibilityEnum? _visibility;
         private VideoIntroduction? _videoIntroduction = new();
-        private Availability? _availability = new();
+        private int? _availability;
         private readonly List<Education> _educations = new();
         private readonly List<Portfolio> _portfolios = new();
         private readonly List<EmploymentHistory> _employmentHistory = new();
@@ -29,7 +29,6 @@ namespace Workneering.User.Domain.Entites
         private readonly List<FreelancerSkill> _freelancerSkills = new();
         private readonly List<Language> _languages = new();
         private readonly List<Certification> _certifications = new();
-
         public Freelancer()
         {
 
@@ -51,10 +50,9 @@ namespace Workneering.User.Domain.Entites
         public decimal? HourlyRate { get => _hourlyRate; private set => _hourlyRate = value; }
         public string? Title { get => _title; private set => _title = value; }
         public string? OverviewDescription { get => _overviewDescription; private set => _overviewDescription = value; }
-        public VisibilityEnum? Visibility { get => _visibility; private set => _visibility = value; }
         public ExperienceLevelEnum? ExperienceLevel { get => _experienceLevel; private set => _experienceLevel = value; }
         public VideoIntroduction? VideoIntroduction { get => _videoIntroduction; private set => _videoIntroduction = value; }
-        public Availability? Availability { get => _availability; private set => _availability = value; }
+        public int? Availability { get => _availability; private set => _availability = value; }
         public List<Experience> Experiences => _experiences;
         public List<Education> Educations => _educations;
         public List<Portfolio> Portfolios => _portfolios;
@@ -67,6 +65,7 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region public methods
+
         #region Basic Details
         public void UpdateReviews(decimal? field)
         {
@@ -98,7 +97,7 @@ namespace Workneering.User.Domain.Entites
         {
             _hourlyRate = field;
         }
-        public void UpdateAvailability(Availability availability)
+        public void UpdateAvailability(int availability)
         {
             _availability = availability;
         }
@@ -110,10 +109,7 @@ namespace Workneering.User.Domain.Entites
         {
             _videoIntroduction = videoIntroduction;
         }
-        public void UpdateVisibility(VisibilityEnum? field)
-        {
-            _visibility = field;
-        }
+
         public void UpdateExperienceLevel(ExperienceLevelEnum? field)
         {
             _experienceLevel = field;
@@ -175,7 +171,7 @@ namespace Workneering.User.Domain.Entites
         #region Category
         public void UpdateCategory(Guid? categoryId)
         {
-            _categories.FirstOrDefault().UpdateCategoryId(categoryId.Value);
+            _categories.FirstOrDefault()?.UpdateCategoryId(categoryId.Value);
 
         }
         #endregion
@@ -184,15 +180,19 @@ namespace Workneering.User.Domain.Entites
         #region Freelancer Skills
         public void UpdateFreelancerSkills(List<FreelancerSkill>? freelancerSkills)
         {
-            var addNewItems = freelancerSkills?.Where(x => x.Id == null);
-            var removeItems = _freelancerSkills.Select(x => x.Id).Except(freelancerSkills.Select(x => x.Id));
-            var removItemsObj = _freelancerSkills.Where(x => removeItems.Contains(x.Id));
-            var newItemsObj = _freelancerSkills.Where(x => removeItems.Contains(x.Id));
-            _freelancerSkills.AddRange(addNewItems);
+            var addNewItems = freelancerSkills?.Where(x => x.SkillId == null);
+            var removeItems = _freelancerSkills.Select(x => x.SkillId).Except(freelancerSkills.Select(x => x.SkillId));
+            var removItemsObj = _freelancerSkills.Where(x => removeItems.Contains(x.SkillId));
+            var newItemsObj = _freelancerSkills.Where(x => removeItems.Contains(x.SkillId));
+
+            foreach (var item in addNewItems)
+            {
+                _freelancerSkills.Add(new FreelancerSkill(item.Name, null));
+            }
 
             foreach (var item in removItemsObj)
             {
-                var data = _freelancerSkills.FirstOrDefault(x => x.Id == item.Id);
+                var data = _freelancerSkills.FirstOrDefault(x => x.SkillId == item.SkillId);
                 data.MarkAsDeleted(null);
             }
         }

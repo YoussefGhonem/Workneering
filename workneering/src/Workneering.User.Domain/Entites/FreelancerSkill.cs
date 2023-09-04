@@ -1,34 +1,29 @@
 ﻿using Workneering.Base.Domain.Common;
-using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.User.Domain.Entites;
 public record FreelancerSkill : BaseEntity
 {
     private string _name;
-    private string _description;
-    private bool _isSystemAdded;
+    private Guid? _skillId;
 
-    public FreelancerSkill(string name)
+    public FreelancerSkill(string name, Guid? skillId)
     {
         _name = name;
-        _isSystemAdded = CurrentUser.Roles.Contains(Shared.Core.Identity.Enums.RolesEnum.SuperAdmin) ? true : false;
+        _skillId = skillId ?? Id;
     }
     public FreelancerSkill()
     {
-
     }
     public string Name { get => _name; private set => _name = value; }
-    public string Description { get => _description; private set => _description = value; }
-    public bool IsSystemAdded { get => _isSystemAdded; private set => _isSystemAdded = value; }
-
+    public Guid? SkillId { get => _skillId; private set => _skillId = value; }
 
     public void UpdateName(string field)
     {
         _name = field;
     }
-    public void UpdateDescription(string field)
+    public void UpdateSkillId(Guid field)
     {
-        _description = field;
+        _skillId = field;
     }
 
 }

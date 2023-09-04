@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Workneering.Base.Infrastructure.Persistence;
 using Workneering.Settings.Domain.Entities;
+using Workneering.Settings.Domain.Entities.Refrences;
 
 namespace Workneering.Settings.Infrastructure.Persistence;
 
@@ -22,4 +23,7 @@ public class SettingsDbContext : ApplicationDbContext
     }
 
     public DbSet<Country> Countries => Set<Country>();
+    public DbSet<Language> Languages => Set<Language>();
+    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Skill> Skills => Set<Skill>();
 }

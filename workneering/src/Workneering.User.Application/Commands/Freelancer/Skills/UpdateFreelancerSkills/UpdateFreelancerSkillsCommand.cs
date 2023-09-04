@@ -4,13 +4,15 @@ namespace Workneering.User.Application.Commands.Freelancer.Skills.UpdateFreelanc
 {
     public class UpdateFreelancerSkillsCommand : IRequest<Unit>
     {
-        public List<UpdateSkillsDto>? FreelancerSkills { get; set; }
+        public List<UpdateFreelancerSkillsDto>? FreelancerSkills { get; set; }
 
     }
-    public class UpdateSkillsDto
+    public class UpdateFreelancerSkillsDto
     {
-        public Guid Id { get; set; } //Important: need this id from ui to get new skills or delete skills
+        // Importaaaaaaaaaant
+        //Important: need this id from ui to get new skills or delete skills
+        //SkillId: this id get from skills Table (refrences schama) i'm already provide you API for Get All skills
+        public Guid SkillId { get; set; }
         public string? Name { get; set; }
-        public string? Description { get; set; }
     }
 }

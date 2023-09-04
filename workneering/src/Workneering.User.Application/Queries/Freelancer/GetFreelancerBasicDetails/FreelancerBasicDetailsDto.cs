@@ -22,9 +22,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
         public string? ExperienceLevel { get; set; }
         public string? VideoIntroductionLinkYoutube { get; set; }
         public string? VideoIntroductionTypeOfVideo { get; set; }
-        public string? AvailabilityHoursPerWeek { get; set; }
-        public DateTimeOffset? AvailabilityDateForNewWork { get; set; }
-        public bool? AvailabilityContractToHire { get; set; } = false;
+        public int? Availability { get; set; }
     }
     public class LocationInfo
     {

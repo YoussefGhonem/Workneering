@@ -11,6 +11,5 @@ public class FreelancerConfigurations : IEntityTypeConfiguration<Freelancer>
         builder.ToTable("Freelancers", "User");
 
         builder.OwnsOne(z => z.VideoIntroduction);
-        builder.OwnsOne(z => z.Availability);
     }
 }

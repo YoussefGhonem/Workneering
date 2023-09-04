@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Workneering.Base.Helpers.Extensions;
 using Workneering.Settings.Domain.Entities;
@@ -13,6 +14,7 @@ public static class SettingsDbContextSeed
         //seed
         await SeedSettings(context);
         await SeedCountries(context, env);
+        await SeedLanguages(context, env);
 
         // Save changes
         await context.SaveChangesAsync();
@@ -22,6 +24,33 @@ public static class SettingsDbContextSeed
     {
     }
 
+    private static async Task SeedLanguages(SettingsDbContext context, IHostingEnvironment env)
+    {
+        if (!context.Languages.Any())
+        {
+            try
+            {
+
+                using var r = new StreamReader(Path.Combine(env.WebRootPath, "Settings", "Languages.json"));
+                var json = await r.ReadToEndAsync();
+                var items = JsonConvert.DeserializeObject<Dictionary<string, LanguageDto>>(json);
+                //var languages = JsonConvert.DeserializeObject<Dictionary<string, Language>>(json);
+
+                foreach (var language in items)
+                {
+                    context.Languages.Add(new Language(language.Key, language.Value.Name, language.Value.NativeName));
+                }
+
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+    }
     private static async Task SeedCountries(SettingsDbContext context, IHostingEnvironment env)
     {
         if (context.Countries.Any()) return;

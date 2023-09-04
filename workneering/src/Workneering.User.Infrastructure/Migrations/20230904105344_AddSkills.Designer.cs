@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using Workneering.User.Infrastructure.Persistence;
 namespace Workneering.User.Infrastructure.Migrations
 {
     [DbContext(typeof(UserDatabaseContext))]
-    partial class UserDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230904105344_AddSkills")]
+    partial class AddSkills
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -448,9 +450,6 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("Availability")
-                        .HasColumnType("int");
-
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -501,6 +500,9 @@ namespace Workneering.User.Infrastructure.Migrations
 
                     b.Property<string>("TitleOverview")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Visibility")
+                        .HasColumnType("int");
 
                     b.Property<decimal?>("YearsOfExperience")
                         .HasColumnType("decimal(18,2)");
@@ -851,6 +853,28 @@ namespace Workneering.User.Infrastructure.Migrations
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Freelancer", b =>
                 {
+                    b.OwnsOne("Workneering.User.Domain.valueobjects.Availability", "Availability", b1 =>
+                        {
+                            b1.Property<Guid>("FreelancerId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool?>("ContractToHire")
+                                .HasColumnType("bit");
+
+                            b1.Property<DateTimeOffset?>("DateForNewWork")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.Property<int?>("HoursPerWeek")
+                                .HasColumnType("int");
+
+                            b1.HasKey("FreelancerId");
+
+                            b1.ToTable("Freelancers", "User");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FreelancerId");
+                        });
+
                     b.OwnsOne("Workneering.User.Domain.valueobjects.VideoIntroduction", "VideoIntroduction", b1 =>
                         {
                             b1.Property<Guid>("FreelancerId")
@@ -869,6 +893,8 @@ namespace Workneering.User.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("FreelancerId");
                         });
+
+                    b.Navigation("Availability");
 
                     b.Navigation("VideoIntroduction");
                 });
