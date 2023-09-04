@@ -19,7 +19,6 @@ namespace Workneering.User.Domain.Entites
         private DateTimeOffset? _foundedIn;
         private CompanySizeEnum? _companySize;
         private ReviewersStars? _reviewersStars;
-        private Guid? _specialtyId;
         private List<CompanyCategory>? _categories = new();
 
         public Company(Guid id, string? name)
@@ -43,7 +42,6 @@ namespace Workneering.User.Domain.Entites
         public string? Title { get => _title; set => _title = value; }
         public int? NumOfReviews { get => _numOfReviews; set => _numOfReviews = value; }
         public decimal? Reviews { get => _reviews; private set => _reviews = value; }
-        public Guid? SpecialtyId { get => _specialtyId; private set => _specialtyId = value; }
 
         public DateTimeOffset? FoundedIn { get => _foundedIn; set => _foundedIn = value; }
 
@@ -57,14 +55,10 @@ namespace Workneering.User.Domain.Entites
 
         #region Public Methods
 
-        public void UpdateCategory(CompanyCategory field)
+        public void UpdateCategory(Guid? categoryId)
         {
-            if (field is not null)
-                _categories.Add(field);
-        }
-        public void UpdateSpecialtyId(Guid? field)
-        {
-            _specialtyId = field;
+            _categories.FirstOrDefault().UpdateCategoryId(categoryId.Value);
+
         }
         #region Basic Details
         public void UpdateWhoAreWe(string? field)

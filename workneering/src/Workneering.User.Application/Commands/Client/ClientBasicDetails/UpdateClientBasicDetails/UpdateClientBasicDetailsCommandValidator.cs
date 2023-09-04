@@ -1,14 +1,18 @@
 ﻿using FluentValidation;
 
-namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyBasicDetails
+namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientBasicDetails
 {
-    public class UpdateCompanyBasicDetailsCommandValidator : AbstractValidator<UpdateCompanyBasicDetailsCommand>
+    public class UpdateClientBasicDetailsCommandValidator : AbstractValidator<UpdateClientBasicDetailsCommand>
     {
 
-        public UpdateCompanyBasicDetailsCommandValidator()
+        public UpdateClientBasicDetailsCommandValidator()
         {
 
-            RuleFor(r => r.FoundedIn)
+            RuleFor(r => r.CategoryId)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(r => r.Gender)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
@@ -22,13 +26,6 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
-
-            RuleFor(r => r.CompanySize)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty();
-
-
 
         }
 

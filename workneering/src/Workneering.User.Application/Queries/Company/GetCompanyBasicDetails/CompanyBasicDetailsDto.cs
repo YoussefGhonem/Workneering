@@ -1,6 +1,4 @@
-﻿using Workneering.Base.Helpers.Enums;
-using Workneering.User.Domain.Enums;
-using Workneering.User.Domain.valueobjects;
+﻿using Workneering.User.Domain.Enums;
 
 namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
 {
@@ -27,16 +25,9 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
         public DateTimeOffset? FoundedIn { get; set; }
 
         public CompanySizeEnum? CompanySize { get; set; }
+        public Guid? CategoryId { get; set; }
 
         public LocationInfo? Location { get; set; }
-        public SpecialtyDto? Specialty { get; set; }
-
-
-    }
-    public class SpecialtyDto
-    {
-        public Guid? Id { get; set; }
-        public string? Name { get; set; }
 
     }
     public class LocationInfo

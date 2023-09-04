@@ -17,8 +17,8 @@ namespace Workneering.User.Application.Commands.CreateUser
         {
             if (request.Role == Shared.Core.Identity.Enums.RolesEnum.Client)
             {
-                var user = new Client(request.Id);
-                await _userDatabaseContext.Clients.AddAsync(user);
+                var user = new Domain.Entites.Client(request.Id);
+                await _userDatabaseContext.Clients.AddAsync(user, cancellationToken);
 
             }
             else if (request.Role == Shared.Core.Identity.Enums.RolesEnum.Company)

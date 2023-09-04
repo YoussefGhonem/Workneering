@@ -173,23 +173,9 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region Category
-        public void AddCategory(List<FreelancerCategory> data)
+        public void UpdateCategory(Guid? categoryId)
         {
-            _categories.AddRange(data);
-        }
-        public void AddCategory(FreelancerCategory data)
-        {
-            _categories.Add(data);
-        }
-        public void RemoveCategory(Guid id)
-        {
-            var data = _categories.FirstOrDefault(x => x.Id == id);
-            data.MarkAsDeleted(id);
-        }
-        public void UpdateCategory(Guid? id)
-        {
-            var data = _categories.FirstOrDefault();
-            data.UpdateCategoryId(id);
+            _categories.FirstOrDefault().UpdateCategoryId(categoryId.Value);
 
         }
         #endregion

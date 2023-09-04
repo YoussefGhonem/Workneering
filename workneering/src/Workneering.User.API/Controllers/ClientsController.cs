@@ -4,19 +4,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyBasicDetails;
-using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyDescription;
-using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhoAreWe;
-using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
+using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientBasicDetails;
+using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientDescription;
+using Workneering.User.Application.Queries.Client.GetClientBasicDetails;
 
 namespace Workneering.User.API.Controllers
 {
     [ApiVersion("1.0")]
     [Authorize]
-    [Route("api/v{version:apiVersion}/companies")]
-    public class CompaniesController : BaseController
+    [Route("api/v{version:apiVersion}/clients")]
+    public class ClientsController : BaseController
     {
-        public CompaniesController(ISender mediator) : base(mediator)
+        public ClientsController(ISender mediator) : base(mediator)
         {
         }
 
@@ -26,7 +25,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateCompanyDescriptionCommand(UpdateCompanyDescriptionCommand command)
+        public async Task<ActionResult<Unit>> UpdateClientDescriptionCommand(UpdateClientDescriptionCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
@@ -35,19 +34,11 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateCompanyBasicDetailsCommand(UpdateCompanyBasicDetailsCommand command)
+        public async Task<ActionResult<Unit>> UpdateClientBasicDetailsCommand(UpdateClientBasicDetailsCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
-        [HttpPut("profile/who-are-we")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateWhoAreWeCommand(UpdateWhoAreWeCommand command)
-        {
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
+
         #endregion
 
         #region Queries
@@ -55,10 +46,10 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CompanyBasicDetailsDto))]
-        public async Task<ActionResult<CompanyBasicDetailsDto>> GetCompanyBasicDetailsQuery()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientBasicDetailsDto))]
+        public async Task<ActionResult<ClientBasicDetailsDto>> GetClientBasicDetailsQuery()
         {
-            var query = new GetCompanyBasicDetailsQuery() { CompanyId = CurrentUser.Id.Value };
+            var query = new GetClientBasicDetailsQuery() { ClientId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
@@ -66,10 +57,10 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CompanyBasicDetailsDto))]
-        public async Task<ActionResult<CompanyBasicDetailsDto>> GetCompanyBasicDetailsQuery(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientBasicDetailsDto))]
+        public async Task<ActionResult<ClientBasicDetailsDto>> GetClientBasicDetailsQuery(Guid id)
         {
-            var query = new GetCompanyBasicDetailsQuery() { CompanyId = id };
+            var query = new GetClientBasicDetailsQuery() { ClientId = id };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         #endregion

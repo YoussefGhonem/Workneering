@@ -10,11 +10,10 @@ namespace Workneering.User.Domain.Entites
         private string? _overviewDescription;
         private string? _titleOverview;
         private string? _title;
-        private int? _numOfReviews; // 100 clients for example
-        private decimal? _reviews; // 4.3 of 5 stars
-        private ReviewersStars? _reviewersStars;
-        private Guid? _categoryId; //  spcialized Company // lookup
         private GenderEnum? _gender;
+        private decimal? _reviews; // 4.3 of 5 stars
+        private int? _numOfReviews; // 100 clients for example
+        private ReviewersStars? _reviewersStars;
         private List<ClientCategory>? _categories = new();
 
         public Client(Guid id)
@@ -28,7 +27,6 @@ namespace Workneering.User.Domain.Entites
 
         #region Public fields
         public string? Name { get => _name; set => _name = value; }
-        public Guid? CategoryId { get => _categoryId; set => _categoryId = value; }
         public string? Description { get => _overviewDescription; set => _overviewDescription = value; }
         public GenderEnum? Gender { get => _gender; private set => _gender = value; }
         public string? TitleOverview { get => _titleOverview; set => _titleOverview = value; }
@@ -50,10 +48,6 @@ namespace Workneering.User.Domain.Entites
         public void UpdateGender(GenderEnum? field)
         {
             _gender = field;
-        }
-        public void UpdateCategoryId(Guid? field)
-        {
-            _categoryId = field;
         }
         public void UpdateReviews(decimal field)
         {
@@ -83,24 +77,10 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region Category
-        public void AddCategory(List<ClientCategory> data)
+        public void UpdateCategory(Guid? categoryId)
         {
-            _categories.AddRange(data);
-        }
-        public void AddCategory(ClientCategory data)
-        {
-            _categories.Add(data);
-        }
-        public void RemoveCategory(Guid id)
-        {
-            var data = _categories.FirstOrDefault(x => x.Id == id);
-            data.MarkAsDeleted(id);
-        }
-        public void UpdateCategory(Guid categoryId)
-        {
-            var data = _categories.FirstOrDefault();
-            if (data is null) return;
-            data.UpdateCategoryId(categoryId);
+            _categories.FirstOrDefault().UpdateCategoryId(categoryId.Value);
+
         }
         #endregion
 
