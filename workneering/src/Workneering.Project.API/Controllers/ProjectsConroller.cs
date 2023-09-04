@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Project.Application.Commands.CreateProject;
+using Workneering.Project.Application.Commands.CreateProposal;
 using Workneering.Project.Application.Commands.UpdateProject;
+using Workneering.Project.Application.Commands.Wishlist.CreateWishlist;
+using Workneering.Project.Application.Commands.Wishlist.RemoveWishlist;
 
 namespace Workneering.Project.API.Controllers
 {
@@ -18,6 +21,7 @@ namespace Workneering.Project.API.Controllers
         }
 
         #region Commands
+        #region project
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -37,6 +41,45 @@ namespace Workneering.Project.API.Controllers
             command.Id = id;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
+        #endregion
+
+        #region proposal
+        [HttpPost("{id}/proposal")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreateProposalCommand(CreateProposalCommand command, Guid id)
+        {
+            command.ProjectId = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        #endregion
+
+        #region wishlist
+        [HttpPost("{id}/wishlist")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreateWishlistCommand(CreateWishlistCommand command, Guid id)
+        {
+            command.ProjectId = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpDelete("{id}/wishlist")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> RemoveWishlistCommand(RemoveWishlistCommand command, Guid id)
+        {
+            command.ProjectId = id;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        #endregion
         #endregion
     }
 }

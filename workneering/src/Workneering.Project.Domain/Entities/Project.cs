@@ -136,6 +136,10 @@ namespace Workneering.Project.Domain.Entities
                 data.MarkAsDeleted(null);
             }
         }
+
+        #endregion
+
+        #region Wishlist
         public void AddIntoWishlist(Guid? freelancerId)
         {
             _wishlist.Add(new Wishlist(freelancerId));
@@ -145,9 +149,14 @@ namespace Workneering.Project.Domain.Entities
             if (freelancerId == null) return;
             _wishlist.FirstOrDefault(x => x.FreelancerId == freelancerId)?.MarkAsDeleted(null);
         }
-
         #endregion
 
+        #region Proposal
+        public void AddProposal(Guid? freelancerId, string? coverLetter, ProposalDurationEnum? proposalDuratio, decimal? totalBid = null)
+        {
+            _proposals.Add(new Proposal(freelancerId, coverLetter, proposalDuratio, totalBid));
+        }
+        #endregion
         #endregion
     }
 }

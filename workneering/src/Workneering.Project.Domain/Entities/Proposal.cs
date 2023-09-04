@@ -24,7 +24,7 @@ namespace Workneering.Project.Domain.Entities
         #region MyRegion
         public string? CoverLetter { get => _coverLetter; set => _coverLetter = value; }
         public Guid? FreelancerId { get => _freelancerId; set => _freelancerId = value; }
-        public ProposalDurationEnum? ProposalDuratio { get => _proposalDuratio; set => _proposalDuratio = value; }
+        public ProposalDurationEnum? ProposalDuration { get => _proposalDuratio; set => _proposalDuratio = value; }
         public decimal? HourlyRate { get => _hourlyRate; set => _hourlyRate = value; }
         public decimal? TotalBid { get => _totalBid; set => _totalBid = value; }
         #endregion
