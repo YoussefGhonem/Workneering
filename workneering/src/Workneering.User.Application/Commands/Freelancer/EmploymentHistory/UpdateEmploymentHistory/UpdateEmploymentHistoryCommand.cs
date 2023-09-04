@@ -7,13 +7,12 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Upd
     public class UpdateEmploymentHistoryCommand : IRequest<Unit>
     {
         [JsonIgnore]
-        public Guid EmploymentHistoryId { get; set; }
+        public Guid Id { get; set; }
         public string CompanyName { get; set; }
         public string Title { get; set; }
         public string? Description { get; set; }
-        public Location Location { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset? EndDate { get; set; }
-        public bool IsCurrentlyWork { get; set; }
+        public string? Role { get; set; }
+        public int? StartYear { get; set; }
+        public int? EndYear { get; set; }
     }
 }

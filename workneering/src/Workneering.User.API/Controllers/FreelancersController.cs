@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.User.Application.Commands.Freelancer.Category.CreateCategory;
-using Workneering.User.Application.Commands.Freelancer.Category.DeleteCategory;
 using Workneering.User.Application.Commands.Freelancer.Category.UpdateCategory;
 using Workneering.User.Application.Commands.Freelancer.Certification.CreateCertification;
 using Workneering.User.Application.Commands.Freelancer.Certification.DeleteCertification;
@@ -16,9 +14,6 @@ using Workneering.User.Application.Commands.Freelancer.Education.UpdateEducation
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.DeleteEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory;
-using Workneering.User.Application.Commands.Freelancer.Experiences.CreateExperience;
-using Workneering.User.Application.Commands.Freelancer.Experiences.DeleteExperiences;
-using Workneering.User.Application.Commands.Freelancer.Experiences.UpdateExperiences;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailabilityHoursPerWeek;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateExperienceLevel;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateHourlyRate;
@@ -35,7 +30,6 @@ using Workneering.User.Application.Commands.Freelancer.Skills.UpdateFreelancerSk
 using Workneering.User.Application.Queries.Freelancer.GetCertifications;
 using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
-using Workneering.User.Application.Queries.Freelancer.GetExperiences;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategories;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerSkills;
@@ -125,71 +119,35 @@ namespace Workneering.User.API.Controllers
         #endregion
 
         #region employment-history
-        [HttpPost("{id}/profile/employment-history")]
+        [HttpPost("{profile/employment-history")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateEmploymentHistoryCommand(CreateEmploymentHistoryCommand command, Guid id)
+        public async Task<ActionResult<Unit>> CreateEmploymentHistoryCommand(CreateEmploymentHistoryCommand command)
         {
-            command.Id = id;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("{id}/profile/employment-history")]
+        [HttpPut("profile/employment-history/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> UpdateEmploymentHistoryCommand(UpdateEmploymentHistoryCommand command, Guid id)
         {
-            command.EmploymentHistoryId = id;
+            command.Id = id;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/employment-history")]
+        [HttpDelete("profile/employment-history/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> DeleteEmploymentHistoryCommand(DeleteEmploymentHistoryCommand command, Guid id)
         {
-            command.EmploymentHistoryId = id;
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
-        #endregion
-
-        #region Experience
-
-        [HttpPost("profile/experiences")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateExperienceCommand(CreateExperienceCommand command)
-        {
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
-
-        [HttpPut("{id}/profile/experiences")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateExperienceCommand(UpdateExperienceCommand command, Guid id)
-        {
-            command.ExperienceId = id;
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
-
-        [HttpDelete("{id}/profile/experiences")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> DeleteExperienceCommand(DeleteExperiencesCommand command, Guid id)
-        {
-            command.ExperienceId = id;
+            command.Id = id;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
         #endregion
@@ -221,7 +179,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("{id}/profile/educations")]
+        [HttpPut("profile/educations/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -232,7 +190,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/educations")]
+        [HttpDelete("profile/educations/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -256,7 +214,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("{id}/profile/portfolios")]
+        [HttpPut("profile/portfolios/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -267,7 +225,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/portfolios")]
+        [HttpDelete("profile/portfolios/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -293,8 +251,6 @@ namespace Workneering.User.API.Controllers
 
         #endregion
 
-
-
         #region Certifications
 
         [HttpPost("profile/certifications")]
@@ -307,7 +263,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPut("{id}/profile/certifications")]
+        [HttpPut("profile/certifications/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -318,7 +274,7 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpDelete("{id}/profile/certifications")]
+        [HttpDelete("profile/certifications/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -445,16 +401,7 @@ namespace Workneering.User.API.Controllers
             var query = new GetEmploymentHistoryQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
-        [HttpGet("profile/experiences")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerExperienceDto>))]
-        public async Task<ActionResult<List<FreelancerExperienceDto>>> GetExperiencesQuery()
-        {
-            var query = new GetExperiencesQuery() { FreelancerId = CurrentUser.Id.Value };
-            return Ok(await Mediator.Send(query, CancellationToken));
-        }
+
         //[Authorize]
         [HttpGet("profile/categories")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -558,16 +505,7 @@ namespace Workneering.User.API.Controllers
             var query = new GetEmploymentHistoryQuery() { FreelancerId = id };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
-        [HttpGet("{id}/profile/experiences")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerExperienceDto>))]
-        public async Task<ActionResult<List<FreelancerExperienceDto>>> GetExperiencesQuery(Guid id)
-        {
-            var query = new GetExperiencesQuery() { FreelancerId = id };
-            return Ok(await Mediator.Send(query, CancellationToken));
-        }
+
         //[Authorize]
         [HttpGet("{id}/profile/categories")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

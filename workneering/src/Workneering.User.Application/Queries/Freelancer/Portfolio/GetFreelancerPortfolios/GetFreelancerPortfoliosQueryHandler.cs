@@ -18,10 +18,8 @@ namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelance
         {
 
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
-                .ThenInclude(x => x.PortfolioFiles).Include(x => x.Portfolios).ThenInclude(x => x.PortfolioSkills)
                 .FirstOrDefault(x => x.Id == request.FreelancerId);
 
-            Mapper.ApplyMapping();
             var result = query!.Portfolios.Adapt<List<FreelancerPortfolioDto>>();
             return result;
 

@@ -7,12 +7,20 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Cre
 
         public CreateEmploymentHistoryCommandValidator()
         {
-            RuleFor(r => r.Id)
+
+            RuleFor(r => r.Title)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
-
-            RuleFor(r => r.Title)
+            RuleFor(r => r.EndYear)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(r => r.StartYear)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(r => r.Role)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();

@@ -4,11 +4,11 @@ using Workneering.User.Domain.Entites;
 
 namespace Workneering.User.Infrastructure.Configurations;
 
-public class CategoryConfigurations : IEntityTypeConfiguration<FreelancerCategory>
+public class FreelancerCategoryConfigurations : IEntityTypeConfiguration<FreelancerCategory>
 {
     public void Configure(EntityTypeBuilder<FreelancerCategory> builder)
     {
-        builder.ToTable("Categories", "User");
+        builder.ToTable("FreelancerCategories", "User");
 
     }
 }

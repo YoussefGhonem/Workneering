@@ -12,7 +12,11 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
                 .NotNull()
                 .NotEmpty();
 
-            RuleFor(r => r.Template)
+            RuleFor(r => r.StartYear)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(r => r.EndYear)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();

@@ -1,9 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.User.Domain.Entites;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory
@@ -21,7 +19,7 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Upd
             var query = _userDatabaseContext.Freelancers.Include(x => x.EmploymentHistory).FirstOrDefault(x => x.Id == CurrentUser.Id);
             var result = request.Adapt<Domain.Entites.EmploymentHistory>();
 
-            query.UpdateEmploymentHistory(request.EmploymentHistoryId, result);
+            query.UpdateEmploymentHistory(request.Id, result);
             _userDatabaseContext.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;

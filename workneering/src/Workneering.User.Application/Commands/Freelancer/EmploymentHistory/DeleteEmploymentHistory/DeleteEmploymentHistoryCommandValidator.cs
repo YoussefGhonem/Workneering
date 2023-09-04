@@ -7,7 +7,7 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Del
 
         public DeleteEmploymentHistoryCommandValidator()
         {
-            RuleFor(r => r.EmploymentHistoryId)
+            RuleFor(r => r.Id)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();

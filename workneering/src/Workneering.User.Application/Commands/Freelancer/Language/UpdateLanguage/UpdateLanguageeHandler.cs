@@ -18,7 +18,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Language.UpdateLangua
         {
             var query = _userDatabaseContext.Freelancers.Include(x => x.Languages).FirstOrDefault(x => x.Id == CurrentUser.Id);
             var result = request.Adapt<Domain.Entites.Language>();
-            query!.AddLanguage(result);
+            query!.UpdateLanguage(result.Id, result);
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;

@@ -19,12 +19,9 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortf
         {
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios).FirstOrDefault(x => x.Id == CurrentUser.Id);
 
-            Mapper.ApplyMapping();
             var portfolioMap = request.Adapt<Domain.Entites.Portfolio>();
-            var mapPortfolioSkills = request.PortfolioSkills.Adapt<List<Domain.Entites.PortfolioSkill>>();
-            var mapPortfolioFiles = request.PortfolioSkills.Adapt<List<Domain.Entites.PortfolioFile>>();
 
-            query!.AddPortfolio(portfolioMap, mapPortfolioSkills, mapPortfolioFiles);
+            query!.AddPortfolio(portfolioMap);
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;

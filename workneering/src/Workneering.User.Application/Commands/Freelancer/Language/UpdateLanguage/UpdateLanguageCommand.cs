@@ -1,11 +1,12 @@
 ﻿using MediatR;
-using Workneering.Shared.Core.Models;
+using Workneering.User.Domain.Enums;
 
 namespace Workneering.User.Application.Commands.Freelancer.Language.UpdateLanguage
 {
     public class UpdateLanguageCommand : IRequest<Unit>
     {
-        public string? Name { get; set; }
-        public string? Level { get; set; }
+        public Guid Id { get; set; }
+        public Guid LanguageId { get; set; }  // lookup
+        public LanguageLevelEnum? Level { get; set; }
     }
 }

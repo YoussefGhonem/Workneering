@@ -29,7 +29,6 @@ namespace Workneering.User.Domain.Entites
         private readonly List<FreelancerSkill> _freelancerSkills = new();
         private readonly List<Language> _languages = new();
         private readonly List<Certification> _certifications = new();
-        private readonly List<Testimonial> _testimonials = new();
 
         public Freelancer()
         {
@@ -64,8 +63,6 @@ namespace Workneering.User.Domain.Entites
         public List<Language> Languages => _languages;
         public List<EmploymentHistory> EmploymentHistory => _employmentHistory;
         public List<FreelancerCategory>? Categories => _categories;
-
-        public List<Testimonial> Testimonials => _testimonials;
 
         #endregion
 
@@ -143,12 +140,11 @@ namespace Workneering.User.Domain.Entites
             var data = _employmentHistory.FirstOrDefault(x => x.Id == id);
             if (data is null) return;
             data.UpdateDescription(employmentHistory.Description);
-            data.UpdateEndDate(employmentHistory.EndDate);
-            data.UpdateStartDate(employmentHistory.StartDate);
+            data.UpdateEndDate(employmentHistory.EndYear);
+            data.UpdateStartDate(employmentHistory.StartYear);
             data.UpdateCompanyName(employmentHistory.CompanyName);
             data.UpdateTitle(employmentHistory.Title);
-            data.UpdateLocation(employmentHistory.Location);
-            data.UpdateIsCurrentlyWork(employmentHistory.IsCurrentlyWork);
+            data.UpdateRole(employmentHistory.Role);
         }
         #endregion
 
@@ -198,36 +194,6 @@ namespace Workneering.User.Domain.Entites
         }
         #endregion
 
-        #region Testimonial
-
-        public void AddTestimonial(Testimonial data)
-        {
-            _testimonials.Add(data);
-        }
-        public void RemoveTestimonial(Guid id)
-        {
-            var data = _testimonials.FirstOrDefault(x => x.Id == id);
-            data.MarkAsDeleted(id);
-        }
-        public void UpdateTestimonial(Guid id, Testimonial obj)
-        {
-            var data = _testimonials.FirstOrDefault(x => x.Id == id);
-            if (data is null) return;
-            data.UpdateBusinessEmail(obj.BusinessEmail);
-            data.UpdateClientTitle(obj.ClientTitle);
-            data.UpdateLastName(obj.LastName);
-            data.UpdateLinkedInProfile(obj.LinkedInProfile);
-            data.UpdateMessageToClient(obj.MessageToClient);
-            data.UpdateProjectType(obj.ProjectType);
-        }
-        public void UpdateTestimonialReplyClient(Guid id, string message)
-        {
-            var data = _testimonials.FirstOrDefault(x => x.Id == id);
-            if (data is null) return;
-            data.UpdateReplayClient(message);
-
-        }
-        #endregion
 
         #region Freelancer Skills
         public void UpdateFreelancerSkills(List<FreelancerSkill>? freelancerSkills)
@@ -301,6 +267,12 @@ namespace Workneering.User.Domain.Entites
         {
             _languages.Add(data);
         }
+        public void UpdateLanguage(Guid id, Language language)
+        {
+            var data = _languages.FirstOrDefault(x => x.Id == id);
+            data.UpdateLanguageId(language.LanguageId);
+            data.UpdateLevel(language.Level);
+        }
         public void RemoveLanguage(Guid id)
         {
             var data = _languages.FirstOrDefault(x => x.Id == id);
@@ -317,11 +289,8 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region Portfolio
-        public void AddPortfolio(Portfolio data, List<PortfolioSkill> portfolioSkills, List<PortfolioFile> portfolioFiles)
+        public void AddPortfolio(Portfolio data)
         {
-            data.AddPortfolioFiles(portfolioFiles);
-            data.AddPortfolioSkills(portfolioSkills);
-
             _portfolios.Add(data);
         }
         public void RemovePortfolio(Guid id)
@@ -329,23 +298,16 @@ namespace Workneering.User.Domain.Entites
             var data = _portfolios.FirstOrDefault(x => x.Id == id);
             data.MarkAsDeleted(id);
         }
-        public void UpdatePortfolio(Guid id, Portfolio obj, List<PortfolioSkill> portfolioSkills, List<PortfolioFile> portfolioFiles)
+        public void UpdatePortfolio(Guid? id, Portfolio obj)
         {
             var data = _portfolios.FirstOrDefault(x => x.Id == id);
             if (data is null) return;
 
-            data.UpdateCompletionDate(obj.CompletionDate.Value);
-            data.UpdateRelatedSpecializedProfile(obj.RelatedSpecializedProfile);
-            data.UpdateFileCaption(obj.FileCaption);
-            data.UpdateYouTubeLink(obj.YouTubeLink);
             data.UpdateProjectDescription(obj.ProjectDescription);
-            data.UpdateProjectSolutionDescription(obj.ProjectSolutionDescription);
-            data.UpdateProjectTaskDescription(obj.ProjectTaskDescription);
-            data.UpdateRole(obj.Role);
-            data.UpdateProjectURL(obj.ProjectURL);
+            data.UpdateStartYear(obj.StartYear);
+            data.UpdateEndYear(obj.EndYear);
             data.UpdateProjectTitle(obj.ProjectTitle);
             // list
-            data.UpdatePortfolioSkills(portfolioSkills);
         }
         #endregion        
 

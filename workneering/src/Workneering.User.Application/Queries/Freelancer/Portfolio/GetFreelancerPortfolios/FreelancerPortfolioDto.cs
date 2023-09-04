@@ -5,21 +5,11 @@ namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelance
     public class FreelancerPortfolioDto
     {
         public Guid Id { get; set; }
-        public string? ProjectTitle { get; set; }
-        public TemplateEnum Template { get; set; }
-        public SpecialtyEnum RelatedSpecializedProfile { get; set; }
-        public DateTimeOffset? CompletionDate { get; set; }
-        public List<FreelancerPortfolioSkillDto> PortfolioSkills { get; set; }
-        public List<FreelancerPortfolioFileDto> PortfolioFiles { get; set; } // TODO : get only main image and number of files
+        public string ProjectTitle { get; set; }
+        public string? ProjectDescription { get; set; }
+        public int? StartYear { get; set; }
+        public int? EndYear { get; set; }
     }
 
-    public class FreelancerPortfolioSkillDto
-    {
-        public Guid? Id { get; set; }
-        public string? Name { get; set; }
-    }
-    public class FreelancerPortfolioFileDto
-    {
 
-    }
 }

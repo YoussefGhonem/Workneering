@@ -5,7 +5,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Language.CreateLangua
 {
     public class CreateLanguageCommand : IRequest<Unit>
     {
-        public string Name { get; set; }
-        public LanguageLevelEnum Level { get; set; }
+        public Guid LanguageId { get; set; }  // lookup
+        public LanguageLevelEnum? Level { get; set; }
     }
 }

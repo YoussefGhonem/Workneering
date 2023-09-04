@@ -8,7 +8,11 @@ namespace Workneering.User.Application.Commands.Freelancer.Language.UpdateLangua
         public UpdateLanguageCommandValidator()
         {
 
-            RuleFor(r => r.Name)
+            RuleFor(r => r.Id)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(r => r.LanguageId)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();

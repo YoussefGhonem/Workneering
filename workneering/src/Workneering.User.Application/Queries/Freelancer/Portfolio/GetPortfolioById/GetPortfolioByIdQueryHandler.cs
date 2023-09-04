@@ -17,16 +17,12 @@ namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetPortfolio
         {
 
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
-                .ThenInclude(x => x.PortfolioFiles)
-                .Include(x => x.Portfolios)
-                .ThenInclude(x => x.PortfolioSkills)
                 .FirstOrDefault(x => x.Id == request.FreelancerId);
 
             var portfolio = query.Portfolios.FirstOrDefault(x => x.Id == request.Id);
 
             if (portfolio == null) return new PortfolioDetailsDto();
 
-            Mapper.ApplyMapping();
             var result = portfolio.Adapt<PortfolioDetailsDto>();
             return result;
 

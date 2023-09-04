@@ -5,36 +5,24 @@ namespace Workneering.User.Domain.Entites
 {
     public record EmploymentHistory : BaseEntity
     {
-        private string _companyName;
         private string _title;
+        private string _companyName;
+        private int? _startYear;
+        private int? _endYear;
         private string? _description;
-        private Location _location;
-        private DateTimeOffset _startDate;
-        private DateTimeOffset? _endDate;
-        private bool _isCurrentlyWork;
+        private string _role; // Area Of Work
         public EmploymentHistory()
         {
 
-        }
-        public EmploymentHistory(string? companyName, string title, Location location, DateTimeOffset startDate, DateTimeOffset endDate, bool currentlyWork, string? description)
-        {
-            _companyName = companyName;
-            _title = title;
-            _description = description;
-            _location = location;
-            _startDate = startDate;
-            _endDate = endDate;
-            _isCurrentlyWork = currentlyWork;
         }
 
         #region public fields
         public string CompanyName { get => _companyName; private set => _companyName = value; }
         public string Title { get => _title; private set => _title = value; }
         public string? Description { get => _description; private set => _description = value; }
-        public Location Location { get => _location; private set => _location = value; }
-        public DateTimeOffset StartDate { get => _startDate; private set => _startDate = value; }
-        public DateTimeOffset? EndDate { get => _endDate; private set => _endDate = value; }
-        public bool IsCurrentlyWork { get => _isCurrentlyWork; private set => _isCurrentlyWork = value; }
+        public string? Role { get => _role; private set => _role = value; }
+        public int? StartYear { get => _startYear; private set => _startYear = value; }
+        public int? EndYear { get => _endYear; private set => _endYear = value; }
         #endregion
 
         #region public methods
@@ -46,25 +34,22 @@ namespace Workneering.User.Domain.Entites
         {
             _companyName = field;
         }
+        public void UpdateRole(string? field)
+        {
+            _role = field;
+        }
         public void UpdateTitle(string? field)
         {
             _title = field;
         }
-        public void UpdateLocation(Location field)
+
+        public void UpdateStartDate(int? field)
         {
-            _location = field;
+            _startYear = field;
         }
-        public void UpdateStartDate(DateTimeOffset field)
+        public void UpdateEndDate(int? field)
         {
-            _startDate = field;
-        }
-        public void UpdateEndDate(DateTimeOffset? field)
-        {
-            _endDate = field;
-        }
-        public void UpdateIsCurrentlyWork(bool field)
-        {
-            _isCurrentlyWork = field;
+            _endYear = field;
         }
         #endregion
 

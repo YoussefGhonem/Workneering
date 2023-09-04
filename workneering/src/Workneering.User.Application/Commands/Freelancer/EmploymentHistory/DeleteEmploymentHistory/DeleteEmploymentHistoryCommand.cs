@@ -6,6 +6,6 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Del
     public class DeleteEmploymentHistoryCommand : IRequest<Unit>
     {
         [JsonIgnore]
-        public Guid EmploymentHistoryId { get; set; }
+        public Guid Id { get; set; }
     }
 }

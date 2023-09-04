@@ -8,7 +8,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Language.CreateLangua
         public CreateLanguageCommandValidator()
         {
 
-            RuleFor(r => r.Name)
+            RuleFor(r => r.LanguageId)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using Workneering.User.Infrastructure.Persistence;
 namespace Workneering.User.Infrastructure.Migrations
 {
     [DbContext(typeof(UserDatabaseContext))]
-    partial class UserDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230904045126_AddCategory")]
+    partial class AddCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,11 +371,14 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EndYear")
-                        .HasColumnType("int");
+                    b.Property<DateTimeOffset?>("EndDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("FreelancerId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsCurrentlyWork")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -384,11 +389,8 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LastModifiedDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("StartYear")
-                        .HasColumnType("int");
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -631,17 +633,18 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("LanguageId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset?>("LastModifiedDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("Level")
+                    b.Property<int>("Level")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -657,6 +660,9 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTimeOffset?>("CompletionDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -669,8 +675,8 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("DeletedDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("EndYear")
-                        .HasColumnType("int");
+                    b.Property<string>("FileCaption")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("FreelancerId")
                         .HasColumnType("uniqueidentifier");
@@ -687,12 +693,32 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<string>("ProjectDescription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProjectSolutionDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectTaskDescription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProjectTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StartYear")
+                    b.Property<string>("ProjectURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RelatedSpecializedProfile")
                         .HasColumnType("int");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Template")
+                        .HasColumnType("int");
+
+                    b.Property<string>("YouTubeLink")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -774,7 +800,14 @@ namespace Workneering.User.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("PortfolioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("PortfolioId");
 
                     b.ToTable("PortfolioSkills", "User.Portfolio");
                 });
@@ -888,6 +921,28 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.HasOne("Workneering.User.Domain.Entites.Freelancer", null)
                         .WithMany("EmploymentHistory")
                         .HasForeignKey("FreelancerId");
+
+                    b.OwnsOne("Workneering.Shared.Core.Models.Location", "Location", b1 =>
+                        {
+                            b1.Property<Guid>("EmploymentHistoryId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("City")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("CountryName")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("EmploymentHistoryId");
+
+                            b1.ToTable("EmploymentHistories", "User");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EmploymentHistoryId");
+                        });
+
+                    b.Navigation("Location")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Experience", b =>
@@ -980,6 +1035,13 @@ namespace Workneering.User.Infrastructure.Migrations
                         .HasForeignKey("PortfolioId");
                 });
 
+            modelBuilder.Entity("Workneering.User.Domain.Entites.PortfolioSkill", b =>
+                {
+                    b.HasOne("Workneering.User.Domain.Entites.Portfolio", null)
+                        .WithMany("PortfolioSkills")
+                        .HasForeignKey("PortfolioId");
+                });
+
             modelBuilder.Entity("Workneering.User.Domain.Entites.Client", b =>
                 {
                     b.Navigation("Categories");
@@ -1012,6 +1074,8 @@ namespace Workneering.User.Infrastructure.Migrations
             modelBuilder.Entity("Workneering.User.Domain.Entites.Portfolio", b =>
                 {
                     b.Navigation("PortfolioFiles");
+
+                    b.Navigation("PortfolioSkills");
                 });
 #pragma warning restore 612, 618
         }

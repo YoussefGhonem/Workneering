@@ -11,5 +11,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateC
         public int EndYear { get; set; }
         public string AwardAreaOfStudy { get; set; }
         public string GivenBy { get; set; }
+        public string? Licence { get; set; }
+
     }
 }

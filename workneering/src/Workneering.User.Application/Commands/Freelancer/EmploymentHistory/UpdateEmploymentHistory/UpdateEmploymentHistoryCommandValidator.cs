@@ -7,7 +7,7 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Upd
 
         public UpdateEmploymentHistoryCommandValidator()
         {
-            RuleFor(r => r.EmploymentHistoryId)
+            RuleFor(r => r.Id)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();

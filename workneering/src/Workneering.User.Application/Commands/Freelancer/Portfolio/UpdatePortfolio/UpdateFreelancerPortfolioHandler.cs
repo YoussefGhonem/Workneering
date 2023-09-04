@@ -19,18 +19,13 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
             if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
 
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
-                .ThenInclude(x => x.PortfolioFiles).Include(x => x.Portfolios).ThenInclude(x => x.PortfolioSkills)
                 .FirstOrDefault(x => x.Id == CurrentUser.Id);
 
-            Mapper.ApplyMapping();
             var portfolioMap = request.Adapt<Domain.Entites.Portfolio>();
-            var mapPortfolioSkills = request.PortfolioSkills.Adapt<List<Domain.Entites.PortfolioSkill>>();
-            var mapPortfolioFiles = request.PortfolioSkills.Adapt<List<Domain.Entites.PortfolioFile>>();
 
-            query!.UpdatePortfolio(request.Id, portfolioMap, mapPortfolioSkills, mapPortfolioFiles);
+            query!.UpdatePortfolio(request.Id, portfolioMap);
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
-
 
             return Unit.Value;
 

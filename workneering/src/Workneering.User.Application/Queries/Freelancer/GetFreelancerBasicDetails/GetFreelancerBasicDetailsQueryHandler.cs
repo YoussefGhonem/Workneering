@@ -1,10 +1,8 @@
-﻿using MediatR;
-using Mapster;
-using Workneering.User.Infrastructure.Persistence;
-using Workneering.Base.Application.GlobalExceptions;
-using Microsoft.EntityFrameworkCore;
-using Workneering.User.Application.Services.DbQueryService;
+﻿using Mapster;
+using MediatR;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.User.Application.Services.DbQueryService;
+using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails
 {

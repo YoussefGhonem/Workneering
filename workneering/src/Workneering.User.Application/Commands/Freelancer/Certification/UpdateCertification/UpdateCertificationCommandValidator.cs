@@ -16,10 +16,14 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.UpdateC
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
-            RuleFor(r => r.PassedDate)
-    .Cascade(CascadeMode.Stop)
-    .NotNull()
-    .NotEmpty();
+            RuleFor(r => r.StartYear)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(r => r.EndYear)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty();
 
         }
 

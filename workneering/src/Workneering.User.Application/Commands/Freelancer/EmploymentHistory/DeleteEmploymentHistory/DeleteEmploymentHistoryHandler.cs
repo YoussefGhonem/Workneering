@@ -1,5 +1,4 @@
-﻿using Mapster;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Infrastructure.Persistence;
@@ -17,7 +16,7 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Del
         public async Task<Unit> Handle(DeleteEmploymentHistoryCommand request, CancellationToken cancellationToken)
         {
             var query = _userDatabaseContext.Freelancers.Include(x => x.EmploymentHistory).FirstOrDefault(x => x.Id == CurrentUser.Id);
-            query.RemoveEmploymentHistory(request.EmploymentHistoryId);
+            query.RemoveEmploymentHistory(request.Id);
             _userDatabaseContext.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;
