@@ -20,7 +20,14 @@ namespace Workneering.Project.Application.Commands.CreateProject
         public ExperienceLevelEnum? ExperienceLevel { get; set; }
         public ProjectBudgetEnum? ProjectBudget { get; set; }
         public ProjectTypeEnum? ProjectType { get; set; }
-        public List<CreateProjectSkillDto> RequiredSkills { get; set; } = new();
-        public CreateProjectCategoryDto? ProjectCategory { get; set; } = new();
+        public List<CategorizationDto>? Categories { get; set; }
+        public List<CategorizationDto>? SubCategories { get; set; }
+        public List<CategorizationDto>? Skills { get; set; }
+    }
+
+    public class CategorizationDto
+    {
+        public Guid? Id { get; set; }
+        public string? Name { get; set; } = null;
     }
 }

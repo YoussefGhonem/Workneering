@@ -25,13 +25,17 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
 
             var query = _context.Projects
                 .Include(x => x.Wishlist)
-                .Include(x => x.ProjectCategory)
+                .Include(x => x.Categories)
+                .Include(x => x.SubCategories)
+                .Include(x => x.Skills)
                 .Where(x => x.Wishlist.Any(x => x.FreelancerId == CurrentUser.Id))
                 .OrderByDescending(a => a.CreatedDate)
                 .AsQueryable()
                 .Filter(request, _dbQueryService)
                 .Paginate(request.PageSize, request.PageNumber);
+
             var result = query.Adapt<List<ProjectListDto>>();
+
             if (CurrentUser.Roles.Contains(Shared.Core.Identity.Enums.RolesEnum.Freelancer))
             {
                 foreach (var item in result.ToList())

@@ -23,7 +23,24 @@ namespace Workneering.Project.Application.Commands.UpdateProject
         public ExperienceLevelEnum? ExperienceLevel { get; set; }
         public ProjectBudgetEnum? ProjectBudget { get; set; }
         public ProjectTypeEnum? ProjectType { get; set; }
-        public List<UpdateProjectSkillDto> RequiredSkills { get; set; } = new();
-        public UpdateProjectCategoryDto? ProjectCategory { get; set; } = new();
+        public List<CategoriesDto>? Categories { get; set; } = new();
+        public List<SubCategoriesDto>? SubCategories { get; set; } = new();
+        public List<SkillsDto>? Skills { get; set; } = new();
+    }
+
+    public class CategoriesDto
+    {
+        public Guid? CategoryId { get; set; }
+        public string? Name { get; set; } = null;
+    }
+    public class SubCategoriesDto
+    {
+        public Guid? SubCategoryId { get; set; }
+        public string? Name { get; set; } = null;
+    }
+    public class SkillsDto
+    {
+        public Guid? SkillId { get; set; }
+        public string? Name { get; set; } = null;
     }
 }

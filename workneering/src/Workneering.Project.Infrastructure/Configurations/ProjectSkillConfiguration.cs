@@ -7,6 +7,6 @@ internal class ProjectSkillConfiguration : IEntityTypeConfiguration<Domain.Entit
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.ProjectSkill> builder)
     {
-        builder.ToTable("ProjectSkills", "ProjectsSchema");
+        builder.ToTable("Skills", "ProjectsSchema");
     }
 }

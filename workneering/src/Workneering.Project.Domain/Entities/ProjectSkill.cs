@@ -1,30 +1,25 @@
 ﻿using Workneering.Base.Domain.Common;
 
-namespace Workneering.Project.Domain.Entities
+namespace Workneering.Project.Domain.Entities;
+public record ProjectSkill : BaseEntity
 {
-    public record ProjectSkill : BaseEntity
+    private Guid _skillId;
+    private string _name;
+
+    public ProjectSkill(Guid skillId, string name)
     {
-        private string _name;
-        private Guid? _skillId;
-
-        public ProjectSkill(string name, Guid? skillId)
-        {
-            _name = name;
-            _skillId = skillId ?? Id;
-        }
-        public ProjectSkill()
-        {
-        }
-        public string Name { get => _name; private set => _name = value; }
-        public Guid? SkillId { get => _skillId; private set => _skillId = value; }
-
-        public void UpdateName(string field)
-        {
-            _name = field;
-        }
-        public void UpdateSkillId(Guid field)
-        {
-            _skillId = field;
-        }
+        _skillId = skillId;
+        _name = name;
     }
+    public ProjectSkill()
+    {
+    }
+    public Guid SkillId { get => _skillId; private set => _skillId = value; }
+    public string Name { get => _name; private set => _name = value; }
+
+    public void UpdateSkillId(Guid field)
+    {
+        _skillId = field;
+    }
+
 }

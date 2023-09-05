@@ -8,10 +8,5 @@ internal class ProjectConfiguration : IEntityTypeConfiguration<Domain.Entities.P
     public void Configure(EntityTypeBuilder<Domain.Entities.Project> builder)
     {
         builder.ToTable("Projects", "ProjectsSchema");
-        builder.OwnsOne(x => x.ProjectCategory, x =>
-        {
-            x.Property(x => x.CategoryId).HasColumnName("CategoryId");
-            x.Property(x => x.SubCategoryId).HasColumnName("SubCategoryId");
-        });
     }
 }

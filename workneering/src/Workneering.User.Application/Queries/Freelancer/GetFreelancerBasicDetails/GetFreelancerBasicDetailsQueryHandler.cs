@@ -1,7 +1,5 @@
 ﻿using Mapster;
 using MediatR;
-using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -25,7 +23,6 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
             var userservice = await _dbQueryService.GetUserBasicInfo(request.FreelancerId, cancellationToken);
 
             var result = query?.Adapt<FreelancerBasicDetailsDto>();
-            result.CategoryId = query.Category.CategoryId;
             // Country Info
             if (userservice.CountryId != Guid.Empty && userservice.CountryId != null)
             {

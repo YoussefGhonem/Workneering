@@ -1,6 +1,6 @@
 ﻿namespace Workneering.Project.Application.Services.Models
 {
-    public class CountryDetailsDto
+    public class CategorizationDetailsDto
     {
         public Guid? Id { get; set; }
         public string? Name { get; set; }

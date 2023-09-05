@@ -27,7 +27,10 @@ public static class ListExtension
     {
         return original == null || !original.Any();
     }
-
+    static bool IsNullOrEmpty<T>(List<T> list)
+    {
+        return list == null || list.Count == 0;
+    }
     /// <summary>
     /// Validates that list has unique values
     /// </summary>

@@ -3,11 +3,11 @@
 namespace Workneering.User.Domain.Entites;
 public record UserSkill : BaseEntity
 {
-    private Guid? _skillId;
+    private Guid _skillId;
 
-    public UserSkill(Guid? skillId)
+    public UserSkill(Guid skillId)
     {
-        _skillId = skillId ?? Id;
+        _skillId = skillId;
     }
     public UserSkill()
     {

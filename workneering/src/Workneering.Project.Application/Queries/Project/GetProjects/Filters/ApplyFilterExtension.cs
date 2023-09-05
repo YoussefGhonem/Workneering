@@ -39,14 +39,12 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects.Filters
             }
             if (filters.CategoryIds.Any())
             {
-                query = query.Where(x => filters.CategoryIds.Contains(x.ProjectCategory.CategoryId));
+                query = query.Where(x => x.Categories.Any(x => filters.CategoryIds.Contains(x.CategoryId)));
             }
             if (filters.NumberOfProposals != null)
             {
                 query = query.Where(p => p.Proposals.Count() >= filters.NumberOfProposals.From && p.Proposals.Count() <= filters.NumberOfProposals.To);
             }
-
-
 
             // Sort
             if (!filters.ApplySort) query = query.OrderByDescending(x => x.CreatedDate);
@@ -59,7 +57,7 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects.Filters
                         break;
                     case SortedByEnum.Relevance:
                         var categoryId = _dbQueryService.GetUserCategoryId(CurrentUser.Id!.Value);
-                        query = query.OrderByDescending(x => x.ProjectCategory.CategoryId == categoryId);
+                        query = query.OrderByDescending(x => x.Categories.Where(x => categoryId.Contains(x.CategoryId)));
                         break;
                     case SortedByEnum.CleintRating:
                         var projects = _dbQueryService.GetProjectsSortedByClientRating(CurrentUser.Id!.Value, filters.PageSize, filters.PageNumber);

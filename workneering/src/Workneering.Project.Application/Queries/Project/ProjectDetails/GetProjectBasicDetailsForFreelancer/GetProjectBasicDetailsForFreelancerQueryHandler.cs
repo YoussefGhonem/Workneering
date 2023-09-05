@@ -18,7 +18,6 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
         }
         public async Task<ProjectBasicDetailsForFreelancerDto> Handle(GetProjectBasicDetailsForFreelancerQuery request, CancellationToken cancellationToken)
         {
-
             var query = _context.Projects.FirstOrDefault(x => x.Id == request.ProjectId);
             var userservice = _dbQueryService.GetFreelancerInfoForProposals(query.ClientId!.Value);
             var result = query?.Adapt<ProjectBasicDetailsForFreelancerDto>();

@@ -17,7 +17,9 @@ namespace Workneering.Project.Application.Commands.UpdateProject
         public async Task<Unit> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
             var query = _context.Projects
-                .Include(x => x.RequiredSkills)
+                .Include(x => x.Skills)
+                .Include(x => x.SubCategories)
+                .Include(x => x.Categories)
                 .FirstOrDefault(x => x.Id == request.Id);
 
             var command = request.UpdateProject(query);

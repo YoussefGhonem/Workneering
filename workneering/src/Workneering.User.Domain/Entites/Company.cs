@@ -135,7 +135,7 @@ namespace Workneering.User.Domain.Entites
 
             foreach (var item in removeItems)
             {
-                var data = _categories.FirstOrDefault(x => x.Id == item);
+                var data = _categories.FirstOrDefault(x => x.CategoryId == item);
                 data.MarkAsDeleted(null);
             }
 
@@ -152,7 +152,7 @@ namespace Workneering.User.Domain.Entites
 
             foreach (var item in removeItems)
             {
-                var data = _subCategories.FirstOrDefault(x => x.Id == item);
+                var data = _subCategories.FirstOrDefault(x => x.SubCategoryId == item);
                 data.MarkAsDeleted(null);
             }
 
@@ -169,7 +169,7 @@ namespace Workneering.User.Domain.Entites
 
             foreach (var item in removeItems)
             {
-                var data = _skills.FirstOrDefault(x => x.Id == item);
+                var data = _skills.FirstOrDefault(x => x.SkillId == item);
                 data.MarkAsDeleted(null);
             }
 

@@ -1,6 +1,4 @@
 ﻿using Mapster;
-using Workneering.Project.Domain.Entities;
-using Workneering.Project.Domain.ValueObject;
 
 namespace Workneering.Project.Application.Commands.UpdateProject.Helpers
 {
@@ -8,8 +6,11 @@ namespace Workneering.Project.Application.Commands.UpdateProject.Helpers
     {
         public static Domain.Entities.Project UpdateProject(this UpdateProjectCommand command, Domain.Entities.Project query)
         {
-            var projectCategory = command.ProjectCategory.Adapt<ProjectCategory>();
-            var skills = command.RequiredSkills.Adapt<List<ProjectSkill>>();
+
+
+            var Categories = command.Categories.Adapt<List<Domain.Entities.ProjectCategory>>();
+            var SubCategories = command.SubCategories.Adapt<List<Domain.Entities.ProjectSubCategory>>();
+            var Skills = command.SubCategories.Adapt<List<Domain.Entities.ProjectSkill>>();
 
             query.UpdateProjectDurationDescription(command.DueDate);
             query.UpdateProjectDuration(command.ProjectDuration);
@@ -23,8 +24,9 @@ namespace Workneering.Project.Application.Commands.UpdateProject.Helpers
             query.UpdateIsOpenDueDate(command.IsOpenDueDate);
             query.UpdateProjectBudgetPrice(command.ProjectBudgetPrice);
 
-            query.UpdateFreelancerSkills(skills);
-            query.UpdateProjectCategory(projectCategory);
+            query.UpdateSkills(Skills);
+            query.UpdateCategory(Categories);
+            query.UpdateSubCategory(SubCategories);
 
             return query;
 

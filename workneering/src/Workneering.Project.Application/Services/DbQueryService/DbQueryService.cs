@@ -1,4 +1,5 @@
 using Dapper;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Workneering.Project.Application.Services.Models;
@@ -14,20 +15,18 @@ public class DbQueryService : IDbQueryService
         _connectionString = configuration.GetConnectionString("DefaultConnection");
     }
 
-    public Guid GetUserCategoryId(Guid userId)
+    public List<Guid> GetUserCategoryId(Guid userId)
     {
         using var con = new SqlConnection(_connectionString);
         con.OpenAsync();
 
         var data = con
-            .QueryFirstOrDefault<Guid>(
-                @$"SELECT 
-                c.CategoryId
-                FROM UserSchema.Freelancers f
-                INNER JOIN
-                UserSchema.FreelancerCategories c ON f.CategoryId = c.CategoryId
-                WHERE f.Id = '{userId.ToString()}'");
-        return data;
+            .Query<Guid>(
+                @$"SELECT CategoryId
+                FROM ProjectsSchema.ProjectCategories WHERE
+                WHERE c.UserId = '{userId.ToString()}'");
+
+        return data.ToList();
     }
     public List<ProjectsListInfo> GetProjectsSortedByClientRating(Guid clientId, int pageSize, int pageNumber)
     {
@@ -62,7 +61,6 @@ public class DbQueryService : IDbQueryService
 
         return data.ToList();
     }
-
     public FreelancerInfoForProposalsList GetFreelancerInfoForProposals(Guid freelancerId)
     {
         using var con = new SqlConnection(_connectionString);
@@ -78,13 +76,13 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
-    public FreelancerInfoForProposalsList GetClientInfoForProjectDetails(Guid clientId)
+    public ClientInfoForProjectDetails GetClientInfoForProjectDetails(Guid clientId)
     {
         using var con = new SqlConnection(_connectionString);
         con.Open();
 
         var data = con
-                    .QueryFirst<FreelancerInfoForProposalsList>(
+                    .QueryFirst<ClientInfoForProjectDetails>(
                         @$"  SELECT  f.Id, f.Name ,f.Title , c.Name as CountryName
                         FROM  UserSchema.Freelancers f
                         INNER JOIN IdentitySchema.Users u ON f.Id = u.Id
@@ -93,4 +91,6 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
+
+
 }

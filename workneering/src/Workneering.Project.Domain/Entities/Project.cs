@@ -1,6 +1,5 @@
 ﻿using Workneering.Base.Domain.Common;
 using Workneering.Project.Domain.Enums;
-using Workneering.Project.Domain.ValueObject;
 
 namespace Workneering.Project.Domain.Entities
 {
@@ -10,7 +9,6 @@ namespace Workneering.Project.Domain.Entities
         private string? _projectDescription;
         private bool? _isOpenDueDate;
         private decimal? _projectBudgetPrice;
-        private ProjectCategory? _projectCategory;
         private Guid? _clientId;
         private string? _projectDurationDescription;
         private ProjectDurationEnum? _projectDuration;
@@ -19,32 +17,46 @@ namespace Workneering.Project.Domain.Entities
         private ExperienceLevelEnum? _experienceLevel;
         private ProjectBudgetEnum? _projectBudget;
         private ProjectTypeEnum? _projectType;
-        private List<ProjectSkill> _requiredSkills = new();
         private List<Wishlist> _wishlist = new();
         private List<ProjectActivity> _activities = new();
         private List<Proposal> _proposals = new();
+        private List<ProjectCategory>? _categories = new();
+        private List<ProjectSkill>? _skills = new();
+        private List<ProjectSubCategory>? _subCategories = new();
 
 
-        public Project(HoursPerWeekEnum? hoursPerWeekEnum, ProjectDurationEnum? projectDuration, string? projectTitle, string? projectDescription = null, bool? isOpenDueDate = null,
-            string? projectDurationDescription = null, decimal? projectBudgetPrice = null, ProjectCategory? projectCategory = null,
+
+        public Project(
+             List<ProjectSubCategory>? subCategories,
+             List<ProjectCategory>? categories,
+             List<ProjectSkill>? skills,
+            HoursPerWeekEnum? hoursPerWeek, ProjectDurationEnum? projectDuration, string? projectTitle, string? projectDescription = null, bool? isOpenDueDate = null,
+            string? projectDurationDescription = null, decimal? projectBudgetPrice = null,
             Guid? clientId = null, ProjectStatusEnum? projectStatus = null, ExperienceLevelEnum? experienceLevel = null,
-            ProjectBudgetEnum? projectBudget = null, List<ProjectSkill> requiredSkills = null)
+            ProjectBudgetEnum? projectBudget = null)
         {
             _projectTitle = projectTitle;
             _projectDescription = projectDescription;
             _isOpenDueDate = isOpenDueDate;
             _projectDurationDescription = projectDurationDescription;
             _projectBudgetPrice = projectBudgetPrice;
-            _projectCategory = projectCategory;
             _clientId = clientId;
             _projectStatus = projectStatus;
             _experienceLevel = experienceLevel;
             _projectBudget = projectBudget;
-            _requiredSkills = requiredSkills;
             _projectDuration = projectDuration;
             _projectBudgetPrice = projectBudgetPrice;
+            _hoursPerWeek = hoursPerWeek;
+            _subCategories.AddRange(subCategories);
+            _categories.AddRange(categories);
+            _skills.AddRange(skills);
             _activities.Add(new ProjectActivity(@$"You Created Project '{projectTitle}'"));
         }
+        private void AddCategorization()
+        {
+
+        }
+
         public Project()
         {
 
@@ -55,7 +67,6 @@ namespace Workneering.Project.Domain.Entities
         public bool? IsOpenDueDate { get => _isOpenDueDate; private set => _isOpenDueDate = value; }
         public string? ProjectDurationDescription { get => _projectDurationDescription; private set => _projectDurationDescription = value; }
         public decimal? ProjectBudgetPrice { get => _projectBudgetPrice; private set => _projectBudgetPrice = value; }
-        public ProjectCategory? ProjectCategory { get => _projectCategory; private set => _projectCategory = value; }
         public Guid? ClientId { get => _clientId; private set => _clientId = value; }
         public ProjectDurationEnum? ProjectDuration { get => _projectDuration; private set => _projectDuration = value; }
         public ProjectStatusEnum? ProjectStatus { get => _projectStatus; private set => _projectStatus = value; }
@@ -63,12 +74,13 @@ namespace Workneering.Project.Domain.Entities
         public ProjectBudgetEnum? ProjectBudget { get => _projectBudget; private set => _projectBudget = value; }
         public HoursPerWeekEnum? HoursPerWeek { get => _hoursPerWeek; private set => _hoursPerWeek = value; }
         public ProjectTypeEnum? ProjectType { get => _projectType; private set => _projectType = value; }
-        public List<ProjectSkill> RequiredSkills => _requiredSkills;
         public List<ProjectActivity> Activities => _activities;
         public List<Proposal> Proposals => _proposals;
         public List<Wishlist> Wishlist => _wishlist;
 
-
+        public List<ProjectCategory>? Categories => _categories;
+        public List<ProjectSubCategory>? SubCategories => _subCategories;
+        public List<ProjectSkill>? Skills => _skills;
 
         #endregion
 
@@ -108,12 +120,7 @@ namespace Workneering.Project.Domain.Entities
         {
             _projectBudgetPrice = field;
         }
-        public void UpdateProjectCategory(ProjectCategory? field)
-        {
-            _activities.Add(new ProjectActivity(@$"You change category of project To '{field}'"));
 
-            _projectCategory = field;
-        }
         public void UpdateProjectStatus(ProjectStatusEnum? field)
         {
             _activities.Add(new ProjectActivity(@$"You project sttatus  To '{field.ToString()}'"));
@@ -134,28 +141,70 @@ namespace Workneering.Project.Domain.Entities
         }
         #endregion
 
-        #region Project Skill
-        public void UpdateFreelancerSkills(List<ProjectSkill>? freelancerSkills)
+
+        #region categorization
+        public void UpdateCategory(List<ProjectCategory>? categories)
         {
-            var addNewItems = freelancerSkills?.Where(x => x.SkillId == null);
-            var removeItems = _requiredSkills.Select(x => x.SkillId).Except(freelancerSkills.Select(x => x.SkillId));
-            var removItemsObj = _requiredSkills.Where(x => removeItems.Contains(x.SkillId));
-            var newItemsObj = _requiredSkills.Where(x => removeItems.Contains(x.SkillId));
+            var idsExternal = categories.Select(x => x.CategoryId).ToList();
+            var idsDatabase = _categories.Select(x => x.CategoryId).ToList();
+            if (!idsDatabase.Any()) return;
 
-            foreach (var item in addNewItems)
+            var addNewItemsIds = idsExternal.Except(idsDatabase);
+            var newItems = categories.Where(x => addNewItemsIds.Contains(x.CategoryId));
+            var result = newItems.Select(x => new ProjectCategory(x.CategoryId, x.Name));
+            _categories.AddRange(result);
+
+
+            var removeItemsIds = idsDatabase.Except(idsExternal);
+            var removeItems = categories.Where(x => removeItemsIds.Contains(x.CategoryId));
+            foreach (var item in removeItems)
             {
-                _requiredSkills.Add(new ProjectSkill(item.Name, null));
+                var data = _categories.FirstOrDefault(x => x.CategoryId == item.CategoryId);
+                data.MarkAsDeleted(null);
             }
+        }
+        public void UpdateSubCategory(List<ProjectSubCategory>? categories)
+        {
+            var idsExternal = categories.Select(x => x.SubCategoryId).ToList();
+            var idsDatabase = _subCategories.Select(x => x.SubCategoryId).ToList();
+            if (!idsDatabase.Any()) return;
 
-            foreach (var item in removItemsObj)
+            var addNewItemsIds = idsExternal.Except(idsDatabase);
+            var newItems = categories.Where(x => addNewItemsIds.Contains(x.SubCategoryId));
+            var result = newItems.Select(x => new ProjectSubCategory(x.SubCategoryId, x.Name));
+            _subCategories.AddRange(result);
+
+
+            var removeItemsIds = idsDatabase.Except(idsExternal);
+            var removeItems = categories.Where(x => removeItemsIds.Contains(x.SubCategoryId));
+            foreach (var item in removeItems)
             {
-                var data = _requiredSkills.FirstOrDefault(x => x.SkillId == item.SkillId);
+                var data = _subCategories.FirstOrDefault(x => x.SubCategoryId == item.SubCategoryId);
+                data.MarkAsDeleted(null);
+            }
+        }
+        public void UpdateSkills(List<ProjectSkill>? categories)
+        {
+            var idsExternal = categories.Select(x => x.SkillId).ToList();
+            var idsDatabase = _skills.Select(x => x.SkillId).ToList();
+            if (!idsDatabase.Any()) return;
+
+            var addNewItemsIds = idsExternal.Except(idsDatabase);
+            var newItems = categories.Where(x => addNewItemsIds.Contains(x.SkillId));
+            var result = newItems.Select(x => new ProjectSkill(x.SkillId, x.Name));
+            _skills.AddRange(result);
+
+
+            var removeItemsIds = idsDatabase.Except(idsExternal);
+            var removeItems = categories.Where(x => removeItemsIds.Contains(x.SkillId));
+            foreach (var item in removeItems)
+            {
+                var data = _skills.FirstOrDefault(x => x.SkillId == item.SkillId);
                 data.MarkAsDeleted(null);
             }
         }
 
         #endregion
-
         #region Wishlist
         public void AddIntoWishlist(Guid? freelancerId)
         {

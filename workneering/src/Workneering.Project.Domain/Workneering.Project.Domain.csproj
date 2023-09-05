@@ -11,4 +11,8 @@
 		<ProjectReference Include="..\Workneering.Base.Helpers\Workneering.Base.Helpers.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="ValueObject\" />
+	</ItemGroup>
+
 </Project>

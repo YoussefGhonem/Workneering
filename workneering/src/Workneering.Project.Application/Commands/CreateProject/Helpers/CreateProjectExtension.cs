@@ -1,6 +1,5 @@
-﻿using Mapster;
+﻿using Workneering.Base.Helpers.Extensions;
 using Workneering.Project.Domain.Entities;
-using Workneering.Project.Domain.ValueObject;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Project.Application.Commands.CreateProject.Helpers
@@ -9,15 +8,19 @@ namespace Workneering.Project.Application.Commands.CreateProject.Helpers
     {
         public static Domain.Entities.Project CreatProject(this CreateProjectCommand command)
         {
-            var projectCategory = command.ProjectCategory.Adapt<ProjectCategory>();
             var clientId = CurrentUser.Id;
-            var skills = command.RequiredSkills.Adapt<List<ProjectSkill>>();
+            var categories = command.Categories.AsNotNull().Select(x => new ProjectCategory(x.Id.Value, x.Name)).ToList();
+            var subCategories = command.SubCategories.AsNotNull().Select(x => new ProjectSubCategory(x.Id.Value, x.Name)).ToList();
+            var skills = command.Skills.AsNotNull().Select(x => new ProjectSkill(x.Id.Value, x.Name)).ToList();
 
-            return new Domain.Entities.Project(command.HoursPerWeek, command.ProjectDuration,
+
+            return new Domain.Entities.Project(
+                subCategories, categories, skills,
+                command.HoursPerWeek, command.ProjectDuration,
                 command.ProjectTitle, command.ProjectDescription, command.IsOpenDueDate,
-                command.DueDate, command.ProjectBudgetPrice, projectCategory, clientId,
+                command.DueDate, command.ProjectBudgetPrice, clientId,
                 command.ProjectStatus, command.ExperienceLevel,
-                command.ProjectBudget, skills);
+                command.ProjectBudget);
 
         }
     }

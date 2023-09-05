@@ -12,6 +12,7 @@ namespace Workneering.User.Domain.Entites
         }
         public UserCategory(Guid categoryId)
         {
+            _categoryId = categoryId;
         }
 
         public Guid CategoryId { get => _categoryId; private set => _categoryId = value; }

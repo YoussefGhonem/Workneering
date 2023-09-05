@@ -27,14 +27,11 @@ using Workneering.User.Application.Commands.Freelancer.Language.DeleteLanguage;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.DeletePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio;
-using Workneering.User.Application.Commands.Freelancer.Skills.UpdateFreelancerSkills;
 using Workneering.User.Application.Queries.Freelancer.GetCertifications;
-using Workneering.User.Application.Queries.Freelancer.GetClientCategorization;
 using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorization;
-using Workneering.User.Application.Queries.Freelancer.GetFreelancerSkills;
 using Workneering.User.Application.Queries.Freelancer.GetLanguages;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetPortfolioById;
@@ -248,20 +245,6 @@ namespace Workneering.User.API.Controllers
         }
         #endregion
 
-        #region skills
-
-        [HttpPut("profile/skills")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateFreelancerSkillsCommand(UpdateFreelancerSkillsCommand command)
-        {
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
-
-        #endregion
-
         #region Certifications
 
         [HttpPost("profile/certifications")]
@@ -401,17 +384,7 @@ namespace Workneering.User.API.Controllers
             var query = new GetPortfolioByIdQuery() { Id = id, FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
-        //[Authorize]
-        [HttpGet("profile/skills")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerSkillDto>))]
-        public async Task<ActionResult<List<FreelancerSkillDto>>> GetFreelancerSkillsQuery()
-        {
-            var query = new GetFreelancerSkillsQuery() { FreelancerId = CurrentUser.Id.Value };
-            return Ok(await Mediator.Send(query, CancellationToken));
-        }
+
         //[Authorize]
         [HttpGet("profile/employment-history")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -505,17 +478,7 @@ namespace Workneering.User.API.Controllers
             var query = new GetPortfolioByIdQuery() { Id = id, FreelancerId = userId };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
-        //[Authorize]
-        [HttpGet("{id}/profile/skills")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerSkillDto>))]
-        public async Task<ActionResult<List<FreelancerSkillDto>>> GetFreelancerSkillsQuery(Guid id)
-        {
-            var query = new GetFreelancerSkillsQuery() { FreelancerId = id };
-            return Ok(await Mediator.Send(query, CancellationToken));
-        }
+
         //[Authorize]
         [HttpGet("{id}/profile/employment-history")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
