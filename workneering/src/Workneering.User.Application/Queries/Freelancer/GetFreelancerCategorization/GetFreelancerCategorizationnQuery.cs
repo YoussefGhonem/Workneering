@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Workneering.User.Application.Queries.Freelancer.GetClientCategorization
+namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorization
 {
     public class GetFreelancerCategorizationnQuery : IRequest<FreelancerCategorizationDto>
     {

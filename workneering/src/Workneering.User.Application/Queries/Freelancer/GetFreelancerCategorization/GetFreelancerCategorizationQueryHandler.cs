@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
-namespace Workneering.User.Application.Queries.Freelancer.GetClientCategorization
+namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorization
 {
     public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetFreelancerCategorizationnQuery, FreelancerCategorizationDto>
     {

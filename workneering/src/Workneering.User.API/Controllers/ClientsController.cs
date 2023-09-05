@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientBasicDetails;
+using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientCategorization;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientDescription;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;
 using Workneering.User.Application.Queries.Client.GetClientBasicDetails;
 using Workneering.User.Application.Queries.Client.GetClientCategorization;
 using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
@@ -28,6 +30,15 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> UpdateClientDescriptionCommand(UpdateClientDescriptionCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/categorization")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateClientCategorizationCommand(UpdateClientCategorizationCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }

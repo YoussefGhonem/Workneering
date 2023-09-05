@@ -17,6 +17,7 @@ using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateE
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailability;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateCountry;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateExperienceLevel;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateHourlyRate;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateOverviewDescription;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateTitle;
@@ -32,6 +33,7 @@ using Workneering.User.Application.Queries.Freelancer.GetClientCategorization;
 using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
+using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorization;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerSkills;
 using Workneering.User.Application.Queries.Freelancer.GetLanguages;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios;
@@ -51,7 +53,15 @@ namespace Workneering.User.API.Controllers
         #region Commands
 
         #region Update Basic Details
-
+        [HttpPut("profile/categorization")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateFreelancerCategorizationCommand(UpdateFreelancerCategorizationCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
         [HttpPut("profile/experience-level")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

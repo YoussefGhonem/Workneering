@@ -24,7 +24,6 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
 
             query!.UpdateTitle(request.Title);
             query!.UpdateTitleOverview(request.TitleOverview);
-            query!.UpdateCategory(request.CategoryId);
             query!.UpdateTitleOverview(request.TitleOverview);
             query!.UpdateGender(request.Gender);
 

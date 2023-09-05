@@ -28,7 +28,6 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
             query!.UpdateFoundedIn(request.FoundedIn);
             query!.UpdateTitle(request.Title);
             query!.UpdateTitleOverview(request.TitleOverview);
-            query!.UpdateCategory(request.CategoryId);
 
             await _dbQueryService!.UpdateCountryUser(CurrentUser.Id!.Value, request.CountryId, cancellationToken);
 
