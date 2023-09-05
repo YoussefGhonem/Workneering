@@ -2,6 +2,7 @@
 {
     public class ProjectListDto
     {
+        public bool IsSaved { get; set; } = false;
         public Guid Id { get; set; }
         public string? ProjectTitle { get; set; }
         public string? ProjectDescription { get; set; }
