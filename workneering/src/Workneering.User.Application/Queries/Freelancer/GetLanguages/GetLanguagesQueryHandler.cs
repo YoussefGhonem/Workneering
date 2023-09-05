@@ -16,8 +16,8 @@ namespace Workneering.User.Application.Queries.Freelancer.GetLanguages
         public async Task<List<LanguagesListDto>> Handle(GetLanguagesQuery request, CancellationToken cancellationToken)
         {
 
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Categories).FirstOrDefault(x => x.Id == request.FreelancerId);
-            var result = query!.Categories.Adapt<List<LanguagesListDto>>();
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Languages).FirstOrDefault(x => x.Id == request.FreelancerId);
+            var result = query!.Languages.Adapt<List<LanguagesListDto>>();
             return result;
         }
     }

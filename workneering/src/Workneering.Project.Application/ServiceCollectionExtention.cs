@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using Workneering.Base.Application.Services.DbQueryService;
+using Workneering.Project.Application.Services.DbQueryService;
 
 namespace Workneering.Project.Application
 {

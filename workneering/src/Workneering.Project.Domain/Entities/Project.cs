@@ -172,7 +172,30 @@ namespace Workneering.Project.Domain.Entities
         public void AddProposal(Guid? freelancerId, string? coverLetter, ProposalDurationEnum? proposalDuratio,
             decimal? totalBid, decimal? hourlyRate)
         {
-            _proposals.Add(new Proposal(freelancerId, coverLetter, proposalDuratio, totalBid, hourlyRate));
+            var proposalStatus = ProposalStatusEnum.Submitted;
+            _proposals.Add(new Proposal(proposalStatus, freelancerId, coverLetter, proposalDuratio, totalBid, hourlyRate));
+        }
+        public void AcceptProposal(Guid proposalId)
+        {
+            var proposalStatus = ProposalStatusEnum.Accepted;
+            var porposal = _proposals.FirstOrDefault(x => x.Id == proposalId);
+            porposal.UpdateProposalStatus(proposalStatus);
+
+            var otherPorposals = _proposals.Where(x => x.Id != proposalId);
+            foreach (var item in otherPorposals)
+            {
+                if (item.ProposalStatus != ProposalStatusEnum.Rejected)
+                {
+                    item.UpdateProposalStatus(ProposalStatusEnum.None);
+                }
+            }
+        }
+        public void RejectedProposal(Guid proposalId)
+        {
+            var proposalStatus = ProposalStatusEnum.Rejected;
+            var porposal = _proposals.FirstOrDefault(x => x.Id == proposalId);
+            porposal.UpdateProposalStatus(proposalStatus);
+
         }
         #endregion
         #endregion

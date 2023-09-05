@@ -17,7 +17,7 @@ public class DbQueryService : IDbQueryService
     public Guid GetUserCategoryId(Guid userId)
     {
         using var con = new SqlConnection(_connectionString);
-        con.OpenAsync(cancellationToken);
+        con.OpenAsync();
 
         var data = con
             .QueryFirstOrDefault<Guid>(
@@ -29,8 +29,6 @@ public class DbQueryService : IDbQueryService
                 WHERE f.Id = '{userId.ToString()}'");
         return data;
     }
-
-
     public List<ProjectsListInfo> GetProjectsSortedByClientRating(Guid clientId, int pageSize, int pageNumber)
     {
         using var con = new SqlConnection(_connectionString);
@@ -63,5 +61,21 @@ public class DbQueryService : IDbQueryService
                         FETCH NEXT {pageSize} ROWS ONLY");
 
         return data.ToList();
+    }
+
+    public FreelancerInfoForProposalsList GetFreelancerInfoForProposals(Guid freelancerId)
+    {
+        using var con = new SqlConnection(_connectionString);
+        con.Open();
+
+        var data = con
+                    .QueryFirst<FreelancerInfoForProposalsList>(
+                        @$"  SELECT  f.Id, f.Name ,f.Title , c.Name as CountryName
+                        FROM  UserSchema.Freelancers f
+                        INNER JOIN IdentitySchema.Users u ON f.Id = u.Id
+                        INNER JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
+                        WHERE f.Id = '{freelancerId}' ");
+
+        return data;
     }
 }

@@ -10,6 +10,7 @@ using Workneering.Project.Application.Commands.UpdateProject;
 using Workneering.Project.Application.Commands.Wishlist.CreateWishlist;
 using Workneering.Project.Application.Commands.Wishlist.RemoveWishlist;
 using Workneering.Project.Application.Queries.Project.GetProjects;
+using Workneering.Project.Application.Queries.Proposal.GetProposals;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Project.API.Controllers
@@ -83,7 +84,10 @@ namespace Workneering.Project.API.Controllers
         }
 
         #endregion
+
         #endregion
+
+        #region Queries
 
         #region Project 
         [HttpGet] // for freelancers
@@ -117,5 +121,63 @@ namespace Workneering.Project.API.Controllers
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         #endregion
+
+        #region Wishlist
+        [HttpGet("wishlist")] // for freelancers
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProjectListDto>))]
+        public async Task<ActionResult<PaginationResult<ProjectListDto>>> GetWishListProjects([FromQuery] GetProjectsQuery query)
+        {
+            query.ClientId = null;
+            query.IsWishlist = true;
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        #endregion
+
+        #region Proposals
+        [HttpGet("{id}/proposals")] // for clients to get project proposals
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProposalsDto>))]
+        public async Task<ActionResult<PaginationResult<ProposalsDto>>> GetProposals([FromQuery] GetProposalsQuery query, Guid id)
+        {
+            query.ProjectId = id;
+            query.ClientId = null;
+            query.FreelancerId = null;
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        [HttpGet("proposals")] // for clients to get project proposals
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProposalsDto>))]
+        public async Task<ActionResult<PaginationResult<ProposalsDto>>> GetProposals([FromQuery] GetProposalsQuery query)
+        {
+            query.FreelancerId = null;
+            query.ProjectId = null;
+            query.ClientId = CurrentUser.Id;
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        [HttpGet("proposals/freelancer")] // for freelancer to get all proposals freelancer
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProposalsDto>))]
+        public async Task<ActionResult<PaginationResult<ProposalsDto>>> GetProposalsFreelancer([FromQuery] GetProposalsQuery query)
+        {
+            query.FreelancerId = CurrentUser.Id;
+            query.ProjectId = null;
+            query.ClientId = null;
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        #endregion
+
+        #endregion
+
     }
 }

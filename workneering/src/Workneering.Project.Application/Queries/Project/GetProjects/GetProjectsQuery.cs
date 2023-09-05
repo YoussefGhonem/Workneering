@@ -6,6 +6,5 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
 {
     public class GetProjectsQuery : ProjectsListFilters, IRequest<PaginationResult<ProjectListDto>>
     {
-        public Guid? ProjectId { get; set; }
     }
 }

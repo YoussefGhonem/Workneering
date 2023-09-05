@@ -25,7 +25,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
             var userservice = await _dbQueryService.GetUserBasicInfo(request.FreelancerId, cancellationToken);
 
             var result = query?.Adapt<FreelancerBasicDetailsDto>();
-            result.CategoryId = query!.Categories?.FirstOrDefault()?.CategoryId;
+            result.CategoryId = query.Category.CategoryId;
             // Country Info
             if (userservice.CountryId != Guid.Empty && userservice.CountryId != null)
             {
