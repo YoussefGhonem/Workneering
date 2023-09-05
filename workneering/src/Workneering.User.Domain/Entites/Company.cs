@@ -19,7 +19,9 @@ namespace Workneering.User.Domain.Entites
         private DateTimeOffset? _foundedIn;
         private CompanySizeEnum? _companySize;
         private ReviewersStars? _reviewersStars;
-        private List<CompanyCategory>? _categories = new();
+        private List<UserCategory>? _categories = new();
+        private List<UserSubCategory>? _subCategories = new();
+        private List<UserSkill>? _skills = new();
 
         public Company(Guid id, string? name)
         {
@@ -48,7 +50,9 @@ namespace Workneering.User.Domain.Entites
         public CompanySizeEnum? CompanySize { get => _companySize; set => _companySize = value; }
 
         public ReviewersStars? ReviewersStars { get => _reviewersStars; set => _reviewersStars = value; }
-        public List<CompanyCategory>? Categories => _categories;
+        public List<UserCategory>? Categories => _categories;
+        public List<UserSubCategory>? UserSubCategories => _subCategories;
+        public List<UserSkill>? Skills => _skills;
 
 
         #endregion
@@ -119,24 +123,56 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region Category
-        public void AddCategory(List<CompanyCategory> data)
+        public void UpdateCategory(List<Guid>? categoryIds)
         {
-            _categories.AddRange(data);
+            var ids = _categories.Select(x => x.CategoryId).ToList();
+            if (!ids.Any()) return;
+
+            var addNewItems = categoryIds?.Except(ids);
+            var removeItems = ids?.Except(categoryIds);
+            var result = addNewItems.Select(x => new UserCategory(x));
+            _categories.AddRange(result);
+
+            foreach (var item in removeItems)
+            {
+                var data = _categories.FirstOrDefault(x => x.Id == item);
+                data.MarkAsDeleted(null);
+            }
+
         }
-        public void AddCategory(CompanyCategory data)
+        public void UpdateSubCategory(List<Guid>? externalIds)
         {
-            _categories.Add(data);
+            var ids = _subCategories?.Select(x => x.SubCategoryId).ToList();
+            if (!ids.Any()) return;
+
+            var addNewItems = externalIds?.Except(ids);
+            var removeItems = ids?.Except(externalIds);
+            var result = addNewItems.Select(x => new UserSubCategory(x));
+            _subCategories.AddRange(result);
+
+            foreach (var item in removeItems)
+            {
+                var data = _subCategories.FirstOrDefault(x => x.Id == item);
+                data.MarkAsDeleted(null);
+            }
+
         }
-        public void RemoveCategory(Guid id)
+        public void UpdateSkills(List<Guid> externalIds)
         {
-            var data = _categories.FirstOrDefault(x => x.Id == id);
-            data.MarkAsDeleted(id);
-        }
-        public void UpdateCategory(Guid categoryId)
-        {
-            var data = _categories.FirstOrDefault();
-            if (data is null) return;
-            data.UpdateCategoryId(categoryId);
+            var ids = _skills.Select(x => x.SkillId).ToList();
+            if (!ids.Any()) return;
+
+            var addNewItems = externalIds.Except(ids);
+            var removeItems = ids.Except(externalIds);
+            var result = addNewItems.Select(x => new UserSkill(x));
+            _skills.AddRange(result);
+
+            foreach (var item in removeItems)
+            {
+                var data = _skills.FirstOrDefault(x => x.Id == item);
+                data.MarkAsDeleted(null);
+            }
+
         }
         #endregion
         #endregion

@@ -2,17 +2,16 @@
 
 namespace Workneering.User.Domain.Entites
 {
-    public record ClientCategory : BaseEntity
+    public record UserCategory : BaseEntity
     {
         private Guid _categoryId;
 
-        public ClientCategory()
+        public UserCategory()
         {
 
         }
-        public ClientCategory(Guid categoryId)
+        public UserCategory(Guid categoryId)
         {
-            _categoryId = categoryId;
         }
 
         public Guid CategoryId { get => _categoryId; private set => _categoryId = value; }

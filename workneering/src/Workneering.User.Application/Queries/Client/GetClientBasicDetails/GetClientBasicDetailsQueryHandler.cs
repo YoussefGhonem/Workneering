@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
@@ -19,12 +20,13 @@ namespace Workneering.User.Application.Queries.Client.GetClientBasicDetails
         public async Task<ClientBasicDetailsDto> Handle(GetClientBasicDetailsQuery request, CancellationToken cancellationToken)
         {
 
-            var query = _userDatabaseContext.Clients.FirstOrDefault(x => x.Id == request.ClientId);
+            var query = _userDatabaseContext.Clients
+
+                .FirstOrDefault(x => x.Id == request.ClientId);
 
             var userservice = await _dbQueryService.GetUserBasicInfo(request.ClientId, cancellationToken);
 
             var result = query?.Adapt<ClientBasicDetailsDto>();
-            result.CategoryId = query!.Categories?.FirstOrDefault()?.CategoryId;
             // Country Info
             if (userservice.CountryId != Guid.Empty && userservice.CountryId != null)
             {

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Workneering.Project.Application.Services.Models
 {
-    internal class CategoryDetailsDto
+    public class CategoryDetailsDto
     {
+        public int CategoryName { get; set; }
     }
 }

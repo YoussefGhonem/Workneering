@@ -20,7 +20,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Skills.UpdateFreelanc
             if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
 
             var query = _userDatabaseContext.Freelancers.Include(x => x.FreelancerSkills).FirstOrDefault(x => x.Id == CurrentUser.Id);
-            var result = request.FreelancerSkills?.Adapt<List<FreelancerSkill>>();
+            var result = request.FreelancerSkills?.Adapt<List<UserSkill>>();
             query!.UpdateFreelancerSkills(result);
             _userDatabaseContext.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);

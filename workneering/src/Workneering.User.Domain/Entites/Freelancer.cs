@@ -26,9 +26,11 @@ namespace Workneering.User.Domain.Entites
         private readonly List<EmploymentHistory> _employmentHistory = new();
         private readonly List<Experience> _experiences = new();
         private readonly FreelancerCategory _category = new();
-        private readonly List<FreelancerSkill> _freelancerSkills = new();
         private readonly List<Language> _languages = new();
         private readonly List<Certification> _certifications = new();
+        private List<UserCategory>? _categories = new();
+        private List<UserSubCategory>? _subCategories = new();
+        private List<UserSkill>? _skills = new();
         public Freelancer()
         {
 
@@ -56,7 +58,9 @@ namespace Workneering.User.Domain.Entites
         public List<Experience> Experiences => _experiences;
         public List<Education> Educations => _educations;
         public List<Portfolio> Portfolios => _portfolios;
-        public List<FreelancerSkill> FreelancerSkills => _freelancerSkills;
+        public List<UserCategory>? Categories => _categories;
+        public List<UserSubCategory>? UserSubCategories => _subCategories;
+        public List<UserSkill>? Skills => _skills;
         public List<Certification> Certifications => _certifications;
         public List<Language> Languages => _languages;
         public List<EmploymentHistory> EmploymentHistory => _employmentHistory;
@@ -177,24 +181,57 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
 
-        #region Freelancer Skills
-        public void UpdateFreelancerSkills(List<FreelancerSkill>? freelancerSkills)
+        #region Category
+        public void UpdateCategory(List<Guid>? categoryIds)
         {
-            var addNewItems = freelancerSkills?.Where(x => x.SkillId == null);
-            var removeItems = _freelancerSkills.Select(x => x.SkillId).Except(freelancerSkills.Select(x => x.SkillId));
-            var removItemsObj = _freelancerSkills.Where(x => removeItems.Contains(x.SkillId));
-            var newItemsObj = _freelancerSkills.Where(x => removeItems.Contains(x.SkillId));
+            var ids = _categories.Select(x => x.CategoryId).ToList();
+            if (!ids.Any()) return;
 
-            foreach (var item in addNewItems)
-            {
-                _freelancerSkills.Add(new FreelancerSkill(item.Name, null));
-            }
+            var addNewItems = categoryIds?.Except(ids);
+            var removeItems = ids?.Except(categoryIds);
+            var result = addNewItems.Select(x => new UserCategory(x));
+            _categories.AddRange(result);
 
-            foreach (var item in removItemsObj)
+            foreach (var item in removeItems)
             {
-                var data = _freelancerSkills.FirstOrDefault(x => x.SkillId == item.SkillId);
+                var data = _categories.FirstOrDefault(x => x.Id == item);
                 data.MarkAsDeleted(null);
             }
+
+        }
+        public void UpdateSubCategory(List<Guid>? externalIds)
+        {
+            var ids = _subCategories?.Select(x => x.SubCategoryId).ToList();
+            if (!ids.Any()) return;
+
+            var addNewItems = externalIds?.Except(ids);
+            var removeItems = ids?.Except(externalIds);
+            var result = addNewItems.Select(x => new UserSubCategory(x));
+            _subCategories.AddRange(result);
+
+            foreach (var item in removeItems)
+            {
+                var data = _subCategories.FirstOrDefault(x => x.Id == item);
+                data.MarkAsDeleted(null);
+            }
+
+        }
+        public void UpdateSkills(List<Guid> externalIds)
+        {
+            var ids = _skills.Select(x => x.SkillId).ToList();
+            if (!ids.Any()) return;
+
+            var addNewItems = externalIds.Except(ids);
+            var removeItems = ids.Except(externalIds);
+            var result = addNewItems.Select(x => new UserSkill(x));
+            _skills.AddRange(result);
+
+            foreach (var item in removeItems)
+            {
+                var data = _skills.FirstOrDefault(x => x.Id == item);
+                data.MarkAsDeleted(null);
+            }
+
         }
         #endregion
 

@@ -9,5 +9,6 @@ public interface IDbQueryService
     public List<ProjectsListInfo> GetProjectsByLocations(List<Guid> categoryIds, int pageSize = 10, int pageNumber = 1);
     public FreelancerInfoForProposalsList GetFreelancerInfoForProposals(Guid freelancerId);
     public FreelancerInfoForProposalsList GetClientInfoForProjectDetails(Guid clientId);
+    public CategoryDetailsDto GetCategoryDetails(Guid clientId);
 
 }
