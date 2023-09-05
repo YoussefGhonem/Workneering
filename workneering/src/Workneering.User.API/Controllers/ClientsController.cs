@@ -7,6 +7,8 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientBasicDetails;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientDescription;
 using Workneering.User.Application.Queries.Client.GetClientBasicDetails;
+using Workneering.User.Application.Queries.Client.GetClientCategorization;
+using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 
 namespace Workneering.User.API.Controllers
 {
@@ -61,6 +63,26 @@ namespace Workneering.User.API.Controllers
         public async Task<ActionResult<ClientBasicDetailsDto>> GetClientBasicDetailsQuery(Guid id)
         {
             var query = new GetClientBasicDetailsQuery() { ClientId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet("{id}/profile/categorization")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientCategorizationDto))]
+        public async Task<ActionResult<ClientBasicDetailsDto>> GetClientCategorizationQuery(Guid id)
+        {
+            var query = new GetClientCategorizationQuery() { ClientId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet("profile/categorization")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientCategorizationDto))]
+        public async Task<ActionResult<ClientBasicDetailsDto>> GetClientCategorizationQuery()
+        {
+            var query = new GetClientCategorizationQuery() { ClientId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         #endregion

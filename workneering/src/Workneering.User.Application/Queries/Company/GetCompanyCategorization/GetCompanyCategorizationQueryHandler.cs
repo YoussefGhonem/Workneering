@@ -5,9 +5,9 @@ using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
-namespace Workneering.User.Application.Queries.Client.GetClientCategorization
+namespace Workneering.User.Application.Queries.Company.GetCompanyCategorization
 {
-    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetClientCategorizationQuery, ClientCategorizationDto>
+    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetCompanyCategorizationQuery, CompanyCategorizationDto>
     {
         private readonly UserDatabaseContext _userDatabaseContext;
         private readonly IDbQueryService _dbQueryService;
@@ -17,18 +17,16 @@ namespace Workneering.User.Application.Queries.Client.GetClientCategorization
             _userDatabaseContext = userDatabaseContext;
             _dbQueryService = dbQueryService;
         }
-        public async Task<ClientCategorizationDto> Handle(GetClientCategorizationQuery request, CancellationToken cancellationToken)
+        public async Task<CompanyCategorizationDto> Handle(GetCompanyCategorizationQuery request, CancellationToken cancellationToken)
         {
 
-            var query = _userDatabaseContext.Clients
+            var query = _userDatabaseContext.Companies
                 .Include(x => x.Skills)
                 .Include(x => x.Categories)
                 .Include(x => x.SubCategories)
-                .FirstOrDefault(x => x.Id == request.ClientId);
+                .FirstOrDefault(x => x.Id == request.CompanyId);
 
-            var userservice = await _dbQueryService.GetUserBasicInfo(request.ClientId, cancellationToken);
-
-            var result = query?.Adapt<ClientCategorizationDto>();
+            var result = query?.Adapt<CompanyCategorizationDto>();
             result.CategoryIds = query!.Categories.Select(x => x.CategoryId).ToList();
             result.SubCategoryIds = query!.SubCategories.Select(x => x.SubCategoryId).ToList();
             result.SkillIds = query!.Skills.Select(x => x.SkillId).ToList();

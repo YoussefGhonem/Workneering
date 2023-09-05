@@ -28,10 +28,10 @@ using Workneering.User.Application.Commands.Freelancer.Portfolio.DeletePortfolio
 using Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Skills.UpdateFreelancerSkills;
 using Workneering.User.Application.Queries.Freelancer.GetCertifications;
+using Workneering.User.Application.Queries.Freelancer.GetClientCategorization;
 using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
-using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategories;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerSkills;
 using Workneering.User.Application.Queries.Freelancer.GetLanguages;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios;
@@ -314,6 +314,17 @@ namespace Workneering.User.API.Controllers
         #endregion
 
         #region Queries
+
+        [HttpGet("profile/categorization")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FreelancerCategorizationDto))]
+        public async Task<ActionResult<FreelancerCategorizationDto>> GetClientCategorizationQuery()
+        {
+            var query = new GetFreelancerCategorizationnQuery() { FreelancerId = CurrentUser.Id.Value };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
         //[Authorize]
         [HttpGet("profile/basic-details")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -403,21 +414,21 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
-        //[Authorize]
-        [HttpGet("profile/categories")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerCategoryDto>))]
-        public async Task<ActionResult<List<FreelancerCategoryDto>>> GetFreelancerCategoriesQuery()
-        {
-            var query = new GetFreelancerCategoriesQuery() { FreelancerId = CurrentUser.Id.Value };
-            return Ok(await Mediator.Send(query, CancellationToken));
-        }
+
 
         #endregion
 
         #region Queries profile by Id
+        [HttpGet("{id}/profile/categorization")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FreelancerCategorizationDto))]
+        public async Task<ActionResult<FreelancerCategorizationDto>> GetClientCategorizationQuery(Guid id)
+        {
+            var query = new GetFreelancerCategorizationnQuery() { FreelancerId = id };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
         //[Authorize]
         [HttpGet("{id}/profile/basic-details")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -506,19 +517,6 @@ namespace Workneering.User.API.Controllers
             var query = new GetEmploymentHistoryQuery() { FreelancerId = id };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
-
-        //[Authorize]
-        [HttpGet("{id}/profile/categories")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FreelancerCategoryDto>))]
-        public async Task<ActionResult<List<FreelancerCategoryDto>>> GetFreelancerCategoriesQuery(Guid id)
-        {
-            var query = new GetFreelancerCategoriesQuery() { FreelancerId = id };
-            return Ok(await Mediator.Send(query, CancellationToken));
-        }
-
         #endregion
     }
 }

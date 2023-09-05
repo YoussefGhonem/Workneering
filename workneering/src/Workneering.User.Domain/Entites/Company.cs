@@ -51,7 +51,7 @@ namespace Workneering.User.Domain.Entites
 
         public ReviewersStars? ReviewersStars { get => _reviewersStars; set => _reviewersStars = value; }
         public List<UserCategory>? Categories => _categories;
-        public List<UserSubCategory>? UserSubCategories => _subCategories;
+        public List<UserSubCategory>? SubCategories => _subCategories;
         public List<UserSkill>? Skills => _skills;
 
 

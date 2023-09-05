@@ -59,7 +59,7 @@ namespace Workneering.User.Domain.Entites
         public List<Education> Educations => _educations;
         public List<Portfolio> Portfolios => _portfolios;
         public List<UserCategory>? Categories => _categories;
-        public List<UserSubCategory>? UserSubCategories => _subCategories;
+        public List<UserSubCategory>? SubCategories => _subCategories;
         public List<UserSkill>? Skills => _skills;
         public List<Certification> Certifications => _certifications;
         public List<Language> Languages => _languages;
