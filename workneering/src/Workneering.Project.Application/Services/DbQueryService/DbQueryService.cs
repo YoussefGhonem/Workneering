@@ -78,4 +78,19 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
+    public FreelancerInfoForProposalsList GetClientInfoForProjectDetails(Guid clientId)
+    {
+        using var con = new SqlConnection(_connectionString);
+        con.Open();
+
+        var data = con
+                    .QueryFirst<FreelancerInfoForProposalsList>(
+                        @$"  SELECT  f.Id, f.Name ,f.Title , c.Name as CountryName
+                        FROM  UserSchema.Freelancers f
+                        INNER JOIN IdentitySchema.Users u ON f.Id = u.Id
+                        INNER JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
+                        WHERE f.Id = '{clientId}' ");
+
+        return data;
+    }
 }
