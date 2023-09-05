@@ -17,6 +17,8 @@ namespace Workneering.Project.Application.Commands.UpdateProject
         public bool? IsOpenDueDate { get; set; }
         public string? DueDate { get; set; }
         public decimal? ProjectBudgetPrice { get; set; }
+        public ProjectDurationEnum? ProjectDuration { get; set; }
+        public HoursPerWeekEnum? HoursPerWeek { get; set; }
         public ProjectStatusEnum? ProjectStatus { get; set; }
         public ExperienceLevelEnum? ExperienceLevel { get; set; }
         public ProjectBudgetEnum? ProjectBudget { get; set; }

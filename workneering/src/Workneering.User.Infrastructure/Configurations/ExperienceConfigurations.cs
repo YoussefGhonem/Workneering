@@ -8,7 +8,7 @@ public class ExperienceConfigurations : IEntityTypeConfiguration<Experience>
 {
     public void Configure(EntityTypeBuilder<Experience> builder)
     {
-        builder.ToTable("Experiences", "User");
+        builder.ToTable("Experiences", "UserSchema");
 
 
     }

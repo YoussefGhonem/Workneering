@@ -8,7 +8,7 @@ public class CompanyConfigurations : IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
     {
-        builder.ToTable("Companies", "User");
+        builder.ToTable("Companies", "UserSchema");
 
         builder.OwnsOne(z => z.ReviewersStars, x =>
             {

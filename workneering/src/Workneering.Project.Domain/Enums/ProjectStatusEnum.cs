@@ -6,8 +6,8 @@
         Posted = 2,
         OfferAccepted = 3,
         Ongoing = 4,
-        Rejected = 4, // can be rejected by workneering system
-        Closed = 5
+        Rejected = 5, // can be rejected by workneering system
+        Closed = 6
 
     }
 }

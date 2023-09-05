@@ -11,10 +11,12 @@ namespace Workneering.Project.Application.Commands.UpdateProject.Helpers
             var projectCategory = command.ProjectCategory.Adapt<ProjectCategory>();
             var skills = command.RequiredSkills.Adapt<List<ProjectSkill>>();
 
-            query.UpdateDueDate(command.DueDate);
+            query.UpdateProjectDurationDescription(command.DueDate);
+            query.UpdateProjectDuration(command.ProjectDuration);
             query.UpdateExperienceLevel(command.ExperienceLevel);
             query.UpdateProjectBudget(command.ProjectBudget);
             query.UpdateProjectDescription(command.ProjectDescription);
+            query.UpdateHoursPerWeek(command.HoursPerWeek);
             query.UpdateProjectStatus(command.ProjectStatus);
             query.UpdateProjectTitle(command.ProjectTitle);
             query.UpdateProjectType(command.ProjectType);

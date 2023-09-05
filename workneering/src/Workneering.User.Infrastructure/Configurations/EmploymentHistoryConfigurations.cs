@@ -8,7 +8,7 @@ public class EmploymentHistoryConfigurations : IEntityTypeConfiguration<Employme
 {
     public void Configure(EntityTypeBuilder<EmploymentHistory> builder)
     {
-        builder.ToTable("EmploymentHistories", "User");
+        builder.ToTable("EmploymentHistories", "UserSchema");
 
     }
 }

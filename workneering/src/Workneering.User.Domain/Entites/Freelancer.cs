@@ -25,7 +25,7 @@ namespace Workneering.User.Domain.Entites
         private readonly List<Portfolio> _portfolios = new();
         private readonly List<EmploymentHistory> _employmentHistory = new();
         private readonly List<Experience> _experiences = new();
-        private readonly List<FreelancerCategory> _categories = new();
+        private readonly FreelancerCategory _category = new();
         private readonly List<FreelancerSkill> _freelancerSkills = new();
         private readonly List<Language> _languages = new();
         private readonly List<Certification> _certifications = new();
@@ -60,7 +60,7 @@ namespace Workneering.User.Domain.Entites
         public List<Certification> Certifications => _certifications;
         public List<Language> Languages => _languages;
         public List<EmploymentHistory> EmploymentHistory => _employmentHistory;
-        public List<FreelancerCategory>? Categories => _categories;
+        public FreelancerCategory Category => _category;
 
         #endregion
 
@@ -172,8 +172,7 @@ namespace Workneering.User.Domain.Entites
         #region Category
         public void UpdateCategory(Guid? categoryId)
         {
-            _categories.FirstOrDefault()?.UpdateCategoryId(categoryId.Value);
-
+            _category.UpdateCategoryId(categoryId.Value);
         }
         #endregion
 

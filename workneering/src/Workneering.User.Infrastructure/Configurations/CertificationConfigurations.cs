@@ -8,7 +8,7 @@ public class CertificationConfigurations : IEntityTypeConfiguration<Certificatio
 {
     public void Configure(EntityTypeBuilder<Certification> builder)
     {
-        builder.ToTable("Certifications", "User");
+        builder.ToTable("Certifications", "UserSchema");
 
 
     }

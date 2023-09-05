@@ -3,6 +3,6 @@
     public enum ProjectBudgetEnum
     {
         Hour = 1,
-        Project = 2
+        Fixed = 2
     }
 }

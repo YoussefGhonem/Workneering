@@ -8,7 +8,7 @@ public class FreelancerSkillConfigurations : IEntityTypeConfiguration<Freelancer
 {
     public void Configure(EntityTypeBuilder<FreelancerSkill> builder)
     {
-        builder.ToTable("FreelancerSkills", "User");
+        builder.ToTable("FreelancerSkills", "UserSchema");
 
 
     }

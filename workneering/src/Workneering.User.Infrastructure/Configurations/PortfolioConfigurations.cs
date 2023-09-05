@@ -8,7 +8,7 @@ public class PortfolioConfigurations : IEntityTypeConfiguration<Portfolio>
 {
     public void Configure(EntityTypeBuilder<Portfolio> builder)
     {
-        builder.ToTable("Portfolios", "User");
+        builder.ToTable("Portfolios", "UserSchema");
 
 
     }

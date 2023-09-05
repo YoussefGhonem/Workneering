@@ -13,8 +13,7 @@ namespace Workneering.Project.Application.Commands.CreateProject.Helpers
             var clientId = CurrentUser.Id;
             var skills = command.RequiredSkills.Adapt<List<ProjectSkill>>();
 
-
-            return new Domain.Entities.Project(
+            return new Domain.Entities.Project(command.HoursPerWeek, command.ProjectDuration,
                 command.ProjectTitle, command.ProjectDescription, command.IsOpenDueDate,
                 command.DueDate, command.ProjectBudgetPrice, projectCategory, clientId,
                 command.ProjectStatus, command.ExperienceLevel,

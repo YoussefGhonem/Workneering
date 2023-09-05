@@ -8,7 +8,7 @@ public class ClientConfigurations : IEntityTypeConfiguration<Client>
 {
     public void Configure(EntityTypeBuilder<Client> builder)
     {
-        builder.ToTable("Clients", "User");
+        builder.ToTable("Clients", "UserSchema");
 
         builder.OwnsOne(z => z.ReviewersStars, x =>
             {

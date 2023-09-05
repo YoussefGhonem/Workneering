@@ -15,7 +15,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Category.UpdateCatego
         }
         public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Categories).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Category).FirstOrDefault(x => x.Id == CurrentUser.Id);
             query!.UpdateCategory(request.CategoryId);
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);

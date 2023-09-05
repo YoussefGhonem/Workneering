@@ -8,7 +8,7 @@ public class FreelancerConfigurations : IEntityTypeConfiguration<Freelancer>
 {
     public void Configure(EntityTypeBuilder<Freelancer> builder)
     {
-        builder.ToTable("Freelancers", "User");
+        builder.ToTable("Freelancers", "UserSchema");
 
         builder.OwnsOne(z => z.VideoIntroduction);
     }

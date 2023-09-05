@@ -8,7 +8,7 @@ public class FreelancerCategoryConfigurations : IEntityTypeConfiguration<Freelan
 {
     public void Configure(EntityTypeBuilder<FreelancerCategory> builder)
     {
-        builder.ToTable("FreelancerCategories", "User");
+        builder.ToTable("FreelancerCategories", "UserSchema");
 
     }
 }

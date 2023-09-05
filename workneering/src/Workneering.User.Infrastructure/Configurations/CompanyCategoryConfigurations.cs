@@ -8,7 +8,7 @@ public class CompanyCategoryyConfigurations : IEntityTypeConfiguration<CompanyCa
 {
     public void Configure(EntityTypeBuilder<CompanyCategory> builder)
     {
-        builder.ToTable("CompanyCategories", "User");
+        builder.ToTable("CompanyCategories", "UserSchema");
 
     }
 }

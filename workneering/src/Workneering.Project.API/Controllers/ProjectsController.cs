@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
+using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Project.Application.Commands.CreateProject;
 using Workneering.Project.Application.Commands.CreateProposal;
 using Workneering.Project.Application.Commands.UpdateProject;
 using Workneering.Project.Application.Commands.Wishlist.CreateWishlist;
 using Workneering.Project.Application.Commands.Wishlist.RemoveWishlist;
+using Workneering.Project.Application.Queries.Project.GetProjects;
+using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Project.API.Controllers
 {
@@ -80,6 +83,39 @@ namespace Workneering.Project.API.Controllers
         }
 
         #endregion
+        #endregion
+
+        #region Project 
+        [HttpGet] // for freelancers
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProjectListDto>))]
+        public async Task<ActionResult<PaginationResult<ProjectListDto>>> GetProjects([FromQuery] GetProjectsQuery query)
+        {
+            query.ClientId = null;
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet("clients/{id}")] // to get projects for client id
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProjectListDto>))]
+        public async Task<ActionResult<PaginationResult<ProjectListDto>>> GetProjects([FromQuery] GetProjectsQuery query, Guid id)
+        {
+            query.ClientId = id;
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet("clients")] // get projects for Current client
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProjectListDto>))]
+        public async Task<ActionResult<PaginationResult<ProjectListDto>>> GetClientProjects([FromQuery] GetProjectsQuery query)
+        {
+            query.ClientId = CurrentUser.Id.Value;
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
         #endregion
     }
 }

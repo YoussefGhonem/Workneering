@@ -8,7 +8,7 @@ public class ClientCategoryConfigurations : IEntityTypeConfiguration<ClientCateg
 {
     public void Configure(EntityTypeBuilder<ClientCategory> builder)
     {
-        builder.ToTable("ClientCategories", "User");
+        builder.ToTable("ClientCategories", "UserSchema");
 
     }
 }
