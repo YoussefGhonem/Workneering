@@ -1,11 +1,10 @@
 ﻿using Workneering.Project.Application.Services.Models;
 
-namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer
+namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForClient
 {
-    public class ProjectBasicDetailsForFreelancerDto
+    public class GetProjectBasicDetailsForClientDto
     {
         public Guid ClientId { get; set; }
-        public bool IsSaved { get; set; } = false;
         public string? ProjectTitle { get; set; }
         public string? ProjectDescription { get; set; }
         public bool? IsOpenDueDate { get; set; }
@@ -17,7 +16,6 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
         public string? ProjectType { get; set; }
         public string? CategoryName { get; set; }
         public string? SubCategoryName { get; set; }
-        public ClientInfoForProjectDetails ClientInfo { get; set; } = new();
         public List<CategoriesDto>? Categories { get; set; } = new();
         public List<SubCategoriesDto>? SubCategories { get; set; } = new();
         public List<SkillsDto>? Skills { get; set; } = new();
