@@ -18,10 +18,13 @@ using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.Up
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateCountry;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateExperienceLevel;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateGender;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateHourlyRate;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateOverviewDescription;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateTitle;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateTitleOverview;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateVideoIntroduction;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateYearsOfExperience;
 using Workneering.User.Application.Commands.Freelancer.Language.CreateLanguage;
 using Workneering.User.Application.Commands.Freelancer.Language.DeleteLanguage;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortfolio;
@@ -68,6 +71,15 @@ namespace Workneering.User.API.Controllers
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
+        [HttpPut("profile/years-of-experience")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateYearsOfExperienceCommand(UpdateYearsOfExperienceCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
         [HttpPut("profile/country")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -92,6 +104,24 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> UpdateOverviewDescriptionCommand(UpdateOverviewDescriptionCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/gender")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateGenderCommand(UpdateGenderCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpPut("profile/title-overview")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateTitleOverviewCommand(UpdateTitleOverviewCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }

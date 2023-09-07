@@ -6,6 +6,5 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
     public class UpdateExperienceLevelCommand : IRequest<Unit>
     {
         public ExperienceLevelEnum ExperienceLevel { get; set; }
-
     }
 }
