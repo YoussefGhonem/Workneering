@@ -57,7 +57,7 @@ public class DbQueryService : IDbQueryService
         var countryId = CountryId == null ? null : @$"'{CountryId}'";
         var sql = @$"
                 UPDATE IdentitySchema.Users SET
-                CountryId = {countryId}, 
+                CountryId = {countryId}
                 WHERE Id = '{userId.ToString()}'";
 
         var data = con.Execute(sql);
