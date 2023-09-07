@@ -20,7 +20,7 @@ namespace Workneering.Identity.API.Controllers
 
         #region Commands
         [AllowAnonymous]
-        [HttpPost("login"), Produces("text/plain")]
+        [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]

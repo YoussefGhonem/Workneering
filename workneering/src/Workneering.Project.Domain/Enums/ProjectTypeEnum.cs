@@ -3,6 +3,6 @@
     public enum ProjectTypeEnum
     {
         ByWorkneering = 1,
-        ByYourSelf = 2
+        Basic = 2
     }
 }

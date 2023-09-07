@@ -22,7 +22,11 @@ namespace Workneering.Project.Application.Commands.UpdateProject.Helpers
             query.UpdateProjectTitle(command.ProjectTitle);
             query.UpdateProjectType(command.ProjectType);
             query.UpdateIsOpenDueDate(command.IsOpenDueDate);
-            query.UpdateProjectBudgetPrice(command.ProjectBudgetPrice);
+            query.UpdateIsRecommend(command.IsRecommend);
+
+            query.UpdateProjectBudgetPrice(command.ProjectFixedBudgetPrice);
+            query.UpdateHourlyToPrice(command.ProjectHourlyToPrice);
+            query.UpdateHourlyFromPrice(command.ProjectHourlyFromPrice);
 
             query.UpdateSkills(Skills);
             query.UpdateCategory(Categories);

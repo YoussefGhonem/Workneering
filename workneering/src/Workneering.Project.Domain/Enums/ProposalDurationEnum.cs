@@ -10,9 +10,9 @@
     }
     public enum ProjectDurationEnum
     {
-        MoreSixMonth = 1,
+        MoreSixMonth = 1,// larg
         ThreeToSixMonth = 2,
         OneToThreeMonth = 3,
-        LessOneeMonth = 4,
+        LessOneeMonth = 4, // small
     }
 }

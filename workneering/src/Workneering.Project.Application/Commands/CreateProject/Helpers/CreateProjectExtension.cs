@@ -18,9 +18,9 @@ namespace Workneering.Project.Application.Commands.CreateProject.Helpers
                 subCategories, categories, skills,
                 command.HoursPerWeek, command.ProjectDuration,
                 command.ProjectTitle, command.ProjectDescription, command.IsOpenDueDate,
-                command.DueDate, command.ProjectBudgetPrice, clientId,
+                command.DueDate, command.ProjectFixedBudgetPrice, clientId,
                 command.ProjectStatus, command.ExperienceLevel,
-                command.ProjectBudget);
+                command.ProjectBudget, command.ProjectHourlyFromPrice, command.ProjectHourlyToPrice, command.IsRecommend);
 
         }
     }

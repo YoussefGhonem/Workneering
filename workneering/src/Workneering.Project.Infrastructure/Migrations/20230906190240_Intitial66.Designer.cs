@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Workneering.Project.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using Workneering.Project.Infrastructure.Persistence;
 namespace Workneering.Project.Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectsDbContext))]
-    partial class ProjectsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230906190240_Intitial66")]
+    partial class Intitial66
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,9 +54,6 @@ namespace Workneering.Project.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool?>("IsOpenDueDate")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsRecommend")
                         .HasColumnType("bit");
 
                     b.Property<Guid?>("LastModifiedBy")

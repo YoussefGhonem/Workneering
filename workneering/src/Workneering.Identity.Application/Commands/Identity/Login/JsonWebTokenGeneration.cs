@@ -28,6 +28,8 @@ namespace Workneering.Identity.Application.Commands.Identity.Login
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Issuer = null, // Not required as no third-party is involved
+                Audience = null, // Not required as no third-party is involved
                 IssuedAt = DateTime.UtcNow,
                 NotBefore = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddMinutes(jwtConfig.ExpiryDuration),

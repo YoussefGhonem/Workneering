@@ -4,14 +4,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Base.Application.Common.Pagination.models;
+using Workneering.Settings.Application.Queries.GetCategories;
 using Workneering.Settings.Application.Queries.GetCountries;
 using Workneering.Settings.Application.Queries.GetCountriesDropdown;
-
+using Workneering.Settings.Application.Queries.GetSkills;
+using Workneering.Settings.Application.Queries.GetSubCategories;
 
 namespace Workneering.Settings.API.Controllers
 {
     [ApiVersion("1.0")]
-    [Authorize]
+    //[Authorize]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class SettingsController : BaseController
     {
@@ -30,6 +32,36 @@ namespace Workneering.Settings.API.Controllers
         {
             return Ok(await Mediator.Send(new GetCountriesDropdownQuery(), CancellationToken));
         }
+        [HttpGet("categories/dropdown")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CategoriesDrp>))]
+        public async Task<ActionResult<List<CategoriesDrp>>> GetCategoriesQuery()
+        {
+            return Ok(await Mediator.Send(new GetCategoriesQuery(), CancellationToken));
+        }
+
+        [HttpGet("subcategories/dropdown")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CategoriesDrp>))]
+        public async Task<ActionResult<List<SubCategoriesDrp>>> GetSubCategories([FromQuery] GetSubCategoriesQuery query)
+        {
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet("skills/dropdown")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<SkillsDrp>))]
+        public async Task<ActionResult<List<SkillsDrp>>> GetSkills([FromQuery] GetSkillsQuery query)
+        {
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+
 
 
         [HttpGet("timezone/dropdown")]

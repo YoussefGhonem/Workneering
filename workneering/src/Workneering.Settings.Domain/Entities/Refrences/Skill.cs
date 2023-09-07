@@ -2,8 +2,23 @@
 
 namespace Workneering.Settings.Domain.Entities.Refrences
 {
-    public record Skill : RefrenceEntity
+    public record Skill : BaseEntity
     {
-        public Skill(string name) : base(name) { }
+        private string _name;
+
+        public Skill()
+        {
+
+        }
+        public Skill(string name)
+        {
+            _name = name;
+        }
+        public string Name { get => _name; private set => _name = value; }
+
+        public void UpdateName(string field)
+        {
+            Name = field;
+        }
     }
 }

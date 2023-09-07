@@ -1,0 +1,91 @@
+[
+  {
+    "name": "Software Engineering",
+    "subcategories": [
+      {
+        "name": "Front-End Development",
+        "skills": [
+          { "name": "HTML/CSS" },
+          { "name": "JavaScript" },
+          { "name": "React" },
+          { "name": "Angular" }
+        ]
+      },
+      {
+        "name": "Back-End Development",
+        "skills": [
+          { "name": "Node.js" },
+          { "name": "Java" },
+          { "name": "Python" },
+          { "name": "C#" }
+        ]
+      },
+      {
+        "name": "DevOps",
+        "skills": [
+          { "name": "Docker" },
+          { "name": "Kubernetes" },
+          { "name": "Continuous Integration (CI/CD)" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "IT",
+    "subcategories": [
+      {
+        "name": "Network Administration",
+        "skills": [
+          { "name": "Routing and Switching" },
+          { "name": "Firewall Configuration" },
+          { "name": "Network Security" }
+        ]
+      },
+      {
+        "name": "Database Administration",
+        "skills": [
+          { "name": "SQL" },
+          { "name": "Database Design" },
+          { "name": "Performance Tuning" }
+        ]
+      },
+      {
+        "name": "System Administration",
+        "skills": [
+          { "name": "Linux Administration" },
+          { "name": "Windows Server Administration" },
+          { "name": "Cloud Computing (AWS, Azure)" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Marketing",
+    "subcategories": [
+      {
+        "name": "Digital Marketing",
+        "skills": [
+          { "name": "Search Engine Optimization (SEO)" },
+          { "name": "Social Media Marketing" },
+          { "name": "Email Marketing" }
+        ]
+      },
+      {
+        "name": "Content Marketing",
+        "skills": [
+          { "name": "Content Strategy" },
+          { "name": "Blogging" },
+          { "name": "Video Marketing" }
+        ]
+      },
+      {
+        "name": "Marketing Analytics",
+        "skills": [
+          { "name": "Data Analysis" },
+          { "name": "Marketing ROI Measurement" },
+          { "name": "Google Analytics" }
+        ]
+      }
+    ]
+  }
+]

@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+﻿using Mapster;
+using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using Workneering.Base.Helpers.Extensions;
 using Workneering.Settings.Domain.Entities;
+using Workneering.Settings.Domain.Entities.Refrences;
 using Workneering.Settings.Infrastructure.Models;
 
 namespace Workneering.Settings.Infrastructure.Persistence;
@@ -14,6 +15,7 @@ public static class SettingsDbContextSeed
         //seed
         await SeedSettings(context);
         await SeedCountries(context, env);
+        await SeedCategories(context, env);
         await SeedLanguages(context, env);
 
         // Save changes
@@ -51,6 +53,38 @@ public static class SettingsDbContextSeed
 
         }
     }
+
+
+    private static async Task SeedCategories(SettingsDbContext context, IHostingEnvironment env)
+    {
+        if (!context.Categories.Any())
+        {
+            try
+            {
+
+                using var r = new StreamReader(Path.Combine(env.WebRootPath, "Settings", "Categories.json"));
+                var json = await r.ReadToEndAsync();
+                var categories = JsonConvert.DeserializeObject<List<CategoriesDto>>(json);
+                var mapping = categories.Adapt<List<Category>>();
+                context.Categories.AddRange(mapping);
+                context.SaveChanges();
+
+                //foreach (var item in mapping)
+                //{
+                //    context.Categories.Add(new Category(item.Name, item.SubCategories));
+
+                //}
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+    }
+
     private static async Task SeedCountries(SettingsDbContext context, IHostingEnvironment env)
     {
         if (context.Countries.Any()) return;

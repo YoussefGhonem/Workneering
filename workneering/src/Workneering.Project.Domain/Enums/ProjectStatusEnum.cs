@@ -4,7 +4,7 @@
     {
         Draft = 1,
         Posted = 2,
-        OfferAccepted = 3,
+        Pending = 3, // when project type is by wirkneering team
         Ongoing = 4,
         Rejected = 5, // can be rejected by workneering system
         Closed = 6

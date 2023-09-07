@@ -93,7 +93,7 @@ public static class DependencyInjection
 
     public static WebApplication UseIdentityApplication(this WebApplication app)
     {
-
+        app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();

@@ -8,7 +8,10 @@ namespace Workneering.Project.Domain.Entities
         private string? _projectTitle;
         private string? _projectDescription;
         private bool? _isOpenDueDate;
-        private decimal? _projectBudgetPrice;
+        private bool? _isRecommend;
+        private decimal? _projectFixedBudgetPrice;
+        private decimal? _projectHourlyFromPrice;
+        private decimal? _projectHourlyToPrice;
         private Guid? _clientId;
         private string? _projectDurationDescription;
         private ProjectDurationEnum? _projectDuration;
@@ -33,24 +36,26 @@ namespace Workneering.Project.Domain.Entities
             HoursPerWeekEnum? hoursPerWeek, ProjectDurationEnum? projectDuration, string? projectTitle, string? projectDescription = null, bool? isOpenDueDate = null,
             string? projectDurationDescription = null, decimal? projectBudgetPrice = null,
             Guid? clientId = null, ProjectStatusEnum? projectStatus = null, ExperienceLevelEnum? experienceLevel = null,
-            ProjectBudgetEnum? projectBudget = null)
+            ProjectBudgetEnum? projectBudget = null, decimal? projectHourlyFromPrice = null, decimal? projectHourlyToPrice = null, bool? isRecommend = null)
         {
             _projectTitle = projectTitle;
             _projectDescription = projectDescription;
             _isOpenDueDate = isOpenDueDate;
             _projectDurationDescription = projectDurationDescription;
-            _projectBudgetPrice = projectBudgetPrice;
+            _projectFixedBudgetPrice = projectBudgetPrice;
             _clientId = clientId;
             _projectStatus = projectStatus;
             _experienceLevel = experienceLevel;
             _projectBudget = projectBudget;
             _projectDuration = projectDuration;
-            _projectBudgetPrice = projectBudgetPrice;
             _hoursPerWeek = hoursPerWeek;
             _subCategories.AddRange(subCategories);
             _categories.AddRange(categories);
             _skills.AddRange(skills);
             _activities.Add(new ProjectActivity(@$"You Created Project '{projectTitle}'"));
+            _projectHourlyFromPrice = projectHourlyFromPrice;
+            _projectHourlyToPrice = projectHourlyToPrice;
+            _isRecommend = isRecommend;
         }
         private void AddCategorization()
         {
@@ -66,7 +71,7 @@ namespace Workneering.Project.Domain.Entities
         public string? ProjectDescription { get => _projectDescription; private set => _projectDescription = value; }
         public bool? IsOpenDueDate { get => _isOpenDueDate; private set => _isOpenDueDate = value; }
         public string? ProjectDurationDescription { get => _projectDurationDescription; private set => _projectDurationDescription = value; }
-        public decimal? ProjectBudgetPrice { get => _projectBudgetPrice; private set => _projectBudgetPrice = value; }
+        public decimal? ProjectFixedBudgetPrice { get => _projectFixedBudgetPrice; private set => _projectFixedBudgetPrice = value; }
         public Guid? ClientId { get => _clientId; private set => _clientId = value; }
         public ProjectDurationEnum? ProjectDuration { get => _projectDuration; private set => _projectDuration = value; }
         public ProjectStatusEnum? ProjectStatus { get => _projectStatus; private set => _projectStatus = value; }
@@ -74,6 +79,10 @@ namespace Workneering.Project.Domain.Entities
         public ProjectBudgetEnum? ProjectBudget { get => _projectBudget; private set => _projectBudget = value; }
         public HoursPerWeekEnum? HoursPerWeek { get => _hoursPerWeek; private set => _hoursPerWeek = value; }
         public ProjectTypeEnum? ProjectType { get => _projectType; private set => _projectType = value; }
+        public decimal? ProjectHourlyToPrice { get => _projectHourlyToPrice; private set => _projectHourlyToPrice = value; }
+        public decimal? ProjectHourlyFromPrice { get => _projectHourlyFromPrice; private set => _projectHourlyFromPrice = value; }
+        public bool? IsRecommend { get => _isRecommend; private set => _isRecommend = value; }
+
         public List<ProjectActivity> Activities => _activities;
         public List<Proposal> Proposals => _proposals;
         public List<Wishlist> Wishlist => _wishlist;
@@ -82,10 +91,26 @@ namespace Workneering.Project.Domain.Entities
         public List<ProjectSubCategory>? SubCategories => _subCategories;
         public List<ProjectSkill>? Skills => _skills;
 
+
         #endregion
 
         #region Public Methods
         #region Basic Details
+        public void UpdateHourlyFromPrice(decimal? field)
+        {
+            _projectHourlyFromPrice = field;
+
+        }
+        public void UpdateIsRecommend(bool? field)
+        {
+            _isRecommend = field;
+
+        }
+        public void UpdateHourlyToPrice(decimal? field)
+        {
+            _projectHourlyToPrice = field;
+
+        }
         public void UpdateProjectTitle(string field)
         {
             _activities.Add(new ProjectActivity(@$"You Update Project Title From '{_projectTitle}' To '{field}'"));
@@ -118,7 +143,7 @@ namespace Workneering.Project.Domain.Entities
         }
         public void UpdateProjectBudgetPrice(decimal? field)
         {
-            _projectBudgetPrice = field;
+            _projectFixedBudgetPrice = field;
         }
 
         public void UpdateProjectStatus(ProjectStatusEnum? field)

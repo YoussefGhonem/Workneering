@@ -2,9 +2,18 @@
 
 namespace Workneering.Settings.Domain.Entities.Refrences
 {
-    public record SubCategory : RefrenceEntity
+    public record SubCategory : BaseEntity
     {
-        public SubCategory(string name) : base(name) { }
+        private string _name;
+        public SubCategory(string name, List<Skill> _skills)
+        {
+            _name = name;
+        }
+        public SubCategory()
+        {
+
+        }
+        public string Name { get => _name; private set => _name = value; }
 
         private List<Skill> _skills = new();
 
@@ -15,12 +24,16 @@ namespace Workneering.Settings.Domain.Entities.Refrences
         {
             var skill = _skills.FirstOrDefault(x => x.Id == id);
             skill.UpdateName(field.Name);
-            skill.UpdateDescription(field.Description);
         }
         public void RemoveSkills(Guid id)
         {
             var skill = _skills.FirstOrDefault(x => x.Id == id);
             skill.MarkAsDeleted(null);
+        }
+
+        public void UpdateName(string field)
+        {
+            Name = field;
         }
         #endregion
     }

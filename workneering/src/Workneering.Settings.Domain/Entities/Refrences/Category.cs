@@ -3,19 +3,33 @@ using Workneering.Base.Domain.Common;
 
 namespace Workneering.Settings.Domain.Entities.Refrences
 {
-    public record Category : RefrenceEntity
+    public record Category : BaseEntity
     {
-        public Category(string name) : base(name) { }
+        private string _name;
 
+        public Category()
+        {
+
+        }
+        public Category(string name, List<SubCategory> subCategories)
+        {
+            _name = name;
+            _subCategories.AddRange(subCategories);
+        }
+        public string Name { get => _name; private set => _name = value; }
         private List<SubCategory> _subCategories = new();
 
         public List<SubCategory> SubCategories => _subCategories;
+
+        public void UpdateName(string field)
+        {
+            Name = field;
+        }
 
         public void UpdateSubCategory(Guid id, SubCategory field)
         {
             var skill = _subCategories.FirstOrDefault(x => x.Id == id);
             skill.UpdateName(field.Name);
-            skill.UpdateDescription(field.Description);
         }
         public void AddSubCategory(SubCategory field)
         {
