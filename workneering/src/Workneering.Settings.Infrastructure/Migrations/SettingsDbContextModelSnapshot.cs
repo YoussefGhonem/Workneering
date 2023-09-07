@@ -110,7 +110,7 @@ namespace Workneering.Settings.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages", "SettingsSchema.Refrences");
+                    b.ToTable("Languages", "SettingsSchema");
                 });
 
             modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.Category", b =>
@@ -147,7 +147,7 @@ namespace Workneering.Settings.Infrastructure.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Categories", "SettingsSchema.Refrences");
+                    b.ToTable("Categories", "SettingsSchema");
                 });
 
             modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.Skill", b =>
@@ -189,7 +189,7 @@ namespace Workneering.Settings.Infrastructure.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("Skills", "SettingsSchema.Refrences");
+                    b.ToTable("Skills", "SettingsSchema");
                 });
 
             modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.SubCategory", b =>
@@ -231,7 +231,7 @@ namespace Workneering.Settings.Infrastructure.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("SubCategories", "SettingsSchema.Refrences");
+                    b.ToTable("SubCategories", "SettingsSchema");
                 });
 
             modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.Skill", b =>

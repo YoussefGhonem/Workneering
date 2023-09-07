@@ -12,8 +12,8 @@ using Workneering.Settings.Infrastructure.Persistence;
 namespace Workneering.Settings.Infrastructure.Migrations
 {
     [DbContext(typeof(SettingsDbContext))]
-    [Migration("20230904111749_LanguagesUpdate")]
-    partial class LanguagesUpdate
+    [Migration("20230907104330_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -112,7 +112,7 @@ namespace Workneering.Settings.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages", "SettingsSchema.Refrences");
+                    b.ToTable("Languages", "SettingsSchema");
                 });
 
             modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.Category", b =>
@@ -132,14 +132,7 @@ namespace Workneering.Settings.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("DeletedDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMain")
                         .HasColumnType("bit");
 
                     b.Property<Guid?>("LastModifiedBy")
@@ -164,6 +157,48 @@ namespace Workneering.Settings.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("DeletedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("LastModifiedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SubCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("Skills", "SettingsSchema");
+                });
+
+            modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.SubCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
@@ -178,10 +213,6 @@ namespace Workneering.Settings.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset?>("DeletedDate")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -202,17 +233,29 @@ namespace Workneering.Settings.Infrastructure.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Skills", "SettingsSchema.Refrences");
+                    b.ToTable("SubCategories", "SettingsSchema");
                 });
 
             modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.Skill", b =>
                 {
-                    b.HasOne("Workneering.Settings.Domain.Entities.Refrences.Category", null)
+                    b.HasOne("Workneering.Settings.Domain.Entities.Refrences.SubCategory", null)
                         .WithMany("Skills")
+                        .HasForeignKey("SubCategoryId");
+                });
+
+            modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.SubCategory", b =>
+                {
+                    b.HasOne("Workneering.Settings.Domain.Entities.Refrences.Category", null)
+                        .WithMany("SubCategories")
                         .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.Category", b =>
+                {
+                    b.Navigation("SubCategories");
+                });
+
+            modelBuilder.Entity("Workneering.Settings.Domain.Entities.Refrences.SubCategory", b =>
                 {
                     b.Navigation("Skills");
                 });

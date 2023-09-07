@@ -8,6 +8,6 @@ internal class LanguagesConfiguration : IEntityTypeConfiguration<Language>
 {
     public void Configure(EntityTypeBuilder<Language> builder)
     {
-        builder.ToTable("Languages", "SettingsSchema.Refrences");
+        builder.ToTable("Languages", "SettingsSchema");
     }
 }

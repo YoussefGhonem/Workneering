@@ -8,6 +8,6 @@ internal class SkillConfiguration : IEntityTypeConfiguration<Skill>
 {
     public void Configure(EntityTypeBuilder<Skill> builder)
     {
-        builder.ToTable("Skills", "SettingsSchema.Refrences");
+        builder.ToTable("Skills", "SettingsSchema");
     }
 }
