@@ -32,7 +32,6 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
                 result.Location.Id = id;
                 result.Location.Name = countryInfo?.Name;
                 result.Location.Flag = countryInfo?.Flag;
-
             }
             // Address Info
             var userAddress = await _dbQueryService.GetAddressUser(request.CompanyId, cancellationToken);

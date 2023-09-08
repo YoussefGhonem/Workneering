@@ -13,6 +13,6 @@
         MoreSixMonth = 1,// larg
         ThreeToSixMonth = 2,
         OneToThreeMonth = 3,
-        LessOneeMonth = 4, // small
+        LessOneMonth = 4, // small
     }
 }

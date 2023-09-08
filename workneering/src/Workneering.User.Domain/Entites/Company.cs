@@ -18,6 +18,7 @@ namespace Workneering.User.Domain.Entites
         private decimal? _reviews; // 4.3 of 5 stars
         private DateTimeOffset? _foundedIn;
         private CompanySizeEnum? _companySize;
+        private Guid? _industryId;
         private ReviewersStars? _reviewersStars;
         private List<UserCategory>? _categories = new();
         private List<UserSubCategory>? _subCategories = new();
@@ -54,6 +55,8 @@ namespace Workneering.User.Domain.Entites
         public List<UserSubCategory>? SubCategories => _subCategories;
         public List<UserSkill>? Skills => _skills;
 
+        public Guid? IndustryId { get => _industryId; private set => _industryId = value; }
+
 
         #endregion
 
@@ -62,6 +65,11 @@ namespace Workneering.User.Domain.Entites
         public void UpdateCategory(Guid? categoryId)
         {
             _categories.FirstOrDefault()?.UpdateCategoryId(categoryId.Value);
+
+        }
+        public void UpdateIndustryId(Guid? IndustryId)
+        {
+            _industryId = IndustryId;
 
         }
         #region Basic Details

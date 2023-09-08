@@ -32,6 +32,8 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
             result.ClientInfo.Name = userservice.Name;
             result.ClientInfo.Title = userservice.Title;
             result.ClientInfo.CountryName = userservice.CountryName;
+            result.ClientType = userservice.CountryName;
+            result.ProjectBudgetEnum = query.ProjectBudget;
 
             return result;
         }

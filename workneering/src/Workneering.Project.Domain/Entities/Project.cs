@@ -5,10 +5,10 @@ namespace Workneering.Project.Domain.Entities
 {
     public record Project : BaseEntity
     {
+        private bool? _isRecommend;
         private string? _projectTitle;
         private string? _projectDescription;
         private bool? _isOpenDueDate;
-        private bool? _isRecommend;
         private decimal? _projectFixedBudgetPrice;
         private decimal? _projectHourlyFromPrice;
         private decimal? _projectHourlyToPrice;

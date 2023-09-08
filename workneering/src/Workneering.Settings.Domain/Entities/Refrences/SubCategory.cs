@@ -5,18 +5,17 @@ namespace Workneering.Settings.Domain.Entities.Refrences
     public record SubCategory : BaseEntity
     {
         private string _name;
+        private List<Skill> _skills = new();
         public SubCategory(string name, List<Skill> _skills)
         {
             _name = name;
+            _skills.AddRange(Skills);
         }
         public SubCategory()
         {
 
         }
         public string Name { get => _name; private set => _name = value; }
-
-        private List<Skill> _skills = new();
-
         public List<Skill> Skills => _skills;
 
         #region Skills
