@@ -134,8 +134,9 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProjectBasicDetailsForClientDto))]
-        public async Task<ActionResult<GetProjectBasicDetailsForClientDto>> GetProjectBasicDetailsForClientQuery([FromQuery] GetProjectBasicDetailsForFreelancerQuery query)
+        public async Task<ActionResult<GetProjectBasicDetailsForClientDto>> GetProjectBasicDetailsForClientQuery([FromQuery] GetProjectBasicDetailsForFreelancerQuery query, Guid id)
         {
+            query.ProjectId = id;
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         [HttpGet("{id}/details-for-client")] // for client
@@ -143,8 +144,9 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProjectBasicDetailsForClientDto))]
-        public async Task<ActionResult<GetProjectBasicDetailsForClientDto>> GetProjects([FromQuery] GetProjectBasicDetailsForClientQuery query)
+        public async Task<ActionResult<GetProjectBasicDetailsForClientDto>> GetProjects([FromQuery] GetProjectBasicDetailsForClientQuery query, Guid id)
         {
+            query.ProjectId = id;
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         #endregion

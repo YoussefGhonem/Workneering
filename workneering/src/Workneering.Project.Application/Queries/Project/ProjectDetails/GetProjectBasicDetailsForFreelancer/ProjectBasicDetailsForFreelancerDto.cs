@@ -5,6 +5,7 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
 {
     public class ProjectBasicDetailsForFreelancerDto
     {
+        public Guid Id { get; set; }
         public Guid ClientId { get; set; }
         public string ClientType { get; set; }
         public string? ProjectType { get; set; }
@@ -30,12 +31,14 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
     public class ClientInfoForProjectDetailsDto
     {
         public Guid Id { get; set; }
-        public int? IsCompany { get; set; }
+        public bool IsCompany { get; set; } = false;
         public string Name { get; set; }
+        public string? IndustryName { get; set; }
         public string Title { get; set; }
         public string TitleOverview { get; set; }
         public string CountryName { get; set; }
         public int CompanySize { get; set; }
+        public int NumOfProjects { get; set; }
         public DateTimeOffset FoundedIn { get; set; }
     }
     public class CategoriesDto
