@@ -1,12 +1,15 @@
 ﻿using Mapster;
+using System.Linq;
+using Workneering.Base.Helpers.Extensions;
 using Workneering.Project.Application.Services.DbQueryService;
+using Workneering.Project.Domain.Enums;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Project.Application.Queries.Project.GetProjects.Filters
 {
     public static class ApplyFilterExtension
     {
-        public static IQueryable<Domain.Entities.Project> Filter(
+        public static async Task<IQueryable<Domain.Entities.Project>> Filter(
             this IQueryable<Domain.Entities.Project> query, GetProjectsQuery filters, IDbQueryService _dbQueryService)
         {
             // Filters
@@ -25,30 +28,43 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects.Filters
             }
             if (filters.ProjectType is not null)
             {
-                query = query.Where(x => x.ProjectType == filters.ProjectType);
+                query = query.Where(x => filters.ProjectType.Contains(x.ProjectType.Value));
             }
-            if (filters.ProjectBudget is not null)
+            if (filters.HoursPerWeek is not null)
             {
-                query = query.Where(x => x.ProjectBudget == filters.ProjectBudget);
+                query = query.Where(x => filters.HoursPerWeek.Contains(x.HoursPerWeek.Value));
             }
-            if (filters.CountriesId.Any())
+            if (filters.ProjectDuration is not null)
+            {
+                query = query.Where(x => filters.ProjectDuration.Contains(x.ProjectDuration.Value));
+            }
+            if (filters.IsFixed && filters.IsHourly)
+            {
+                query = query.Where(x => x.ProjectBudget == ProjectBudgetEnum.Fixed || x.ProjectBudget == ProjectBudgetEnum.Hourly);
+            }
+            if (filters.IsFixed && filters.IsHourly == false)
+            {
+                query = query.Where(x => x.ProjectBudget == ProjectBudgetEnum.Fixed);
+            }
+            if (filters.IsFixed == false && filters.IsHourly)
+            {
+                query = query.Where(x => x.ProjectBudget == ProjectBudgetEnum.Hourly);
+            }
+            if (filters.CountriesId.AsNotNull().Any())
             {
                 var projects = _dbQueryService.GetProjectsByLocations(filters.CountriesId, filters.PageSize, filters.PageNumber);
                 var list = projects.Adapt<List<Domain.Entities.Project>>();
                 query = list.AsQueryable();
             }
-            if (filters.CategoryIds.Any())
+            if (filters.CategoryIds.AsNotNull().Any())
             {
-                query = query.Where(x => x.Categories.Any(x => filters.CategoryIds.Contains(x.CategoryId)));
+                query = query.Where(x => x.Categories.Any(x => filters.CategoryIds.AsNotNull().Contains(x.CategoryId)));
             }
             if (filters.NumberOfProposals != null)
             {
                 query = query.Where(p => p.Proposals.Count() >= filters.NumberOfProposals.From && p.Proposals.Count() <= filters.NumberOfProposals.To);
             }
-
-            // Sort
-            if (!filters.ApplySort) query = query.OrderByDescending(x => x.CreatedDate);
-            else
+            try
             {
                 switch (filters.SortedBy)
                 {
@@ -56,8 +72,9 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects.Filters
                         query = query.OrderByDescending(x => x.CreatedDate);
                         break;
                     case SortedByEnum.Relevance:
-                        var categoryId = _dbQueryService.GetUserCategoryId(CurrentUser.Id!.Value);
-                        query = query.OrderByDescending(x => x.Categories.Where(x => categoryId.Contains(x.CategoryId)));
+                        var categoryIds = await _dbQueryService.GetUserCategoryId(CurrentUser.Id!.Value);
+                        query = query.OrderByDescending(p => p.Categories
+                                        .Where(x => categoryIds.Contains(x.CategoryId)).Any());
                         break;
                     case SortedByEnum.CleintRating:
                         var projects = _dbQueryService.GetProjectsSortedByClientRating(CurrentUser.Id!.Value, filters.PageSize, filters.PageNumber);
@@ -65,7 +82,15 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects.Filters
                         query = list.AsQueryable();
                         break;
                 }
+
             }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
 
             return query;
         }

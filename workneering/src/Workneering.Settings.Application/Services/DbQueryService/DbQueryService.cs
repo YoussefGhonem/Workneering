@@ -30,9 +30,9 @@ public class DbQueryService : IDbQueryService
 
         string sqlQuery = @$"
                             SELECT s.Id , s.Name
-                            FROM ProjectsSchema.Refrences.Skills s
-                            JOIN ProjectsSchema.Refrences.SubCategories sub ON s.SubCategoryId = sub.Id
-                            WHERE sub.SubCategoryId IN ({subcategoryIdsString})
+                            FROM SettingsSchema.Skills s
+                            JOIN SettingsSchema.SubCategories sub ON s.SubCategoryId = sub.Id
+                            WHERE sub.Id IN ({subcategoryIdsString})
                             ORDER BY sub.Id";
         var data = con.Query<SubcategoryDetailsDto>(sqlQuery);
 

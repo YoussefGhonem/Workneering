@@ -26,4 +26,5 @@ public class SettingsDbContext : ApplicationDbContext
     public DbSet<Language> Languages => Set<Language>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Skill> Skills => Set<Skill>();
+    public DbSet<Industry> Industries => Set<Industry>();
 }

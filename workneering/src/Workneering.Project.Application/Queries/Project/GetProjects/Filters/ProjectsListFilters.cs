@@ -5,16 +5,19 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects.Filters;
 public class ProjectsListFilters : BaseFilterDto
 {
     public bool IsWishlist { get; set; } = false;
-    public Guid? ClientId { get; set; }
+    public bool IsFreelancer { get; set; } = false;
     public string? SearchWord { get; set; }
+    public Guid? ClientId { get; set; }
     public SortedByEnum? SortedBy { get; set; }
-    public ProjectTypeEnum? ProjectType { get; set; }
-    public ProjectBudgetEnum? ProjectBudget { get; set; }
-    public ClientInfoEnum? ClientInfo { get; set; }
-    public HoursPerWeekEnum? HoursPerWeek { get; set; }
-    public List<Guid>? CountriesId { get; set; }
-    public List<Guid>? CategoryIds { get; set; }
-    public NumberOfProposalsDto? NumberOfProposals { get; set; }
+    public List<ProjectTypeEnum>? ProjectType { get; set; } = null;
+    public bool IsFixed { get; set; } = false;
+    public bool IsHourly { get; set; } = false;
+    public List<ClientInfoEnum>? ClientInfo { get; set; } = null;
+    public List<ProjectDurationEnum>? ProjectDuration { get; set; } = null;
+    public List<HoursPerWeekEnum>? HoursPerWeek { get; set; } = null;
+    public List<Guid>? CountriesId { get; set; } = null;
+    public List<Guid>? CategoryIds { get; set; } = null;
+    public NumberOfProposalsDto? NumberOfProposals { get; set; } = null;
 
 }
 public class NumberOfProposalsDto
@@ -30,7 +33,7 @@ public enum SortedByEnum
 }
 public enum ClientInfoEnum
 {
-    previousClients = 1,
+    PreviousClients = 1,
     PaymentVerified = 2
 }
 

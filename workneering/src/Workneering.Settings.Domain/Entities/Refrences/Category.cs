@@ -6,6 +6,7 @@ namespace Workneering.Settings.Domain.Entities.Refrences
     public record Category : BaseEntity
     {
         private string _name;
+        private List<SubCategory> _subCategories = new();
 
         public Category()
         {
@@ -17,7 +18,6 @@ namespace Workneering.Settings.Domain.Entities.Refrences
             _subCategories.AddRange(subCategories);
         }
         public string Name { get => _name; private set => _name = value; }
-        private List<SubCategory> _subCategories = new();
 
         public List<SubCategory> SubCategories => _subCategories;
 

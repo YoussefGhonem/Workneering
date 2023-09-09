@@ -2,7 +2,7 @@
 {
     public enum ProjectBudgetEnum
     {
-        Hour = 1,
+        Hourly = 1,
         Fixed = 2
     }
 }

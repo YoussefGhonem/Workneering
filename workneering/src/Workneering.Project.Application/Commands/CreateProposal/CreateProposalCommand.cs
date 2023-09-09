@@ -12,7 +12,6 @@ namespace Workneering.Project.Application.Commands.CreateProposal
         public Guid? ProjectId { get; set; }
         public string? CoverLetter { get; set; }
         public ProposalDurationEnum? ProposalDuration { get; set; }
-        public ProposalStatusEnum? ProposalStatus { get; set; }
         public decimal? HourlyRate { get; set; }
         public decimal? TotalBid { get; set; }
     }

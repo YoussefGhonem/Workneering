@@ -5,10 +5,10 @@ namespace Workneering.Project.Domain.Entities
 {
     public record Project : BaseEntity
     {
+        private bool? _isRecommend;
         private string? _projectTitle;
         private string? _projectDescription;
         private bool? _isOpenDueDate;
-        private bool? _isRecommend;
         private decimal? _projectFixedBudgetPrice;
         private decimal? _projectHourlyFromPrice;
         private decimal? _projectHourlyToPrice;
@@ -247,7 +247,7 @@ namespace Workneering.Project.Domain.Entities
             decimal? totalBid, decimal? hourlyRate)
         {
             var proposalStatus = ProposalStatusEnum.Submitted;
-            _proposals.Add(new Proposal(proposalStatus, freelancerId, coverLetter, proposalDuratio, totalBid, hourlyRate));
+            _proposals.Add(new Proposal(freelancerId, coverLetter, proposalDuratio, totalBid, hourlyRate));
         }
         public void AcceptProposal(Guid proposalId)
         {

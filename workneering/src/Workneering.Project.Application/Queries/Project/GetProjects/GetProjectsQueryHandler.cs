@@ -7,6 +7,7 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Base.Application.Common.Pagination;
 using Workneering.Project.Application.Services.DbQueryService;
 using Workneering.Project.Application.Queries.Project.GetProjects.Filters;
+using ServiceStack;
 
 namespace Workneering.Project.Application.Queries.Project.GetProjects
 {
@@ -22,28 +23,46 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
         }
         public async Task<PaginationResult<ProjectListDto>> Handle(GetProjectsQuery request, CancellationToken cancellationToken)
         {
-
-            var query = _context.Projects
-                .Include(x => x.Wishlist)
-                .Include(x => x.Categories)
-                .Include(x => x.SubCategories)
-                .Include(x => x.Skills)
-                .Where(x => x.Wishlist.Any(x => x.FreelancerId == CurrentUser.Id))
-                .OrderByDescending(a => a.CreatedDate)
-                .AsQueryable()
-                .Filter(request, _dbQueryService)
-                .Paginate(request.PageSize, request.PageNumber);
-
-            var result = query.Adapt<List<ProjectListDto>>();
-
-            if (CurrentUser.Roles.Contains(Shared.Core.Identity.Enums.RolesEnum.Freelancer))
+            try
             {
-                foreach (var item in result.ToList())
+                var query = await _context.Projects
+                    .Include(x => x.Wishlist)
+                    .Include(x => x.Categories)
+                    .Include(x => x.SubCategories)
+                    .Include(x => x.Skills)
+                    .Where(x => x.ProjectStatus!.Value == Domain.Enums.ProjectStatusEnum.Posted)
+                    .Where(x => request.IsFreelancer ? x.ProjectType == Domain.Enums.ProjectTypeEnum.Basic :
+                                (x.ProjectType == Domain.Enums.ProjectTypeEnum.Basic &&
+                                 x.ProjectType == Domain.Enums.ProjectTypeEnum.ByWorkneering))
+                    .OrderByDescending(a => a.CreatedDate)
+                    .AsQueryable()
+                    .Filter(request, _dbQueryService);
+
+                var dataQuery = await query.PaginateAsync(request.PageSize, request.PageNumber);
+
+                var result = dataQuery.list.Adapt<List<ProjectListDto>>();
+
+                if (request.IsFreelancer)
                 {
-                    item.IsSaved = query.list.Any(x => x.Wishlist.Any(x => x.FreelancerId == CurrentUser.Id));
+                    foreach (var item in result.ToList())
+                    {
+                        item.IsSaved = query.Any(project => project.Wishlist
+                                    .Any(Wishlist => Wishlist.FreelancerId == CurrentUser.Id && item.Id == project.Id));
+
+
+                    }
                 }
+                return new PaginationResult<ProjectListDto>(result.ToList(), dataQuery.total);
             }
-            return new PaginationResult<ProjectListDto>(result.ToList(), query.total);
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+
+
 
         }
     }

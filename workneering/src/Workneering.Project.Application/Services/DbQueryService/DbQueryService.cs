@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Workneering.Project.Application.Services.Models;
+using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Identity.Enums;
 
 namespace Workneering.Project.Application.Services.DbQueryService;
@@ -16,18 +17,30 @@ public class DbQueryService : IDbQueryService
         _connectionString = configuration.GetConnectionString("DefaultConnection");
     }
 
-    public List<Guid> GetUserCategoryId(Guid userId)
+    public async Task<List<Guid>> GetUserCategoryId(Guid userId)
     {
         using var con = new SqlConnection(_connectionString);
-        con.OpenAsync();
+        await con.OpenAsync();
+        string culomnName = string.Empty;
+        if (CurrentUser.Roles.Contains(RolesEnum.Freelancer))
+        {
+            culomnName = "FreelancerId";
+        }
+        else if (CurrentUser.Roles.Contains(RolesEnum.Client))
+        {
+            culomnName = "CompanyId";
+        }
+        if (CurrentUser.Roles.Contains(RolesEnum.Company))
+        {
+            culomnName = "CompanyId";
+        }
+        var sql = @$"SELECT CategoryId
+                FROM UserSchema.UserCategories c
+                WHERE c.{culomnName} = '{userId.ToString()}'";
 
-        var data = con
-            .Query<Guid>(
-                @$"SELECT CategoryId
-                FROM ProjectsSchema.ProjectCategories WHERE
-                WHERE c.UserId = '{userId.ToString()}'");
+        var data = con.QueryAsync<Guid>(sql);
 
-        return data.ToList();
+        return data.Result.ToList();
     }
     public List<ProjectsListInfo> GetProjectsSortedByClientRating(Guid clientId, int pageSize, int pageNumber)
     {
@@ -82,44 +95,80 @@ public class DbQueryService : IDbQueryService
         using var con = new SqlConnection(_connectionString);
         con.Open();
         var userRole = GetUserRole(userId);
+
         dynamic data;
-        if (userRole == RolesEnum.Company)
+        if (userRole == RolesEnum.Company.ToString())
         {
-            data = con
-                       .QueryFirst<ClientInfoForProjectDetails>(
-                           @$"  SELECT  f.Id, f.Name ,f.Title,f.FoundedIn,f.CompanySize,f.TitleOverview , c.Name as CountryName
+            var sql = @$"  SELECT  f.Id, f.Name ,f.Title,f.FoundedIn,f.CompanySize,f.TitleOverview , c.Name as CountryName
                         FROM  UserSchema.Companies f
                         INNER JOIN IdentitySchema.Users u ON f.Id = u.Id
-                        INNER JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
-                        WHERE f.Id = '{userId}' ");
+                        LEFT JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
+                        WHERE f.Id = '{userId}' ";
+            data = con
+                       .QueryFirst<ClientInfoForProjectDetails>(sql);
         }
         else
         {
-            data = con
-             .QueryFirst<ClientInfoForProjectDetails>(
-                 @$"SELECT  f.Id, f.Name ,f.Title,f.TitleOverview, c.Name as CountryName
+            var sql = @$"SELECT  f.Id, f.Name ,f.Title,f.TitleOverview, c.Name as CountryName
                         FROM  UserSchema.Clients f
                         INNER JOIN IdentitySchema.Users u ON f.Id = u.Id
-                        INNER JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
-                        WHERE f.Id = '{userId}' ");
+                        LEFT JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
+                        WHERE f.Id = '{userId}' ";
+            data = con
+             .QueryFirst<ClientInfoForProjectDetails>(sql);
         }
 
         return data;
     }
-    public RolesEnum GetUserRole(Guid userId)
+    public string GetUserRole(Guid userId)
     {
         using var con = new SqlConnection(_connectionString);
         con.Open();
-
-        var data = con
-                    .QueryFirst<RolesEnum>(
-                        @$"SELECT r.Name AS RoleName
+        var sql = @$"SELECT r.Name AS RoleName
                            FROM IdentitySchema.Roles r
                            INNER JOIN IdentitySchema.UserRoles ur ON r.Id = ur.RoleId
                            INNER JOIN IdentitySchema.Users u ON ur.UserId = u.Id
-                           WHERE u.Id = '{userId}' ");
+                           WHERE u.Id = '{userId}' ";
+
+        var data = con.QueryFirst<string>(sql);
 
         return data;
+    }
+    public string? GetIndustryName(Guid userId)
+    {
+        using var con = new SqlConnection(_connectionString);
+        con.Open();
+        var sql = string.Empty;
+        var userRole = GetUserRole(userId);
+
+        try
+        {
+            if (userRole == RolesEnum.Company.ToString())
+            {
+                sql = @$"SELECT r.Name 
+                              FROM SettingsSchema.Industries r 
+                              JOIN UserSchema.Companies c ON r.Id = c.IndustryId
+	                          WHERE c.Id = '{userId}'";
+
+            }
+            else
+            {
+                return null;
+                //sql = @$"SELECT r.Name 
+                //                  FROM SettingsSchema.Industries r
+                //                  JOIN UserSchema.Companies c ON r.Id = c.IndustryId
+                //               WHERE c.Id = '{userId}'";
+            }
+            var data = con.QueryFirst<dynamic>(sql);
+            return data;
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+
+
     }
 
 
