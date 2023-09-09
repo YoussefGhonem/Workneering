@@ -1,12 +1,13 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorization
 {
-    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetFreelancerCategorizationnQuery, FreelancerCategorizationDto>
+    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetFreelancerCategorizationnQuery, CategorizationDto>
     {
         private readonly UserDatabaseContext _userDatabaseContext;
         private readonly IDbQueryService _dbQueryService;
@@ -16,7 +17,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerCategoriz
             _userDatabaseContext = userDatabaseContext;
             _dbQueryService = dbQueryService;
         }
-        public async Task<FreelancerCategorizationDto> Handle(GetFreelancerCategorizationnQuery request, CancellationToken cancellationToken)
+        public async Task<CategorizationDto> Handle(GetFreelancerCategorizationnQuery request, CancellationToken cancellationToken)
         {
 
             var query = _userDatabaseContext.Freelancers
@@ -25,11 +26,9 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerCategoriz
                 .Include(x => x.SubCategories)
                 .FirstOrDefault(x => x.Id == request.FreelancerId);
 
-            var result = query?.Adapt<FreelancerCategorizationDto>();
-            result.CategoryIds = query!.Categories.Select(x => x.CategoryId).ToList();
-            result.SubCategoryIds = query!.SubCategories.Select(x => x.SubCategoryId).ToList();
-            result.SkillIds = query!.Skills.Select(x => x.SkillId).ToList();
-
+            var result = await _dbQueryService.GetCategorizationAsync(query!.Categories.Select(x => x.CategoryId),
+                            query!.SubCategories.Select(x => x.SubCategoryId),
+                            query!.Skills.Select(x => x.SkillId), cancellationToken);
             return result;
         }
     }

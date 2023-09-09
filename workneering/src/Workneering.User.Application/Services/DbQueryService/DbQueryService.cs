@@ -2,6 +2,7 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Workneering.Base.Domain.ValueObjects;
+using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 using Workneering.User.Application.Services.Models;
 
 namespace Workneering.User.Application.Services.DbQueryService;
@@ -97,4 +98,37 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
+
+    public async Task<CategorizationDto> GetCategorizationAsync(IEnumerable<Guid> categoriesId, IEnumerable<Guid> subCategoriesId, IEnumerable<Guid> skillsId , CancellationToken cancellationToken)
+    {
+        await using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync(cancellationToken);
+        string categoriesIdParametrs = categoriesId.Any() ? $"'{string.Join("','", categoriesId)}'" : "null";
+        string subCategoriesIdParametrs = subCategoriesId.Any() ? $"'{string.Join("','", subCategoriesId)}'" : "null";
+        string skillsIdParametrs = skillsId.Any() ? $"'{string.Join("','", skillsId)}'" : "null";
+        string query = @$"SELECT Id, Name From SettingsSchema.Categories AS Categories
+                            WHERE Id in ({categoriesIdParametrs})
+                            SELECT Id, Name From SettingsSchema.SubCategories AS SubCategories
+                            WHERE Id in ({subCategoriesIdParametrs})
+                            SELECT Id, Name From SettingsSchema.Skills AS Skills
+                            WHERE Id in ({skillsIdParametrs}) ";
+
+        using (var multi = await con.QueryMultipleAsync(query, new
+        {
+            CategoriesIds = categoriesIdParametrs.Split(','), 
+            SubCategoriesIds = subCategoriesIdParametrs.Split(','),
+            SkillsIds = skillsIdParametrs.Split(',')
+        }))
+        {
+            var result = new CategorizationDto
+            {
+                Categories = multi.Read<LookupDto>().ToList(),
+                SubCategories = multi.Read<LookupDto>().ToList(),
+                Skills = multi.Read<LookupDto>().ToList()
+            };
+
+            return result;
+        }
+    }
+
 }

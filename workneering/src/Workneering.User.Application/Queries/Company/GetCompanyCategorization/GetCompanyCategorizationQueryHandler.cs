@@ -7,7 +7,7 @@ using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Queries.Company.GetCompanyCategorization
 {
-    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetCompanyCategorizationQuery, CompanyCategorizationDto>
+    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetCompanyCategorizationQuery, CategorizationDto>
     {
         private readonly UserDatabaseContext _userDatabaseContext;
         private readonly IDbQueryService _dbQueryService;
@@ -17,7 +17,7 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyCategorization
             _userDatabaseContext = userDatabaseContext;
             _dbQueryService = dbQueryService;
         }
-        public async Task<CompanyCategorizationDto> Handle(GetCompanyCategorizationQuery request, CancellationToken cancellationToken)
+        public async Task<CategorizationDto> Handle(GetCompanyCategorizationQuery request, CancellationToken cancellationToken)
         {
 
             var query = _userDatabaseContext.Companies
@@ -26,11 +26,10 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyCategorization
                 .Include(x => x.SubCategories)
                 .FirstOrDefault(x => x.Id == request.CompanyId);
 
-            var result = query?.Adapt<CompanyCategorizationDto>();
-            result.CategoryIds = query!.Categories.Select(x => x.CategoryId).ToList();
-            result.SubCategoryIds = query!.SubCategories.Select(x => x.SubCategoryId).ToList();
-            result.SkillIds = query!.Skills.Select(x => x.SkillId).ToList();
-
+           var result =  await _dbQueryService.GetCategorizationAsync(query!.Categories.Select(x => x.CategoryId),
+                 query!.SubCategories.Select(x => x.SubCategoryId),
+                 query!.Skills.Select(x => x.SkillId), cancellationToken);
+          
             return result;
         }
     }

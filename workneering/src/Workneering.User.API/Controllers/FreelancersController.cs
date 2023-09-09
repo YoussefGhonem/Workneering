@@ -31,6 +31,7 @@ using Workneering.User.Application.Commands.Freelancer.Language.UpdateLanguage;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.DeletePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio;
+using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 using Workneering.User.Application.Queries.Freelancer.GetCertifications;
 using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
@@ -356,8 +357,8 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FreelancerCategorizationDto))]
-        public async Task<ActionResult<FreelancerCategorizationDto>> GetClientCategorizationQuery()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategorizationDto))]
+        public async Task<ActionResult<CategorizationDto>> GetClientCategorizationQuery()
         {
             var query = new GetFreelancerCategorizationnQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));

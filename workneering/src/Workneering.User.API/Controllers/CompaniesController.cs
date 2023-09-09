@@ -41,7 +41,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateCompanyCategorizationCommand(UpdateCompanyCategorizationCommand command)
+        public async Task<ActionResult<Unit>> UpdateCompanyCategorizationCommand([FromBody]UpdateCompanyCategorizationCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
@@ -101,8 +101,8 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CompanyCategorizationDto))]
-        public async Task<ActionResult<CompanyCategorizationDto>> GetClientCategorizationQuery(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategorizationDto))]
+        public async Task<ActionResult<CategorizationDto>> GetClientCategorizationQuery(Guid id)
         {
             var query = new GetCompanyCategorizationQuery() { CompanyId = id };
             return Ok(await Mediator.Send(query, CancellationToken));
@@ -111,8 +111,8 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CompanyCategorizationDto))]
-        public async Task<ActionResult<CompanyCategorizationDto>> GetClientCategorizationQuery()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategorizationDto))]
+        public async Task<ActionResult<CategorizationDto>> GetClientCategorizationQuery()
         {
             var query = new GetCompanyCategorizationQuery() { CompanyId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));

@@ -4,9 +4,9 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
 {
     public class UpdateCompanyCategorizationCommand : IRequest<Unit>
     {
-        public List<Guid> CategoryIds { get; set; }
-        public List<Guid> SubCategoryIds { get; set; }
-        public List<Guid> SkillIds { get; set; }
+        public List<Guid> CategoryIds { get; set; } = new();
+        public List<Guid> SubCategoryIds { get; set; } = new();
+        public List<Guid> SkillIds { get; set; } = new();
 
     }
 

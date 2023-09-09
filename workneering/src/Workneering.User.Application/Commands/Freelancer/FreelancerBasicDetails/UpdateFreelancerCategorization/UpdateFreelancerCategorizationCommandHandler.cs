@@ -30,6 +30,8 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
             query.UpdateSubCategory(request.SubCategoryIds);
             query.UpdateSkills(request.SkillIds);
 
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
+
             return Unit.Value;
         }
     }

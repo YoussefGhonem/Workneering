@@ -9,26 +9,26 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
     public class UpdateCompanyCategorizationCommandHandler : IRequestHandler<UpdateCompanyCategorizationCommand, Unit>
     {
         private readonly UserDatabaseContext _userDatabaseContext;
-        private readonly IDbQueryService _dbQueryService;
 
-        public UpdateCompanyCategorizationCommandHandler(UserDatabaseContext userDatabaseContext, IDbQueryService dbQueryService)
+        public UpdateCompanyCategorizationCommandHandler(UserDatabaseContext userDatabaseContext)
         {
             _userDatabaseContext = userDatabaseContext;
-            _dbQueryService = dbQueryService;
         }
         public async Task<Unit> Handle(UpdateCompanyCategorizationCommand request, CancellationToken cancellationToken)
         {
 
-            var query = _userDatabaseContext.Companies
+            var company = _userDatabaseContext.Companies
                 .Include(x => x.Skills)
                 .Include(x => x.Categories)
                 .Include(x => x.SubCategories)
                 .FirstOrDefault(x => x.Id == CurrentUser.Id);
 
-            query.UpdateCategory(request.CategoryIds);
-            query.UpdateSubCategory(request.SubCategoryIds);
-            query.UpdateSkills(request.SkillIds);
+            company.UpdateCategory(request.CategoryIds);
+            company.UpdateSubCategory(request.SubCategoryIds);
+            company.UpdateSkills(request.SkillIds);
 
+            _userDatabaseContext.Companies.Update(company);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }
