@@ -27,6 +27,7 @@ using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.Up
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateYearsOfExperience;
 using Workneering.User.Application.Commands.Freelancer.Language.CreateLanguage;
 using Workneering.User.Application.Commands.Freelancer.Language.DeleteLanguage;
+using Workneering.User.Application.Commands.Freelancer.Language.UpdateLanguage;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.DeletePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio;
@@ -322,15 +323,28 @@ namespace Workneering.User.API.Controllers
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-
-        [HttpDelete("profile/languages")]
+        [HttpPut("profile/languages/{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> DeleteLanguageCommand(DeleteLanguageCommand command)
+        public async Task<ActionResult<Unit>> UpdateLanguageCommand(UpdateLanguageCommand command, Guid id)
         {
+            command.Id = id;
             return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpDelete("profile/languages/{id}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> DeleteLanguageCommand(Guid id)
+        {
+            return Ok(await Mediator.Send(new DeleteLanguageCommand()
+            {
+                Id = id
+            }, CancellationToken));
         }
         #endregion
 

@@ -9,4 +9,5 @@ public interface IDbQueryService
     public Task<CountryDetailsDto?> GetCountryInfo(Guid userId, CancellationToken cancellationToken);
     public Task<string?> UpdateCountryUser(Guid userId, Guid? CountryId, CancellationToken cancellationToken);
     public Task<UserAddressDetailsDto?> GetAddressUser(Guid userId, CancellationToken cancellationToken);
+    public Task<List<LanguagesListDto>> GetLanguagesAsync(List<Guid>? languagesIds);
 }

@@ -16,7 +16,10 @@ namespace Workneering.User.Domain.Entites
         public Guid? LanguageId { get => _languageId; private set => _languageId = value; }
         public LanguageLevelEnum? Level { get => _level; private set => _level = value; }
 
-
+        public void UpdateLanguageId(Guid id)
+        {
+            _languageId = id;
+        }
         public void UpdateLanguageId(Guid? field)
         {
             _languageId = field;

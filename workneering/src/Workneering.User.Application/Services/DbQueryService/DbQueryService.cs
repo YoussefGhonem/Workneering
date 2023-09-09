@@ -50,6 +50,21 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
+    public async Task<List<LanguagesListDto>> GetLanguagesAsync(List<Guid>? languagesIds)
+    {
+        if (languagesIds is null || !languagesIds.Any())
+        {
+            return default!;
+        }
+        string parameterList = string.Join(',', languagesIds.Select(id => id.ToString()));
+
+        await using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync();
+        var query = $@"SELECT Id, Name FROM SettingsSchema.Languages WHERE Id IN ('{parameterList}')";
+        var languages = await con.QueryAsync<LanguagesListDto>(query);
+
+        return languages.ToList();
+    }
     public async Task<string?> UpdateCountryUser(Guid userId, Guid? CountryId, CancellationToken cancellationToken)
     {
         await using var con = new SqlConnection(_connectionString);

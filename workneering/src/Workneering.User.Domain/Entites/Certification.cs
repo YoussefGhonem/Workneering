@@ -51,7 +51,11 @@ namespace Workneering.User.Domain.Entites
         }
         public void UpdateGivenBy(string? field)
         {
-            _awardAreaOfStudy = field;
+            _givenBy = field;
+        }
+        public void UpdateLicense(string? field)
+        {
+            _licence = field;
         }
         public void UpdateStartYear(int field)
         {

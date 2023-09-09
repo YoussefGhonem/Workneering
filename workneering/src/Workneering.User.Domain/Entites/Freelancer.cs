@@ -169,6 +169,7 @@ namespace Workneering.User.Domain.Entites
             data.UpdateEndYear(employmentHistory.EndYear);
             data.UpdatName(employmentHistory.Name);
             data.UpdateGivenBy(employmentHistory.GivenBy);
+            data.UpdateLicense(employmentHistory.Licence);
             data.UpdateAwardAreaOfStudy(employmentHistory.AwardAreaOfStudy);
         }
         #endregion

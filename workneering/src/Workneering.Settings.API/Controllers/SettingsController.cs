@@ -7,6 +7,7 @@ using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Settings.Application.Queries.GetCategories;
 using Workneering.Settings.Application.Queries.GetCountries;
 using Workneering.Settings.Application.Queries.GetCountriesDropdown;
+using Workneering.Settings.Application.Queries.GetLanguagesDropdown;
 using Workneering.Settings.Application.Queries.GetSkills;
 using Workneering.Settings.Application.Queries.GetSubCategories;
 
@@ -31,6 +32,15 @@ namespace Workneering.Settings.API.Controllers
         public async Task<ActionResult<List<CountriesDropdownDto>>> GetCountriesDropdown()
         {
             return Ok(await Mediator.Send(new GetCountriesDropdownQuery(), CancellationToken));
+        }
+        [HttpGet("languages/dropdown")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LanguagesDropdownDto>))]
+        public async Task<ActionResult<List<LanguagesDropdownDto>>> GetLanguagesDropdown()
+        {
+            return Ok(await Mediator.Send(new GetLanguagesDropdownQuery(), CancellationToken));
         }
         [HttpGet("categories/dropdown")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

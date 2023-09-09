@@ -16,8 +16,11 @@ namespace Workneering.User.Application.Commands.Freelancer.Language.CreateLangua
         }
         public async Task<Unit> Handle(CreateLanguageCommand request, CancellationToken cancellationToken)
         {
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Languages).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = 
+                _userDatabaseContext.Freelancers.Include(x => x.Languages)
+                .FirstOrDefault(x => x.Id == CurrentUser.Id);
             var result = request.Adapt<Domain.Entites.Language>();
+            result.Id = request.LanguageId;
             query!.AddLanguage(result);
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
