@@ -106,7 +106,7 @@ namespace Workneering.Settings.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<string>))]
-        public async Task<ActionResult<List<GetLanguagesDto>>> GetLanguagesDropdown()
+        public async Task<ActionResult<List<GetLanguagesDto>>> GetLanguages()
         {
             return Ok(await Mediator.Send(new GetLanguagesQuery(), CancellationToken));
         }
