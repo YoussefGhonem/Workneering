@@ -1,6 +1,8 @@
 ﻿using Mapster;
 using MediatR;
-using Workneering.Settings.Application.Services.DbQueryService;
+using Microsoft.EntityFrameworkCore;
+using Workneering.Base.Helpers.Extensions;
+using Workneering.Settings.Application.Queries.GetSubCategories;
 using Workneering.Settings.Infrastructure.Persistence;
 
 namespace Workneering.Settings.Application.Queries.GetSkills
@@ -8,21 +10,24 @@ namespace Workneering.Settings.Application.Queries.GetSkills
     public class GetSkillsQueryHandler : IRequestHandler<GetSkillsQuery, List<SkillsDrp>>
     {
         private readonly SettingsDbContext _context;
-        private readonly IDbQueryService _dbQueryService;
 
-        public GetSkillsQueryHandler(SettingsDbContext context, IDbQueryService dbQueryService)
+        public GetSkillsQueryHandler(SettingsDbContext context)
         {
             _context = context;
-            _dbQueryService = dbQueryService;
         }
 
         public async Task<List<SkillsDrp>> Handle(GetSkillsQuery request,
             CancellationToken cancellationToken)
         {
-            if (request.SubCategoryIds == null)
-                return new List<SkillsDrp>();
+            var query = await _context.Categories
+                  .AsNoTracking()
+                  .Include(x => x.SubCategories)
+                  .ThenInclude(x => x.Skills)
+                  .SelectMany(x => x.SubCategories)
+                  .Where(x => request.SubCategoryIds.AsNotNull().Contains(x.Id))
+                  .SelectMany(x => x.Skills)
+                  .ToListAsync(cancellationToken: cancellationToken);
 
-            var query = _dbQueryService.GetSkillsBuSubCategoriesIds(request.SubCategoryIds);
             var data = query.Adapt<List<SkillsDrp>>();
             return data;
         }

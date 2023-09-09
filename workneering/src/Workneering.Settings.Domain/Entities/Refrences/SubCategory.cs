@@ -5,9 +5,10 @@ namespace Workneering.Settings.Domain.Entities.Refrences
     public record SubCategory : BaseEntity
     {
         private string _name;
-        public SubCategory(string name, List<Skill> _skills)
+        public SubCategory(string name, List<Skill> skills)
         {
             _name = name;
+            _skills = skills;
         }
         public SubCategory()
         {
