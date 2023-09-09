@@ -14,6 +14,7 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
         public bool? IsOpenDueDate { get; set; }
         public string? ProjectDuration { get; set; }
         public ProjectBudgetEnum? ProjectBudgetEnum { get; set; }
+        public HoursPerWeekEnum? HoursPerWeekEnum { get; set; }
         public string? ProjectBudget { get; set; }
         public decimal? ProjectFixedBudgetPrice { get; set; }
         public decimal? ProjectHourlyFromPrice { get; set; }
@@ -21,7 +22,6 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
         public string? ExperienceLevel { get; set; }
         public string? DueDate { get; set; }
         public string? ProjectDescription { get; set; }
-
         public bool IsSaved { get; set; } = false;
         public ClientInfoForProjectDetailsDto ClientInfo { get; set; } = new();
         public List<CategoriesDto>? Categories { get; set; } = new();
