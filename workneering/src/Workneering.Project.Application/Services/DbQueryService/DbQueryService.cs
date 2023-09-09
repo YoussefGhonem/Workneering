@@ -134,7 +134,7 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
-    public dynamic? GetIndustryName(Guid userId)
+    public string? GetIndustryName(Guid userId)
     {
         using var con = new SqlConnection(_connectionString);
         con.Open();
