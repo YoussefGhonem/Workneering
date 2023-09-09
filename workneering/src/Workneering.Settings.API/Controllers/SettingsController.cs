@@ -7,6 +7,8 @@ using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Settings.Application.Queries.GetCategories;
 using Workneering.Settings.Application.Queries.GetCountries;
 using Workneering.Settings.Application.Queries.GetCountriesDropdown;
+using Workneering.Settings.Application.Queries.GetLanguages;
+using Workneering.Settings.Application.Queries.GetPrimaryIndustry;
 using Workneering.Settings.Application.Queries.GetLanguagesDropdown;
 using Workneering.Settings.Application.Queries.GetSkills;
 using Workneering.Settings.Application.Queries.GetSubCategories;
@@ -97,6 +99,26 @@ namespace Workneering.Settings.API.Controllers
         public async Task<ActionResult<Unit>> GetCountriesQuery([FromQuery] GetCountriesQuery query)
         {
             return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        [HttpGet("languages/dropdown")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<string>))]
+        public async Task<ActionResult<List<GetLanguagesDto>>> GetLanguagesDropdown()
+        {
+            return Ok(await Mediator.Send(new GetLanguagesQuery(), CancellationToken));
+        }
+
+        [HttpGet("industries/dropdown")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PrimaryIndustryDto>))]
+        public async Task<ActionResult<List<PrimaryIndustryDto>>> GetIndustriesDropdown()
+        {
+            return Ok(await Mediator.Send(new GetPrimaryIndustryQuery(), CancellationToken));
         }
 
         #endregion
