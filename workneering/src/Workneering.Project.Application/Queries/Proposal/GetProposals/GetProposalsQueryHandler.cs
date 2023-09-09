@@ -23,11 +23,12 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals
         public async Task<PaginationResult<ProposalsDto>> Handle(GetProposalsQuery request, CancellationToken cancellationToken)
         {
 
-            var proposals = _context.Projects
+            var proposals = await _context.Projects
                 .Include(x => x.Proposals)
+                .Include(x => x.Categories)
                 .AsQueryable()
                 .Filter(request, _dbQueryService)
-                .Paginate(request.PageSize, request.PageNumber);
+                .PaginateAsync(request.PageSize, request.PageNumber);
             var result = proposals.Adapt<List<ProposalsDto>>();
 
             foreach (var item in result.ToList())

@@ -37,7 +37,8 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
                     .OrderByDescending(a => a.CreatedDate)
                     .AsQueryable()
                     .Filter(request, _dbQueryService);
-                var dataQuery = query.Paginate(request.PageSize, request.PageNumber);
+
+                var dataQuery = await query.PaginateAsync(request.PageSize, request.PageNumber);
 
                 var result = dataQuery.list.Adapt<List<ProjectListDto>>();
 

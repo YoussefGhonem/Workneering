@@ -58,7 +58,7 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects.Filters
             }
             if (filters.CategoryIds.AsNotNull().Any())
             {
-                query = query.Where(x => x.Categories.AsNotNull().Any(x => filters.CategoryIds.AsNotNull().Contains(x.CategoryId)));
+                query = query.Where(x => x.Categories.Any(x => filters.CategoryIds.AsNotNull().Contains(x.CategoryId)));
             }
             if (filters.NumberOfProposals != null)
             {

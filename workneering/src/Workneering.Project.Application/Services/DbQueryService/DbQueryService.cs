@@ -141,24 +141,35 @@ public class DbQueryService : IDbQueryService
         var sql = string.Empty;
         var userRole = GetUserRole(userId);
 
-        if (userRole == RolesEnum.Company.ToString())
+        try
         {
-            sql = @$"SELECT r.Name 
-                              FROM SettingsSchema.Industries r
+            if (userRole == RolesEnum.Company.ToString())
+            {
+                sql = @$"SELECT r.Name 
+                              FROM SettingsSchema.Industries r 
                               JOIN UserSchema.Companies c ON r.Id = c.IndustryId
 	                          WHERE c.Id = '{userId}'";
 
+            }
+            else
+            {
+                return null;
+                //sql = @$"SELECT r.Name 
+                //                  FROM SettingsSchema.Industries r
+                //                  JOIN UserSchema.Companies c ON r.Id = c.IndustryId
+                //               WHERE c.Id = '{userId}'";
+            }
+            var data = con.QueryFirst<dynamic>(sql);
+            return data;
         }
-        else
+        catch (Exception ex)
         {
-            return null;
-            //sql = @$"SELECT r.Name 
-            //                  FROM SettingsSchema.Industries r
-            //                  JOIN UserSchema.Companies c ON r.Id = c.IndustryId
-            //               WHERE c.Id = '{userId}'";
-        }
-        var data = con.QueryFirst<string>(sql);
 
-        return data;
+            throw;
+        }
+
+
     }
+
+
 }

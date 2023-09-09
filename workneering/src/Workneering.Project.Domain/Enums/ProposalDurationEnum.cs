@@ -6,7 +6,7 @@
         MoreSixMonth = 2,
         ThreeToSixMonth = 3,
         OneToThreeMonth = 4,
-        LessOneeMonth = 5,
+        LessOneMonth = 5,
     }
     public enum ProjectDurationEnum
     {

@@ -2,6 +2,7 @@
 {
     public class CategoriesDto
     {
+
         public string? Name { get; set; }
         public List<SubCategoriesDto> Subcategories { get; set; }
     }
@@ -13,6 +14,7 @@
     }
     public class SkillsDto
     {
+
         public string? Name { get; set; }
     }
 }
