@@ -18,7 +18,7 @@ namespace Workneering.Project.Domain.Entities
         {
 
         }
-        public Proposal(ProposalStatusEnum? proposalStatus, Guid? freelancerId, string? coverLetter,
+        public Proposal(Guid? freelancerId, string? coverLetter,
             ProposalDurationEnum? proposalDuratio, decimal? totalBid = null, decimal? hourlyRate = null)
         {
             _freelancerId = freelancerId;
@@ -26,7 +26,7 @@ namespace Workneering.Project.Domain.Entities
             _proposalDuratio = proposalDuratio;
             _totalBid = totalBid;
             _hourlyRate = hourlyRate;
-            _proposalStatus = proposalStatus;
+            _proposalStatus = ProposalStatusEnum.Submitted;
         }
         #region MyRegion
         public string? CoverLetter { get => _coverLetter; private set => _coverLetter = value; }

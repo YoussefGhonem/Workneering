@@ -65,16 +65,13 @@ public static class SettingsDbContextSeed
                 using var r = new StreamReader(Path.Combine(env.WebRootPath, "Settings", "Categories.json"));
                 var json = await r.ReadToEndAsync();
                 var categories = JsonConvert.DeserializeObject<List<CategoriesDto>>(json);
-                var mapping = categories.Adapt<List<Category>>();
-                context.Categories.AddRange(mapping);
-                context.SaveChanges();
-
-                //foreach (var item in mapping)
-                //{
-                //    context.Categories.Add(new Category(item.Name, item.SubCategories));
-
-                //}
-
+                foreach (var item in categories)
+                {
+                    var subcategories = item.Subcategories
+                        .Select(x => new SubCategory(x.Name, x.Skills.Select(s => new Skill(s.Name)).ToList())).ToList();
+                    context.Categories.Add(new Category(item.Name, subcategories));
+                    context.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

@@ -247,7 +247,7 @@ namespace Workneering.Project.Domain.Entities
             decimal? totalBid, decimal? hourlyRate)
         {
             var proposalStatus = ProposalStatusEnum.Submitted;
-            _proposals.Add(new Proposal(proposalStatus, freelancerId, coverLetter, proposalDuratio, totalBid, hourlyRate));
+            _proposals.Add(new Proposal(freelancerId, coverLetter, proposalDuratio, totalBid, hourlyRate));
         }
         public void AcceptProposal(Guid proposalId)
         {
