@@ -15,7 +15,6 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
         }
         public async Task<Unit> Handle(UpdateHourlyRateCommand request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
             var query = await _userDatabaseContext.Freelancers.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
             query!.UpdateHourlyRate(request.HourlyRate);
             _userDatabaseContext.Freelancers.Attach(query);

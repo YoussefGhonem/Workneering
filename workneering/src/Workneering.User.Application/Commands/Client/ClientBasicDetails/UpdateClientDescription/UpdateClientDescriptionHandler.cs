@@ -15,7 +15,7 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         }
         public async Task<Unit> Handle(UpdateClientDescriptionCommand request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Clients.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
+
             var query = await _userDatabaseContext.Clients.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
             query!.UpdateOverviewDescription(request.OverviewDescription);
             _userDatabaseContext.Clients.Attach(query);

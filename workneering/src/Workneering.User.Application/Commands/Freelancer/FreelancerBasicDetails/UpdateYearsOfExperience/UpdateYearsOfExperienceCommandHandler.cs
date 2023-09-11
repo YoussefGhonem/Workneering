@@ -15,7 +15,6 @@ public class UpdateYearsOfExperienceCommandHandler : IRequestHandler<UpdateYears
     }
     public async Task<Unit> Handle(UpdateYearsOfExperienceCommand request, CancellationToken cancellationToken)
     {
-        if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
         var query = await _userDatabaseContext
                         .Freelancers
                         .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);

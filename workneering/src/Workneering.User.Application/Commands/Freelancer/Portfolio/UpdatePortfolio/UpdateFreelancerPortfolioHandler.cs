@@ -16,8 +16,6 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
         }
         public async Task<Unit> Handle(UpdateFreelancerPortfolioCommand request, CancellationToken cancellationToken)
         {
-            if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
-
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
                 .FirstOrDefault(x => x.Id == CurrentUser.Id);
 

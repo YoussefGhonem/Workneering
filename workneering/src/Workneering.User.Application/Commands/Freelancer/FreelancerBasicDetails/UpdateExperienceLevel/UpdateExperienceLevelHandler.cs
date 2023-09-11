@@ -15,7 +15,6 @@ public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<UpdateE
     }
     public async Task<Unit> Handle(UpdateExperienceLevelCommand request, CancellationToken cancellationToken)
     {
-        if (_userDatabaseContext.Freelancers.Any(x => x.Id != CurrentUser.Id)) return Unit.Value;
         var query = await _userDatabaseContext.Freelancers.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
         query!.UpdateExperienceLevel(request.ExperienceLevel);
         _userDatabaseContext.Freelancers.Attach(query);
