@@ -8,6 +8,8 @@ namespace Workneering.User.Domain.Entites
     {
         private string? _name;
         private string? _overviewDescription;
+        private string? _whoIAm;
+        private string? _whatDoIdo;
         private string? _titleOverview;
         private string? _title;
         private GenderEnum? _gender;
@@ -29,6 +31,8 @@ namespace Workneering.User.Domain.Entites
 
         #region Public fields
         public string? Name { get => _name; set => _name = value; }
+        public string? WhoIAm { get => _whoIAm; set => _whoIAm = value; }
+        public string? WhatDoIDo { get => _whatDoIdo; set => _whatDoIdo = value; }
         public string? Description { get => _overviewDescription; set => _overviewDescription = value; }
         public GenderEnum? Gender { get => _gender; private set => _gender = value; }
         public string? TitleOverview { get => _titleOverview; set => _titleOverview = value; }
@@ -48,6 +52,14 @@ namespace Workneering.User.Domain.Entites
         #region Public Methods
 
         #region Basic Details
+        public void UpdateWhoIAm(string? field)
+        {
+            _whoIAm = field;
+        }
+        public void UpdateWhatDoIdo(string? field)
+        {
+            _whatDoIdo = field;
+        }
         public void UpdateGender(GenderEnum? field)
         {
             _gender = field;
