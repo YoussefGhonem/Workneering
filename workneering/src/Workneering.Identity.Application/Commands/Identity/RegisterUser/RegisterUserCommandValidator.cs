@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
 using Microsoft.AspNetCore.Identity;
 using Workneering.Base.Application.FluentValidation.Validators;
-using Workneering.Identity.Domain.Entities;
 using Workneering.Shared.Core.Identity.Enums;
 
 namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
@@ -16,12 +14,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
             _userManager = userManager;
             CascadeMode = CascadeMode.Stop;
 
-            RuleFor(r => r.FirstName)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty();
-
-            RuleFor(r => r.LastName)
+            RuleFor(r => r.Name)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
