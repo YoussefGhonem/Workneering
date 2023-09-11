@@ -1,7 +1,6 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 

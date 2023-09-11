@@ -17,11 +17,6 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
                 .NotNull()
                 .NotEmpty();
 
-            RuleFor(r => r.Title)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty();
-
             RuleFor(r => r.TitleOverview)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()

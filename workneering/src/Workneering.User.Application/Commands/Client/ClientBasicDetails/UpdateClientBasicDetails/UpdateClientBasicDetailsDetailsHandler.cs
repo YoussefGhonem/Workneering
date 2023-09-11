@@ -1,9 +1,7 @@
-﻿using Mapster;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Services.DbQueryService;
-using Workneering.User.Application.Services.Models;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientBasicDetails
@@ -22,11 +20,10 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         {
             var query = await _userDatabaseContext.Clients.Include(x => x.Categories).FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
 
-            query!.UpdateTitle(request.Title);
+            //query!.UpdateTitle(request.Title);
             query!.UpdateTitleOverview(request.TitleOverview);
             query!.UpdateTitleOverview(request.TitleOverview);
             query!.UpdateGender(request.Gender);
-
             await _dbQueryService!.UpdateCountryUser(CurrentUser.Id!.Value, request.CountryId, cancellationToken);
 
             _userDatabaseContext.Clients.Attach(query);
