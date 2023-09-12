@@ -6,10 +6,10 @@ namespace Workneering.Settings.Domain.Entities.Refrences
     {
         private string _name;
         private List<Skill> _skills = new();
-        public SubCategory(string name, List<Skill> _skills)
+        public SubCategory(string name, List<Skill> skills)
         {
             _name = name;
-            _skills.AddRange(Skills);
+            _skills.AddRange(skills);
         }
         public SubCategory()
         {

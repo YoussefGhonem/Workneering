@@ -65,8 +65,8 @@ public static class SettingsDbContextSeed
                 var json = await r.ReadToEndAsync();
                 var categories = JsonConvert.DeserializeObject<List<CategoriesDto>>(json);
                 var mappedCat = categories.Select(x => new Category(x.Name,
-                    x.Subcategories.Select(sub => new SubCategory(sub.Name,
-                    sub.Skills.Select(s => new Skill(s.Name)).ToList())).ToList())).ToList();
+                               x.Subcategories.Select(sub => new SubCategory(sub.Name,
+                               sub.Skills.Select(s => new Skill(s.Name)).ToList())).ToList())).ToList();
                 context.Categories.AddRange(mappedCat);
                 context.SaveChanges();
 
