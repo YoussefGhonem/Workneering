@@ -38,7 +38,7 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
             result.ClientInfo.CompanySize = userservice.CompanySize;
 
             var industryName = _dbQueryService.GetIndustryName(query.ClientId!.Value);
-            result.ClientInfo.IndustryName = industryName;
+            result.ClientInfo.IndustryName = industryName?.Name;
             var clientType = _dbQueryService.GetUserRole(query.ClientId!.Value);
             result.ClientType = clientType;
             result.ProjectBudgetEnum = query.ProjectBudget;
