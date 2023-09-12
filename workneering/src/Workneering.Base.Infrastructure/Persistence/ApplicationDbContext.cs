@@ -13,6 +13,7 @@ public class ApplicationDbContext : DbContext
     //{
     //    _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     //}
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public ApplicationDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options)
     {
