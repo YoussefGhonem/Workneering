@@ -13,7 +13,7 @@ namespace Workneering.Project.Domain.Entities
         private decimal? _projectHourlyFromPrice;
         private decimal? _projectHourlyToPrice;
         private Guid? _clientId;
-        private string? _projectDurationDescription;
+		private string? _projectDurationDescription;
         private ProjectDurationEnum? _projectDuration;
         private HoursPerWeekEnum? _hoursPerWeek;
         private ProjectStatusEnum? _projectStatus;
@@ -33,9 +33,9 @@ namespace Workneering.Project.Domain.Entities
              List<ProjectSubCategory>? subCategories,
              List<ProjectCategory>? categories,
              List<ProjectSkill>? skills,
-            HoursPerWeekEnum? hoursPerWeek, ProjectDurationEnum? projectDuration, string? projectTitle, string? projectDescription = null, bool? isOpenDueDate = null,
+            HoursPerWeekEnum? hoursPerWeek, ProjectDurationEnum? projectDuration, ProjectTypeEnum? projectType, string? projectTitle, string? projectDescription = null, bool? isOpenDueDate = null,
             string? projectDurationDescription = null, decimal? projectBudgetPrice = null,
-            Guid? clientId = null, ProjectStatusEnum? projectStatus = null, ExperienceLevelEnum? experienceLevel = null,
+			Guid? clientId = null, ProjectStatusEnum? projectStatus = null, ExperienceLevelEnum? experienceLevel = null,
             ProjectBudgetEnum? projectBudget = null, decimal? projectHourlyFromPrice = null, decimal? projectHourlyToPrice = null, bool? isRecommend = null)
         {
             _projectTitle = projectTitle;
@@ -48,6 +48,7 @@ namespace Workneering.Project.Domain.Entities
             _experienceLevel = experienceLevel;
             _projectBudget = projectBudget;
             _projectDuration = projectDuration;
+            _projectType = projectType;
             _hoursPerWeek = hoursPerWeek;
             _subCategories.AddRange(subCategories);
             _categories.AddRange(categories);
@@ -92,11 +93,11 @@ namespace Workneering.Project.Domain.Entities
         public List<ProjectSkill>? Skills => _skills;
 
 
-        #endregion
+		#endregion
 
-        #region Public Methods
-        #region Basic Details
-        public void UpdateHourlyFromPrice(decimal? field)
+		#region Public Methods
+		#region Basic Details
+		public void UpdateHourlyFromPrice(decimal? field)
         {
             _projectHourlyFromPrice = field;
 

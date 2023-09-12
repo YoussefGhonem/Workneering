@@ -134,7 +134,7 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
-    public string? GetIndustryName(Guid userId)
+    public IndustryDetails? GetIndustryName(Guid userId)
     {
         using var con = new SqlConnection(_connectionString);
         con.Open();
@@ -159,7 +159,7 @@ public class DbQueryService : IDbQueryService
                 //                  JOIN UserSchema.Companies c ON r.Id = c.IndustryId
                 //               WHERE c.Id = '{userId}'";
             }
-            var data = con.QueryFirst<dynamic>(sql);
+            var data = con.QueryFirstOrDefault<IndustryDetails>(sql);
             return data;
         }
         catch (Exception ex)
