@@ -2,6 +2,7 @@ using Dapper;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using Workneering.Project.Application.Commands.CreateProject;
 using Workneering.Project.Application.Services.Models;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Identity.Enums;
@@ -134,7 +135,61 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
-    public IndustryDetails? GetIndustryName(Guid userId)
+
+    public List<CategorizationDto> GetCategoriesForProject(List<Guid> categoryIds)
+    {
+
+		using var con = new SqlConnection(_connectionString);
+		con.Open();
+
+        string inClause = string.Join(",", categoryIds);
+
+
+		var data = con.Query<CategorizationDto>(
+	@"SELECT c.Id, c.Name
+      FROM SettingsSchema.Categories c
+      WHERE c.Id IN @CategoryIds",
+	new { CategoryIds = categoryIds });
+
+		return data.ToList();
+
+	}
+
+	public List<CategorizationDto> GetSupCateforiesForProject(List<Guid> suppCategoryIds)
+	{
+
+		using var con = new SqlConnection(_connectionString);
+		con.Open();
+		string inClause = string.Join(",", suppCategoryIds);
+
+		var data = con.Query<CategorizationDto>(
+	        @"SELECT c.Id, c.Name
+              FROM SettingsSchema.SubCategories c
+              WHERE c.Id IN @SuppCategoryIds",
+	        new { SuppCategoryIds = suppCategoryIds });
+
+		return data.ToList();
+
+	}
+
+	public List<CategorizationDto> GetSkillsForProject(List<Guid> skillsIds)
+	{
+
+		using var con = new SqlConnection(_connectionString);
+		con.Open();
+		string inClause = string.Join(",", skillsIds);
+
+
+		var data = con.Query<CategorizationDto>(
+			@"SELECT c.Id, c.Name
+             FROM SettingsSchema.Skills c
+              WHERE c.Id IN @SkillsIds",
+			new { SkillsIds = skillsIds });
+
+		return data.ToList();
+
+	}
+	public IndustryDetails? GetIndustryName(Guid userId)
     {
         using var con = new SqlConnection(_connectionString);
         con.Open();

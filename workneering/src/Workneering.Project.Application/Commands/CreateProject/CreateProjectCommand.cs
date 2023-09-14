@@ -29,9 +29,9 @@ namespace Workneering.Project.Application.Commands.CreateProject
         public decimal? ProjectHourlyToPrice { get; set; }
 
         // list 
-        public List<CategorizationDto>? CategoriesList { get; set; }
-        public List<CategorizationDto>? SubCategoriesList { get; set; }
-        public List<CategorizationDto>? SkillsList { get; set; }
+        public List<Guid>? categoriesIds { get; set; }
+        public List<Guid>? subCategoriesIds { get; set; }
+        public List<Guid>? skillsIds { get; set; }
     }
 
     public class CategorizationDto
