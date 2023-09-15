@@ -101,4 +101,29 @@ public static class DependencyInjection
 
         return app;
     }
+
+
+    //         #region CORS
+    //     services.AddCors(options =>
+    //     {
+    //         options.AddPolicy("AllowAnyOriginPolicy",
+    //         builder => builder
+    //             .AllowAnyOrigin()  // Allow requests from any origin
+    //             .AllowAnyHeader()
+    //             .AllowAnyMethod());
+    //     });
+    //     #endregion
+
+    //     return services;
+    // }
+
+    // public static WebApplication UseIdentityApplication(this WebApplication app)
+    // {
+    //     app.UseCors("AllowAnyOriginPolicy");
+    //     app.UseHttpsRedirection();
+    //     app.UseAuthentication();
+    //     app.UseAuthorization();
+    //     app.UseCurrentUser();
+    //     return app;
+    // }
 }
