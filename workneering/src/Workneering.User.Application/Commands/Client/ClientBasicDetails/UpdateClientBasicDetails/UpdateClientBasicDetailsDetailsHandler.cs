@@ -22,8 +22,8 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
 
             //query!.UpdateTitle(request.Title);
             query!.UpdateTitleOverview(request.TitleOverview);
-            query!.UpdateTitleOverview(request.TitleOverview);
             query!.UpdateGender(request.Gender);
+            query!.UpdateName(request.Name);
             await _dbQueryService!.UpdateCountryUser(CurrentUser.Id!.Value, request.CountryId, cancellationToken);
 
             _userDatabaseContext.Clients.Attach(query);

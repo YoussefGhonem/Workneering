@@ -5,7 +5,7 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
 {
     public class UpdateClientBasicDetailsCommand : IRequest<Unit>
     {
-        public Guid? CategoryId { get; set; }
+        public string? Name { get; set; }
         public GenderEnum? Gender { get; set; }
         public string? TitleOverview { get; set; }
         public Guid? CountryId { get; set; } 

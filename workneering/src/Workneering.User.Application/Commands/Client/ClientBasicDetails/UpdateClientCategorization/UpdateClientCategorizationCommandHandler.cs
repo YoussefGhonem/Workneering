@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Services.DbQueryService;
+using Workneering.User.Domain.Entites;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientCategorization
@@ -30,7 +31,10 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
             query.UpdateSubCategory(request.SubCategoryIds);
             query.UpdateSkills(request.SkillIds);
 
-            return Unit.Value;
+			_userDatabaseContext.Clients.Update(query);
+			await _userDatabaseContext.SaveChangesAsync(cancellationToken);
+
+			return Unit.Value;
         }
     }
 }

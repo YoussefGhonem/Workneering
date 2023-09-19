@@ -26,13 +26,17 @@ namespace Workneering.User.Application.Queries.Client.GetClientCategorization
                 .FirstOrDefault(x => x.Id == request.ClientId);
 
             var userservice = await _dbQueryService.GetUserBasicInfo(request.ClientId, cancellationToken);
+            //var result = query?.Adapt<ClientCategorizationDto>();
+            //result.Categories = query!.Categories.Select(x => x.CategoryId).ToList();
+            //result.SubCategoryIds = query!.SubCategories.Select(x => x.SubCategoryId).ToList();
+            //result.SkillIds = query!.Skills.Select(x => x.SkillId).ToList();
 
-            var result = query?.Adapt<ClientCategorizationDto>();
-            result.CategoryIds = query!.Categories.Select(x => x.CategoryId).ToList();
-            result.SubCategoryIds = query!.SubCategories.Select(x => x.SubCategoryId).ToList();
-            result.SkillIds = query!.Skills.Select(x => x.SkillId).ToList();
+            var result = await _dbQueryService.GetCategorizationAsync(query!.Categories.Select(x => x.CategoryId),
+            query!.SubCategories.Select(x => x.SubCategoryId),
+            query!.Skills.Select(x => x.SkillId), cancellationToken);
+            var returnvalue = result?.Adapt<ClientCategorizationDto>();
 
-            return result;
+			return returnvalue;
         }
     }
 }

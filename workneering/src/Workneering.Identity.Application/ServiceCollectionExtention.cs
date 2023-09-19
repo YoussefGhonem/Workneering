@@ -82,13 +82,21 @@ public static class DependencyInjection
         #endregion
 
         #region CORS
-        services.AddCors(c =>
-        {
-            c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-        });
-        #endregion
+        //services.AddCors(c =>
+        //{
+        //    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+        //});
+		services.AddCors(options =>
+		{
+			options.AddPolicy("AllowAnyOriginPolicy",
+			builder => builder
+				.AllowAnyOrigin()  // Allow requests from any origin
+				.AllowAnyHeader()
+				.AllowAnyMethod());
+		});
+		#endregion
 
-        return services;
+		return services;
     }
 
     public static WebApplication UseIdentityApplication(this WebApplication app)
@@ -103,27 +111,27 @@ public static class DependencyInjection
     }
 
 
-    //         #region CORS
-    //     services.AddCors(options =>
-    //     {
-    //         options.AddPolicy("AllowAnyOriginPolicy",
-    //         builder => builder
-    //             .AllowAnyOrigin()  // Allow requests from any origin
-    //             .AllowAnyHeader()
-    //             .AllowAnyMethod());
-    //     });
-    //     #endregion
+     //        #region CORS
+     //    services.AddCors(options =>
+     //    {
+     //        options.AddPolicy("AllowAnyOriginPolicy",
+     //        builder => builder
+     //            .AllowAnyOrigin()  // Allow requests from any origin
+     //            .AllowAnyHeader()
+     //            .AllowAnyMethod());
+     //    });
+     //    #endregion
 
-    //     return services;
-    // }
+     //    return services;
+     //}
 
-    // public static WebApplication UseIdentityApplication(this WebApplication app)
-    // {
-    //     app.UseCors("AllowAnyOriginPolicy");
-    //     app.UseHttpsRedirection();
-    //     app.UseAuthentication();
-    //     app.UseAuthorization();
-    //     app.UseCurrentUser();
-    //     return app;
-    // }
+     //public static WebApplication UseIdentityApplication(this WebApplication app)
+     //{
+     //    app.UseCors("AllowAnyOriginPolicy");
+     //    app.UseHttpsRedirection();
+     //    app.UseAuthentication();
+     //    app.UseAuthorization();
+     //    app.UseCurrentUser();
+     //    return app;
+     //}
 }

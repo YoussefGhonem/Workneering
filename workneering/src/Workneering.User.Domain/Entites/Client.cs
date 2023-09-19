@@ -60,6 +60,11 @@ namespace Workneering.User.Domain.Entites
         {
             _whatDoIdo = field;
         }
+
+        public void UpdateName(string? field)
+        {
+            _name = field;
+        }
         public void UpdateGender(GenderEnum? field)
         {
             _gender = field;
@@ -95,7 +100,7 @@ namespace Workneering.User.Domain.Entites
         public void UpdateCategory(List<Guid>? categoryIds)
         {
             var ids = _categories.Select(x => x.CategoryId).ToList();
-            if (!ids.Any()) return;
+            //if (!ids.Any()) return;
 
             var addNewItems = categoryIds?.Except(ids);
             var removeItems = ids?.Except(categoryIds);
@@ -112,7 +117,7 @@ namespace Workneering.User.Domain.Entites
         public void UpdateSubCategory(List<Guid>? externalIds)
         {
             var ids = _subCategories?.Select(x => x.SubCategoryId).ToList();
-            if (!ids.Any()) return;
+            //if (!ids.Any()) return;
 
             var addNewItems = externalIds?.Except(ids);
             var removeItems = ids?.Except(externalIds);
@@ -129,7 +134,7 @@ namespace Workneering.User.Domain.Entites
         public void UpdateSkills(List<Guid> externalIds)
         {
             var ids = _skills.Select(x => x.SkillId).ToList();
-            if (!ids.Any()) return;
+           // if (!ids.Any()) return;
 
             var addNewItems = externalIds.Except(ids);
             var removeItems = ids.Except(externalIds);

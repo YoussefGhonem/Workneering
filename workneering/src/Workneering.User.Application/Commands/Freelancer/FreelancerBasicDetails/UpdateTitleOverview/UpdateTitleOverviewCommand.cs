@@ -4,5 +4,5 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
 
 public class UpdateTitleOverviewCommand : IRequest
 {
-    public string TitleOverview { get; set; } = string.Empty;
+    public string TitleOverview { get; set; }
 }

@@ -26,15 +26,15 @@ namespace Workneering.Settings.API.Controllers
 
         #region Queries
 
-        //[HttpGet("countries/dropdown")]
-        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CountriesDropdownDto>))]
-        //public async Task<ActionResult<List<CountriesDropdownDto>>> GetCountriesDropdown()
-        //{
-        //    return Ok(await Mediator.Send(new GetCountriesDropdownQuery(), CancellationToken));
-        //}
+        [HttpGet("countries/dropdown")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CountriesDropdownDto>))]
+        public async Task<ActionResult<List<CountriesDropdownDto>>> GetCountriesDropdown()
+        {
+            return Ok(await Mediator.Send(new GetCountriesDropdownQuery(), CancellationToken));
+        }
         [HttpGet("languages/dropdown")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

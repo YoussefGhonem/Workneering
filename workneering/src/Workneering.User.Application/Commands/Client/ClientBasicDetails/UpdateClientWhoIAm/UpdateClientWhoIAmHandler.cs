@@ -15,7 +15,6 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         }
         public async Task<Unit> Handle(UpdateClientWhoIAmCommand request, CancellationToken cancellationToken)
         {
-
             var query = await _userDatabaseContext.Clients.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
             query!.UpdateWhoIAm(request.WhoIAm);
             _userDatabaseContext.Clients.Attach(query);

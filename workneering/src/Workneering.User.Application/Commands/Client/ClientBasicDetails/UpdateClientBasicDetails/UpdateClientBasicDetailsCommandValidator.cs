@@ -8,10 +8,10 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         public UpdateClientBasicDetailsCommandValidator()
         {
 
-            RuleFor(r => r.CategoryId)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty();
+            //RuleFor(r => r.CategoryId)
+            //    .Cascade(CascadeMode.Stop)
+            //    .NotNull()
+            //    .NotEmpty();
             RuleFor(r => r.Gender)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()

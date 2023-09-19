@@ -15,7 +15,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.DeletePortf
         }
         public async Task<Unit> Handle(DeletePortfolioCommand request, CancellationToken cancellationToken)
         {
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Educations).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios).FirstOrDefault(x => x.Id == CurrentUser.Id);
             query.RemovePortfolio(request.Id);
             _userDatabaseContext.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
