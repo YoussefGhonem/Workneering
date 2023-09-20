@@ -17,7 +17,7 @@ using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 namespace Workneering.User.API.Controllers
 {
     [ApiVersion("1.0")]
-    [Authorize]
+  //  [Authorize]
     [Route("api/v{version:apiVersion}/clients")]
     public class ClientsController : BaseController
     {
@@ -27,6 +27,7 @@ namespace Workneering.User.API.Controllers
 
         #region Commands
         [HttpPut("profile/description")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

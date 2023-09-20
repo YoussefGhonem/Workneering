@@ -17,6 +17,7 @@ public static class SettingsDbContextSeed
         await SeedCountries(context, env);
         await SeedCategories(context, env);
         await SeedLanguages(context, env);
+       // await SeedIndastry(context, env);
 
         // Save changes
         await context.SaveChangesAsync();
@@ -25,6 +26,19 @@ public static class SettingsDbContextSeed
     private static async Task SeedSettings(SettingsDbContext context)
     {
     }
+
+ //   private static async Task SeedIndastry(SettingsDbContext context, IHostingEnvironment env)
+ //   {
+ //       if (context.Industries.Any()) return;
+	//	using var r = new StreamReader(Path.Combine(env.WebRootPath, "Industry", "Industry.json"));
+	//	var json = await r.ReadToEndAsync();
+	//	var items = JsonConvert.DeserializeObject<Dictionary<string, IndustryDto>>(json);
+	//	//var languages = JsonConvert.DeserializeObject<Dictionary<string, Language>>(json);
+	//	foreach (var industy in items)
+	//	{
+	//		context.Industries.Add(new Industry(industy.Value.name));
+	//	}		
+	//}
 
     private static async Task SeedLanguages(SettingsDbContext context, IHostingEnvironment env)
     {
