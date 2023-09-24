@@ -13,6 +13,8 @@ using Workneering.Identity.Domain.Entities;
 using Workneering.Identity.Infrastructure.Persistence;
 using Workneering.Base.Application.Extensions;
 using Workneering.Shared.Core.Identity.CurrentUser;
+//using Workneering.Base.Application.Services.DbQueryService;
+using Workneering.Identity.Application.Services.DbQueryService.DbQueryService;
 
 namespace Workneering.Identity.Application;
 
@@ -21,12 +23,13 @@ public static class DependencyInjection
     public static IServiceCollection AddIdentityApplication(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+		services.AddSingleton<IDbQueryService, DbQueryService>();
+
+		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(Assembly.GetExecutingAssembly());
+		#region Identity Configuration
 
-        #region Identity Configuration
-
-        var config = configuration.GetJwtConfig();
+		var config = configuration.GetJwtConfig();
 
         services.AddAuthorization();
         services.AddAuthorization(auth =>

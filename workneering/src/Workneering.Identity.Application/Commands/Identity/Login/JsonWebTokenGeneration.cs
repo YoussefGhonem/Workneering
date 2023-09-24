@@ -3,25 +3,29 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Workneering.Base.Application.Extensions;
+using Workneering.Identity.Application.Services.Models;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Identity.Application.Commands.Identity.Login
 {
     public static class JsonWebTokenGeneration
     {
-        public static string GenerateJwtToken(IConfiguration configuration, Workneering.Identity.Domain.Entities.User user)
+        public static string GenerateJwtToken(IConfiguration configuration,
+            Workneering.Identity.Domain.Entities.User user, UserBaseData? userBaseData = null)
         {
             var jwtConfig = configuration.GetJwtConfig();
             var signingKey = Convert.FromBase64String(jwtConfig.Key);
 
-            #region Add Claims
+			#region Add Claims
 
-            var claims = new List<Claim>();
+			var claims = new List<Claim>();
 
             claims.AddClaim(ClaimKeys.Id, user.Id.ToString());
             claims.AddClaim(ClaimKeys.Email, user.Email);
             claims.AddClaim(ClaimKeys.FirstName, user.GetClaimValue(ClaimKeys.FirstName));
             claims.AddClaim(ClaimKeys.LastName, user.GetClaimValue(ClaimKeys.LastName));
+            claims.AddClaim("WengazPoint", userBaseData?.WengazPoint.ToString() ?? "");
+            claims.AddClaim("WengazPercentage", userBaseData?.WengazPercentage.ToString() ?? "");
             claims.AddRange(user.UserRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Role.Name)));
 
             #endregion

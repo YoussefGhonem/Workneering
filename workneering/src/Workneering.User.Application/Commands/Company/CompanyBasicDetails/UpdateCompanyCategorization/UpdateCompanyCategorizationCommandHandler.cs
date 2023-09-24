@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyCategorization
 {
@@ -26,7 +27,7 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
             company.UpdateCategory(request.CategoryIds);
             company.UpdateSubCategory(request.SubCategoryIds);
             company.UpdateSkills(request.SkillIds);
-
+            company!.UpdateAllPointAndPercentage();
             _userDatabaseContext.Companies.Update(company);
             await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;

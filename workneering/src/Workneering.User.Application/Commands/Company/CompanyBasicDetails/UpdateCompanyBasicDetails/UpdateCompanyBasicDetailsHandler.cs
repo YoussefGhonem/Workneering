@@ -31,7 +31,7 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
             query!.UpdateTitleOverview(request.TitleOverview);
 
             await _dbQueryService!.UpdateCountryUser(CurrentUser.Id!.Value, request.CountryId, cancellationToken);
-
+            query!.UpdateAllPointAndPercentage();
             _userDatabaseContext.Companies.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;

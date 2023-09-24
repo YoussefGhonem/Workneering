@@ -30,8 +30,9 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
             query.UpdateCategory(request.CategoryIds);
             query.UpdateSubCategory(request.SubCategoryIds);
             query.UpdateSkills(request.SkillIds);
+            query!.UpdateAllPointAndPercentage();
 
-			_userDatabaseContext.Clients.Update(query);
+            _userDatabaseContext.Clients.Attach(query);
 			await _userDatabaseContext.SaveChangesAsync(cancellationToken);
 
 			return Unit.Value;

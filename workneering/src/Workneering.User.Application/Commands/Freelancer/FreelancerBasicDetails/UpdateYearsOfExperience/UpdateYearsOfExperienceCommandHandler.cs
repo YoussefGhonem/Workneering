@@ -15,10 +15,17 @@ public class UpdateYearsOfExperienceCommandHandler : IRequestHandler<UpdateYears
     }
     public async Task<Unit> Handle(UpdateYearsOfExperienceCommand request, CancellationToken cancellationToken)
     {
-        var query = await _userDatabaseContext
-                        .Freelancers
-                        .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
+        var query = await _userDatabaseContext.Freelancers
+                            .Include(c => c.Portfolios).AsSplitQuery()
+                            .Include(c => c.Educations).AsSplitQuery()
+                            .Include(c => c.Certifications).AsSplitQuery()
+                            .Include(c => c.Languages).AsSplitQuery()
+                            .Include(c => c.Experiences).AsSplitQuery()
+                            .Include(c => c.Categories).AsSplitQuery()
+                            .Include(c => c.EmploymentHistory).AsSplitQuery()
+                            .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
         query!.UpdateYearsOfExperience(request.YearsOfExperience);
+        query.UpdateAllPointAndPercentage(query);
         _userDatabaseContext.Freelancers.Attach(query);
         _userDatabaseContext?.SaveChangesAsync(cancellationToken);
 

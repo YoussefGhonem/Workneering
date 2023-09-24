@@ -19,16 +19,23 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
         }
         public async Task<Unit> Handle(UpdateFreelancerCategorizationCommand request, CancellationToken cancellationToken)
         {
+            var query = await _userDatabaseContext.Freelancers
+                        .Include(c => c.Portfolios).AsSplitQuery()
+                        .Include(c => c.Educations).AsSplitQuery()
+                        .Include(c => c.Certifications).AsSplitQuery()
+                        .Include(c => c.Languages).AsSplitQuery()
+                        .Include(c => c.Experiences).AsSplitQuery()
+                        .Include(c => c.Categories).AsSplitQuery()
+                        .Include(x => x.Skills).AsSplitQuery()
+                        .Include(x => x.SubCategories).AsSplitQuery()
+                        .Include(x => x.EmploymentHistory).AsSplitQuery()
+                        .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
 
-            var query = _userDatabaseContext.Freelancers
-                .Include(x => x.Skills)
-                .Include(x => x.Categories)
-                .Include(x => x.SubCategories)
-                .FirstOrDefault(x => x.Id == CurrentUser.Id);
-
-            query.UpdateCategory(request.CategoryIds);
+            query!.UpdateCategory(request.CategoryIds);
             query.UpdateSubCategory(request.SubCategoryIds);
             query.UpdateSkills(request.SkillIds);
+            query.UpdateAllPointAndPercentage(query);
+
 
             await _userDatabaseContext.SaveChangesAsync(cancellationToken);
 

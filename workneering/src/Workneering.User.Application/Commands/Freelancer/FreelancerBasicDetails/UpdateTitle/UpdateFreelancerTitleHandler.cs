@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -15,8 +16,17 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
         public async Task<Unit> Handle(UpdateFreelancerTitleCommand request, CancellationToken cancellationToken)
         {
 
-            var query = _userDatabaseContext.Freelancers.FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = await _userDatabaseContext.Freelancers
+                            .Include(c => c.Portfolios).AsSplitQuery()
+                            .Include(c => c.Educations).AsSplitQuery()
+                            .Include(c => c.Certifications).AsSplitQuery()
+                            .Include(c => c.Languages).AsSplitQuery()
+                            .Include(c => c.Experiences).AsSplitQuery()
+                            .Include(c => c.Categories).AsSplitQuery()
+                            .Include(c => c.EmploymentHistory).AsSplitQuery()
+                            .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
             query.UpdateTitle(request.Title);
+            query.UpdateAllPointAndPercentage(query);
             _userDatabaseContext.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;

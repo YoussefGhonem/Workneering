@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using Workneering.User.Infrastructure.Persistence;
 namespace Workneering.User.Infrastructure.Migrations
 {
     [DbContext(typeof(UserDatabaseContext))]
-    partial class UserDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230923122939_addCounrtyflag")]
+    partial class addCounrtyflag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -402,9 +404,6 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<decimal?>("DeductedPoint")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -435,9 +434,6 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LastModifiedDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<decimal?>("MonthPoint")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -446,12 +442,6 @@ namespace Workneering.User.Infrastructure.Migrations
 
                     b.Property<string>("OverviewDescription")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("PackagePoint")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("ProfilePoint")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("Reviews")
                         .HasColumnType("decimal(18,2)");

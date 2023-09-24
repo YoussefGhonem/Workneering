@@ -2,8 +2,10 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Workneering.Base.Domain.ValueObjects;
+using Workneering.Shared.Core.Identity.Enums;
 using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 using Workneering.User.Application.Services.Models;
+using Workneering.User.Domain.Helpr;
 
 namespace Workneering.User.Application.Services.DbQueryService;
 
@@ -71,12 +73,50 @@ public class DbQueryService : IDbQueryService
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
         var countryId = CountryId == null ? null : @$"'{CountryId}'";
+
+        var tableName = string.Empty;
+        var getRolesql = $@"
+                           SELECT r.Name AS RoleName
+                           FROM IdentitySchema.Roles r
+                           INNER JOIN IdentitySchema.UserRoles ur ON r.Id = ur.RoleId
+                           INNER JOIN IdentitySchema.Users u ON ur.UserId = u.Id
+                           WHERE u.Id = '{userId}'";
+        var getroles = await con.QueryFirstOrDefaultAsync<string>(getRolesql);
+
+        if (getroles == RolesEnum.Freelancer.ToString()) tableName = "Freelancers";
+        else if (getroles == RolesEnum.Company.ToString()) tableName = "Companies";
+        else tableName = "Clients";
+
+        var selectCountryValuesql = $@"
+                SELECT IsCountainCountry FROM UserSchema.{tableName}
+                WHERE Id = '{userId.ToString()}'";
+        var selectCountryValue =await con.QueryFirstOrDefaultAsync<bool>(selectCountryValuesql);
+
+        if (selectCountryValue is false)
+        {
+            var wengazsql = $@"
+                SELECT WengazPercentage FROM UserSchema.{tableName}
+                WHERE Id = '{userId.ToString()}'";
+            decimal wengazeValue = await con.QueryFirstOrDefaultAsync<decimal>(wengazsql);
+            int numberOfField = typeof(FreelancersPercentageFields).GetProperties().Count();
+            decimal numberOfNotNull = (int)Math.Round(((wengazeValue / 100) * numberOfField), MidpointRounding.AwayFromZero);
+            var newPercentage = (((numberOfNotNull + 1) / numberOfField) * 100);
+            var wengazssql = @$"
+                UPDATE UserSchema.{tableName} SET
+                WengazPercentage = {newPercentage}
+                WHERE Id = '{userId.ToString()}'";
+            await con.ExecuteAsync(wengazssql);
+        }
         var sql = @$"
                 UPDATE IdentitySchema.Users SET
                 CountryId = {countryId}
                 WHERE Id = '{userId.ToString()}'";
+        var updateIsCountaisCountry = $@"
+                UPDATE UserSchema.{tableName} SET IsCountainCountry = {1}
+                WHERE Id = '{userId.ToString()}'";
 
         var data = con.Execute(sql);
+        await con.ExecuteAsync(updateIsCountaisCountry);
 
         return string.Empty;
     }

@@ -25,7 +25,7 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
             query!.UpdateGender(request.Gender);
             query!.UpdateName(request.Name);
             await _dbQueryService!.UpdateCountryUser(CurrentUser.Id!.Value, request.CountryId, cancellationToken);
-
+            query!.UpdateAllPointAndPercentage();
             _userDatabaseContext.Clients.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;

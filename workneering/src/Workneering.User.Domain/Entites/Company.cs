@@ -1,5 +1,7 @@
-﻿using Workneering.Base.Domain.Common;
+﻿using MediatR;
+using Workneering.Base.Domain.Common;
 using Workneering.User.Domain.Enums;
+using Workneering.User.Domain.Helpr;
 using Workneering.User.Domain.valueobjects;
 
 namespace Workneering.User.Domain.Entites
@@ -16,6 +18,13 @@ namespace Workneering.User.Domain.Entites
         private string? _whatDoWeDo;
         private int? _numOfReviews; // 100 clients for example
         private decimal? _reviews; // 4.3 of 5 stars
+		private decimal? _wengazPercentage;
+        private decimal? _profilePoint;
+        private decimal? _monthPoint;
+        private decimal? _packagePoint;
+        private decimal? _deductedPoint;
+        private decimal? _wengazPoint;
+        private bool _isCountainCountry;
         private DateTimeOffset? _foundedIn;
         private CompanySizeEnum? _companySize;
         private Guid? _industryId;
@@ -44,7 +53,15 @@ namespace Workneering.User.Domain.Entites
         public string? WhatDoWeDo { get => _whatDoWeDo; set => _whatDoWeDo = value; }
         public string? Title { get => _title; set => _title = value; }
         public int? NumOfReviews { get => _numOfReviews; set => _numOfReviews = value; }
+
         public decimal? Reviews { get => _reviews; private set => _reviews = value; }
+		public decimal? WengazPercentage { get => _wengazPercentage; private set => _wengazPercentage = value; }
+        public decimal? ProfilePoint { get => _profilePoint; private set => _profilePoint = 0; }
+        public decimal? MonthPoint { get => _monthPoint; private set => _monthPoint = 0; }
+        public decimal? PackagePoint { get => _packagePoint; private set => _packagePoint = 0; }
+        public decimal? DeductedPoint { get => _deductedPoint; private set => _deductedPoint = 0; }
+        public decimal? WengazPoint { get => _wengazPoint; private set => _wengazPoint = value; }
+        public bool IsCountainCountry { get => _isCountainCountry; private set => _isCountainCountry = false; }
 
         public DateTimeOffset? FoundedIn { get => _foundedIn; set => _foundedIn = value; }
 
@@ -103,6 +120,58 @@ namespace Workneering.User.Domain.Entites
             _numOfReviews++;
             var summ = _reviews + field;
             _reviews = summ / _numOfReviews;
+        }
+
+        private decimal CalculateNullValue()
+        {
+        
+            decimal nullFieldCount = 0;
+            if (string.IsNullOrEmpty(_name)) { nullFieldCount++; }
+            if (string.IsNullOrEmpty(_whatDoWeDo)) { nullFieldCount++; }
+            if (string.IsNullOrEmpty(_whoAreWe)) { nullFieldCount++; }
+            if (_isCountainCountry == false) { nullFieldCount++; }
+            if (string.IsNullOrEmpty(_overviewDescription)) nullFieldCount++;
+            if (_foundedIn == null) nullFieldCount++;
+            if (_industryId == null) nullFieldCount++;
+            return nullFieldCount;
+        }
+        public void UpdateAllPointAndPercentage()
+        {
+            UpdateWengazPercentage();
+            UpdateProrilePoint();
+            UpdateDeductedPoint();
+            UpdateWengazPoint();
+        }
+        public void UpdateWengazPercentage()
+        {
+
+            decimal nullValue = CalculateNullValue();
+            decimal allValue = typeof(CompanyPercentageFields).GetProperties().Count();
+            _wengazPercentage = (((allValue - nullValue) / allValue) * 100);
+
+        }
+        public void UpdateProrilePoint()
+        {
+            decimal nullValue = CalculateNullValue();
+            decimal allValue = typeof(CompanyPercentageFields).GetProperties().Count();
+            _profilePoint = ((allValue - nullValue) * 10);
+        }
+        public void UpdateMonthPoint(decimal? field)
+        {
+            _monthPoint = field;
+        }
+        public void UpdatePackagePoint(decimal? field)
+        {
+            _packagePoint = field;
+        }
+        public void UpdateDeductedPoint()
+        {
+            decimal allValue = typeof(CompanyPercentageFields).GetProperties().Count();
+            _deductedPoint = (allValue * 10) - _profilePoint;
+        }
+        public void UpdateWengazPoint()
+        {
+            _wengazPoint = _packagePoint ?? 0 + _profilePoint ?? 0 + _monthPoint ?? 0;
         }
         public void UpdateReviewersStars(ReviewersStars? field)
         {

@@ -13,6 +13,8 @@
         public string? Gender { get; set; }
         public decimal? Reviews { get; set; }
         public int? NumOfReviews { get; set; }
+        public decimal? WengazPercentage { get; set; }
+        public decimal? WengazPoint { get; set; }
         public decimal? YearsOfExperience { get; set; }
         public decimal? HourlyRate { get; set; }
         public string? Title { get; set; }

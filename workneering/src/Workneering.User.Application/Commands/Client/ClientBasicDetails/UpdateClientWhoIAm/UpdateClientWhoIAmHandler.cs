@@ -17,6 +17,7 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         {
             var query = await _userDatabaseContext.Clients.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
             query!.UpdateWhoIAm(request.WhoIAm);
+            query!.UpdateAllPointAndPercentage();
             _userDatabaseContext.Clients.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;
