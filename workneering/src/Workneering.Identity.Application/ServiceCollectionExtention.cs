@@ -23,13 +23,13 @@ public static class DependencyInjection
     public static IServiceCollection AddIdentityApplication(this IServiceCollection services,
         IConfiguration configuration)
     {
-		services.AddSingleton<IDbQueryService, DbQueryService>();
+        services.AddSingleton<IDbQueryService, DbQueryService>();
 
-		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(Assembly.GetExecutingAssembly());
-		#region Identity Configuration
+        #region Identity Configuration
 
-		var config = configuration.GetJwtConfig();
+        var config = configuration.GetJwtConfig();
 
         services.AddAuthorization();
         services.AddAuthorization(auth =>
@@ -83,58 +83,43 @@ public static class DependencyInjection
         });
 
         #endregion
-
-        #region CORS
-        //services.AddCors(c =>
-        //{
-        //    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-        //});
-		services.AddCors(options =>
-		{
-			options.AddPolicy("AllowAnyOriginPolicy",
-			builder => builder
-				.AllowAnyOrigin()  // Allow requests from any origin
-				.AllowAnyHeader()
-				.AllowAnyMethod());
-		});
-		#endregion
-
-		return services;
+        return services;
     }
 
     public static WebApplication UseIdentityApplication(this WebApplication app)
     {
-        app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         app.UseHttpsRedirection();
+        app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         app.UseAuthentication();
         app.UseAuthorization();
+        app.MapControllers();
         app.UseCurrentUser();
 
         return app;
     }
 
 
-     //        #region CORS
-     //    services.AddCors(options =>
-     //    {
-     //        options.AddPolicy("AllowAnyOriginPolicy",
-     //        builder => builder
-     //            .AllowAnyOrigin()  // Allow requests from any origin
-     //            .AllowAnyHeader()
-     //            .AllowAnyMethod());
-     //    });
-     //    #endregion
+    //        #region CORS
+    //    services.AddCors(options =>
+    //    {
+    //        options.AddPolicy("AllowAnyOriginPolicy",
+    //        builder => builder
+    //            .AllowAnyOrigin()  // Allow requests from any origin
+    //            .AllowAnyHeader()
+    //            .AllowAnyMethod());
+    //    });
+    //    #endregion
 
-     //    return services;
-     //}
+    //    return services;
+    //}
 
-     //public static WebApplication UseIdentityApplication(this WebApplication app)
-     //{
-     //    app.UseCors("AllowAnyOriginPolicy");
-     //    app.UseHttpsRedirection();
-     //    app.UseAuthentication();
-     //    app.UseAuthorization();
-     //    app.UseCurrentUser();
-     //    return app;
-     //}
+    //public static WebApplication UseIdentityApplication(this WebApplication app)
+    //{
+    //    app.UseCors("AllowAnyOriginPolicy");
+    //    app.UseHttpsRedirection();
+    //    app.UseAuthentication();
+    //    app.UseAuthorization();
+    //    app.UseCurrentUser();
+    //    return app;
+    //}
 }

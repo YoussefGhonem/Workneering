@@ -26,7 +26,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjec
                 return result;
             foreach (var proposal in project.Proposals)
             {
-                var userInfo = _dbQueryService.GetFreelancerInfo(proposal.FreelancerId!.Value);
+                var userInfo = await _dbQueryService.GetFreelancerInfo(proposal.FreelancerId!.Value);
                 result.SubmittedOffers.Add(new SubmittedOffersDto
                 {
                     FreelancerId = proposal.FreelancerId,
@@ -38,8 +38,8 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjec
 
             foreach (var proposal in project.Proposals)
             {
-                var userInfo = _dbQueryService.GetFreelancerInfo(proposal.FreelancerId!.Value);
-                result.Proposals.Add(new ProposalsDto
+                var userInfo = await _dbQueryService.GetFreelancerInfo(proposal.FreelancerId!.Value);
+                result.Proposals.Add(new ClientProposalsDto
                 {
                     FreelancerDetails = new SubmittedOffersDto
                     {
@@ -55,6 +55,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjec
                 });
             }
 
+            return result;
         }
     }
 }

@@ -70,16 +70,13 @@ public static class ConfigureServicesExtention
     public static async Task<WebApplication> Configure(this WebApplication app, IWebHostEnvironment env)
     {
         #region Using Base Packages 
-
-        app
-            .UseIdentityApplication()
-           //.UseExceptionHandling()
-           //.UseHealthCheckApplication()
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseIdentityApplication()
            .UseBaseSwagger(app.Configuration);
 
         #endregion
 
-        app.MapControllers();
 
         using (var scope = app.Services.CreateScope())
         {

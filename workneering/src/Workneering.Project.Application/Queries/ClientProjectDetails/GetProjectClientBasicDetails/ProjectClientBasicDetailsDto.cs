@@ -18,7 +18,7 @@ public class ProjectClientBasicDetailsDto
     public List<CategoriesDto>? Categories { get; set; } = new();
     public List<SubCategoriesDto>? SubCategories { get; set; } = new();
     public List<SkillsDto>? Skills { get; set; } = new();
-    public List<ProposalsDto> Proposals { get; set; } = new();
+    public List<ClientProposalsDto> Proposals { get; set; } = new();
     public List<SubmittedOffersDto> SubmittedOffers { get; set; } = new();
 }
 
@@ -44,7 +44,7 @@ public class SubmittedOffersDto
     public string? Title { get; set; } = null;
     public string? CountryName { get; set; } = null;
 }
-public class ProposalsDto
+public class ClientProposalsDto
 {
     public SubmittedOffersDto FreelancerDetails { get; set; } = new();
     public string? CoverLetter { get; set; }

@@ -11,7 +11,7 @@ using Workneering.Identity.Application.Queries.GetProfileDetails;
 namespace Workneering.Identity.API.Controllers
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/identity")]
     public class IdentityController : BaseController
     {
         public IdentityController(ISender mediator) : base(mediator)

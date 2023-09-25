@@ -15,6 +15,6 @@ public interface IDbQueryService
     public List<CategorizationDto> GetSkillsForProject(List<Guid> skillsIds);
     public List<CategorizationDto> GetSupCateforiesForProject(List<Guid> suppCategoryIds);
     public List<CategorizationDto> GetCategoriesForProject(List<Guid> categoryIds);
-    public FreelancerInfoDto GetFreelancerInfo(Guid Id);
+    public Task<FreelancerInfoDto> GetFreelancerInfo(Guid Id);
 
 }
