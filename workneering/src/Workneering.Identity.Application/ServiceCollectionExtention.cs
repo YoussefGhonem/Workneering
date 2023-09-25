@@ -14,7 +14,7 @@ using Workneering.Identity.Infrastructure.Persistence;
 using Workneering.Base.Application.Extensions;
 using Workneering.Shared.Core.Identity.CurrentUser;
 //using Workneering.Base.Application.Services.DbQueryService;
-using Workneering.Identity.Application.Services.DbQueryService.DbQueryService;
+using Workneering.Identity.Application.Services.DbQueryService;
 
 namespace Workneering.Identity.Application;
 

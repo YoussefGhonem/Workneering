@@ -14,10 +14,7 @@ namespace Workneering.Project.Domain.Entities
         private decimal? _totalBid;
         // if type project and client make the project with hourly
         private decimal? _hourlyRate;
-        public Proposal()
-        {
-
-        }
+        public Proposal() { }
         public Proposal(Guid? freelancerId, string? coverLetter,
             ProposalDurationEnum? proposalDuratio, decimal? totalBid = null, decimal? hourlyRate = null)
         {

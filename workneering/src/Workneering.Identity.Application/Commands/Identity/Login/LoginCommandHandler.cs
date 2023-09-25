@@ -5,7 +5,7 @@ using Workneering.Identity.Infrastructure.Persistence;
 using System.Security.Claims;
 using Mapster;
 using Workneering.Identity.Application.Services.Models;
-using Workneering.Identity.Application.Services.DbQueryService.DbQueryService;
+using Workneering.Identity.Application.Services.DbQueryService;
 
 namespace Workneering.Identity.Application.Commands.Identity.Login
 {

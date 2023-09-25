@@ -139,57 +139,57 @@ public class DbQueryService : IDbQueryService
     public List<CategorizationDto> GetCategoriesForProject(List<Guid> categoryIds)
     {
 
-		using var con = new SqlConnection(_connectionString);
-		con.Open();
+        using var con = new SqlConnection(_connectionString);
+        con.Open();
 
         string inClause = string.Join(",", categoryIds);
 
 
-		var data = con.Query<CategorizationDto>(
-	@"SELECT c.Id, c.Name
+        var data = con.Query<CategorizationDto>(
+    @"SELECT c.Id, c.Name
       FROM SettingsSchema.Categories c
       WHERE c.Id IN @CategoryIds",
-	new { CategoryIds = categoryIds });
+    new { CategoryIds = categoryIds });
 
-		return data.ToList();
+        return data.ToList();
 
-	}
+    }
 
-	public List<CategorizationDto> GetSupCateforiesForProject(List<Guid> suppCategoryIds)
-	{
+    public List<CategorizationDto> GetSupCateforiesForProject(List<Guid> suppCategoryIds)
+    {
 
-		using var con = new SqlConnection(_connectionString);
-		con.Open();
-		string inClause = string.Join(",", suppCategoryIds);
+        using var con = new SqlConnection(_connectionString);
+        con.Open();
+        string inClause = string.Join(",", suppCategoryIds);
 
-		var data = con.Query<CategorizationDto>(
-	        @"SELECT c.Id, c.Name
+        var data = con.Query<CategorizationDto>(
+            @"SELECT c.Id, c.Name
               FROM SettingsSchema.SubCategories c
               WHERE c.Id IN @SuppCategoryIds",
-	        new { SuppCategoryIds = suppCategoryIds });
+            new { SuppCategoryIds = suppCategoryIds });
 
-		return data.ToList();
+        return data.ToList();
 
-	}
+    }
 
-	public List<CategorizationDto> GetSkillsForProject(List<Guid> skillsIds)
-	{
+    public List<CategorizationDto> GetSkillsForProject(List<Guid> skillsIds)
+    {
 
-		using var con = new SqlConnection(_connectionString);
-		con.Open();
-		string inClause = string.Join(",", skillsIds);
+        using var con = new SqlConnection(_connectionString);
+        con.Open();
+        string inClause = string.Join(",", skillsIds);
 
 
-		var data = con.Query<CategorizationDto>(
-			@"SELECT c.Id, c.Name
+        var data = con.Query<CategorizationDto>(
+            @"SELECT c.Id, c.Name
              FROM SettingsSchema.Skills c
               WHERE c.Id IN @SkillsIds",
-			new { SkillsIds = skillsIds });
+            new { SkillsIds = skillsIds });
 
-		return data.ToList();
+        return data.ToList();
 
-	}
-	public IndustryDetails? GetIndustryName(Guid userId)
+    }
+    public IndustryDetails? GetIndustryName(Guid userId)
     {
         using var con = new SqlConnection(_connectionString);
         con.Open();
@@ -226,5 +226,20 @@ public class DbQueryService : IDbQueryService
 
     }
 
+    public async Task<FreelancerInfoDto> GetFreelancerInfo(Guid userId)
+    {
+        using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync();
 
+        var sql = @$"  SELECT  f.Id, f.Name ,f.Title,c.Name as CountryName
+                        FROM  UserSchema.Freelancers f
+                        INNER JOIN IdentitySchema.Users u ON f.Id = u.Id
+                        LEFT JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
+                        WHERE f.Id = '{userId}' ";
+
+        var data = await con.QueryFirstAsync<FreelancerInfoDto>(sql);
+
+        return data;
+
+    }
 }
