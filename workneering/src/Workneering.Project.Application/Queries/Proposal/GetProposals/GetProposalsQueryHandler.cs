@@ -23,7 +23,7 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals
         public async Task<PaginationResult<ProposalsDto>> Handle(GetProposalsQuery request, CancellationToken cancellationToken)
         {
 
-            var proposals = await _context.Projects
+            var proposals = await _context.Projects.Where(x => x.ClientId == CurrentUser.Id)
                 .Include(x => x.Proposals)
                 .Include(x => x.Categories)
                 .AsQueryable()

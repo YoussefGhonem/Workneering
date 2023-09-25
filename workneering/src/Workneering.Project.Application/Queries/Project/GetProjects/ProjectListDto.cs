@@ -8,6 +8,7 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
         public bool IsSaved { get; set; } = false;
         public string? ProjectTitle { get; set; }
         public string? ProjectDescription { get; set; }
+        public ProjectBudgetEnum? ProjectBudget { get; set; }
         public decimal? ProjectFixedBudgetPrice { get; set; }
         public decimal? ProjectHourlyFromPrice { get; set; }
         public decimal? ProjectHourlyToPrice { get; set; }
@@ -17,7 +18,6 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
         public decimal? ProjectBudgetPrice { get; set; }
         public string? ExperienceLevel { get; set; }
         public string? ProjectDuration { get; set; }
-        public ProjectBudgetEnum? ProjectBudget { get; set; }
         public List<CategoriesDto>? Categories { get; set; } = new();
         public List<SubCategoriesDto>? SubCategories { get; set; } = new();
         public List<SkillsDto>? Skills { get; set; } = new();

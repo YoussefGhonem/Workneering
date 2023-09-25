@@ -13,7 +13,8 @@ namespace Workneering.Project.Domain.Entities
         private decimal? _projectHourlyFromPrice;
         private decimal? _projectHourlyToPrice;
         private Guid? _clientId;
-		private string? _projectDurationDescription;
+        private Guid? _assginedFreelancerId;
+        private string? _projectDurationDescription;
         private ProjectDurationEnum? _projectDuration;
         private HoursPerWeekEnum? _hoursPerWeek;
         private ProjectStatusEnum? _projectStatus;
@@ -35,7 +36,7 @@ namespace Workneering.Project.Domain.Entities
              List<ProjectSkill>? skills,
             HoursPerWeekEnum? hoursPerWeek, ProjectDurationEnum? projectDuration, ProjectTypeEnum? projectType, string? projectTitle, string? projectDescription = null, bool? isOpenDueDate = null,
             string? projectDurationDescription = null, decimal? projectBudgetPrice = null,
-			Guid? clientId = null, ProjectStatusEnum? projectStatus = null, ExperienceLevelEnum? experienceLevel = null,
+            Guid? clientId = null, ProjectStatusEnum? projectStatus = null, ExperienceLevelEnum? experienceLevel = null,
             ProjectBudgetEnum? projectBudget = null, decimal? projectHourlyFromPrice = null, decimal? projectHourlyToPrice = null, bool? isRecommend = null)
         {
             _projectTitle = projectTitle;
@@ -74,6 +75,7 @@ namespace Workneering.Project.Domain.Entities
         public string? ProjectDurationDescription { get => _projectDurationDescription; private set => _projectDurationDescription = value; }
         public decimal? ProjectFixedBudgetPrice { get => _projectFixedBudgetPrice; private set => _projectFixedBudgetPrice = value; }
         public Guid? ClientId { get => _clientId; private set => _clientId = value; }
+        public Guid? AssginedFreelancerId { get => _assginedFreelancerId; private set => _assginedFreelancerId = value; }
         public ProjectDurationEnum? ProjectDuration { get => _projectDuration; private set => _projectDuration = value; }
         public ProjectStatusEnum? ProjectStatus { get => _projectStatus; private set => _projectStatus = value; }
         public ExperienceLevelEnum? ExperienceLevel { get => _experienceLevel; private set => _experienceLevel = value; }
@@ -93,14 +95,18 @@ namespace Workneering.Project.Domain.Entities
         public List<ProjectSkill>? Skills => _skills;
 
 
-		#endregion
+        #endregion
 
-		#region Public Methods
-		#region Basic Details
-		public void UpdateHourlyFromPrice(decimal? field)
+        #region Public Methods
+        #region Basic Details
+        public void UpdateHourlyFromPrice(decimal? field)
         {
             _projectHourlyFromPrice = field;
 
+        }
+        public void SetAssginedFreelancerId(Guid? field)
+        {
+            _assginedFreelancerId = field;
         }
         public void UpdateIsRecommend(bool? field)
         {
@@ -261,7 +267,7 @@ namespace Workneering.Project.Domain.Entities
             {
                 if (item.ProposalStatus != ProposalStatusEnum.Rejected)
                 {
-                    item.UpdateProposalStatus(ProposalStatusEnum.None);
+                    item.UpdateProposalStatus(ProposalStatusEnum.Achieved);
                 }
             }
         }

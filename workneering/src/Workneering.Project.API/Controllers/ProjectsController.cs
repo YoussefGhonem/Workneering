@@ -12,8 +12,10 @@ using Workneering.Project.Application.Commands.Wishlist.RemoveWishlist;
 using Workneering.Project.Application.Queries.Project.GetProjects;
 using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForClient;
 using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails;
 using Workneering.Project.Application.Queries.Proposal.GetProposals;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects;
 
 namespace Workneering.Project.API.Controllers
 {
@@ -180,6 +182,7 @@ namespace Workneering.Project.API.Controllers
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
+
         [HttpGet("proposals")] // for clients to get project proposals
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -207,6 +210,26 @@ namespace Workneering.Project.API.Controllers
         }
         #endregion
 
+        #region Client 
+        [HttpGet("{id}/client/basic-details")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProjectClientBasicDetailsDto))]
+        public async Task<ActionResult<ProjectClientBasicDetailsDto>> GetProjectClientBasicDetails(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetProjectClientBasicDetailsQuery { ProjectId = id }, CancellationToken));
+        }
+        [HttpGet("client")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ClientProjectsDto>))]
+        public async Task<ActionResult<ProjectClientBasicDetailsDto>> GetClientProjectsQuery([FromQuery] GetClientProjectsQuery query)
+        {
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        #endregion
         #endregion
 
     }
