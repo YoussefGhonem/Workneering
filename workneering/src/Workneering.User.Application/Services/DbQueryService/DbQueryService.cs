@@ -75,6 +75,7 @@ public class DbQueryService : IDbQueryService
         var countryId = CountryId == null ? null : @$"'{CountryId}'";
 
         var tableName = string.Empty;
+        var numberOffield = 0;
         var getRolesql = $@"
                            SELECT r.Name AS RoleName
                            FROM IdentitySchema.Roles r
@@ -83,9 +84,23 @@ public class DbQueryService : IDbQueryService
                            WHERE u.Id = '{userId}'";
         var getroles = await con.QueryFirstOrDefaultAsync<string>(getRolesql);
 
-        if (getroles == RolesEnum.Freelancer.ToString()) tableName = "Freelancers";
-        else if (getroles == RolesEnum.Company.ToString()) tableName = "Companies";
-        else tableName = "Clients";
+        if (getroles == RolesEnum.Freelancer.ToString())
+        { 
+            tableName = "Freelancers";
+            numberOffield = typeof(FreelancersPercentageFields).GetProperties().Count();
+
+        }
+        else if (getroles == RolesEnum.Company.ToString())
+        { 
+            tableName = "Companies";
+            numberOffield = typeof(CompanyPercentageFields).GetProperties().Count();
+        }
+        else
+        {
+            tableName = "Clients";
+            numberOffield = typeof(ClientPercentageFields).GetProperties().Count();
+
+        }
 
         var selectCountryValuesql = $@"
                 SELECT IsCountainCountry FROM UserSchema.{tableName}
@@ -98,9 +113,8 @@ public class DbQueryService : IDbQueryService
                 SELECT WengazPercentage FROM UserSchema.{tableName}
                 WHERE Id = '{userId.ToString()}'";
             decimal wengazeValue = await con.QueryFirstOrDefaultAsync<decimal>(wengazsql);
-            int numberOfField = typeof(FreelancersPercentageFields).GetProperties().Count();
-            decimal numberOfNotNull = (int)Math.Round(((wengazeValue / 100) * numberOfField), MidpointRounding.AwayFromZero);
-            var newPercentage = (((numberOfNotNull + 1) / numberOfField) * 100);
+            decimal numberOfNotNull = (int)Math.Round(((wengazeValue / 100) * numberOffield), MidpointRounding.AwayFromZero);
+            var newPercentage = (((numberOfNotNull + 1) / numberOffield) * 100);
             var wengazssql = @$"
                 UPDATE UserSchema.{tableName} SET
                 WengazPercentage = {newPercentage}
