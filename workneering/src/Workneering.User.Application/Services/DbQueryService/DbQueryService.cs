@@ -85,13 +85,13 @@ public class DbQueryService : IDbQueryService
         var getroles = await con.QueryFirstOrDefaultAsync<string>(getRolesql);
 
         if (getroles == RolesEnum.Freelancer.ToString())
-        { 
+        {
             tableName = "Freelancers";
             numberOffield = typeof(FreelancersPercentageFields).GetProperties().Count();
 
         }
         else if (getroles == RolesEnum.Company.ToString())
-        { 
+        {
             tableName = "Companies";
             numberOffield = typeof(CompanyPercentageFields).GetProperties().Count();
         }
@@ -105,7 +105,7 @@ public class DbQueryService : IDbQueryService
         var selectCountryValuesql = $@"
                 SELECT IsCountainCountry FROM UserSchema.{tableName}
                 WHERE Id = '{userId.ToString()}'";
-        var selectCountryValue =await con.QueryFirstOrDefaultAsync<bool>(selectCountryValuesql);
+        var selectCountryValue = await con.QueryFirstOrDefaultAsync<bool>(selectCountryValuesql);
 
         if (selectCountryValue is false)
         {
@@ -153,7 +153,7 @@ public class DbQueryService : IDbQueryService
         return data;
     }
 
-    public async Task<CategorizationDto> GetCategorizationAsync(IEnumerable<Guid> categoriesId, IEnumerable<Guid> subCategoriesId, IEnumerable<Guid> skillsId , CancellationToken cancellationToken)
+    public async Task<CategorizationDto> GetCategorizationAsync(IEnumerable<Guid> categoriesId, IEnumerable<Guid> subCategoriesId, IEnumerable<Guid> skillsId, CancellationToken cancellationToken)
     {
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
@@ -169,7 +169,7 @@ public class DbQueryService : IDbQueryService
 
         using (var multi = await con.QueryMultipleAsync(query, new
         {
-            CategoriesIds = categoriesIdParametrs.Split(','), 
+            CategoriesIds = categoriesIdParametrs.Split(','),
             SubCategoriesIds = subCategoriesIdParametrs.Split(','),
             SkillsIds = skillsIdParametrs.Split(',')
         }))
