@@ -22,12 +22,12 @@ namespace Workneering.User.Domain.Entites
         private decimal? _hourlyRate;
         private string? _title;
         private string? _overviewDescription;
-        private decimal? _wengazPercentage;
-        private decimal? _profilePoint;
-        private decimal? _monthPoint;
-        private decimal? _packagePoint;
-        private decimal? _deductedPoint;
-        private decimal? _wengazPoint;
+        private decimal _wengazPercentage;
+        private decimal _profilePoint;
+        private decimal _monthPoint;
+        private decimal _packagePoint;
+        private decimal _deductedPoint;
+        private decimal _wengazPoint;
         private bool _isCountainCountry;
         private ExperienceLevelEnum? _experienceLevel;
         private VideoIntroduction? _videoIntroduction = new();
@@ -58,12 +58,12 @@ namespace Workneering.User.Domain.Entites
         public string? Name { get => _name; private set => _name = value; }
         public GenderEnum? Gender { get => _gender; private set => _gender = value; }
 		public decimal? Reviews { get => _reviews; private set => _reviews = value; }
-		public decimal? WengazPercentage { get => _wengazPercentage; private set => _wengazPercentage = value; }
-        public decimal? ProfilePoint { get => _profilePoint; private set => _profilePoint = 0; }
-        public decimal? MonthPoint { get => _monthPoint; private set => _monthPoint = 0; }
-        public decimal? PackagePoint { get => _packagePoint; private set => _packagePoint = 0; }
-        public decimal? DeductedPoint { get => _deductedPoint; private set => _deductedPoint = 0; }
-        public decimal? WengazPoint { get => _wengazPoint; private set => _wengazPoint = value; }
+		public decimal WengazPercentage { get => _wengazPercentage; private set => _wengazPercentage = 0; }
+        public decimal ProfilePoint { get => _profilePoint; private set => _profilePoint = 0; }
+        public decimal MonthPoint { get => _monthPoint; private set => _monthPoint = 0; }
+        public decimal PackagePoint { get => _packagePoint; private set => _packagePoint = 0; }
+        public decimal DeductedPoint { get => _deductedPoint; private set => _deductedPoint = 0; }
+        public decimal WengazPoint { get => _wengazPoint; private set => _wengazPoint = 0; }
         public bool IsCountainCountry { get => _isCountainCountry; private set => _isCountainCountry = false; }
         public int? NumOfReviews { get => _numOfReviews; private set => _numOfReviews = value; }
         public decimal? YearsOfExperience { get => _yearsOfExperience; private set => _yearsOfExperience = value; }
@@ -162,11 +162,11 @@ namespace Workneering.User.Domain.Entites
             decimal allValue = typeof(FreelancersPercentageFields).GetProperties().Count();
             _profilePoint = ((allValue - nullValue) * 10);
         }
-        public void UpdateMonthPoint(decimal? field)
+        public void UpdateMonthPoint(decimal field)
         {
             _monthPoint = field;
         }
-        public void UpdatePackagePoint(decimal? field)
+        public void UpdatePackagePoint(decimal field)
         {
             _packagePoint = field;  
         }
@@ -177,7 +177,7 @@ namespace Workneering.User.Domain.Entites
         }
 		public void UpdateWengazPoint()
         {
-            _wengazPoint =_packagePoint??0 + _profilePoint??0 + _monthPoint??0;
+            _wengazPoint =_packagePoint + _profilePoint + _monthPoint;
         }
 
 		public void UpdateAvailability(int availability)

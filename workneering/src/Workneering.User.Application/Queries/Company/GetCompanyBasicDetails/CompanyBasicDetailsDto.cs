@@ -22,12 +22,12 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
         public DateTimeOffset? FoundedIn { get; set; }
         public CompanySizeEnum? CompanySize { get; set; }
         public Guid? CategoryId { get; set; }
-        public int? WengazPercentage { get; set; }
-        public int? ProfilePoint { get ; set; }
-        public int? MonthPoint { get; set; }
-        public int? PackagePoint { get; set; }
-        public int? DeductedPoint { get; set; }
-        public int? WengazPoint { get; set; }
+        public int WengazPercentage { get; set; }
+        public int ProfilePoint { get ; set; }
+        public int MonthPoint { get; set; }
+        public int PackagePoint { get; set; }
+        public int DeductedPoint { get; set; }
+        public int WengazPoint { get; set; }
         public CountryInfo Location { get; set; } = new();
         public UserAddressInfo Address { get; set; } = new();
 
