@@ -55,6 +55,15 @@ namespace Workneering.User.API.Controllers
         #region Commands
 
         #region Update Basic Details
+        [HttpPut("profile/image")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateClientImageCommand([FromForm] UpdateFreelancerImageCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
         [HttpPut("profile/categorization")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -250,7 +259,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> CreatePortfolioCommand(CreatePortfolioCommand command)
-            {
+        {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 

@@ -44,7 +44,6 @@ namespace Workneering.Packages.Storage.AWS3.Services
                     BucketName = bucketName,
                     Key = fileNameStorage,
                     InputStream = stream,
-                    CannedACL = S3CannedACL.PublicRead,
 
                 };
                 uploadRequest.Metadata.Add("filename", $"{file.FileName}");
@@ -52,7 +51,6 @@ namespace Workneering.Packages.Storage.AWS3.Services
                 // upload to s3
                 var transferUtility = new TransferUtility(client);
                 await transferUtility.UploadAsync(uploadRequest, cancellationToken);
-
                 var size = file.Length;
                 var originalFileName = file.FileName;
                 var extension = Path.GetExtension(originalFileName);
@@ -160,24 +158,41 @@ namespace Workneering.Packages.Storage.AWS3.Services
                 return false;
             }
         }
-        public async Task<string> DownloadFileUrl(string key)
+        public async Task<string?> DownloadFileUrl(string? key)
         {
-            var options = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
-            var region = AWS3ConfigurationExtension.GetRgionAWS();
-            var credential = AWS3ConfigurationExtension.GetBasicAWSCredentials(_configuration);
-            var bucketName = options.DefaultBucket;
-
-            var client = new AmazonS3Client(credential, region);
-
-            // Generate a pre-signed URL for the object with a specific key
-            var request = new GetPreSignedUrlRequest
+            try
             {
-                BucketName = bucketName,
-                Key = key,
-            };
+                if (string.IsNullOrEmpty(key)) return null;
+                var options = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
+                var region = AWS3ConfigurationExtension.GetRgionAWS();
+                var credential = AWS3ConfigurationExtension.GetBasicAWSCredentials(_configuration);
+                var bucketName = options.DefaultBucket;
 
-            var url = client.GetPreSignedURL(request);
-            return url;
+                var client = new AmazonS3Client(credential, region);
+
+                // Generate a pre-signed URL for the object with a specific key
+                var request = new GetPreSignedUrlRequest
+                {
+                    BucketName = bucketName,
+                    Key = key,
+                    Expires = DateTime.Now.AddHours(1) // Adjust expiration as needed
+
+                };
+
+                var url = client.GetPreSignedURL(request);
+                return url;
+            }
+            catch (AmazonS3Exception e)
+            {
+                throw;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         public async Task<DownloadedFile> DownloadFile(string key)

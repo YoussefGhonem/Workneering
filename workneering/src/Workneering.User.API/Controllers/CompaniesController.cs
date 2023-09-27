@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientImage;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyBasicDetails;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyCategorization;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyDescription;
@@ -27,6 +28,15 @@ namespace Workneering.User.API.Controllers
         }
 
         #region Commands
+        [HttpPut("profile/image")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateClientImageCommand([FromForm] UpdateCompanyImageCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
         [HttpPut("profile/description")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,7 +51,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateCompanyCategorizationCommand([FromBody]UpdateCompanyCategorizationCommand command)
+        public async Task<ActionResult<Unit>> UpdateCompanyCategorizationCommand([FromBody] UpdateCompanyCategorizationCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
