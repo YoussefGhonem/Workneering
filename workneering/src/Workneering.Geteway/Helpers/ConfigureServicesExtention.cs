@@ -60,6 +60,8 @@ public static class ConfigureServicesExtention
                 .AddUserExtension(builder.Configuration)
                 .AddProjectExtension(builder.Configuration)
                 .AddSettingsExtension(builder.Configuration);
+
+
         #endregion
 
 

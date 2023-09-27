@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Workneering.Base.API.Controllers;
 
+[EnableCors("AllowSpecificOrigin")]
 [ApiController]
 [Route("api/[controller]")]
 public abstract class BaseController : ControllerBase
