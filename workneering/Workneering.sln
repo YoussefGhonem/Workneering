@@ -51,23 +51,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.User.Infrastruc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workneering.Settings", "Workneering.Settings", "{12AAD758-9960-494E-8EE1-E3010944EDB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Settings.API", "src\Workneering.Settings.API\Workneering.Settings.API.csproj", "{2098C99B-19E9-4829-97A6-30B57ED2A633}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Settings.API", "src\Workneering.Settings.API\Workneering.Settings.API.csproj", "{2098C99B-19E9-4829-97A6-30B57ED2A633}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Settings.Domain", "src\Workneering.Settings.Domain\Workneering.Settings.Domain.csproj", "{FB69CF17-CC6A-4DD0-B0C5-A7524E50CC2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Settings.Domain", "src\Workneering.Settings.Domain\Workneering.Settings.Domain.csproj", "{FB69CF17-CC6A-4DD0-B0C5-A7524E50CC2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Settings.Application", "src\Workneering.Settings.Application\Workneering.Settings.Application.csproj", "{CA0B78C7-2417-43E2-8D38-1B070D3C94DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Settings.Application", "src\Workneering.Settings.Application\Workneering.Settings.Application.csproj", "{CA0B78C7-2417-43E2-8D38-1B070D3C94DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Settings.Infrastructure", "src\Workneering.Settings.Infrastructure\Workneering.Settings.Infrastructure.csproj", "{C81C2658-DCEC-4E0F-AE80-48D6AA1F5A3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Settings.Infrastructure", "src\Workneering.Settings.Infrastructure\Workneering.Settings.Infrastructure.csproj", "{C81C2658-DCEC-4E0F-AE80-48D6AA1F5A3C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workneering.Project", "Workneering.Project", "{75A5C556-0EC4-4C9B-B9EC-BFABAFAA5569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Project.API", "src\Workneering.Project.API\Workneering.Project.API.csproj", "{3E3DA8A0-3BA5-4EA1-B24A-036519C991CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Project.API", "src\Workneering.Project.API\Workneering.Project.API.csproj", "{3E3DA8A0-3BA5-4EA1-B24A-036519C991CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Project.Application", "src\Workneering.Project.Application\Workneering.Project.Application.csproj", "{9080C080-8FE9-4E03-978B-E0498A175F77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Project.Application", "src\Workneering.Project.Application\Workneering.Project.Application.csproj", "{9080C080-8FE9-4E03-978B-E0498A175F77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Project.Infrastructure", "src\Workneering.Project.Infrastructure\Workneering.Project.Infrastructure.csproj", "{ACB2FC41-67E1-4F4B-8BCE-86B263F9AD5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Project.Infrastructure", "src\Workneering.Project.Infrastructure\Workneering.Project.Infrastructure.csproj", "{ACB2FC41-67E1-4F4B-8BCE-86B263F9AD5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Project.Domain", "src\Workneering.Project.Domain\Workneering.Project.Domain.csproj", "{E836922D-0007-4F80-B26E-819FDD3F81A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Project.Domain", "src\Workneering.Project.Domain\Workneering.Project.Domain.csproj", "{E836922D-0007-4F80-B26E-819FDD3F81A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Packages.Storage.AWS3", "src\Workneering.Packages.Storage.AWS3\Workneering.Packages.Storage.AWS3.csproj", "{66B700BB-6576-4C63-96AD-4A82E4F53C56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -175,6 +177,10 @@ Global
 		{E836922D-0007-4F80-B26E-819FDD3F81A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E836922D-0007-4F80-B26E-819FDD3F81A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E836922D-0007-4F80-B26E-819FDD3F81A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B700BB-6576-4C63-96AD-4A82E4F53C56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B700BB-6576-4C63-96AD-4A82E4F53C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B700BB-6576-4C63-96AD-4A82E4F53C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B700BB-6576-4C63-96AD-4A82E4F53C56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -208,6 +214,7 @@ Global
 		{9080C080-8FE9-4E03-978B-E0498A175F77} = {75A5C556-0EC4-4C9B-B9EC-BFABAFAA5569}
 		{ACB2FC41-67E1-4F4B-8BCE-86B263F9AD5F} = {75A5C556-0EC4-4C9B-B9EC-BFABAFAA5569}
 		{E836922D-0007-4F80-B26E-819FDD3F81A4} = {75A5C556-0EC4-4C9B-B9EC-BFABAFAA5569}
+		{66B700BB-6576-4C63-96AD-4A82E4F53C56} = {F6C93FD1-C8FE-4EEC-AD21-C5A7A3127998}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C64C2BEE-DEEE-46D8-A36D-F0C68C595E8D}

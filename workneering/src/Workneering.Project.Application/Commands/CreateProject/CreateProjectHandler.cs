@@ -26,7 +26,7 @@ namespace Workneering.Project.Application.Commands.CreateProject
             var command = request.CreatProject(categories, Supcategoris, skills);
 
             await _context.Projects.AddAsync(command, cancellationToken);
-            _context?.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

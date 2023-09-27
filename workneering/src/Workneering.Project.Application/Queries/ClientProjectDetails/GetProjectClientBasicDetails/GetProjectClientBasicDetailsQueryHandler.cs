@@ -19,7 +19,11 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjec
         }
         public async Task<ProjectClientBasicDetailsDto> Handle(GetProjectClientBasicDetailsQuery request, CancellationToken cancellationToken)
         {
-            var project = _context.Projects.Include(x => x.Proposals).FirstOrDefault(x => x.Id == request.ProjectId);
+            var project = _context.Projects.Include(x => x.Proposals)
+                .Include(x => x.Categories)
+                .Include(x => x.SubCategories)
+                .Include(x => x.Skills)
+                .FirstOrDefault(x => x.Id == request.ProjectId);
             var result = project?.Adapt<ProjectClientBasicDetailsDto>();
 
             if (!project.Proposals.Any())
@@ -49,7 +53,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjec
                         Title = userInfo.Title
                     },
                     CoverLetter = proposal.CoverLetter,
-                    HourlyRate = proposal.HourlyRate,
+                    TotalBid = proposal.TotalBid,
                     ProposalDuration = proposal.ProposalDuration,
                     ProposalStatus = proposal.ProposalStatus
                 });

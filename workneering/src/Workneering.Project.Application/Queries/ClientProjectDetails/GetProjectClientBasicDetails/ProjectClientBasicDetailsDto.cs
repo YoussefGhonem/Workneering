@@ -10,15 +10,19 @@ public class ProjectClientBasicDetailsDto
     public string? ProjectDescription { get; set; }
     public bool? IsOpenDueDate { get; set; }
     public string? DueDate { get; set; }
-    public decimal? ProjectBudgetPrice { get; set; }
-    public ProjectTypeEnum? ProjectType { get; set; }
+    public decimal? ProjectFixedBudgetPrice { get; set; }
+    public decimal? ProjectHourlyToPrice { get; set; }
+    public DateTimeOffset? CreatedDate { get; set; }
+    public decimal? ProjectHourlyFromPrice { get; set; }
+    public string? ProjectType { get; set; }
+    public string? HoursPerWeek { get; set; }
     public ProjectStatusEnum? ProjectStatus { get; set; }
-    public ExperienceLevelEnum? ExperienceLevel { get; set; }
+    public string? ExperienceLevel { get; set; }
     public ProjectBudgetEnum? ProjectBudget { get; set; }
     public List<CategoriesDto>? Categories { get; set; } = new();
     public List<SubCategoriesDto>? SubCategories { get; set; } = new();
     public List<SkillsDto>? Skills { get; set; } = new();
-    public List<ClientProposalsDto> Proposals { get; set; } = new();
+    public List<ClientProposalsDto> Proposals { get; set; }
     public List<SubmittedOffersDto> SubmittedOffers { get; set; } = new();
 }
 
@@ -49,7 +53,8 @@ public class ClientProposalsDto
     public SubmittedOffersDto FreelancerDetails { get; set; } = new();
     public string? CoverLetter { get; set; }
     public Guid? FreelancerId { get; set; }
-    public decimal? HourlyRate { get; set; }
+    public DateTimeOffset? CreatedDate { get; set; }
+
     public decimal? TotalBid { get; set; }
     public ProposalDurationEnum? ProposalDuration { get; set; }
     public ProposalStatusEnum? ProposalStatus { get; set; }
