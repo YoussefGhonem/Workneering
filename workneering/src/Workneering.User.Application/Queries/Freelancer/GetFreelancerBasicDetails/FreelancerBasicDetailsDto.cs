@@ -10,6 +10,8 @@
         public int? NumberOfLanguages { get; set; }
         public int? NumberOfCertification { get; set; }
         public string? Name { get; set; }
+        public string? ImageUrl { get; set; }
+
         public string? Gender { get; set; }
         public decimal? Reviews { get; set; }
         public int? NumOfReviews { get; set; }

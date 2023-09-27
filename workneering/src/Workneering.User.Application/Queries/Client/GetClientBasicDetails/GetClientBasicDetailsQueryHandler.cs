@@ -14,7 +14,8 @@ namespace Workneering.User.Application.Queries.Client.GetClientBasicDetails
         private readonly IDbQueryService _dbQueryService;
         private readonly IStorageService _storageService;
 
-        public GetFreelancerEducationDetailsQueryHandler(UserDatabaseContext userDatabaseContext, IDbQueryService dbQueryService, IStorageService storageService)
+        public GetFreelancerEducationDetailsQueryHandler(UserDatabaseContext userDatabaseContext,
+            IDbQueryService dbQueryService, IStorageService storageService)
         {
             _userDatabaseContext = userDatabaseContext;
             _dbQueryService = dbQueryService;

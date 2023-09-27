@@ -8,6 +8,7 @@ using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClie
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyBasicDetails;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyCategorization;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyDescription;
+using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyImage;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhatDoWeDo;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhoAreWe;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;

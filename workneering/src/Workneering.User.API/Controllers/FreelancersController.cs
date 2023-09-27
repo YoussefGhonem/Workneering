@@ -15,6 +15,7 @@ using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateE
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.DeleteEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailability;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateClientImage;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateCountry;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateExperienceLevel;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;
