@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Workneering.Base.Domain.Common;
+using Workneering.Shared.Core.Models;
 using Workneering.User.Domain.Enums;
 using Workneering.User.Domain.Helpr;
 using Workneering.User.Domain.valueobjects;
@@ -9,6 +10,7 @@ namespace Workneering.User.Domain.Entites
     public record Company : BaseEntity
     {
         private string? _name;
+        private FileDto? _imageDetails;
         private string? _overviewDescription;
         private string? _websiteLink;
         private string? _titleOverview;
@@ -45,6 +47,7 @@ namespace Workneering.User.Domain.Entites
 
         #region Public fields
         public string? Name { get => _name; set => _name = value; }
+        public FileDto? ImageDetails { get => _imageDetails; set => _imageDetails = value; }
         public string? VatId { get => _vatId; set => _vatId = value; }
         public string? Description { get => _overviewDescription; set => _overviewDescription = value; }
         public string? WebsiteLink { get => _websiteLink; set => _websiteLink = value; }
@@ -77,7 +80,10 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region Public Methods
-
+        public void UpdateImage(FileDto? imageDetails)
+        {
+            _imageDetails = imageDetails;
+        }
         public void UpdateCategory(Guid? categoryId)
         {
             _categories.FirstOrDefault()?.UpdateCategoryId(categoryId.Value);

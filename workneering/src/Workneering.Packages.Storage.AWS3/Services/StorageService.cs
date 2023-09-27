@@ -1,6 +1,12 @@
-﻿using Amazon.S3.Transfer;
+﻿using Amazon.Runtime.Internal;
+using Amazon.S3;
+using Amazon.S3.Model;
+using Amazon.S3.Transfer;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using System.Net;
+using System.Text;
 using Workneering.Packages.Storage.AWS3.Extensions;
 using Workneering.Packages.Storage.AWS3.Models;
 
@@ -18,40 +24,187 @@ namespace Workneering.Packages.Storage.AWS3.Services
             _configuration = configuration;
         }
 
-        public async Task<StoredFile> Upload(Stream? file, string? fileName, string? bucketName = null, CancellationToken cancellationToken = default)
+        public async Task<StoredFile> Upload(IFormFile? file, CancellationToken cancellationToken = default)
         {
             if (file is null) return new StoredFile();
-            if (fileName is null) return new StoredFile();
 
-            var credential = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
-            var key = Guid.NewGuid();
-            var stream = file;
-            bucketName = credential.DefaultBucket;
-            var fileNameStorage = GetFileName(key, fileName);
-            var region = AWS3ConfigurationExtension.GetRgionAWS();
-
-            var uploadRequest = new TransferUtilityUploadRequest()
+            try
             {
-                BucketName =
+                var options = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
+                var region = AWS3ConfigurationExtension.GetRgionAWS();
+                var credential = AWS3ConfigurationExtension.GetBasicAWSCredentials(_configuration);
+
+                var key = Guid.NewGuid();
+                var stream = file.OpenReadStream();
+                var bucketName = options.DefaultBucket;
+                var fileNameStorage = GetFileName(key, file.FileName);
+
+                var uploadRequest = new TransferUtilityUploadRequest()
+                {
+                    BucketName = bucketName,
+                    Key = fileNameStorage,
+                    InputStream = stream,
+                    CannedACL = S3CannedACL.PublicRead,
+
+                };
+                uploadRequest.Metadata.Add("filename", $"{file.FileName}");
+                var client = new AmazonS3Client(credential, region);
+                // upload to s3
+                var transferUtility = new TransferUtility(client);
+                await transferUtility.UploadAsync(uploadRequest, cancellationToken);
+
+                var size = file.Length;
+                var originalFileName = file.FileName;
+                var extension = Path.GetExtension(originalFileName);
+
+                return new StoredFile()
+                {
+                    FileName = originalFileName,
+                    Key = fileNameStorage,
+                    Extension = extension,
+                    FileSize = size,
+                };
+            }
+            catch (AmazonS3Exception e)
+            {
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+        public async Task<List<StoredFile>?> UploadFiles(List<IFormFile>? files, CancellationToken cancellationToken = default)
+        {
+            if (files == null || files.Count == 0)
+            {
+                return new List<StoredFile>();
+            }
+
+            var options = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
+            var region = AWS3ConfigurationExtension.GetRgionAWS();
+            var credential = AWS3ConfigurationExtension.GetBasicAWSCredentials(_configuration);
+
+            var bucketName = options.DefaultBucket;
+            var uploadedFiles = new List<StoredFile>();
+
+            var transferUtility = new TransferUtility(new AmazonS3Client(credential, region));
+
+            foreach (var file in files)
+            {
+                if (file == null || file.Length == 0)
+                {
+                    // Handle the case where a file is null or empty (optional).
+                    continue;
+                }
+
+                var key = Guid.NewGuid();
+                var stream = file.OpenReadStream();
+                var fileNameStorage = GetFileName(key, file.FileName);
+
+                var uploadRequest = new TransferUtilityUploadRequest()
+                {
+                    BucketName = bucketName,
+                    Key = fileNameStorage,
+                    InputStream = stream,
+                    CannedACL = S3CannedACL.NoACL
+                };
+                uploadRequest.Metadata.Add("filename", $"{file.FileName}");
+                await transferUtility.UploadAsync(uploadRequest, cancellationToken);
+
+                var size = file.Length;
+                var originalFileName = file.FileName;
+                var extension = Path.GetExtension(originalFileName);
+
+                var storedFile = new StoredFile()
+                {
+                    FileName = originalFileName,
+                    Key = fileNameStorage,
+                    Extension = extension,
+                    FileSize = size,
+                };
+
+                uploadedFiles.Add(storedFile);
+            }
+
+            return uploadedFiles;
+        }
+        public async Task<bool> Delete(string key, CancellationToken cancellationToken = default)
+        {
+            var options = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
+            var region = AWS3ConfigurationExtension.GetRgionAWS();
+            var credential = AWS3ConfigurationExtension.GetBasicAWSCredentials(_configuration);
+            var bucketName = options.DefaultBucket;
+
+            var client = new AmazonS3Client(credential, region);
+
+            var deleteRequest = new DeleteObjectRequest
+            {
+                BucketName = bucketName,
+                Key = key
             };
+
+            try
+            {
+                var response = await client.DeleteObjectAsync(deleteRequest, cancellationToken);
+                // Check the response for success
+                return response.HttpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (AmazonS3Exception ex)
+            {
+                // Handle exceptions, such as object not found
+                // Log the error or perform other error handling as needed
+                return false;
+            }
         }
-        public Task<List<StoredFile>?> UploadFiles(List<IFormFile>? file, string? bucketName = null, CancellationToken cancellationToken = default)
+        public async Task<string> DownloadFileUrl(string key)
         {
-            throw new NotImplementedException();
-        }
-        public Task Delete(Guid blobId, string? bucketName = null)
-        {
-            throw new NotImplementedException();
+            var options = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
+            var region = AWS3ConfigurationExtension.GetRgionAWS();
+            var credential = AWS3ConfigurationExtension.GetBasicAWSCredentials(_configuration);
+            var bucketName = options.DefaultBucket;
+
+            var client = new AmazonS3Client(credential, region);
+
+            // Generate a pre-signed URL for the object with a specific key
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = bucketName,
+                Key = key,
+            };
+
+            var url = client.GetPreSignedURL(request);
+            return url;
         }
 
-        public Task<byte[]?> DownlaodAsMemoryStream(Guid blobId, string? bucketName = null)
+        public async Task<DownloadedFile> DownloadFile(string key)
         {
-            throw new NotImplementedException();
-        }
+            var options = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
+            var region = AWS3ConfigurationExtension.GetRgionAWS();
+            var credential = AWS3ConfigurationExtension.GetBasicAWSCredentials(_configuration);
+            var bucketName = options.DefaultBucket;
 
-        public Task<StoredFile> Upload(IFormFile file, string? bucketName = null, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
+            using (var client = new AmazonS3Client(credential, region))
+            {
+                var getObjectRequest = new GetObjectRequest
+                {
+                    BucketName = bucketName,
+                    Key = key
+                };
+
+                using (var response = await client.GetObjectAsync(getObjectRequest))
+                using (var streamReader = new StreamReader(response.ResponseStream))
+                {
+                    var fileContent = Encoding.UTF8.GetBytes(streamReader.ReadToEnd());
+                    var contentType = response.Headers.ContentType;
+                    var fileName = response.Metadata["filename"]; // Make sure to set this when uploading the file
+
+                    return new DownloadedFile(fileContent, contentType, fileName);
+                }
+            }
         }
 
         #region Helpers
@@ -63,6 +216,8 @@ namespace Workneering.Packages.Storage.AWS3.Services
             if (fileSplit.Length > 1) blobFileName += "." + fileExtension;
             return blobFileName;
         }
+
+
 
         #endregion
 
