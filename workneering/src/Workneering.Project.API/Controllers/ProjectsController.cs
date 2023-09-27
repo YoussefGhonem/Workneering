@@ -31,12 +31,12 @@ namespace Workneering.Project.API.Controllers
         #region Commands
 
         #region project
-        [HttpPost]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateProjectCommand(CreateProjectCommand command)
+        public async Task<ActionResult<Unit>> CreateProjectCommand([FromForm] CreateProjectCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }

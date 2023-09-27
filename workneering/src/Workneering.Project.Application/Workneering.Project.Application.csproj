@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Workneering.Base.Application\Workneering.Base.Application.csproj" />
 		<ProjectReference Include="..\Workneering.Base.Helpers\Workneering.Base.Helpers.csproj" />
+		<ProjectReference Include="..\Workneering.Packages.Storage.AWS3\Workneering.Packages.Storage.AWS3.csproj" />
 		<ProjectReference Include="..\Workneering.Project.Infrastructure\Workneering.Project.Infrastructure.csproj" />
 		<ProjectReference Include="..\Workneering.Shared.Core\Workneering.Shared.Core.csproj" />
 	</ItemGroup>

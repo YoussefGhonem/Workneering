@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Project.Application.Commands.CreateProject.Helpers;
 using Workneering.Project.Application.Services.DbQueryService;
 using Workneering.Project.Infrastructure.Persistence;
@@ -10,11 +11,13 @@ namespace Workneering.Project.Application.Commands.CreateProject
     {
         private readonly ProjectsDbContext _context;
         private readonly IDbQueryService _dbQueryService;
+        private readonly IStorageService _storageService;
 
-        public GetFreelancerEducationDetailsQueryHandler(ProjectsDbContext context, IDbQueryService dbQueryService)
+        public GetFreelancerEducationDetailsQueryHandler(ProjectsDbContext context, IDbQueryService dbQueryService, IStorageService storageService)
         {
             _context = context;
             _dbQueryService = dbQueryService;
+            _storageService = storageService;
         }
         public async Task<Unit> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
@@ -23,7 +26,7 @@ namespace Workneering.Project.Application.Commands.CreateProject
             var Supcategoris = _dbQueryService.GetSupCateforiesForProject(request.SubCategoriesIds);
             var skills = _dbQueryService.GetSkillsForProject(request.SkillsIds);
 
-            var command = request.CreatProject(categories, Supcategoris, skills);
+            var command = await request.CreatProject(categories, Supcategoris, skills, _storageService, cancellationToken);
 
             await _context.Projects.AddAsync(command, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
