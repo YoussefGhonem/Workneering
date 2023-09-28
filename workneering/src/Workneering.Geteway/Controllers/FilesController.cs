@@ -16,10 +16,16 @@ namespace Workneering.Geteway.Controllers
             _storageService = storageService;
         }
         [HttpGet("{id}/download")]
-        public async Task<ActionResult> DownloadFile([FromRoute] string id)
+        public async Task<IActionResult> DownloadFile([FromRoute] string id)
         {
             var result = await _storageService.DownloadFile(id);
             return File(result.Contents, result.ContentType, result.FileName);
+        }
+        [HttpGet("{id}")]
+        public async Task<string> GetFileUrl([FromRoute] string id)
+        {
+            var result = await _storageService.DownloadFileUrl(id);
+            return result;
         }
     }
 }

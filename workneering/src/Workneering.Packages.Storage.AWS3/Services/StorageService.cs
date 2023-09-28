@@ -39,21 +39,34 @@ namespace Workneering.Packages.Storage.AWS3.Services
                 var bucketName = options.DefaultBucket;
                 var fileNameStorage = GetFileName(key, file.FileName);
 
-                var uploadRequest = new TransferUtilityUploadRequest()
+                //var uploadRequest = new TransferUtilityUploadRequest()
+                //{
+                //    BucketName = bucketName,
+                //    Key = fileNameStorage,
+                //    InputStream = stream,
+                //}; 
+
+                var uploadRequest = new PutObjectRequest()
                 {
                     BucketName = bucketName,
                     Key = fileNameStorage,
                     InputStream = stream,
 
                 };
-                uploadRequest.Metadata.Add("filename", $"{file.FileName}");
-                var client = new AmazonS3Client(credential, region);
-                // upload to s3
-                var transferUtility = new TransferUtility(client);
-                await transferUtility.UploadAsync(uploadRequest, cancellationToken);
                 var size = file.Length;
                 var originalFileName = file.FileName;
                 var extension = Path.GetExtension(originalFileName);
+
+                string contentType = GetContentType(originalFileName);
+                //uploadRequest.Metadata.Add("filename", $"{file.FileName}");
+                uploadRequest.Metadata.Add("Content-Type", contentType);
+
+                var client = new AmazonS3Client(credential, region);
+                // upload to s3
+                var transferUtility = new TransferUtility(client);
+                await client.PutObjectAsync(uploadRequest, cancellationToken);
+
+
 
                 return new StoredFile()
                 {
@@ -82,50 +95,12 @@ namespace Workneering.Packages.Storage.AWS3.Services
                 return new List<StoredFile>();
             }
 
-            var options = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
-            var region = AWS3ConfigurationExtension.GetRgionAWS();
-            var credential = AWS3ConfigurationExtension.GetBasicAWSCredentials(_configuration);
-
-            var bucketName = options.DefaultBucket;
             var uploadedFiles = new List<StoredFile>();
-
-            var transferUtility = new TransferUtility(new AmazonS3Client(credential, region));
 
             foreach (var file in files)
             {
-                if (file == null || file.Length == 0)
-                {
-                    // Handle the case where a file is null or empty (optional).
-                    continue;
-                }
-
-                var key = Guid.NewGuid();
-                var stream = file.OpenReadStream();
-                var fileNameStorage = GetFileName(key, file.FileName);
-
-                var uploadRequest = new TransferUtilityUploadRequest()
-                {
-                    BucketName = bucketName,
-                    Key = fileNameStorage,
-                    InputStream = stream,
-                    CannedACL = S3CannedACL.NoACL
-                };
-                uploadRequest.Metadata.Add("filename", $"{file.FileName}");
-                await transferUtility.UploadAsync(uploadRequest, cancellationToken);
-
-                var size = file.Length;
-                var originalFileName = file.FileName;
-                var extension = Path.GetExtension(originalFileName);
-
-                var storedFile = new StoredFile()
-                {
-                    FileName = originalFileName,
-                    Key = fileNameStorage,
-                    Extension = extension,
-                    FileSize = size,
-                };
-
-                uploadedFiles.Add(storedFile);
+                var result = await Upload(file, cancellationToken);
+                uploadedFiles.Add(result);
             }
 
             return uploadedFiles;
@@ -194,34 +169,39 @@ namespace Workneering.Packages.Storage.AWS3.Services
             }
 
         }
-
-        public async Task<DownloadedFile> DownloadFile(string key)
+        public async Task<DownloadedFile> DownloadFile(string key, CancellationToken cancellationToken)
         {
             var options = AWS3OptionsExtension.GetAWSConfigurationOptions(_configuration);
+            var bucketName = options.DefaultBucket;
             var region = AWS3ConfigurationExtension.GetRgionAWS();
             var credential = AWS3ConfigurationExtension.GetBasicAWSCredentials(_configuration);
-            var bucketName = options.DefaultBucket;
-
-            using (var client = new AmazonS3Client(credential, region))
+            using (var s3Client = new AmazonS3Client(credential, region))
             {
-                var getObjectRequest = new GetObjectRequest
+                using (var transferUtility = new TransferUtility(s3Client))
                 {
-                    BucketName = bucketName,
-                    Key = key
-                };
+                    var downloadRequest = new TransferUtilityDownloadRequest
+                    {
+                        BucketName = bucketName,
+                        Key = key,
+                        FilePath = "D:\\images\\" + key
+                    };
 
-                using (var response = await client.GetObjectAsync(getObjectRequest))
-                using (var streamReader = new StreamReader(response.ResponseStream))
-                {
-                    var fileContent = Encoding.UTF8.GetBytes(streamReader.ReadToEnd());
-                    var contentType = response.Headers.ContentType;
-                    var fileName = response.Metadata["filename"]; // Make sure to set this when uploading the file
 
-                    return new DownloadedFile(fileContent, contentType, fileName);
+                    // Download the file asynchronously
+                    await transferUtility.DownloadAsync(downloadRequest, cancellationToken);
+
+                    // Determine the content type based on the file extension
+                    string contentType = GetContentType(key);
+
+                    // Read the file from the local file path
+                    var fileBytes = System.IO.File.ReadAllBytes(downloadRequest.FilePath);
+
+                    // Return the file as a FileContentResult
+                    return new DownloadedFile(fileBytes, contentType, key);
+
                 }
             }
         }
-
         #region Helpers
         private static string GetFileName(Guid blobId, string contentType)
         {
@@ -232,7 +212,26 @@ namespace Workneering.Packages.Storage.AWS3.Services
             return blobFileName;
         }
 
+        private static string GetContentType(string? filePath)
+        {
 
+            // Determine content type based on file extension
+            string extension = Path.GetExtension(filePath).ToLower();
+
+            switch (extension)
+            {
+                case ".jpg":
+                case ".jpeg":
+                    return "image/jpeg";
+                case ".png":
+                    return "image/png";
+                case ".pdf":
+                    return "application/pdf";
+                // Add more cases for other file types as needed
+                default:
+                    return "application/octet-stream"; // Default content type for unknown types
+            }
+        }
 
         #endregion
 
