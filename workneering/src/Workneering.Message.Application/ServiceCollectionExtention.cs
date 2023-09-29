@@ -2,6 +2,8 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Workneering.Message.Application.Services.DbQueryService;
+
 
 namespace Workneering.Message.Application
 {
@@ -9,7 +11,7 @@ namespace Workneering.Message.Application
     {
         public static IServiceCollection AddMessageApplication(this IServiceCollection services)
         {
-            //services.AddSingleton<IDbQueryService, DbQueryService>();
+            services.AddSingleton<IDbQueryService, DbQueryService>();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
 

@@ -21,6 +21,7 @@ namespace Workneering.Message.Domain.Entities
         public bool? RecipientDeleted { get => _recipientDeleted; set => _recipientDeleted = value; }
         public Guid? SenderId { get => _senderId; set => _senderId = value; }
         public Guid? RecipientId { get => _recipientId; set => _recipientId = value; }
+
         public Message(string content, Guid? recipientId, Guid? senderId)
         {
             _content = Guard.Against.NullOrWhiteSpace(content, nameof(content));

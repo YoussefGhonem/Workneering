@@ -3,44 +3,44 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Message.Infrustructure.Persistence;
 using Workneering.Packages.Storage.AWS3.Services;
-using Workneering.Shared.Core.Extention;
+using Workneering.Message.Application.Services.DbQueryService;
+using Workneering.Message.Application.Extensions;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Message.Application.Queries.Message.GetConversation
 {
     public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetConversationQuery, List<GetConversationDto>>
     {
-        private readonly MessagesDbContext _identityDatabase;
+        private readonly MessagesDbContext _context;
         private readonly IStorageService _storageService;
+        private readonly IDbQueryService _dbQueryService;
 
-        public GetFreelancerEducationDetailsQueryHandler(MessagesDbContext userDatabaseContext, IStorageService storageService)
+        public GetFreelancerEducationDetailsQueryHandler(MessagesDbContext userDatabaseContext, IStorageService storageService, IDbQueryService dbQueryService)
         {
-            _identityDatabase = userDatabaseContext;
+            _context = userDatabaseContext;
             _storageService = storageService;
+            _dbQueryService = dbQueryService;
         }
         public async Task<List<GetConversationDto>> Handle(GetConversationQuery request, CancellationToken cancellationToken)
         {
-            /*if (_identityDatabase.Users.Any(x => x.Id != CurrentUser.Id))*/
-            return new List<GetConversationDto>();
+            var userId = CurrentUser.Id;
 
-            //var userId = CurrentUser.Id;
+            var messages = await _context.Messages
+                .Where(m => m.RecipientId == userId && m.RecipientDeleted == false && m.SenderId == request.RecipientId ||
+                        m.RecipientId == request.RecipientId && m.SenderDeleted == false && m.SenderId == userId)
+                        .OrderByDescending(m => m.CreatedDate).ToListAsync();
 
-            //var query = await _identityDatabase.Users
-            //        .Where(u => u.Id == userId)
-            //        .SelectMany(u => u.MessagesSent
-            //        .Where(m => m.Recipient.Id == request.RecipientId || m.Sender.Id == request.RecipientId))
-            //        .Include(m => m.Sender)
-            //        .Include(m => m.Recipient)
-            //        .OrderByDescending(m => m.CreatedDate)
-            //        .ToListAsync(cancellationToken: cancellationToken);
+            TypeAdapterConfig<Domain.Entities.Message, GetConversationDto>.NewConfig()
+                    .Map(dest => dest.RecipientPhotoUrl, src => src.RecipientId.Value.SetImageURL(_dbQueryService))
+                    .Map(dest => dest.SenderPhotoUrl, src => src.SenderId.Value.SetImageURL(_dbQueryService))
+                    .Map(dest => dest.SenderName, src => src.SenderId.Value.GetUserInfo(_dbQueryService).Result.Name)
+                    .Map(dest => dest.RecipientName, src => src.RecipientId.Value.GetUserInfo(_dbQueryService).Result.Name)
+                    .Map(dest => dest.SenderTitle, src => src.SenderId.Value.GetUserInfo(_dbQueryService).Result.Title)
+                    .Map(dest => dest.RecipientTitle, src => src.RecipientId.Value.GetUserInfo(_dbQueryService).Result.Title);
 
-            //TypeAdapterConfig<Domain.Entities.User, GetConversationDto>.NewConfig()
-            //        .Map(dest => dest.SenderPhotoUrl, src => src.ImageKey == null ? null : src.ImageKey.SetDownloadFileUrlByKey(_storageService))
-            //        .Map(dest => dest.RecipientPhotoUrl, src => src.ImageKey == null ? null : src.ImageKey.SetDownloadFileUrlByKey(_storageService));
+            var result = messages.Adapt<List<GetConversationDto>>();
 
-            //var result = query.Adapt<List<GetConversationDto>>();
-
-            //return result;
+            return result;
         }
     }
 }

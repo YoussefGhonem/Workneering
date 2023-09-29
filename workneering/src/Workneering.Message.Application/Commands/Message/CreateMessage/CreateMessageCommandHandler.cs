@@ -2,33 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using Workneering.Message.Infrustructure.Persistence;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.Message.Domain.Entities;
 
 namespace Workneering.Message.Application.Commands.Message.CreateMessage
 {
     public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand, Unit>
     {
-        private readonly MessagesDbContext _identityDbContext;
+        private readonly MessagesDbContext messagesDbContext;
         private readonly IMediator _mediator;
 
         public CreateMessageCommandHandler(IMediator mediator, MessagesDbContext identityDatabase)
         {
-            _identityDbContext = identityDatabase;
+            messagesDbContext = identityDatabase;
             _mediator = mediator;
         }
 
         public async Task<Unit> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
-            //var recipient = await _identityDbContext.Users.FirstOrDefaultAsync(x => x.Id == request.RecipientId, cancellationToken: cancellationToken);
-            //var sender = await _identityDbContext.Users.FirstOrDefaultAsync(x => x.Id == request.SenderId, cancellationToken: cancellationToken);
-
-            //var message = await _identityDbContext.Messages
-            //    .Include(x => x.Recipient)
-            //    .Include(x => x.Sender)
-            //    .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id);
-
-            //message!.AddMessage(request.Content, sender, recipient);
-            //await _identityDbContext.Messages.AddAsync(message, cancellationToken);
-            //await _identityDbContext.SaveChangesAsync(cancellationToken);
+            var message = new Domain.Entities.Message(request.Content, request.RecipientId, request.SenderId);
+            await messagesDbContext.Messages.AddAsync(message, cancellationToken);
+            await messagesDbContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

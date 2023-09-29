@@ -55,6 +55,7 @@ public static class ConfigureServicesExtention
         #region Solution Extensions
         services.AddIdentityExtension(builder.Configuration)
                 .AddUserExtension(builder.Configuration)
+                .AddIdentityExtension(builder.Configuration)
                 .AddProjectExtension(builder.Configuration)
                 .AddSettingsExtension(builder.Configuration);
         #endregion
