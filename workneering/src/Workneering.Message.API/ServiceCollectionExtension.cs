@@ -8,7 +8,7 @@ namespace Workneering.Message.API
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddIdentityExtension(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddMessageExtension(this IServiceCollection services, IConfiguration configuration)
         {
 
             services.AddMessageApplication();

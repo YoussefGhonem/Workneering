@@ -3,9 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Workneering.Message.Application.Services.Models;
 using Workneering.Packages.Storage.AWS3.Services;
-using Workneering.Project.Application.Commands.CreateProject;
 using Workneering.Shared.Core.Extention;
-using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Identity.Enums;
 
 namespace Workneering.Message.Application.Services.DbQueryService;
