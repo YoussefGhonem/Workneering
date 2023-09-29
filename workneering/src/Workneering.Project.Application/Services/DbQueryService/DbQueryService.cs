@@ -2,20 +2,25 @@ using Dapper;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Project.Application.Commands.CreateProject;
 using Workneering.Project.Application.Services.Models;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Identity.Enums;
+using Workneering.Shared.Core.Models;
+using Workneering.Shared.Core.Extention;
 
 namespace Workneering.Project.Application.Services.DbQueryService;
 
 public class DbQueryService : IDbQueryService
 {
     private readonly string _connectionString;
+    private readonly IStorageService _storageService;
 
-    public DbQueryService(IConfiguration configuration)
+    public DbQueryService(IConfiguration configuration, IStorageService storageService)
     {
         _connectionString = configuration.GetConnectionString("DefaultConnection");
+        _storageService = storageService;
     }
 
     public async Task<List<Guid>> GetUserCategoryId(Guid userId)
@@ -243,4 +248,21 @@ public class DbQueryService : IDbQueryService
 
     }
 
+    public async Task<ImageDetailsDto> GetFreelancerImage(Guid freelancerId)
+    {
+        using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync();
+
+        var sql = @$"  SELECT f.ImageDetails_Key
+                        FROM  UserSchema.Freelancers f
+                        WHERE f.Id = '{freelancerId}' ";
+
+        var key = await con.QueryFirstAsync<string>(sql);
+        if (string.IsNullOrEmpty(key)) return new ImageDetailsDto();
+        var result = new ImageDetailsDto()
+        {
+            Url = key.SetDownloadFileUrlByKey(_storageService)
+        };
+        return result;
+    }
 }

@@ -1,4 +1,3 @@
-using Workneering.Base.Helpers.Models;
 using Workneering.Identity.Domain.Entities;
 using Workneering.Shared.Core.Identity.Enums;
 
@@ -12,7 +11,6 @@ public class CreateUserFactory
     private readonly string _name;
     private readonly Guid? _countryId;
     private readonly string _email;
-    private FileDto? _imageDetails;
     private string? _phoneNumber;
     private bool _changePassword;
 
@@ -27,12 +25,6 @@ public class CreateUserFactory
     {
         _name = name;
         _email = email;
-    }
-
-    public CreateUserFactory WithImage(FileDto? imageDetails)
-    {
-        _imageDetails = imageDetails;
-        return this;
     }
 
     public CreateUserFactory WithPhoneNumber(string? phoneNumber)

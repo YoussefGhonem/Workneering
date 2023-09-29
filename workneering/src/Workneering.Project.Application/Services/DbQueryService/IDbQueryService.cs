@@ -9,6 +9,7 @@ public interface IDbQueryService
     public List<ProjectsListInfo> GetProjectsSortedByClientRating(Guid clientId, int pageSize = 10, int pageNumber = 1);
     public List<ProjectsListInfo> GetProjectsByLocations(List<Guid> categoryIds, int pageSize = 10, int pageNumber = 1);
     public FreelancerInfoForProposalsList GetFreelancerInfoForProposals(Guid freelancerId);
+    public Task<ImageDetailsDto> GetFreelancerImage(Guid freelancerId);
     public ClientInfoForProjectDetails GetClientInfoForProjectDetails(Guid clientId);
     public IndustryDetails? GetIndustryName(Guid clientId);
     public string GetUserRole(Guid userId);

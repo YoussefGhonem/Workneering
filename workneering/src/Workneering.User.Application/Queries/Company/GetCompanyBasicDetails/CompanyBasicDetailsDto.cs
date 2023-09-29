@@ -8,6 +8,8 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
         public string VatId { get; set; }
 
         public string Description { get; set; }
+        public string? ImageUrl { get; set; }
+
 
         public string WebsiteLink { get; set; }
 
@@ -23,7 +25,7 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
         public CompanySizeEnum? CompanySize { get; set; }
         public Guid? CategoryId { get; set; }
         public int WengazPercentage { get; set; }
-        public int ProfilePoint { get ; set; }
+        public int ProfilePoint { get; set; }
         public int MonthPoint { get; set; }
         public int PackagePoint { get; set; }
         public int DeductedPoint { get; set; }

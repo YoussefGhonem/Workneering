@@ -837,6 +837,31 @@ namespace Workneering.User.Infrastructure.Migrations
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Client", b =>
                 {
+                    b.OwnsOne("Workneering.Shared.Core.Models.FileDto", "ImageDetails", b1 =>
+                        {
+                            b1.Property<Guid>("ClientId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Extension")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("FileName")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<long?>("FileSize")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Key")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ClientId");
+
+                            b1.ToTable("Clients", "UserSchema");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ClientId");
+                        });
+
                     b.OwnsOne("Workneering.User.Domain.valueobjects.ReviewersStars", "ReviewersStars", b1 =>
                         {
                             b1.Property<Guid>("ClientId")
@@ -870,11 +895,38 @@ namespace Workneering.User.Infrastructure.Migrations
                                 .HasForeignKey("ClientId");
                         });
 
+                    b.Navigation("ImageDetails");
+
                     b.Navigation("ReviewersStars");
                 });
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Company", b =>
                 {
+                    b.OwnsOne("Workneering.Shared.Core.Models.FileDto", "ImageDetails", b1 =>
+                        {
+                            b1.Property<Guid>("CompanyId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Extension")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("FileName")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<long?>("FileSize")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Key")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("CompanyId");
+
+                            b1.ToTable("Companies", "UserSchema");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CompanyId");
+                        });
+
                     b.OwnsOne("Workneering.User.Domain.valueobjects.ReviewersStars", "ReviewersStars", b1 =>
                         {
                             b1.Property<Guid>("CompanyId")
@@ -908,6 +960,8 @@ namespace Workneering.User.Infrastructure.Migrations
                                 .HasForeignKey("CompanyId");
                         });
 
+                    b.Navigation("ImageDetails");
+
                     b.Navigation("ReviewersStars");
                 });
 
@@ -934,6 +988,31 @@ namespace Workneering.User.Infrastructure.Migrations
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Freelancer", b =>
                 {
+                    b.OwnsOne("Workneering.Shared.Core.Models.FileDto", "ImageDetails", b1 =>
+                        {
+                            b1.Property<Guid>("FreelancerId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Extension")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("FileName")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<long?>("FileSize")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Key")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("FreelancerId");
+
+                            b1.ToTable("Freelancers", "UserSchema");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FreelancerId");
+                        });
+
                     b.OwnsOne("Workneering.User.Domain.valueobjects.VideoIntroduction", "VideoIntroduction", b1 =>
                         {
                             b1.Property<Guid>("FreelancerId")
@@ -952,6 +1031,8 @@ namespace Workneering.User.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("FreelancerId");
                         });
+
+                    b.Navigation("ImageDetails");
 
                     b.Navigation("VideoIntroduction");
                 });

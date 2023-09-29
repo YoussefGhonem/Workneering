@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Workneering.Base.Application.Common.Pagination;
 using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects.Filters;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails;
 using Workneering.Project.Application.Services.DbQueryService;
 using Workneering.Project.Domain.Entities;
 using Workneering.Project.Infrastructure.Persistence;
@@ -28,14 +29,17 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                 .Include(x => x.Proposals)
                 .AsQueryable()
                 .Filter(request)
+                .OrderBy(x => x.CreatedDate)
                 .PaginateAsync(request.PageSize, request.PageNumber);
+            var result = projects.list.ToList();
+            var data = new List<ClientProjectsDto>();
 
-            var result = projects.list.Adapt<List<ClientProjectsDto>>();
-
-            foreach (var projectDto in result)
+            foreach (var project in projects.list)
             {
+                var projectDto = project.Adapt<ClientProjectsDto>();
+
                 // Count the number of proposals for the project
-                projectDto.NumberOfProposals = projects.list.SelectMany(x => x.Proposals).Count();
+                projectDto.NumberOfProposals = project.Proposals.Count;
 
                 if (projectDto.AssginedFreelancerId != null)
                 {
@@ -48,9 +52,34 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                         Title = userInfo.Title
                     };
                 }
+
+                // Populate the proposals for the project
+                projectDto.Proposals = new List<ClientProposalsDto>();
+
+                foreach (var proposal in project.Proposals)
+                {
+                    var userInfo = await _dbQueryService.GetFreelancerInfo(proposal.FreelancerId!.Value);
+                    var clientProposalDto = new ClientProposalsDto
+                    {
+                        FreelancerDetails = new SubmittedOffersDto
+                        {
+                            FreelancerId = proposal.FreelancerId,
+                            Name = userInfo.Name,
+                            CountryName = userInfo.CountryName,
+                            Title = userInfo.Title
+                        },
+                        CoverLetter = proposal.CoverLetter,
+                        TotalBid = proposal.TotalBid,
+                        ProposalDuration = proposal.ProposalDuration,
+                        ProposalStatus = proposal.ProposalStatus
+                    };
+                    projectDto.Proposals.Add(clientProposalDto);
+                }
+
+                data.Add(projectDto);
             }
 
-            return new PaginationResult<ClientProjectsDto>(result.ToList(), projects.total);
+            return new PaginationResult<ClientProjectsDto>(data.ToList(), projects.total);
 
         }
     }

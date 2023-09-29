@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MediatR;
+using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -9,11 +10,14 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
     {
         private readonly UserDatabaseContext _userDatabaseContext;
         private readonly IDbQueryService _dbQueryService;
+        private readonly IStorageService _storageService;
 
-        public GetFreelancerEducationDetailsQueryHandler(UserDatabaseContext userDatabaseContext, IDbQueryService dbQueryService)
+        public GetFreelancerEducationDetailsQueryHandler(UserDatabaseContext userDatabaseContext,
+            IDbQueryService dbQueryService, IStorageService storageService)
         {
             _userDatabaseContext = userDatabaseContext;
             _dbQueryService = dbQueryService;
+            _storageService = storageService;
         }
         public async Task<CompanyBasicDetailsDto> Handle(GetCompanyBasicDetailsQuery request, CancellationToken cancellationToken)
         {
@@ -38,7 +42,8 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
             result.Address.Address = userAddress?.Address;
             result.Address.City = userAddress?.City;
             result.Address.ZipCode = userAddress?.ZipCode;
-
+            var storedFiles = await _storageService.DownloadFileUrl(query!.ImageDetails?.Key);
+            result.ImageUrl = storedFiles;
             return result;
         }
     }

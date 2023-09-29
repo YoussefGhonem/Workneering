@@ -8,7 +8,6 @@ using Workneering.Base.API.ServiceCollections.Swagger.models;
 namespace Workneering.Base.API.ServiceCollections.Swagger;
 public static class ConfigureServices
 {
-
     public static IServiceCollection AddBaseSwagger(this IServiceCollection services, IConfiguration configuration)
     {
         var config = configuration.GetSwaggerConfig();

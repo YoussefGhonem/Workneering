@@ -7,6 +7,7 @@ using Workneering.Identity.Application;
 using Workneering.User.API;
 using Workneering.Settings.API;
 using Workneering.Project.API;
+using Workneering.Packages.Storage.AWS3;
 
 namespace Workneering.Geteway.Helpers;
 public static class ConfigureServicesExtention
@@ -47,15 +48,11 @@ public static class ConfigureServicesExtention
         #endregion
 
         #region Packages
-
-        #region RabbitMQ
         //services.AddRabbitMQ(builder.Configuration);
-        #endregion
-
+        services.AddAmazonS3(builder.Configuration);
         #endregion
 
         #region Solution Extensions
-
         services.AddIdentityExtension(builder.Configuration)
                 .AddUserExtension(builder.Configuration)
                 .AddProjectExtension(builder.Configuration)

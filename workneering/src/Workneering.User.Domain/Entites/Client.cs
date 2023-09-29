@@ -1,5 +1,6 @@
 ﻿using Workneering.Base.Domain.Common;
 using Workneering.Base.Helpers.Enums;
+using Workneering.Shared.Core.Models;
 using Workneering.User.Domain.Helpr;
 using Workneering.User.Domain.valueobjects;
 
@@ -8,6 +9,7 @@ namespace Workneering.User.Domain.Entites
     public record Client : BaseEntity
     {
         private string? _name;
+        private FileDto? _imageDetails;
         private string? _overviewDescription;
         private string? _whoIAm;
         private string? _whatDoIdo;
@@ -16,7 +18,7 @@ namespace Workneering.User.Domain.Entites
         private GenderEnum? _gender;
         private decimal? _reviews; // 4.3 of 5 stars
         private int? _numOfReviews; // 100 clients for example
-		private decimal _wengazPercentage;
+        private decimal _wengazPercentage;
         private decimal _profilePoint;
         private decimal _monthPoint;
         private decimal _packagePoint;
@@ -38,6 +40,7 @@ namespace Workneering.User.Domain.Entites
         }
 
         #region Public fields
+        public FileDto? ImageDetails { get => _imageDetails; set => _imageDetails = value; }
         public string? Name { get => _name; set => _name = value; }
         public string? WhoIAm { get => _whoIAm; set => _whoIAm = value; }
         public string? WhatDoIDo { get => _whatDoIdo; set => _whatDoIdo = value; }
@@ -47,7 +50,7 @@ namespace Workneering.User.Domain.Entites
         public string? Title { get => _title; set => _title = value; }
         public int? NumOfReviews { get => _numOfReviews; set => _numOfReviews = value; }
         public decimal? Reviews { get => _reviews; private set => _reviews = value; }
-		public decimal WengazPercentage { get => _wengazPercentage; private set => _wengazPercentage = 0; }
+        public decimal WengazPercentage { get => _wengazPercentage; private set => _wengazPercentage = 0; }
         public decimal ProfilePoint { get => _profilePoint; private set => _profilePoint = 0; }
         public decimal MonthPoint { get => _monthPoint; private set => _monthPoint = 0; }
         public decimal PackagePoint { get => _packagePoint; private set => _packagePoint = 0; }
@@ -65,6 +68,10 @@ namespace Workneering.User.Domain.Entites
         #region Public Methods
 
         #region Basic Details
+        public void UpdateImage(FileDto? imageDetails)
+        {
+            _imageDetails = imageDetails;
+        }
         public void UpdateWhoIAm(string? field)
         {
             _whoIAm = field;
@@ -154,7 +161,7 @@ namespace Workneering.User.Domain.Entites
         }
         public void UpdateWengazPoint()
         {
-            _wengazPoint = _packagePoint  + _profilePoint + _monthPoint ;
+            _wengazPoint = _packagePoint + _profilePoint + _monthPoint;
         }
         #endregion
 
@@ -199,7 +206,7 @@ namespace Workneering.User.Domain.Entites
         public void UpdateSkills(List<Guid> externalIds)
         {
             var ids = _skills.Select(x => x.SkillId).ToList();
-           // if (!ids.Any()) return;
+            // if (!ids.Any()) return;
 
             var addNewItems = externalIds.Except(ids);
             var removeItems = ids.Except(externalIds);

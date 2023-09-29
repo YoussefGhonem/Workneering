@@ -1,7 +1,6 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Workneering.Base.Application.Models;
 using Workneering.Project.Application.Services.DbQueryService;
 using Workneering.Project.Infrastructure.Persistence;
 
@@ -19,43 +18,40 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjec
         }
         public async Task<ProjectClientBasicDetailsDto> Handle(GetProjectClientBasicDetailsQuery request, CancellationToken cancellationToken)
         {
-            var project = _context.Projects.Include(x => x.Proposals).FirstOrDefault(x => x.Id == request.ProjectId);
+            var project = _context.Projects.Include(x => x.Proposals)
+                .Include(x => x.Proposals)
+                .Include(x => x.Categories)
+                .Include(x => x.SubCategories)
+                .Include(x => x.Skills)
+                .FirstOrDefault(x => x.Id == request.ProjectId);
+
             var result = project?.Adapt<ProjectClientBasicDetailsDto>();
 
-            if (!project.Proposals.Any())
+            if (project == null || !project.Proposals.Any())
+            {
                 return result;
+            }
+
             foreach (var proposal in project.Proposals)
             {
                 var userInfo = await _dbQueryService.GetFreelancerInfo(proposal.FreelancerId!.Value);
-                result.SubmittedOffers.Add(new SubmittedOffersDto
+                var freelancerImage = await _dbQueryService.GetFreelancerImage(proposal.FreelancerId.Value);
+
+                var submittedOffer = new SubmittedOffersDto
                 {
                     FreelancerId = proposal.FreelancerId,
                     Name = userInfo.Name,
                     CountryName = userInfo.CountryName,
-                    Title = userInfo.Title
-                });
+                    Title = userInfo.Title,
+                    ImageUrl = freelancerImage.Url,
+                };
+                result.SubmittedOffers.Add(submittedOffer);
             }
 
-            foreach (var proposal in project.Proposals)
-            {
-                var userInfo = await _dbQueryService.GetFreelancerInfo(proposal.FreelancerId!.Value);
-                result.Proposals.Add(new ClientProposalsDto
-                {
-                    FreelancerDetails = new SubmittedOffersDto
-                    {
-                        FreelancerId = proposal.FreelancerId,
-                        Name = userInfo.Name,
-                        CountryName = userInfo.CountryName,
-                        Title = userInfo.Title
-                    },
-                    CoverLetter = proposal.CoverLetter,
-                    HourlyRate = proposal.HourlyRate,
-                    ProposalDuration = proposal.ProposalDuration,
-                    ProposalStatus = proposal.ProposalStatus
-                });
-            }
-
+            result.NumberOfProposals = project.Proposals.Count;
             return result;
         }
+
+
     }
 }
