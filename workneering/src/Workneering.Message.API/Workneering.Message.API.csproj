@@ -7,5 +7,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Workneering.Base.API\Workneering.Base.API.csproj" />
 		<ProjectReference Include="..\Workneering.Base.Helpers\Workneering.Base.Helpers.csproj" />
+		<ProjectReference Include="..\Workneering.Message.Application\Workneering.Message.Application.csproj" />
 	</ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ namespace Workneering.Message.Infrustructure
 {
     public static class ConfigureServices
     {
-        public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services,
+        public static IServiceCollection AddMessageInfrastructure(this IServiceCollection services,
             IConfiguration configuration)
         {
             services.AddDbContext<MessagesDbContext>(options =>

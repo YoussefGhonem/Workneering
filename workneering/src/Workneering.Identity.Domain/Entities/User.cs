@@ -26,8 +26,6 @@ namespace Workneering.Identity.Domain.Entities
         private readonly HashSet<UserClaim> _claims = new();
         private readonly HashSet<UserLogin> _logins = new();
         private readonly HashSet<UserToken> _tokens = new();
-        public HashSet<Message> _messagesSent = new();
-        public HashSet<Message> _messagesReceived = new();
 
         #endregion
         public User(string name, string email)
@@ -100,8 +98,7 @@ namespace Workneering.Identity.Domain.Entities
         public virtual IReadOnlyCollection<UserClaim> Claims => _claims;
         public virtual IReadOnlyCollection<UserLogin> Logins => _logins;
         public virtual IReadOnlyCollection<UserToken> Tokens => _tokens;
-        public virtual IReadOnlyCollection<Message> MessagesSent => _messagesSent;
-        public virtual IReadOnlyCollection<Message> MessagesReceived => _messagesSent;
+
         #endregion
 
         #region Public Methods
@@ -156,11 +153,6 @@ namespace Workneering.Identity.Domain.Entities
             DeletedBy = null;
 
         }
-        #endregion
-
-
-        #region Message
-
         #endregion
     }
 }

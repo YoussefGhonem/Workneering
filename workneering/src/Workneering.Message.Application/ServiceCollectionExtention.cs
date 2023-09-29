@@ -7,7 +7,7 @@ namespace Workneering.Message.Application
 {
     public static class ServiceCollectionExtention
     {
-        public static IServiceCollection AddProjectApplication(this IServiceCollection services)
+        public static IServiceCollection AddMessageApplication(this IServiceCollection services)
         {
             //services.AddSingleton<IDbQueryService, DbQueryService>();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
