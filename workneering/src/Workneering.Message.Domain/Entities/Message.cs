@@ -32,5 +32,10 @@ namespace Workneering.Message.Domain.Entities
         {
 
         }
+
+        public void MarkMessageAsRead()
+        {
+            IsRead = true;
+        }
     }
 }
