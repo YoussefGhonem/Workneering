@@ -70,10 +70,10 @@ public static class ConfigureServicesExtention
     public static async Task<WebApplication> Configure(this WebApplication app, IWebHostEnvironment env)
     {
         #region Using Base Packages 
+        app.UseBaseSwagger(app.Configuration);
         app.UseSignalRApplication();
         app.UseStaticFiles();
-        app.UseIdentityApplication()
-           .UseBaseSwagger(app.Configuration);
+        app.UseIdentityApplication();
         //app.UseRouting();
         #endregion
 
