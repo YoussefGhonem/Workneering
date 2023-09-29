@@ -8,6 +8,6 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         public string? Name { get; set; }
         public GenderEnum? Gender { get; set; }
         public string? TitleOverview { get; set; }
-        public Guid? CountryId { get; set; } 
+        public Guid? CountryId { get; set; }
     }
 }

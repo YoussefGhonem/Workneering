@@ -1,6 +1,4 @@
-﻿using Workneering.Project.Application.Services.Models;
-
-namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForClient
+﻿namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForClient
 {
     public class GetProjectBasicDetailsForClientDto
     {

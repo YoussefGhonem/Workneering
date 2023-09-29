@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Base.Helpers.Extensions;
-using Workneering.Settings.Application.Queries.GetSubCategories;
 using Workneering.Settings.Infrastructure.Persistence;
 
 namespace Workneering.Settings.Application.Queries.GetSkills

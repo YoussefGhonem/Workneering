@@ -1,5 +1,4 @@
-﻿using Mapster;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using Workneering.Base.Helpers.Extensions;
 using Workneering.Settings.Domain.Entities;
@@ -36,10 +35,10 @@ public static class SettingsDbContextSeed
         //var languages = JsonConvert.DeserializeObject<Dictionary<string, Language>>(json);
 
         context.Industries.Add(new Industry("Information Technology"));
-		context.Industries.Add(new Industry("Engineering"));
-		context.Industries.Add(new Industry("Financial Services"));
+        context.Industries.Add(new Industry("Engineering"));
+        context.Industries.Add(new Industry("Financial Services"));
 
-		context.SaveChanges(); 
+        context.SaveChanges();
     }
 
     private static async Task SeedLanguages(SettingsDbContext context, IHostingEnvironment env)

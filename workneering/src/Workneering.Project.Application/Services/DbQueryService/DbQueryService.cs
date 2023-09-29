@@ -1,14 +1,12 @@
 using Dapper;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Project.Application.Commands.CreateProject;
 using Workneering.Project.Application.Services.Models;
+using Workneering.Shared.Core.Extention;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Identity.Enums;
-using Workneering.Shared.Core.Models;
-using Workneering.Shared.Core.Extention;
 
 namespace Workneering.Project.Application.Services.DbQueryService;
 

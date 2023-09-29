@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
-using Workneering.Project.Application.Commands.CreateProject.Models;
 using Workneering.Project.Domain.Enums;
 
 namespace Workneering.Project.Application.Commands.CreateProject

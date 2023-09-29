@@ -1,5 +1,4 @@
-﻿using Amazon.Internal;
-using Amazon.Runtime;
+﻿using Amazon.Runtime;
 using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 

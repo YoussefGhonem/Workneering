@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Infrastructure.Persistence;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateTitleOverview;
 

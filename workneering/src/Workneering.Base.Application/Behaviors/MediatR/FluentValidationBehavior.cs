@@ -1,5 +1,4 @@
-﻿using Workneering.Base.Application.GlobalExceptions;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;

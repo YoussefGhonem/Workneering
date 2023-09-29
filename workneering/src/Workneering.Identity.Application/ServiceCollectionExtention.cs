@@ -9,12 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Security.Claims;
-using Workneering.Identity.Domain.Entities;
-using Workneering.Identity.Infrastructure.Persistence;
 using Workneering.Base.Application.Extensions;
-using Workneering.Shared.Core.Identity.CurrentUser;
 //using Workneering.Base.Application.Services.DbQueryService;
 using Workneering.Identity.Application.Services.DbQueryService;
+using Workneering.Identity.Domain.Entities;
+using Workneering.Identity.Infrastructure.Persistence;
+using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Identity.Application;
 

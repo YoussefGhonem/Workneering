@@ -1,11 +1,7 @@
-using Hangfire;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Workneering.Identity.Application.Commands.Identity.ChangePassword;
 using Workneering.Identity.Infrastructure.Persistence;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.Shared.Core.Identity.Enums;
-using Workneering.User.Application.Commands.CreateUser;
 
 namespace Workneering.Identity.Application.Commands.Identity.UpdateProfile;
 

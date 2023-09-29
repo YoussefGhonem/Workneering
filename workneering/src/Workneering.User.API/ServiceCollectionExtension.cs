@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Workneering.User.Application;
 using Workneering.User.Infrastructure;
 using Workneering.User.Infrastructure.Persistence;
-using Workneering.User.Application;
 
 
 namespace Workneering.User.API

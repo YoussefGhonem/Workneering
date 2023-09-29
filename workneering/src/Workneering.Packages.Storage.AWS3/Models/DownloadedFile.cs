@@ -1,6 +1,4 @@
-﻿using System.Net.Http;
-
-namespace Workneering.Packages.Storage.AWS3.Models;
+﻿namespace Workneering.Packages.Storage.AWS3.Models;
 
 public class DownloadedFile
 {

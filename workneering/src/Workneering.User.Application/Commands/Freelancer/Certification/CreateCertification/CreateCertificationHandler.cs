@@ -24,13 +24,13 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateC
                              .Include(c => c.Experiences).AsSplitQuery()
                              .Include(c => c.Categories).AsSplitQuery()
                              .Include(c => c.EmploymentHistory).AsSplitQuery()
-                             .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken) ;
+                             .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
             var result = request.Adapt<Domain.Entites.Certification>();
             query!.AddCertification(result);
             query.UpdateAllPointAndPercentage(query);
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;
-		}
+        }
     }
 }

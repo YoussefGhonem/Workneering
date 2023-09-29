@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
-using Workneering.Identity.Application.Commands.Identity.Login;
 using Workneering.Identity.Application.Commands.Message.CreateMessage;
-using Workneering.Identity.Application.Queries.GetProfileDetails;
 using Workneering.Identity.Application.Queries.Message.GetConversation;
 using Workneering.Identity.Application.Queries.Message.GetCountUnreadMessages;
 

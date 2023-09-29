@@ -1,4 +1,3 @@
-using Workneering.Base.Domain.ValueObjects;
 using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 using Workneering.User.Application.Services.Models;
 

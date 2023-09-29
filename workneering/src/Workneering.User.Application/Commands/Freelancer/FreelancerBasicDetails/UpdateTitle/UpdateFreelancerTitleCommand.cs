@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Workneering.User.Domain.Enums;
 
 namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateTitle
 {

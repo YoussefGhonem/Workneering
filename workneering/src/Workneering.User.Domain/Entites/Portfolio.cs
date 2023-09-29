@@ -1,5 +1,4 @@
 ﻿using Workneering.Base.Domain.Common;
-using Workneering.User.Domain.Enums;
 
 namespace Workneering.User.Domain.Entites
 {

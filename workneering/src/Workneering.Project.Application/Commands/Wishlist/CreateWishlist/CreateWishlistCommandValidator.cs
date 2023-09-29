@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using Workneering.Project.Infrastructure.Persistence;
 
 namespace Workneering.Project.Application.Commands.Wishlist.CreateWishlist

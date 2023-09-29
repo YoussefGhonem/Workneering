@@ -1,13 +1,13 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ServiceStack;
+using Workneering.Base.Application.Common.Pagination;
 using Workneering.Base.Application.Common.Pagination.models;
+using Workneering.Project.Application.Queries.Project.GetProjects.Filters;
+using Workneering.Project.Application.Services.DbQueryService;
 using Workneering.Project.Infrastructure.Persistence;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.Base.Application.Common.Pagination;
-using Workneering.Project.Application.Services.DbQueryService;
-using Workneering.Project.Application.Queries.Project.GetProjects.Filters;
-using ServiceStack;
 
 namespace Workneering.Project.Application.Queries.Project.GetProjects
 {

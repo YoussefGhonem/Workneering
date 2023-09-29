@@ -1,5 +1,5 @@
-using System.Text.Json.Serialization;
 using MediatR;
+using System.Text.Json.Serialization;
 
 namespace Workneering.Identity.Application.Commands.Identity.ChangePassword;
 

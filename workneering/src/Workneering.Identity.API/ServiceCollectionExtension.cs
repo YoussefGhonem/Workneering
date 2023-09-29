@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Workneering.Identity.Application;
 using Workneering.Identity.Infrastructure;
-using Workneering.User.Application;
 
 namespace Workneering.Identity.API
 {

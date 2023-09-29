@@ -25,8 +25,8 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
                             .Include(c => c.EmploymentHistory).AsSplitQuery()
                             .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
             query!.UpdateHourlyRate(request.HourlyRate);
-			query.UpdateAllPointAndPercentage(query);
-			_userDatabaseContext.Freelancers.Attach(query);
+            query.UpdateAllPointAndPercentage(query);
+            _userDatabaseContext.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }

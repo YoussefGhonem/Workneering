@@ -1,5 +1,4 @@
 ﻿using Mapster;
-using System.Linq;
 using Workneering.Base.Helpers.Extensions;
 using Workneering.Project.Application.Services.DbQueryService;
 using Workneering.Project.Domain.Enums;

@@ -36,7 +36,7 @@ namespace Workneering.User.Application.Queries.Client.GetClientCategorization
             query!.Skills.Select(x => x.SkillId), cancellationToken);
             var returnvalue = result?.Adapt<ClientCategorizationDto>();
 
-			return returnvalue;
+            return returnvalue;
         }
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Workneering.Project.Domain.Enums;
 using Workneering.Project.Infrastructure.Persistence;
-using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Project.Application.Commands.UpdateStatusProposal
 {

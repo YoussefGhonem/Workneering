@@ -1,6 +1,5 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Workneering.Identity.Domain.Entities;
 using Workneering.Identity.Infrastructure.Persistence;
 
 namespace Workneering.Identity.Application.Commands.Identity.ForgetPassword;

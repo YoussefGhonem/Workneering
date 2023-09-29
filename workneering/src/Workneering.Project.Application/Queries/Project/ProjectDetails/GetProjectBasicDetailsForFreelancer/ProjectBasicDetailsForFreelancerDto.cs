@@ -1,5 +1,4 @@
-﻿using Workneering.Project.Application.Services.Models;
-using Workneering.Project.Domain.Enums;
+﻿using Workneering.Project.Domain.Enums;
 
 namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer
 {

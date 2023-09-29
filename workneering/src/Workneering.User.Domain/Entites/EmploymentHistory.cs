@@ -1,5 +1,4 @@
 ﻿using Workneering.Base.Domain.Common;
-using Workneering.Shared.Core.Models;
 
 namespace Workneering.User.Domain.Entites
 {

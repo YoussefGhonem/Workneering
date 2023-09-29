@@ -6,19 +6,19 @@ using Workneering.Base.API.Controllers;
 using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Project.Application.Commands.CreateProject;
 using Workneering.Project.Application.Commands.CreateProposal;
+using Workneering.Project.Application.Commands.RemoveProjectAttachment;
 using Workneering.Project.Application.Commands.UpdateProject;
+using Workneering.Project.Application.Commands.UpdateStatusProposal;
 using Workneering.Project.Application.Commands.Wishlist.CreateWishlist;
 using Workneering.Project.Application.Commands.Wishlist.RemoveWishlist;
-using Workneering.Project.Application.Queries.Project.GetProjects;
-using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProposals;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails;
+using Workneering.Project.Application.Queries.Project.GetProjects;
+using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectAttachments;
+using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer;
 using Workneering.Project.Application.Queries.Proposal.GetProposals;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects;
-using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectAttachments;
-using Workneering.Project.Application.Commands.RemoveProjectAttachment;
-using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProposals;
-using Workneering.Project.Application.Commands.UpdateStatusProposal;
 
 namespace Workneering.Project.API.Controllers
 {

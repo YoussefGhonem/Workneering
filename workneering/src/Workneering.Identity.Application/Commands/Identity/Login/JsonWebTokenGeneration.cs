@@ -16,9 +16,9 @@ namespace Workneering.Identity.Application.Commands.Identity.Login
             var jwtConfig = configuration.GetJwtConfig();
             var signingKey = Convert.FromBase64String(jwtConfig.Key);
 
-			#region Add Claims
+            #region Add Claims
 
-			var claims = new List<Claim>();
+            var claims = new List<Claim>();
 
             claims.AddClaim(ClaimKeys.Id, user.Id.ToString());
             claims.AddClaim(ClaimKeys.Email, user.Email);

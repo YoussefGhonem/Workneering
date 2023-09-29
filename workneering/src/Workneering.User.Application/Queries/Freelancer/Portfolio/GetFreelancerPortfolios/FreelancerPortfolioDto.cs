@@ -1,6 +1,4 @@
-﻿using Workneering.User.Domain.Enums;
-
-namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios
+﻿namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios
 {
     public class FreelancerPortfolioDto
     {

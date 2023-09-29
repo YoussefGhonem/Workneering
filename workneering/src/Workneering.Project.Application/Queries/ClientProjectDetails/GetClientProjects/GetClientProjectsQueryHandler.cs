@@ -6,7 +6,6 @@ using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects.Filters;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails;
 using Workneering.Project.Application.Services.DbQueryService;
-using Workneering.Project.Domain.Entities;
 using Workneering.Project.Infrastructure.Persistence;
 using Workneering.Shared.Core.Identity.CurrentUser;
 

@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Identity;
-using Workneering.Base.Application.FluentValidation.Validators;
 using Workneering.Shared.Core.Identity.Enums;
 
 namespace Workneering.Identity.Application.Commands.Message.CreateMessage

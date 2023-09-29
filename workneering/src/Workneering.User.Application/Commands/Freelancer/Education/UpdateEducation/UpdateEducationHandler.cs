@@ -1,9 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.User.Domain.Entites;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Freelancer.Education.UpdateEducation

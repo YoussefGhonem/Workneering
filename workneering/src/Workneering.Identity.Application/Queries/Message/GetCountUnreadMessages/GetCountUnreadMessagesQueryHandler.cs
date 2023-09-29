@@ -1,11 +1,7 @@
-﻿using Mapster;
-using MediatR;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Workneering.Identity.Domain.Entities;
 using Workneering.Identity.Infrastructure.Persistence;
 using Workneering.Packages.Storage.AWS3.Services;
-using Workneering.Shared.Core.Extention;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Identity.Application.Queries.Message.GetCountUnreadMessages

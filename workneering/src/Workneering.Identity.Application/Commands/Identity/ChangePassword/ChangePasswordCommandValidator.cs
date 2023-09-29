@@ -1,7 +1,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Workneering.Base.Application.FluentValidation.Validators;
-using Workneering.Identity.Domain.Entities;
 
 namespace Workneering.Identity.Application.Commands.Identity.ChangePassword;
 

@@ -11,7 +11,7 @@ public class GetLanguagesQueryHandler : IRequestHandler<GetLanguagesQuery, List<
 
     public GetLanguagesQueryHandler(SettingsDbContext context)
     {
-        _context=context;
+        _context = context;
     }
 
     public async Task<List<GetLanguagesDto>> Handle(GetLanguagesQuery request, CancellationToken cancellationToken)

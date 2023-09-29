@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Models;
-using Workneering.User.Infrastructure.Persistence;
 using Workneering.User.Application.Services.DbQueryService;
+using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientImage
 {

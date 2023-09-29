@@ -1,7 +1,6 @@
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
-using Workneering.Base.Domain.ValueObjects;
 using Workneering.Shared.Core.Identity.Enums;
 using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 using Workneering.User.Application.Services.Models;

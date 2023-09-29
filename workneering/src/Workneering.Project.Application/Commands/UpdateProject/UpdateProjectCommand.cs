@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using System.Text.Json.Serialization;
-using Workneering.Project.Application.Commands.CreateProject.Models;
-using Workneering.Project.Application.Commands.UpdateProject.Models;
 using Workneering.Project.Domain.Enums;
 
 namespace Workneering.Project.Application.Commands.UpdateProject

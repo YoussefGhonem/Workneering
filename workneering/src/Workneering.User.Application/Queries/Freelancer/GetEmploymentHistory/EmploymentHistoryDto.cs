@@ -1,6 +1,4 @@
-﻿using Workneering.Shared.Core.Models;
-
-namespace Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory
+﻿namespace Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory
 {
     public class EmploymentHistoryDto
     {

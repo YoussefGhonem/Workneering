@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Collections;
-using System.Linq;
-using Workneering.Base.Domain.Common;
+﻿using Workneering.Base.Domain.Common;
 using Workneering.Base.Helpers.Enums;
-using Workneering.Base.Helpers.Extensions;
 using Workneering.Shared.Core.Models;
 using Workneering.User.Domain.Enums;
 using Workneering.User.Domain.Helpr;

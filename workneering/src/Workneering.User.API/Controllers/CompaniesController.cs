@@ -4,16 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientImage;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyBasicDetails;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyCategorization;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyDescription;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyImage;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhatDoWeDo;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhoAreWe;
-using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;
-using Workneering.User.Application.Queries.Client.GetClientBasicDetails;
-using Workneering.User.Application.Queries.Client.GetClientCategorization;
 using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 
