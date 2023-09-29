@@ -73,16 +73,16 @@ public static class ConfigureServicesExtention
         app.UseBaseSwagger(app.Configuration);
         app.UseSignalRApplication();
         app.UseStaticFiles();
-        app.UseIdentityApplication();
         //app.UseRouting();
         #endregion
-
 
         using (var scope = app.Services.CreateScope())
         {
             await scope.MigrateDatabase();
             await scope.SeedDatabase();
         }
+        app.UseIdentityApplication();
+
 
         return app;
     }

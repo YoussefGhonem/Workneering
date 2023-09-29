@@ -10,5 +10,13 @@ public class MessageConfigurations : IEntityTypeConfiguration<Message>
     {
         builder.ToTable("Messages", "IdentitySchema");
 
+        // Configure the relationship with Sender
+        builder.HasOne(m => m.Sender)
+            .WithMany(u => u.MessagesSent);
+
+        // Configure the relationship with Recipient
+        builder.HasOne(m => m.Recipient)
+            .WithMany(u => u.MessagesReceived);
+
     }
 }
