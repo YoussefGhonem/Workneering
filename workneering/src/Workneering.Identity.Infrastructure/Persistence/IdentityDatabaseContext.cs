@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Workneering.Base.Domain.Interfaces;
 using Workneering.Base.Helpers.Extensions;
-using Workneering.Base.Infrastructure.Persistence;
 using Workneering.Identity.Domain.Entities;
 using Workneering.Identity.Domain.Entities.Claims;
 
