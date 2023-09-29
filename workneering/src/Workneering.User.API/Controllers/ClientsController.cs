@@ -7,8 +7,10 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientBasicDetails;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientCategorization;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientDescription;
+using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientImage;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientWhatDoIdo;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientWhoIAm;
+using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyImage;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;
 using Workneering.User.Application.Queries.Client.GetClientBasicDetails;
 using Workneering.User.Application.Queries.Client.GetClientCategorization;
@@ -17,7 +19,7 @@ using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 namespace Workneering.User.API.Controllers
 {
     [ApiVersion("1.0")]
-  //  [Authorize]
+    //  [Authorize]
     [Route("api/v{version:apiVersion}/clients")]
     public class ClientsController : BaseController
     {
@@ -27,7 +29,6 @@ namespace Workneering.User.API.Controllers
 
         #region Commands
         [HttpPut("profile/description")]
-        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -35,7 +36,16 @@ namespace Workneering.User.API.Controllers
         public async Task<ActionResult<Unit>> UpdateClientDescriptionCommand(UpdateClientDescriptionCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
-        }   
+        }
+        [HttpPut("profile/image")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateClientImageCommand([FromForm] UpdateCompanyImageCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
         [HttpPut("profile/who-i-am")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,7 +54,7 @@ namespace Workneering.User.API.Controllers
         public async Task<ActionResult<Unit>> UpdateClientWhoIAmCommand(UpdateClientWhoIAmCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
-        }     
+        }
         [HttpPut("profile/what-do-i-do")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

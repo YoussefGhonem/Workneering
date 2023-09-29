@@ -15,6 +15,7 @@ using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateE
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.DeleteEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailability;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateClientImage;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateCountry;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateExperienceLevel;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;
@@ -55,6 +56,15 @@ namespace Workneering.User.API.Controllers
         #region Commands
 
         #region Update Basic Details
+        [HttpPut("profile/image")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> UpdateClientImageCommand([FromForm] UpdateFreelancerImageCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
         [HttpPut("profile/categorization")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -250,7 +260,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> CreatePortfolioCommand(CreatePortfolioCommand command)
-            {
+        {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 

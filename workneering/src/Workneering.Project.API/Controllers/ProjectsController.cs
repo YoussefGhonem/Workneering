@@ -10,12 +10,15 @@ using Workneering.Project.Application.Commands.UpdateProject;
 using Workneering.Project.Application.Commands.Wishlist.CreateWishlist;
 using Workneering.Project.Application.Commands.Wishlist.RemoveWishlist;
 using Workneering.Project.Application.Queries.Project.GetProjects;
-using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForClient;
 using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails;
 using Workneering.Project.Application.Queries.Proposal.GetProposals;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects;
+using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectAttachments;
+using Workneering.Project.Application.Commands.RemoveProjectAttachment;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProposals;
+using Workneering.Project.Application.Commands.UpdateStatusProposal;
 
 namespace Workneering.Project.API.Controllers
 {
@@ -29,14 +32,40 @@ namespace Workneering.Project.API.Controllers
         }
 
         #region Commands
-
-        #region project
-        [HttpPost]
+        [HttpDelete("{id}/attachments/{key}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateProjectCommand(CreateProjectCommand command)
+        public async Task<ActionResult<Unit>> RemoveProjectAttachmentCommand(Guid id, string key)
+        {
+            return Ok(await Mediator.Send(new RemoveProjectAttachmentCommand { ProjectId = id, Key = key }, CancellationToken));
+        }
+        [HttpPut("{id}/proposals/{proposalId}/accept")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> AcceptStatusProposalCommand(Guid id, Guid proposalId)
+        {
+            return Ok(await Mediator.Send(new UpdateStatusProposalCommand { ProjectId = id, ProposalId = proposalId, Status = Domain.Enums.ProposalStatusEnum.Accepted }, CancellationToken));
+        }
+        [HttpPut("{id}/proposals/{proposalId}/reject")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> RejectStatusProposalCommand(Guid id, Guid proposalId)
+        {
+            return Ok(await Mediator.Send(new UpdateStatusProposalCommand { ProjectId = id, ProposalId = proposalId, Status = Domain.Enums.ProposalStatusEnum.Rejected }, CancellationToken));
+        }
+        #region project
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> CreateProjectCommand([FromForm] CreateProjectCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
@@ -135,8 +164,8 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProjectBasicDetailsForClientDto))]
-        public async Task<ActionResult<GetProjectBasicDetailsForClientDto>> GetProjectBasicDetailsForClientQuery([FromQuery] GetProjectBasicDetailsForFreelancerQuery query, Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProjectAttachmentsDto))]
+        public async Task<ActionResult<ProjectAttachmentsDto>> GetProjectBasicDetailsForClientQuery([FromQuery] GetProjectBasicDetailsForFreelancerQuery query, Guid id)
         {
             query.ProjectId = id;
             return Ok(await Mediator.Send(query, CancellationToken));
@@ -145,8 +174,8 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProjectBasicDetailsForClientDto))]
-        public async Task<ActionResult<GetProjectBasicDetailsForClientDto>> GetProjects([FromQuery] GetProjectBasicDetailsForClientQuery query, Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProjectAttachmentsDto))]
+        public async Task<ActionResult<ProjectAttachmentsDto>> GetProjects([FromQuery] GetProjectAttachmentsQuery query, Guid id)
         {
             query.ProjectId = id;
             return Ok(await Mediator.Send(query, CancellationToken));
@@ -230,6 +259,26 @@ namespace Workneering.Project.API.Controllers
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         #endregion
+
+        [HttpGet("{id}/attachments")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProjectAttachmentsDto>))]
+        public async Task<ActionResult<List<ProjectAttachmentsDto>>> GetProjectAttachmentsQuery(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetProjectAttachmentsQuery { ProjectId = id }, CancellationToken));
+        }
+        [HttpGet("{id}/client-proposals")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ClientProposalsListDto>))]
+        public async Task<ActionResult<List<ClientProposalsListDto>>> GetClientProposalsQuery(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetClientProposalsQuery { ProjectId = id }, CancellationToken));
+        }
+
         #endregion
 
     }

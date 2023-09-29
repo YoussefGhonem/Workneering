@@ -1,5 +1,6 @@
 ﻿using Workneering.Base.Domain.Common;
 using Workneering.Project.Domain.Enums;
+using Workneering.Shared.Core.Models;
 
 namespace Workneering.Project.Domain.Entities
 {
@@ -27,10 +28,12 @@ namespace Workneering.Project.Domain.Entities
         private List<ProjectCategory>? _categories = new();
         private List<ProjectSkill>? _skills = new();
         private List<ProjectSubCategory>? _subCategories = new();
+        private List<ProjectAttachment>? _attachments = new();
 
 
 
         public Project(
+             List<ProjectAttachment>? attachments,
              List<ProjectSubCategory>? subCategories,
              List<ProjectCategory>? categories,
              List<ProjectSkill>? skills,
@@ -40,6 +43,7 @@ namespace Workneering.Project.Domain.Entities
             ProjectBudgetEnum? projectBudget = null, decimal? projectHourlyFromPrice = null, decimal? projectHourlyToPrice = null, bool? isRecommend = null)
         {
             _projectTitle = projectTitle;
+            _attachments = attachments;
             _projectDescription = projectDescription;
             _isOpenDueDate = isOpenDueDate;
             _projectDurationDescription = projectDurationDescription;
@@ -93,6 +97,7 @@ namespace Workneering.Project.Domain.Entities
         public List<ProjectCategory>? Categories => _categories;
         public List<ProjectSubCategory>? SubCategories => _subCategories;
         public List<ProjectSkill>? Skills => _skills;
+        public List<ProjectAttachment>? Attachments => _attachments;
 
 
         #endregion
@@ -237,6 +242,7 @@ namespace Workneering.Project.Domain.Entities
         }
 
         #endregion
+
         #region Wishlist
         public void AddIntoWishlist(Guid? freelancerId)
         {
@@ -246,6 +252,17 @@ namespace Workneering.Project.Domain.Entities
         {
             if (freelancerId == null) return;
             _wishlist.FirstOrDefault(x => x.FreelancerId == freelancerId)?.MarkAsDeleted(null);
+        }
+        #endregion    
+        #region Wishlist
+        public void AddAttachment(FileDto? field)
+        {
+            _attachments.Add(new ProjectAttachment(field));
+        }
+        public void RemoveAttachment(string? key)
+        {
+            var obj = _attachments.FirstOrDefault(x => x.ImageDetails.Key == key);
+            _attachments.Remove(obj);
         }
         #endregion
 
@@ -261,7 +278,7 @@ namespace Workneering.Project.Domain.Entities
             var proposalStatus = ProposalStatusEnum.Accepted;
             var porposal = _proposals.FirstOrDefault(x => x.Id == proposalId);
             porposal.UpdateProposalStatus(proposalStatus);
-
+            UpdateProjectStatus(ProjectStatusEnum.Active);
             var otherPorposals = _proposals.Where(x => x.Id != proposalId);
             foreach (var item in otherPorposals)
             {

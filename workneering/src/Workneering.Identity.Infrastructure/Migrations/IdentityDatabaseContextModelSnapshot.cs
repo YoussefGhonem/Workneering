@@ -312,34 +312,6 @@ namespace Workneering.Identity.Infrastructure.Migrations
 
             modelBuilder.Entity("Workneering.Identity.Domain.Entities.User", b =>
                 {
-                    b.OwnsOne("Workneering.Base.Helpers.Models.FileDto", "Image", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("FileName")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<long?>("FileSize")
-                                .HasColumnType("bigint");
-
-                            b1.Property<string>("Id")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<bool?>("IsExternal")
-                                .HasColumnType("bit");
-
-                            b1.Property<string>("Url")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users", "IdentitySchema");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
                     b.OwnsOne("Workneering.Identity.Domain.Entities.ValueObjects.UserAddress", "Address", b1 =>
                         {
                             b1.Property<Guid>("UserId")
@@ -371,8 +343,6 @@ namespace Workneering.Identity.Infrastructure.Migrations
 
                     b.Navigation("Address")
                         .IsRequired();
-
-                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("Workneering.Identity.Domain.Entities.UserLogin", b =>

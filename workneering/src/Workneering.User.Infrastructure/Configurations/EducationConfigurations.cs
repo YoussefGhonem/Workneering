@@ -9,7 +9,5 @@ public class EducationConfigurations : IEntityTypeConfiguration<Education>
     public void Configure(EntityTypeBuilder<Education> builder)
     {
         builder.ToTable("Educations", "UserSchema");
-
-
     }
 }

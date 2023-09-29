@@ -4,6 +4,7 @@ using System.Linq;
 using Workneering.Base.Domain.Common;
 using Workneering.Base.Helpers.Enums;
 using Workneering.Base.Helpers.Extensions;
+using Workneering.Shared.Core.Models;
 using Workneering.User.Domain.Enums;
 using Workneering.User.Domain.Helpr;
 using Workneering.User.Domain.valueobjects;
@@ -13,6 +14,7 @@ namespace Workneering.User.Domain.Entites
     public record Freelancer : BaseEntity
     {
         private bool _isMarked;
+        private FileDto? _imageDetails;
         private string? _titleOverview;
         private string _name;
         private GenderEnum? _gender;
@@ -54,11 +56,12 @@ namespace Workneering.User.Domain.Entites
 
         #region public fields
         public bool IsMarked { get => _isMarked; private set => _isMarked = value; }
+        public FileDto? ImageDetails { get => _imageDetails; private set => _imageDetails = value; }
         public string? TitleOverview { get => _titleOverview; private set => _titleOverview = value; }
         public string? Name { get => _name; private set => _name = value; }
         public GenderEnum? Gender { get => _gender; private set => _gender = value; }
-		public decimal? Reviews { get => _reviews; private set => _reviews = value; }
-		public decimal WengazPercentage { get => _wengazPercentage; private set => _wengazPercentage = 0; }
+        public decimal? Reviews { get => _reviews; private set => _reviews = value; }
+        public decimal WengazPercentage { get => _wengazPercentage; private set => _wengazPercentage = 0; }
         public decimal ProfilePoint { get => _profilePoint; private set => _profilePoint = 0; }
         public decimal MonthPoint { get => _monthPoint; private set => _monthPoint = 0; }
         public decimal PackagePoint { get => _packagePoint; private set => _packagePoint = 0; }
@@ -89,6 +92,10 @@ namespace Workneering.User.Domain.Entites
         #region public methods
 
         #region Basic Details
+        public void UpdateImage(FileDto? imageDetails)
+        {
+            _imageDetails = imageDetails;
+        }
         public void UpdateReviews(decimal? field)
         {
             _numOfReviews++;
@@ -122,7 +129,7 @@ namespace Workneering.User.Domain.Entites
         private decimal CalculateNullValue(Freelancer freelancer)
         {
             decimal nullFieldCount = 0;
-            if (string.IsNullOrEmpty(freelancer.Name)){nullFieldCount++;}
+            if (string.IsNullOrEmpty(freelancer.Name)) { nullFieldCount++; }
             if (string.IsNullOrEmpty(freelancer.TitleOverview)) { nullFieldCount++; }
             if (freelancer.Title == null) { nullFieldCount++; }
             if (freelancer.IsCountainCountry == false) { nullFieldCount++; }
@@ -139,7 +146,7 @@ namespace Workneering.User.Domain.Entites
             if (!freelancer.Certifications.Any()) nullFieldCount++;
             if (!freelancer.Languages.Any()) nullFieldCount++;
             return nullFieldCount;
-		}
+        }
         public void UpdateAllPointAndPercentage(Freelancer freelancer)
         {
             var previousValue = freelancer.ProfilePoint;
@@ -148,14 +155,14 @@ namespace Workneering.User.Domain.Entites
             UpdateDeductedPoint();
             UpdateWengazPoint();
         }
-		public void UpdateWengazPercentage(Freelancer freelancer)
-		{
-			
-            decimal nullValue = CalculateNullValue(freelancer);    
-			decimal allValue = typeof(FreelancersPercentageFields).GetProperties().Count();
-			_wengazPercentage = (((allValue - nullValue) / allValue) * 100);
-            
-		}
+        public void UpdateWengazPercentage(Freelancer freelancer)
+        {
+
+            decimal nullValue = CalculateNullValue(freelancer);
+            decimal allValue = typeof(FreelancersPercentageFields).GetProperties().Count();
+            _wengazPercentage = (((allValue - nullValue) / allValue) * 100);
+
+        }
         public void UpdateProrilePoint(Freelancer freelancer)
         {
             decimal nullValue = CalculateNullValue(freelancer);
@@ -168,19 +175,19 @@ namespace Workneering.User.Domain.Entites
         }
         public void UpdatePackagePoint(decimal field)
         {
-            _packagePoint = field;  
+            _packagePoint = field;
         }
         public void UpdateDeductedPoint()
         {
             decimal allValue = typeof(FreelancersPercentageFields).GetProperties().Count();
-            _deductedPoint = (allValue*10) - _profilePoint;
+            _deductedPoint = (allValue * 10) - _profilePoint;
         }
-		public void UpdateWengazPoint()
+        public void UpdateWengazPoint()
         {
-            _wengazPoint =_packagePoint + _profilePoint + _monthPoint;
+            _wengazPoint = _packagePoint + _profilePoint + _monthPoint;
         }
 
-		public void UpdateAvailability(int availability)
+        public void UpdateAvailability(int availability)
         {
             _availability = availability;
         }

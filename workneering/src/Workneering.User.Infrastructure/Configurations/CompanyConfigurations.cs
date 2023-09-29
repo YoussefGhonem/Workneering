@@ -18,5 +18,7 @@ public class CompanyConfigurations : IEntityTypeConfiguration<Company>
                 x.Property(x => x.NumberOfReviewersFourStars).HasColumnName("NumberOfReviewersFourStars");
                 x.Property(x => x.NumberOfReviewersFiveStars).HasColumnName("NumberOfReviewersFiveStars");
             });
+        builder.OwnsOne(i => i.ImageDetails);
+
     }
 }

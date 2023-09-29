@@ -1,7 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Identity;
 using Workneering.Base.Domain.Interfaces;
-using Workneering.Base.Helpers.Models;
 using Workneering.Identity.Domain.Entities.Claims;
 using Workneering.Identity.Domain.Entities.ValueObjects;
 using Workneering.Shared.Core.Enums;
@@ -15,7 +14,6 @@ namespace Workneering.Identity.Domain.Entities
         private UserStatusEnum? _status;
         private string? _name;
         private string? _phoneNumber;
-        private FileDto? _Image;
         private UserAddress? _address;
         // Audit
         private DateTimeOffset _createdDate;
@@ -39,11 +37,6 @@ namespace Workneering.Identity.Domain.Entities
         }
 
         #region public Fields
-        public FileDto? Image
-        {
-            get => _Image;
-            private set => _Image = value;
-        }
 
         public UserStatusEnum? Status
         {

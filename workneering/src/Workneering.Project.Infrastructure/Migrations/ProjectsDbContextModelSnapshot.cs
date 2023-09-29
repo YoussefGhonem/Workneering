@@ -148,6 +148,44 @@ namespace Workneering.Project.Infrastructure.Migrations
                     b.ToTable("ProjectActivities", "ProjectsSchema");
                 });
 
+            modelBuilder.Entity("Workneering.Project.Domain.Entities.ProjectAttachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("DeletedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("LastModifiedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Attachments", "ProjectsSchema");
+                });
+
             modelBuilder.Entity("Workneering.Project.Domain.Entities.ProjectCategory", b =>
                 {
                     b.Property<Guid>("Id")
@@ -387,6 +425,40 @@ namespace Workneering.Project.Infrastructure.Migrations
                         .HasForeignKey("ProjectId");
                 });
 
+            modelBuilder.Entity("Workneering.Project.Domain.Entities.ProjectAttachment", b =>
+                {
+                    b.HasOne("Workneering.Project.Domain.Entities.Project", null)
+                        .WithMany("Attachments")
+                        .HasForeignKey("ProjectId");
+
+                    b.OwnsOne("Workneering.Shared.Core.Models.FileDto", "ImageDetails", b1 =>
+                        {
+                            b1.Property<Guid>("ProjectAttachmentId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Extension")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("FileName")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<long?>("FileSize")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Key")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ProjectAttachmentId");
+
+                            b1.ToTable("Attachments", "ProjectsSchema");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProjectAttachmentId");
+                        });
+
+                    b.Navigation("ImageDetails");
+                });
+
             modelBuilder.Entity("Workneering.Project.Domain.Entities.ProjectCategory", b =>
                 {
                     b.HasOne("Workneering.Project.Domain.Entities.Project", null)
@@ -425,6 +497,8 @@ namespace Workneering.Project.Infrastructure.Migrations
             modelBuilder.Entity("Workneering.Project.Domain.Entities.Project", b =>
                 {
                     b.Navigation("Activities");
+
+                    b.Navigation("Attachments");
 
                     b.Navigation("Categories");
 
