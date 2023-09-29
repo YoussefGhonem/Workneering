@@ -29,6 +29,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                 .Include(x => x.Proposals)
                 .AsQueryable()
                 .Filter(request)
+                .OrderBy(x => x.CreatedDate)
                 .PaginateAsync(request.PageSize, request.PageNumber);
             var result = projects.list.ToList();
             var data = new List<ClientProjectsDto>();

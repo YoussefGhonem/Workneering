@@ -4,8 +4,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
 {
     public static class ApplyFilterExtension
     {
-        public static IQueryable<Domain.Entities.Project> Filter(
-            this IQueryable<Domain.Entities.Project> query, GetClientProjectsQuery filters)
+        public static IQueryable<Domain.Entities.Project> Filter(this IQueryable<Domain.Entities.Project> query, GetClientProjectsQuery filters)
         {
             // Filters  
             if (filters.Status is not null)

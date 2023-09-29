@@ -259,6 +259,11 @@ namespace Workneering.Project.Domain.Entities
         {
             _attachments.Add(new ProjectAttachment(field));
         }
+        public void RemoveAttachment(string? key)
+        {
+            var obj = _attachments.FirstOrDefault(x => x.ImageDetails.Key == key);
+            _attachments.Remove(obj);
+        }
         #endregion
 
         #region Proposal
@@ -273,7 +278,7 @@ namespace Workneering.Project.Domain.Entities
             var proposalStatus = ProposalStatusEnum.Accepted;
             var porposal = _proposals.FirstOrDefault(x => x.Id == proposalId);
             porposal.UpdateProposalStatus(proposalStatus);
-
+            UpdateProjectStatus(ProjectStatusEnum.Active);
             var otherPorposals = _proposals.Where(x => x.Id != proposalId);
             foreach (var item in otherPorposals)
             {

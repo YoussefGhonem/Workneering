@@ -1,6 +1,4 @@
-﻿using Workneering.Project.Application.Services.Models;
-using Workneering.Project.Domain.Entities;
-using Workneering.Project.Domain.Enums;
+﻿using Workneering.Project.Domain.Enums;
 
 namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails;
 public class ProjectClientBasicDetailsDto
@@ -12,6 +10,7 @@ public class ProjectClientBasicDetailsDto
     public string? DueDate { get; set; }
     public decimal? ProjectFixedBudgetPrice { get; set; }
     public decimal? ProjectHourlyToPrice { get; set; }
+    public int? NumberOfProposals { get; set; }
     public DateTimeOffset? CreatedDate { get; set; }
     public decimal? ProjectHourlyFromPrice { get; set; }
     public string? ProjectType { get; set; }
@@ -22,7 +21,6 @@ public class ProjectClientBasicDetailsDto
     public List<CategoriesDto>? Categories { get; set; } = new();
     public List<SubCategoriesDto>? SubCategories { get; set; } = new();
     public List<SkillsDto>? Skills { get; set; } = new();
-    public List<ClientProposalsDto> Proposals { get; set; }
     public List<SubmittedOffersDto> SubmittedOffers { get; set; } = new();
 }
 
@@ -47,6 +45,7 @@ public class SubmittedOffersDto
     public string? Name { get; set; } = null;
     public string? Title { get; set; } = null;
     public string? CountryName { get; set; } = null;
+    public string? ImageUrl { get; set; } = null;
 }
 public class ClientProposalsDto
 {
