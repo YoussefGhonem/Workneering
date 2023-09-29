@@ -8,6 +8,7 @@ using Workneering.User.API;
 using Workneering.Settings.API;
 using Workneering.Project.API;
 using Workneering.Packages.Storage.AWS3;
+using Workneering.Packages.SignalR;
 
 namespace Workneering.Geteway.Helpers;
 public static class ConfigureServicesExtention
@@ -50,6 +51,7 @@ public static class ConfigureServicesExtention
         #region Packages
         //services.AddRabbitMQ(builder.Configuration);
         services.AddAmazonS3(builder.Configuration);
+        services.AddSignalRApplication();
         #endregion
 
         #region Solution Extensions
@@ -61,7 +63,6 @@ public static class ConfigureServicesExtention
 
         #endregion
 
-
         return services;
     }
 
@@ -69,11 +70,11 @@ public static class ConfigureServicesExtention
     public static async Task<WebApplication> Configure(this WebApplication app, IWebHostEnvironment env)
     {
         #region Using Base Packages 
+        app.UseSignalRApplication();
         app.UseStaticFiles();
-        app.UseRouting();
         app.UseIdentityApplication()
            .UseBaseSwagger(app.Configuration);
-
+        //app.UseRouting();
         #endregion
 
 

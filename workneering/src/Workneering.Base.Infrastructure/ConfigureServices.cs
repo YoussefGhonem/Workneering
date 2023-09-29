@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Workneering.Base.Infrastructure.Persistence;
-using Workneering.Base.Infrastructure.Persistence.Interceptors;
 
 namespace Workneering.Base.Infrastructure
 {
