@@ -4,6 +4,7 @@ using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Models;
 using Workneering.User.Infrastructure.Persistence;
+using Workneering.User.Application.Services.DbQueryService;
 
 namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateClientImage
 {
@@ -11,11 +12,13 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
     {
         private readonly UserDatabaseContext _userDatabaseContext;
         private readonly IStorageService _storageService;
+        private readonly IDbQueryService _dbQueryService;
 
-        public UpdateFreelancerImageHandler(UserDatabaseContext userDatabaseContext, IStorageService storageService)
+        public UpdateFreelancerImageHandler(UserDatabaseContext userDatabaseContext, IStorageService storageService, IDbQueryService dbQueryService)
         {
             _userDatabaseContext = userDatabaseContext;
             _storageService = storageService;
+            _dbQueryService = dbQueryService;
         }
         public async Task<Unit> Handle(UpdateFreelancerImageCommand request, CancellationToken cancellationToken)
         {
@@ -30,6 +33,7 @@ namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetail
                 FileSize = storedFiles.FileSize
             };
             query!.UpdateImage(image);
+            _dbQueryService.UpdateUserIdentityImageKey(CurrentUser.Id.Value, image.Key);
             _userDatabaseContext.Freelancers.Update(query);
             await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;

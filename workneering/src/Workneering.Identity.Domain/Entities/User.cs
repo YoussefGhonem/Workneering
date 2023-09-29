@@ -13,6 +13,7 @@ namespace Workneering.Identity.Domain.Entities
         #region Backing Fields 
         private UserStatusEnum? _status;
         private string? _name;
+        private string? _imageAmazonKey;
         private string? _phoneNumber;
         private UserAddress? _address;
         // Audit
@@ -60,6 +61,11 @@ namespace Workneering.Identity.Domain.Entities
         {
             get => _phoneNumber;
             private set => _phoneNumber = value;
+        }
+        public string? ImageKey
+        {
+            get => _imageAmazonKey;
+            private set => _imageAmazonKey = value;
         }
 
         public bool IsDeleted { get; private set; }

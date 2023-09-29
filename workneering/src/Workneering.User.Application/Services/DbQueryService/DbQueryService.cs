@@ -185,4 +185,13 @@ public class DbQueryService : IDbQueryService
         }
     }
 
+    public void UpdateUserIdentityImageKey(Guid userId, string imageKey)
+    {
+        using var con = new SqlConnection(_connectionString);
+        con.Open();
+
+        var sql = $@"UPDATE IdentitySchema.Users SET  ImageKey = {imageKey}  WHERE Id = '{userId.ToString()}'";
+
+        var data = con.Execute(sql);
+    }
 }
