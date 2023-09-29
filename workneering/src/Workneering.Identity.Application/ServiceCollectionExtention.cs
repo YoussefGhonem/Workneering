@@ -88,7 +88,7 @@ public static class DependencyInjection
         {
             options.AddPolicy("AllowSpecificOrigin", builder =>
             {
-                builder.WithOrigins("https://workneering.com") // Replace with the allowed domain
+                builder.AllowAnyOrigin() // Replace with the allowed domain
                        .AllowAnyHeader()
                        .AllowAnyMethod();
             });
