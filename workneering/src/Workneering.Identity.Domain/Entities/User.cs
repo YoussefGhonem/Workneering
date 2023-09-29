@@ -99,12 +99,14 @@ namespace Workneering.Identity.Domain.Entities
         #endregion
 
         #region Public Methods
-        public void AddMessagesSent(Message message)
+        public void AddMessagesSent(string content)
         {
+            var message = new Message(content);
             _messagesSent.Add(message);
         }
-        public void AddMessagesReceived(Message message)
+        public void AddMessagesReceived(string content)
         {
+            var message = new Message(content);
             _messagesSent.Add(message);
         }
         public void MarkAsCreated(Guid? userId)
