@@ -83,23 +83,13 @@ public static class DependencyInjection
         });
 
         #endregion
-
-        services.AddCors(options =>
-        {
-            options.AddPolicy("AllowSpecificOrigin", builder =>
-            {
-                builder.WithOrigins("https://workneering.com") // Replace with the allowed domain
-                       .AllowAnyHeader()
-                       .AllowAnyMethod();
-            });
-        });
         return services;
     }
 
     public static WebApplication UseIdentityApplication(this WebApplication app)
     {
         app.UseHttpsRedirection();
-        app.UseCors("AllowSpecificOrigin");
+        app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();

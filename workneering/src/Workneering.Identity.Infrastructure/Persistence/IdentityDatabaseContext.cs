@@ -121,4 +121,5 @@ public class IdentityDatabaseContext : IdentityDbContext<
     }
 
     #endregion
+    public DbSet<Message> Messages => Set<Message>();
 }

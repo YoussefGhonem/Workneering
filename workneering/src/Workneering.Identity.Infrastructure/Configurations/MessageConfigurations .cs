@@ -8,7 +8,7 @@ public class MessageConfigurations : IEntityTypeConfiguration<Message>
 {
     public void Configure(EntityTypeBuilder<Message> builder)
     {
-        builder.ToTable("Messages", "IdentitySchema");
+        builder.ToTable("Messages", "ChatSchema");
 
         // Configure the relationship with Sender
         builder.HasOne(m => m.Sender)

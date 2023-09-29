@@ -22,14 +22,21 @@ namespace Workneering.Identity.Domain.Entities
         public bool? RecipientDeleted { get => _recipientDeleted; set => _recipientDeleted = value; }
         public User Sender => _sender;
         public User Recipient => _recipient;
-        public Message(string content)
+        public Message(string content, User sender, User recipient)
         {
             _content = Guard.Against.NullOrWhiteSpace(content, nameof(content));
+            _sender = sender;
+            _recipient = recipient;
 
         }
         public Message()
         {
 
+        }
+
+        public Message AddMessage(string content, User sender, User recipient)
+        {
+            return new Message(content, sender, recipient);
         }
     }
 }

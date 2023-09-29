@@ -7,6 +7,7 @@ using Workneering.Identity.Application.Commands.Identity.Login;
 using Workneering.Identity.Application.Commands.Message.CreateMessage;
 using Workneering.Identity.Application.Queries.GetProfileDetails;
 using Workneering.Identity.Application.Queries.Message.GetConversation;
+using Workneering.Identity.Application.Queries.Message.GetCountUnreadMessages;
 
 namespace Workneering.Identity.API.Controllers
 {
@@ -20,13 +21,12 @@ namespace Workneering.Identity.API.Controllers
         }
 
         #region Commands
-        [HttpPost("sender/{senderId}/recipient/{recipientId}")]
+        [HttpPost("recipient/{recipientId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        public async Task<ActionResult<string>> CreateMessageCommand(CreateMessageCommand command, Guid senderId, Guid recipientId)
+        public async Task<ActionResult<string>> CreateMessageCommand(CreateMessageCommand command, Guid recipientId)
         {
-            command.SenderId = senderId;
             command.RecipientId = recipientId;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
@@ -37,11 +37,20 @@ namespace Workneering.Identity.API.Controllers
         [HttpPost("chat/{recipientId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        public async Task<ActionResult<string>> CreateMessageCommand(GetConversationQuery command, Guid recipientId)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetConversationDto>))]
+        public async Task<ActionResult<List<GetConversationDto>>> GetConversationQuery(GetConversationQuery command, Guid recipientId)
         {
             command.RecipientId = recipientId;
             return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPost("chat/count-unread")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountUnreadMessagesDto))]
+        public async Task<ActionResult<CountUnreadMessagesDto>> GetCountUnreadMessagesQuery()
+        {
+            return Ok(await Mediator.Send(new GetCountUnreadMessagesQuery(), CancellationToken));
         }
 
 
