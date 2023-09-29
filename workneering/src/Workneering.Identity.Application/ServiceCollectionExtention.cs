@@ -28,7 +28,6 @@ public static class DependencyInjection
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(Assembly.GetExecutingAssembly());
         #region Identity Configuration
-
         var config = configuration.GetJwtConfig();
 
         services.AddAuthorization();
@@ -82,24 +81,16 @@ public static class DependencyInjection
             };
         });
 
+        services.AddCors();
         #endregion
 
-        services.AddCors(options =>
-        {
-            options.AddPolicy("AllowSpecificOrigin", builder =>
-            {
-                builder.WithOrigins("https://workneering.com") // Replace with the allowed domain
-                       .AllowAnyHeader()
-                       .AllowAnyMethod();
-            });
-        });
         return services;
     }
 
     public static WebApplication UseIdentityApplication(this WebApplication app)
     {
+        app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
         app.UseHttpsRedirection();
-        app.UseCors("AllowSpecificOrigin");
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
