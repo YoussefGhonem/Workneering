@@ -68,7 +68,8 @@ public static class ConfigureServicesExtention
     // Introduced the middleware components to define a request pipeline, which will be executed on every request.
     public static async Task<WebApplication> Configure(this WebApplication app, IWebHostEnvironment env)
     {
-        #region Using Base Packages 
+        #region Using Base Packages
+        app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
         app.UseIdentityApplication()

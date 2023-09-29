@@ -9,12 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Security.Claims;
-using Workneering.Base.Application.Extensions;
-//using Workneering.Base.Application.Services.DbQueryService;
-using Workneering.Identity.Application.Services.DbQueryService;
 using Workneering.Identity.Domain.Entities;
 using Workneering.Identity.Infrastructure.Persistence;
+using Workneering.Base.Application.Extensions;
 using Workneering.Shared.Core.Identity.CurrentUser;
+//using Workneering.Base.Application.Services.DbQueryService;
+using Workneering.Identity.Application.Services.DbQueryService;
 
 namespace Workneering.Identity.Application;
 
@@ -83,13 +83,23 @@ public static class DependencyInjection
         });
 
         #endregion
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSpecificOrigin", builder =>
+            {
+                builder.AllowAnyOrigin() // Replace with the allowed domain
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
+            });
+        });
         return services;
     }
 
     public static WebApplication UseIdentityApplication(this WebApplication app)
     {
         app.UseHttpsRedirection();
-        app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+        app.UseCors("AllowSpecificOrigin");
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
