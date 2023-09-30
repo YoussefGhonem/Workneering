@@ -12,6 +12,7 @@ namespace Workneering.Project.Application.Commands.UpdateStatusProposal
         [JsonIgnore]
         public Guid ProposalId { get; set; }
         public ProposalStatusEnum Status { get; set; }
+        [JsonIgnore]
         public Guid? AssginedFreelancerId { get; set; }
 
 

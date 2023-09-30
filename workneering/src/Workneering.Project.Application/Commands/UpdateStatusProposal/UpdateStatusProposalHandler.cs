@@ -22,6 +22,7 @@ namespace Workneering.Project.Application.Commands.UpdateStatusProposal
             if (request.Status == ProposalStatusEnum.Accepted)
             {
                 query.AcceptProposal(request.ProposalId);
+                query.SetAssginedFreelancerId(request.AssginedFreelancerId);
             }
             else if (request.Status == ProposalStatusEnum.Rejected)
             {

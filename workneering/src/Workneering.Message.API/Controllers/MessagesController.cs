@@ -55,17 +55,18 @@ namespace Workneering.Message.API.Controllers
         #endregion
 
         #region Queries
-        [HttpPost("chat/{recipientId}")]
+        [HttpGet("chat/{recipientId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetConversationDto>))]
-        public async Task<ActionResult<List<GetConversationDto>>> GetConversationQuery(GetConversationQuery command, Guid recipientId)
+        public async Task<ActionResult<List<GetConversationDto>>> GetConversationQuery(Guid recipientId)
         {
+            var command = new GetConversationQuery();
             command.RecipientId = recipientId;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
-        [HttpPost("chat/count-unread")]
+        [HttpGet("chat/count-unread")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountUnreadMessagesDto))]

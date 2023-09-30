@@ -34,7 +34,6 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
             };
             query!.UpdateImage(image);
             _dbQueryService.UpdateUserIdentityImageKey(CurrentUser.Id.Value, image.Key);
-
             _userDatabaseContext.Companies.Update(query);
 
             await _userDatabaseContext.SaveChangesAsync(cancellationToken);

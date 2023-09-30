@@ -19,7 +19,7 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
 
         public async Task<Unit> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
-            var message = new Domain.Entities.Message(request.Content, request.RecipientId, request.SenderId);
+            var message = new Domain.Entities.Message(request.Content, request.RecipientId, CurrentUser.Id);
             await messagesDbContext.Messages.AddAsync(message, cancellationToken);
             await messagesDbContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;

@@ -28,7 +28,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                 .Include(x => x.Proposals)
                 .AsQueryable()
                 .Filter(request)
-                .OrderBy(x => x.CreatedDate)
+                .OrderByDescending(x => x.CreatedDate)
                 .PaginateAsync(request.PageSize, request.PageNumber);
             var result = projects.list.ToList();
             var data = new List<ClientProjectsDto>();
@@ -39,7 +39,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
 
                 // Count the number of proposals for the project
                 projectDto.NumberOfProposals = project.Proposals.Count;
-
+                var info = await _dbQueryService.GetFreelancerImage(projectDto.AssginedFreelancerId);
                 if (projectDto.AssginedFreelancerId != null)
                 {
                     var userInfo = await _dbQueryService.GetFreelancerInfo(projectDto.AssginedFreelancerId.Value);
@@ -48,7 +48,8 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                         FreelancerId = projectDto.AssginedFreelancerId.Value,
                         CountryName = userInfo.CountryName,
                         Name = userInfo.Name,
-                        Title = userInfo.Title
+                        Title = userInfo.Title,
+                        ImageUrl = info.Url
                     };
                 }
 

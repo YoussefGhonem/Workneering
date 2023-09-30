@@ -189,7 +189,7 @@ public class DbQueryService : IDbQueryService
         using var con = new SqlConnection(_connectionString);
         con.Open();
 
-        var sql = $@"UPDATE IdentitySchema.Users SET  ImageKey = {imageKey}  WHERE Id = '{userId.ToString()}'";
+        var sql = $@"UPDATE IdentitySchema.Users SET  ImageKey = '{imageKey}'  WHERE Id = '{userId.ToString()}'";
 
         var data = con.Execute(sql);
     }

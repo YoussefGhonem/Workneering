@@ -246,8 +246,10 @@ public class DbQueryService : IDbQueryService
 
     }
 
-    public async Task<ImageDetailsDto> GetFreelancerImage(Guid freelancerId)
+    public async Task<ImageDetailsDto> GetFreelancerImage(Guid? freelancerId)
     {
+        if (freelancerId == Guid.Empty || freelancerId == null) return new ImageDetailsDto();
+
         using var con = new SqlConnection(_connectionString);
         await con.OpenAsync();
 

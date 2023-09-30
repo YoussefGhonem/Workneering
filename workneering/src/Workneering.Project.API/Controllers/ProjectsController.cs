@@ -41,14 +41,14 @@ namespace Workneering.Project.API.Controllers
         {
             return Ok(await Mediator.Send(new RemoveProjectAttachmentCommand { ProjectId = id, Key = key }, CancellationToken));
         }
-        [HttpPut("{id}/proposals/{proposalId}/accept")]
+        [HttpPut("{id}/proposals/{proposalId}/accept/{assginedFreelancerId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> AcceptStatusProposalCommand(Guid id, Guid proposalId)
+        public async Task<ActionResult<Unit>> AcceptStatusProposalCommand(Guid id, Guid proposalId, Guid assginedFreelancerId)
         {
-            return Ok(await Mediator.Send(new UpdateStatusProposalCommand { ProjectId = id, ProposalId = proposalId, Status = Domain.Enums.ProposalStatusEnum.Accepted }, CancellationToken));
+            return Ok(await Mediator.Send(new UpdateStatusProposalCommand { ProjectId = id, ProposalId = proposalId, Status = Domain.Enums.ProposalStatusEnum.Accepted, AssginedFreelancerId = assginedFreelancerId }, CancellationToken));
         }
         [HttpPut("{id}/proposals/{proposalId}/reject")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

@@ -26,6 +26,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
         public Guid? FreelancerId { get; set; }
         public string? Name { get; set; } = null;
         public string? Title { get; set; } = null;
+        public string? ImageUrl { get; set; } = null;
         public string? CountryName { get; set; } = null;
     }
 }
