@@ -18,25 +18,31 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
         public decimal? ProjectFixedBudgetPrice { get; set; }
         public decimal? ProjectHourlyFromPrice { get; set; }
         public decimal? PprojectHourlyToPrice { get; set; }
+        public DateTimeOffset? CreatedDateProposal { get; set; }
+
         public string? ExperienceLevel { get; set; }
         public string? DueDate { get; set; }
         public string? ProjectDescription { get; set; }
         public bool IsSaved { get; set; } = false;
+        public bool IsApplied { get; set; } = false;
         public ClientInfoForProjectDetailsDto ClientInfo { get; set; } = new();
         public List<CategoriesDto>? Categories { get; set; } = new();
         public List<SubCategoriesDto>? SubCategories { get; set; } = new();
         public List<SkillsDto>? Skills { get; set; } = new();
     }
+
+
     public class ClientInfoForProjectDetailsDto
     {
         public Guid Id { get; set; }
         public bool IsCompany { get; set; } = false;
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public string? IndustryName { get; set; }
-        public string Title { get; set; }
-        public string TitleOverview { get; set; }
-        public string CountryName { get; set; }
-        public int CompanySize { get; set; }
+        public string? Title { get; set; }
+        public string? TitleOverview { get; set; }
+        public string? CountryName { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? CompanySize { get; set; }
         public int NumOfProjects { get; set; }
         public DateTimeOffset FoundedIn { get; set; }
     }
@@ -55,4 +61,14 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
         public Guid? SkillId { get; set; }
         public string? Name { get; set; } = null;
     }
+    public enum CompanySizeEnum
+    {
+        NotCompany = 1,
+        SmallCompnay = 2,
+        MediumCompany = 3,
+        BigCompany = 4,
+        SuperCompany = 5,
+    }
+
+
 }

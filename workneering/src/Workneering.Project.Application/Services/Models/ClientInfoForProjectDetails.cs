@@ -1,4 +1,6 @@
-﻿namespace Workneering.Project.Application.Services.Models
+﻿using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer;
+
+namespace Workneering.Project.Application.Services.Models
 {
     public class ClientInfoForProjectDetails
     {
@@ -10,7 +12,7 @@
         public string? CountryName { get; set; }
         public string? KeyImage { get; set; }
         public string? ImageUrl { get; set; }
-        public int CompanySize { get; set; }
+        public CompanySizeEnum CompanySize { get; set; }
         public DateTimeOffset FoundedIn { get; set; }
     }
 }
