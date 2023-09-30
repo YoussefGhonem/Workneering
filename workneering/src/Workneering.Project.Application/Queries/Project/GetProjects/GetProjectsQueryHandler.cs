@@ -50,7 +50,17 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
                         item.IsSaved = query.Any(project => project.Wishlist
                                     .Any(Wishlist => Wishlist.FreelancerId == CurrentUser.Id && item.Id == project.Id));
 
+                        item.IsApplied = query.Any(project => project.Proposals.Any(Wishlist => Wishlist.FreelancerId == CurrentUser.Id && item.Id == project.Id));
 
+                        if (item.IsApplied)
+                        {
+                            // Load CreatedDateProposal for this project
+                            var proposal = query.SelectMany(x => x.Proposals).FirstOrDefault(p => p.FreelancerId == CurrentUser.Id);
+                            if (proposal != null)
+                            {
+                                item.CreatedDateProposal = proposal.CreatedDate;
+                            }
+                        }
                     }
                 }
                 return new PaginationResult<ProjectListDto>(result.ToList(), dataQuery.total);

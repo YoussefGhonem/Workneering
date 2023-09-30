@@ -7,6 +7,7 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
     {
         public Guid Id { get; set; }
         public bool IsSaved { get; set; } = false;
+        public bool IsApplied { get; set; } = false;
         public string? ProjectTitle { get; set; }
         public string? ProjectDescription { get; set; }
         public ProjectBudgetEnum? ProjectBudget { get; set; }
