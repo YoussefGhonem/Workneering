@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Workneering.User.Domain.Entites;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.CreateUser

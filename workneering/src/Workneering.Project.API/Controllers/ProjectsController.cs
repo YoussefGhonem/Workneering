@@ -6,19 +6,20 @@ using Workneering.Base.API.Controllers;
 using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Project.Application.Commands.CreateProject;
 using Workneering.Project.Application.Commands.CreateProposal;
+using Workneering.Project.Application.Commands.RemoveProjectAttachment;
 using Workneering.Project.Application.Commands.UpdateProject;
+using Workneering.Project.Application.Commands.UpdateStatusProposal;
 using Workneering.Project.Application.Commands.Wishlist.CreateWishlist;
 using Workneering.Project.Application.Commands.Wishlist.RemoveWishlist;
-using Workneering.Project.Application.Queries.Project.GetProjects;
-using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProposals;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectActivity;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails;
+using Workneering.Project.Application.Queries.Project.GetProjects;
+using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectAttachments;
+using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer;
 using Workneering.Project.Application.Queries.Proposal.GetProposals;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects;
-using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectAttachments;
-using Workneering.Project.Application.Commands.RemoveProjectAttachment;
-using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProposals;
-using Workneering.Project.Application.Commands.UpdateStatusProposal;
 
 namespace Workneering.Project.API.Controllers
 {
@@ -41,14 +42,14 @@ namespace Workneering.Project.API.Controllers
         {
             return Ok(await Mediator.Send(new RemoveProjectAttachmentCommand { ProjectId = id, Key = key }, CancellationToken));
         }
-        [HttpPut("{id}/proposals/{proposalId}/accept")]
+        [HttpPut("{id}/proposals/{proposalId}/accept/{assginedFreelancerId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> AcceptStatusProposalCommand(Guid id, Guid proposalId)
+        public async Task<ActionResult<Unit>> AcceptStatusProposalCommand(Guid id, Guid proposalId, Guid assginedFreelancerId)
         {
-            return Ok(await Mediator.Send(new UpdateStatusProposalCommand { ProjectId = id, ProposalId = proposalId, Status = Domain.Enums.ProposalStatusEnum.Accepted }, CancellationToken));
+            return Ok(await Mediator.Send(new UpdateStatusProposalCommand { ProjectId = id, ProposalId = proposalId, Status = Domain.Enums.ProposalStatusEnum.Accepted, AssginedFreelancerId = assginedFreelancerId }, CancellationToken));
         }
         [HttpPut("{id}/proposals/{proposalId}/reject")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -122,6 +123,18 @@ namespace Workneering.Project.API.Controllers
         #endregion
 
         #region Queries
+        [HttpGet("{id}/activities")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProjectActivitiesDto>))]
+        public async Task<ActionResult<PaginationResult<ProjectActivitiesDto>>> GetProjectActivitiesQuery(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetProjectActivitiesQuery { ProjectId = id }, CancellationToken));
+        }
+        #region Activities
+
+        #endregion
 
         #region Project 
         #region List
@@ -269,6 +282,7 @@ namespace Workneering.Project.API.Controllers
         {
             return Ok(await Mediator.Send(new GetProjectAttachmentsQuery { ProjectId = id }, CancellationToken));
         }
+
         [HttpGet("{id}/client-proposals")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

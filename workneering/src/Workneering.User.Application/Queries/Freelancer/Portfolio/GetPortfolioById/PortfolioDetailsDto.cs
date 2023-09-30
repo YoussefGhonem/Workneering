@@ -1,6 +1,4 @@
-﻿using Workneering.User.Domain.Enums;
-
-namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetPortfolioById
+﻿namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetPortfolioById
 {
     public class PortfolioDetailsDto
     {

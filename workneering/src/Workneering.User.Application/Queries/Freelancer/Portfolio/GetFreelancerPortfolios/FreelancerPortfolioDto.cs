@@ -1,4 +1,5 @@
-﻿using Workneering.User.Domain.Enums;
+﻿using Workneering.Shared.Core.Models;
+using Workneering.User.Domain.Entites;
 
 namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios
 {
@@ -9,7 +10,19 @@ namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelance
         public string? ProjectDescription { get; set; }
         public int? StartYear { get; set; }
         public int? EndYear { get; set; }
+        public List<ImageDetailsDto> PortfolioFiles { get; set; }
+    }
+    public class ImageDetailsDto
+    {
+        public string Url { get; set; }
+        public string Key { get; set; }
+        public string FileName { get; set; }
     }
 
+    public class PortfolioFileDto
+    {
+        public ImageDetailsDto? FileDetails { get; set; }
+
+    }
 
 }

@@ -1,4 +1,5 @@
 ﻿using Workneering.Base.Domain.Common;
+using Workneering.Base.Helpers.Extensions;
 using Workneering.Project.Domain.Enums;
 using Workneering.Shared.Core.Models;
 
@@ -58,7 +59,6 @@ namespace Workneering.Project.Domain.Entities
             _subCategories.AddRange(subCategories);
             _categories.AddRange(categories);
             _skills.AddRange(skills);
-            _activities.Add(new ProjectActivity(@$"You Created Project '{projectTitle}'"));
             _projectHourlyFromPrice = projectHourlyFromPrice;
             _projectHourlyToPrice = projectHourlyToPrice;
             _isRecommend = isRecommend;
@@ -103,6 +103,7 @@ namespace Workneering.Project.Domain.Entities
         #endregion
 
         #region Public Methods
+
         #region Basic Details
         public void UpdateHourlyFromPrice(decimal? field)
         {
@@ -112,6 +113,8 @@ namespace Workneering.Project.Domain.Entities
         public void SetAssginedFreelancerId(Guid? field)
         {
             _assginedFreelancerId = field;
+            _activities.Add(new ProjectActivity(@$"Accepted Freelancer 👏", @$"assgined this project to freelancer", "color1"));
+
         }
         public void UpdateIsRecommend(bool? field)
         {
@@ -125,7 +128,6 @@ namespace Workneering.Project.Domain.Entities
         }
         public void UpdateProjectTitle(string field)
         {
-            _activities.Add(new ProjectActivity(@$"You Update Project Title From '{_projectTitle}' To '{field}'"));
             _projectTitle = field;
 
         }
@@ -143,13 +145,11 @@ namespace Workneering.Project.Domain.Entities
         }
         public void UpdateProjectDurationDescription(string? field)
         {
-            _activities.Add(new ProjectActivity(@$"You change Project duration description To '{field}'"));
 
             _projectDurationDescription = field;
         }
         public void UpdateProjectDuration(ProjectDurationEnum? field)
         {
-            _activities.Add(new ProjectActivity(@$"You change project duration To '{field}'"));
 
             _projectDuration = field;
         }
@@ -160,9 +160,19 @@ namespace Workneering.Project.Domain.Entities
 
         public void UpdateProjectStatus(ProjectStatusEnum? field)
         {
-            _activities.Add(new ProjectActivity(@$"You project sttatus  To '{field.ToString()}'"));
 
             _projectStatus = field;
+
+            if (ProjectStatus == ProjectStatusEnum.Active)
+            {
+                _activities.Add(new ProjectActivity($@"Congratulations 🎉! Project Status Changed To active ✔ ", @$"project status converted into '{field.ToString()}' and you can connect to freelancer to finished your work.", "color1"));
+            }
+
+            if (ProjectStatus == ProjectStatusEnum.Rejected)
+            {
+                _activities.Add(new ProjectActivity($@"Oops 😳! Project Status Changed To rejected ❌ ", @$" You project status converted into '{field.ToString()}' From admin you can connet to our support to slove this proplem.", "color3"));
+            }
+
         }
         public void UpdateExperienceLevel(ExperienceLevelEnum? field)
         {
@@ -254,15 +264,28 @@ namespace Workneering.Project.Domain.Entities
             _wishlist.FirstOrDefault(x => x.FreelancerId == freelancerId)?.MarkAsDeleted(null);
         }
         #endregion    
-        #region Wishlist
+
+        #region Attachment
         public void AddAttachment(FileDto? field)
         {
+
             _attachments.Add(new ProjectAttachment(field));
+
+            if (ProjectStatus == ProjectStatusEnum.Active)
+            {
+                _activities.Add(new ProjectActivity($@"Add new Attachment 📎 ", @$"provide a new atachment in this project: '{field.FileName}'", "color5"));
+
+            }
         }
         public void RemoveAttachment(string? key)
         {
             var obj = _attachments.FirstOrDefault(x => x.ImageDetails.Key == key);
             _attachments.Remove(obj);
+            if (ProjectStatus == ProjectStatusEnum.Active)
+            {
+                _activities.Add(new ProjectActivity($@"Delete Attachment ❌", @$"one of atachments from this project is deleted: '{obj.ImageDetails.FileName}'", "color3"));
+
+            }
         }
         #endregion
 
@@ -287,6 +310,7 @@ namespace Workneering.Project.Domain.Entities
                     item.UpdateProposalStatus(ProposalStatusEnum.Achieved);
                 }
             }
+            _activities.Add(new ProjectActivity($@"Accept Proposal ✔", @$"Greate 🎉 proposal accepted from freelancer", "color6"));
         }
         public void RejectedProposal(Guid proposalId)
         {

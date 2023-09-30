@@ -1,5 +1,4 @@
-﻿using System.Xml.Linq;
-using Workneering.Base.Domain.Common;
+﻿using Workneering.Base.Domain.Common;
 
 namespace Workneering.Settings.Domain.Entities.Refrences
 {

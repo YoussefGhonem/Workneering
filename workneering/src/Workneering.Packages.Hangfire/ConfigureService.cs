@@ -1,10 +1,10 @@
-﻿using Workneering.Packages.Hangfire.Helpers;
-using Hangfire;
+﻿using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Workneering.Packages.Hangfire.Configuration;
+using Workneering.Packages.Hangfire.Helpers;
 
 namespace Workneering.Packages.Hangfire
 {

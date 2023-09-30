@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Workneering.Project.Domain.Enums;
 using Workneering.Project.Infrastructure.Persistence;
-using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Project.Application.Commands.UpdateStatusProposal
 {
@@ -23,6 +22,7 @@ namespace Workneering.Project.Application.Commands.UpdateStatusProposal
             if (request.Status == ProposalStatusEnum.Accepted)
             {
                 query.AcceptProposal(request.ProposalId);
+                query.SetAssginedFreelancerId(request.AssginedFreelancerId);
             }
             else if (request.Status == ProposalStatusEnum.Rejected)
             {

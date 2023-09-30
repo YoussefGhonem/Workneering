@@ -1,6 +1,5 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using Workneering.Shared.Core.Enums;
+﻿using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 using Workneering.Shared.Core.Identity.Enums;
 
 namespace Workneering.Shared.Core.Identity.CurrentUser;

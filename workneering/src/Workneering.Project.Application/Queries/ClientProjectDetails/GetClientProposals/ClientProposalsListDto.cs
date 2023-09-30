@@ -10,7 +10,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
         public Guid? FreelancerId { get; set; }
         public DateTimeOffset? CreatedDate { get; set; }
         public decimal? TotalBid { get; set; }
-        public ProposalDurationEnum? ProposalDuration { get; set; }
+        public string? ProposalDuration { get; set; }
         public ProposalStatusEnum? ProposalStatus { get; set; }
     }
     public class FreelancerInfoDto

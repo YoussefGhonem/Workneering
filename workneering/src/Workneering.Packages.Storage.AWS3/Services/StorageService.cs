@@ -1,12 +1,9 @@
-﻿using Amazon.Runtime.Internal;
-using Amazon.S3;
+﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.Net;
-using System.Text;
 using Workneering.Packages.Storage.AWS3.Extensions;
 using Workneering.Packages.Storage.AWS3.Models;
 

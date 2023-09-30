@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
@@ -7,9 +6,8 @@ using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Settings.Application.Queries.GetCategories;
 using Workneering.Settings.Application.Queries.GetCountries;
 using Workneering.Settings.Application.Queries.GetCountriesDropdown;
-using Workneering.Settings.Application.Queries.GetLanguages;
-using Workneering.Settings.Application.Queries.GetPrimaryIndustry;
 using Workneering.Settings.Application.Queries.GetLanguagesDropdown;
+using Workneering.Settings.Application.Queries.GetPrimaryIndustry;
 using Workneering.Settings.Application.Queries.GetSkills;
 using Workneering.Settings.Application.Queries.GetSubCategories;
 

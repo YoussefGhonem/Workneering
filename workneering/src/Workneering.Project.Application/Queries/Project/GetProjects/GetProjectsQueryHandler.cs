@@ -1,13 +1,13 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ServiceStack;
+using Workneering.Base.Application.Common.Pagination;
 using Workneering.Base.Application.Common.Pagination.models;
+using Workneering.Project.Application.Queries.Project.GetProjects.Filters;
+using Workneering.Project.Application.Services.DbQueryService;
 using Workneering.Project.Infrastructure.Persistence;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.Base.Application.Common.Pagination;
-using Workneering.Project.Application.Services.DbQueryService;
-using Workneering.Project.Application.Queries.Project.GetProjects.Filters;
-using ServiceStack;
 
 namespace Workneering.Project.Application.Queries.Project.GetProjects
 {
@@ -40,6 +40,7 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
 
                 var dataQuery = await query.PaginateAsync(request.PageSize, request.PageNumber);
 
+                Mapper.Mapping(_dbQueryService);
                 var result = dataQuery.list.Adapt<List<ProjectListDto>>();
 
                 if (request.IsFreelancer)
@@ -49,7 +50,17 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
                         item.IsSaved = query.Any(project => project.Wishlist
                                     .Any(Wishlist => Wishlist.FreelancerId == CurrentUser.Id && item.Id == project.Id));
 
+                        item.IsApplied = query.Any(project => project.Proposals.Any(Wishlist => Wishlist.FreelancerId == CurrentUser.Id && item.Id == project.Id));
 
+                        if (item.IsApplied)
+                        {
+                            // Load CreatedDateProposal for this project
+                            var proposal = query.SelectMany(x => x.Proposals).FirstOrDefault(p => p.FreelancerId == CurrentUser.Id);
+                            if (proposal != null)
+                            {
+                                item.CreatedDateProposal = proposal.CreatedDate;
+                            }
+                        }
                     }
                 }
                 return new PaginationResult<ProjectListDto>(result.ToList(), dataQuery.total);
@@ -59,11 +70,6 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
 
                 throw;
             }
-
-
-
-
-
         }
     }
 }

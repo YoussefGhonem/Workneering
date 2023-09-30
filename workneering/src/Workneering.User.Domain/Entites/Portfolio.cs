@@ -1,5 +1,5 @@
 ﻿using Workneering.Base.Domain.Common;
-using Workneering.User.Domain.Enums;
+using Workneering.Shared.Core.Models;
 
 namespace Workneering.User.Domain.Entites
 {
@@ -15,6 +15,15 @@ namespace Workneering.User.Domain.Entites
 
         // template case study
         #endregion
+        public Portfolio(string projectTitle, int? startYaer, int? endnYear, string? projectDescription, List<PortfolioFile> portfolioFiles = null)
+        {
+            _projectTitle = projectTitle;
+            _startYaer = startYaer;
+            _endnYear = endnYear;
+            _projectDescription = projectDescription;
+            _portfolioFiles = portfolioFiles;
+
+        }
         public Portfolio()
         {
 
@@ -29,6 +38,22 @@ namespace Workneering.User.Domain.Entites
         #endregion
 
         #region public methods
+
+        public void UpdateAttachments(List<string>? keys)
+        {
+            var portfolioFiles = _portfolioFiles.Select(x => x.FileDetails.Key);
+            var removeItems = portfolioFiles.Except(keys);
+
+            foreach (var item in removeItems)
+            {
+                var obj = _portfolioFiles.FirstOrDefault(x => x.FileDetails.Key == item);
+                _portfolioFiles.Remove(obj);
+            }
+        }
+        public void AddAttachments(List<PortfolioFile>? files)
+        {
+            _portfolioFiles.AddRange(files);
+        }
 
         public void UpdateProjectTitle(string field)
         {

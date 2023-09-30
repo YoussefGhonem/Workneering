@@ -1,4 +1,5 @@
-﻿using Workneering.Project.Domain.Enums;
+﻿using StackExchange.Redis;
+using Workneering.Project.Domain.Enums;
 
 namespace Workneering.Project.Application.Queries.Project.GetProjects
 {
@@ -6,6 +7,7 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
     {
         public Guid Id { get; set; }
         public bool IsSaved { get; set; } = false;
+        public bool IsApplied { get; set; } = false;
         public string? ProjectTitle { get; set; }
         public string? ProjectDescription { get; set; }
         public ProjectBudgetEnum? ProjectBudget { get; set; }
@@ -13,6 +15,7 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
         public decimal? ProjectHourlyFromPrice { get; set; }
         public decimal? ProjectHourlyToPrice { get; set; }
         public DateTimeOffset CreatedDate { get; set; }
+        public DateTimeOffset CreatedDateProposal { get; set; }
         public bool? IsOpenDueDate { get; set; }
         public string? DueDate { get; set; }
         public decimal? ProjectBudgetPrice { get; set; }
@@ -21,8 +24,16 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
         public List<CategoriesDto>? Categories { get; set; } = new();
         public List<SubCategoriesDto>? SubCategories { get; set; } = new();
         public List<SkillsDto>? Skills { get; set; } = new();
+        public ClientDetailsDto Client { get; set; } = new();
     }
-
+    public class ClientDetailsDto
+    {
+        public Guid? Id { get; set; }
+        public string? Name { get; set; } = null;
+        public string? Title { get; set; } = null;
+        public string? ImageUrl { get; set; } = null;
+        public string? CountryName { get; set; } = null;
+    }
     public class CategoriesDto
     {
         public Guid? CategoryId { get; set; }

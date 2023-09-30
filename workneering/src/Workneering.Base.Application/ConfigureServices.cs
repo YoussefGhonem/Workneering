@@ -1,10 +1,6 @@
-﻿using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.Hosting;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 using Workneering.Base.Application.Behaviors.MediatR;
-using Workneering.Base.Application.Behaviors.MediatR.Caching;
 
 namespace Workneering.Base.Application;
 public static class ConfigureServices

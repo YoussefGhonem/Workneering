@@ -1,10 +1,8 @@
 using Dapper;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Workneering.Base.Helpers.Extensions;
 using Workneering.Settings.Application.Services.Models;
-using Workneering.Shared.Core.Identity.Enums;
 
 namespace Workneering.Settings.Application.Services.DbQueryService;
 

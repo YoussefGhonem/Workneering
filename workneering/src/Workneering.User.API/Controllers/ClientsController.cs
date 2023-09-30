@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
@@ -7,14 +6,11 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientBasicDetails;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientCategorization;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientDescription;
-using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientImage;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientWhatDoIdo;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientWhoIAm;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyImage;
-using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;
 using Workneering.User.Application.Queries.Client.GetClientBasicDetails;
 using Workneering.User.Application.Queries.Client.GetClientCategorization;
-using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 
 namespace Workneering.User.API.Controllers
 {

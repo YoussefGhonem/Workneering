@@ -13,6 +13,7 @@ namespace Workneering.Identity.Domain.Entities
         #region Backing Fields 
         private UserStatusEnum? _status;
         private string? _name;
+        private string? _imageAmazonKey;
         private string? _phoneNumber;
         private UserAddress? _address;
         // Audit
@@ -59,6 +60,11 @@ namespace Workneering.Identity.Domain.Entities
             get => _phoneNumber;
             private set => _phoneNumber = value;
         }
+        public string? ImageKey
+        {
+            get => _imageAmazonKey;
+            private set => _imageAmazonKey = value;
+        }
 
         public bool IsDeleted { get; private set; }
         public DateTimeOffset? DeletedDate { get; private set; }
@@ -92,9 +98,20 @@ namespace Workneering.Identity.Domain.Entities
         public virtual IReadOnlyCollection<UserClaim> Claims => _claims;
         public virtual IReadOnlyCollection<UserLogin> Logins => _logins;
         public virtual IReadOnlyCollection<UserToken> Tokens => _tokens;
+
         #endregion
 
         #region Public Methods
+        public void AddMessagesSent(string content)
+        {
+            //var message = new Message(content);
+            //_messagesSent.Add(message);
+        }
+        public void AddMessagesReceived(string content)
+        {
+            //var message = new Message(content);
+            //_messagesSent.Add(message);
+        }
         public void MarkAsCreated(Guid? userId)
         {
             _createdDate = DateTimeOffset.UtcNow;
@@ -137,6 +154,5 @@ namespace Workneering.Identity.Domain.Entities
 
         }
         #endregion
-
     }
 }

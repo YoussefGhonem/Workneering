@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
 
 namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio
@@ -11,6 +12,9 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
         public string? ProjectDescription { get; set; }
         public int? StartYear { get; set; }
         public int? EndYear { get; set; }
+        public List<string> ImageKyes { get; set; }
+        public List<IFormFile>? PortfolioFiles { get; set; }
+
     }
 
 }

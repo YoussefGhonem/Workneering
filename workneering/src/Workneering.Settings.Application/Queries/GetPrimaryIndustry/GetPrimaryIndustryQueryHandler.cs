@@ -11,7 +11,7 @@ namespace Workneering.Settings.Application.Queries.GetPrimaryIndustry
 
         public GetPrimaryIndustryQueryHandler(SettingsDbContext context)
         {
-            _context=context;
+            _context = context;
         }
 
         public async Task<List<PrimaryIndustryDto>> Handle(GetPrimaryIndustryQuery request, CancellationToken cancellationToken)

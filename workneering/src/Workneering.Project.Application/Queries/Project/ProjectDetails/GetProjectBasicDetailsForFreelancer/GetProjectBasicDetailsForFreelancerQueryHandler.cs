@@ -1,7 +1,6 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using StackExchange.Redis;
 using Workneering.Project.Application.Services.DbQueryService;
 using Workneering.Project.Infrastructure.Persistence;
 using Workneering.Shared.Core.Identity.CurrentUser;
@@ -23,6 +22,7 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
         {
             var query = _context.Projects
                                 .Include(x => x.Categories)
+                                .Include(x => x.Proposals)
                                 .Include(x => x.SubCategories)
                                 .Include(x => x.Skills)
                                 .Include(x => x.Wishlist)
@@ -35,7 +35,7 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
             result.ClientInfo.CountryName = userservice.CountryName;
             result.ClientInfo.FoundedIn = userservice.FoundedIn;
             result.ClientInfo.TitleOverview = userservice.TitleOverview;
-            result.ClientInfo.CompanySize = userservice.CompanySize;
+            result.ClientInfo.CompanySize = userservice.CompanySize.ToString();
 
             var industryName = _dbQueryService.GetIndustryName(query.ClientId!.Value);
             result.ClientInfo.IndustryName = industryName?.Name;
@@ -45,10 +45,14 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
 
 
             result.IsSaved = query.Wishlist.Any(x => x.FreelancerId == CurrentUser.Id);
-            var numofProjects = _context.Projects.Select(x => new { x.ProjectStatus, x.ClientId }).
-                                                 Where(x => x.ClientId == query.ClientId &&
-                                                 x.ProjectStatus == Domain.Enums.ProjectStatusEnum.Posted).Count();
+            result.CreatedDateProposal = query.Proposals.FirstOrDefault(x => x.FreelancerId == CurrentUser.Id)?.CreatedDate;
+            result.IsApplied = query.Proposals.Any(x => x.FreelancerId == CurrentUser.Id);
+            var numofProjects = _context.Projects
+                                    .Select(x => new { x.ProjectStatus, x.ClientId })
+                                    .Where(x => x.ClientId == query.ClientId &&
+                                                x.ProjectStatus == Domain.Enums.ProjectStatusEnum.Posted).Count();
             result.ClientInfo.NumOfProjects = numofProjects;
+            result.ClientInfo.ImageUrl = _dbQueryService.GetClientInfoForProjectDetails(query.ClientId.Value)?.ImageUrl;
             if (result.ClientType == RolesEnum.Company.ToString())
                 result.ClientInfo.IsCompany = true;
             return result;

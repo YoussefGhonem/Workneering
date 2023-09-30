@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using System.Text.Json.Serialization;
-using Workneering.Shared.Core.Models;
 
 namespace Workneering.User.Application.Commands.Freelancer.Education.UpdateEducation
 {

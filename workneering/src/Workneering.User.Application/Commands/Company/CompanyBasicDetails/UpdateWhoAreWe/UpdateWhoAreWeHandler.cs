@@ -15,7 +15,7 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
         }
         public async Task<Unit> Handle(UpdateWhoAreWeCommand request, CancellationToken cancellationToken)
         {
-           
+
             var query = await _userDatabaseContext.Companies.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
             query!.UpdateWhoAreWe(request.WhoAreWe);
             query!.UpdateAllPointAndPercentage();

@@ -21,7 +21,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetLanguages
                 .Include(x => x.Languages).FirstOrDefault(x => x.Id == request.FreelancerId);
 
             var languages = await _dbQueryService.GetLanguagesAsync(query.Languages.Select(x => x.Id).ToList());
-            
+
             var result = query!.Languages.Adapt<List<LanguagesListDto>>();
             result.ForEach(r =>
             {

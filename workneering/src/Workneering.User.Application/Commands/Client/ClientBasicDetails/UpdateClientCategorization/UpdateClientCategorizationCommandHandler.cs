@@ -1,9 +1,7 @@
-﻿using Mapster;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Services.DbQueryService;
-using Workneering.User.Domain.Entites;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientCategorization
@@ -33,9 +31,9 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
             query!.UpdateAllPointAndPercentage();
 
             _userDatabaseContext.Clients.Attach(query);
-			await _userDatabaseContext.SaveChangesAsync(cancellationToken);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
 
-			return Unit.Value;
+            return Unit.Value;
         }
     }
 }

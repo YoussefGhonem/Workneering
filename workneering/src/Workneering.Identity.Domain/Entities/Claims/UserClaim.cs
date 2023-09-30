@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Workneering.Identity.Domain.Entities;
 
 namespace Workneering.Identity.Domain.Entities.Claims
 {

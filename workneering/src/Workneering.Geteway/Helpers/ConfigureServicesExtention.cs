@@ -8,6 +8,7 @@ using Workneering.User.API;
 using Workneering.Settings.API;
 using Workneering.Project.API;
 using Workneering.Packages.Storage.AWS3;
+using Workneering.Message.API;
 
 namespace Workneering.Geteway.Helpers;
 public static class ConfigureServicesExtention
@@ -55,10 +56,9 @@ public static class ConfigureServicesExtention
         #region Solution Extensions
         services.AddIdentityExtension(builder.Configuration)
                 .AddUserExtension(builder.Configuration)
+                .AddMessageExtension(builder.Configuration)
                 .AddProjectExtension(builder.Configuration)
                 .AddSettingsExtension(builder.Configuration);
-
-
         #endregion
 
 

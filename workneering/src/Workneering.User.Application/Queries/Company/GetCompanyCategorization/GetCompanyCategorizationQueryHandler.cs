@@ -1,7 +1,5 @@
-﻿using Mapster;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
@@ -26,10 +24,10 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyCategorization
                 .Include(x => x.SubCategories)
                 .FirstOrDefault(x => x.Id == request.CompanyId);
 
-           var result =  await _dbQueryService.GetCategorizationAsync(query!.Categories.Select(x => x.CategoryId),
-                 query!.SubCategories.Select(x => x.SubCategoryId),
-                 query!.Skills.Select(x => x.SkillId), cancellationToken);
-          
+            var result = await _dbQueryService.GetCategorizationAsync(query!.Categories.Select(x => x.CategoryId),
+                  query!.SubCategories.Select(x => x.SubCategoryId),
+                  query!.Skills.Select(x => x.SkillId), cancellationToken);
+
             return result;
         }
     }

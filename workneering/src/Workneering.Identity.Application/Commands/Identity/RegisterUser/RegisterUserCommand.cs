@@ -11,7 +11,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterUser
         public string Password { get; set; }
 
         public RegisterUserCommand(string email, string password, RolesEnum role,
-            string name )
+            string name)
         {
             Email = email;
             Password = password;

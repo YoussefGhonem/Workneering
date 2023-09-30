@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Models;
+using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientImage
@@ -11,11 +12,13 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
     {
         private readonly UserDatabaseContext _userDatabaseContext;
         private readonly IStorageService _storageService;
+        private readonly IDbQueryService _dbQueryService;
 
-        public UpdateClientImageHandler(UserDatabaseContext userDatabaseContext, IStorageService storageService)
+        public UpdateClientImageHandler(UserDatabaseContext userDatabaseContext, IStorageService storageService, IDbQueryService dbQueryService)
         {
             _userDatabaseContext = userDatabaseContext;
             _storageService = storageService;
+            _dbQueryService = dbQueryService;
         }
         public async Task<Unit> Handle(UpdateClientImageCommand request, CancellationToken cancellationToken)
         {
@@ -30,6 +33,7 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
                 FileSize = storedFiles.FileSize
             };
             query!.UpdateImage(image);
+            _dbQueryService.UpdateUserIdentityImageKey(CurrentUser.Id.Value, image.Key);
             _userDatabaseContext.Clients.Update(query);
             await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;

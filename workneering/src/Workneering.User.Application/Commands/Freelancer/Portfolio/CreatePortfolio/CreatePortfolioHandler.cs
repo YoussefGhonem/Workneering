@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
+using Workneering.Packages.Storage.AWS3.Models;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Models;
@@ -31,14 +32,20 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortf
                                         .Include(c => c.EmploymentHistory).AsSplitQuery()
                                         .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
 
+            TypeAdapterConfig<StoredFile, PortfolioFile>.NewConfig()
+                  .Map(dest => dest.FileDetails.Key, src => src.Key)
+                  .Map(dest => dest.FileDetails.Extension, src => src.Extension)
+                  .Map(dest => dest.FileDetails.FileName, src => src.FileName)
+                  .Map(dest => dest.FileDetails.FileSize, src => src.FileSize);
+
             var uploadAttatchment = await _storageService.UploadFiles(request.PortfolioFiles, cancellationToken);
-            var attachmentsFileDto = uploadAttatchment?.Adapt<List<FileDto>>();
+            var attachmentsFileDto = uploadAttatchment?.Adapt<List<PortfolioFile>>();
             var portfolioMap = request.Adapt<Domain.Entites.Portfolio>();
-            foreach (var item in portfolioMap.PortfolioFiles)
-            {
-                item.UpdateFiles(attachmentsFileDto);
-            }
-            query!.AddPortfolio(portfolioMap);
+
+            var portfolio = new Domain.Entites.Portfolio(request.ProjectTitle, request.StartYear,
+                request.EndYear, request.ProjectDescription, attachmentsFileDto);
+
+            query.AddPortfolio(portfolio);
             query.UpdateAllPointAndPercentage(query);
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);

@@ -17,20 +17,20 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         {
             try
             {
-				var query =await _userDatabaseContext.Clients.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
-				query!.UpdateOverviewDescription(request.OverviewDescription);
+                var query = await _userDatabaseContext.Clients.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
+                query!.UpdateOverviewDescription(request.OverviewDescription);
                 query!.UpdateAllPointAndPercentage();
                 _userDatabaseContext.Clients.Attach(query);
-				_userDatabaseContext?.SaveChangesAsync(cancellationToken);
-				return Unit.Value;
-			}
+                _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+                return Unit.Value;
+            }
             catch (Exception e)
             {
                 return Unit.Value;
             }
 
 
-			   
+
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyCategorization
 {

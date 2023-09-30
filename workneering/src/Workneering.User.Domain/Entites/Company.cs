@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Workneering.Base.Domain.Common;
+﻿using Workneering.Base.Domain.Common;
 using Workneering.Shared.Core.Models;
 using Workneering.User.Domain.Enums;
 using Workneering.User.Domain.Helpr;

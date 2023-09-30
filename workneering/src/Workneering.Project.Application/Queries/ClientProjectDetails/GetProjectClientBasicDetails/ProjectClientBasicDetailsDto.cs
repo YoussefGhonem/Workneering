@@ -5,6 +5,7 @@ public class ProjectClientBasicDetailsDto
 {
     public Guid ClientId { get; set; }
     public string? ProjectTitle { get; set; }
+    public Guid? AssginedFreelancerId { get; set; }
     public string? ProjectDescription { get; set; }
     public bool? IsOpenDueDate { get; set; }
     public string? DueDate { get; set; }

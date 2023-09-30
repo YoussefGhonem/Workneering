@@ -1,8 +1,8 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Workneering.User.Infrastructure.Persistence;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateEmploymentHistory
 {
@@ -23,7 +23,7 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Cre
                             .Include(c => c.Languages).AsSplitQuery()
                             .Include(c => c.Experiences).AsSplitQuery()
                             .Include(c => c.Categories).AsSplitQuery()
-                            .Include(c=>c.EmploymentHistory).AsSplitQuery()
+                            .Include(c => c.EmploymentHistory).AsSplitQuery()
                             .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
             var result = request.Adapt<Domain.Entites.EmploymentHistory>();
             query!.AddEmploymentHistory(result);

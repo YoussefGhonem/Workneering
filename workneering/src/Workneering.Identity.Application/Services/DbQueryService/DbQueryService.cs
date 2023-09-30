@@ -1,15 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Workneering.Identity.Application.Services.Models;
-using Workneering.Identity.Domain.Entities;
-using Workneering.User.Application.Services.Models;
 
 namespace Workneering.Identity.Application.Services.DbQueryService
 {

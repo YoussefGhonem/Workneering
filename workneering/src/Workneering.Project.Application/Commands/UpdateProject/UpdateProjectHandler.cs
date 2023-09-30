@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Workneering.Project.Application.Commands.CreateProject.Helpers;
 using Workneering.Project.Application.Commands.UpdateProject.Helpers;
 using Workneering.Project.Infrastructure.Persistence;
 

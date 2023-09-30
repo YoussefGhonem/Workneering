@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Project.Application.Commands.CreateProject.Helpers;
 using Workneering.Project.Application.Services.DbQueryService;

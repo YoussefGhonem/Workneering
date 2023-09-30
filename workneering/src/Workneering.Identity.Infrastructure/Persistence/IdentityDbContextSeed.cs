@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Workneering.Base.Helpers.Extensions;
+using Workneering.Identity.Domain.Builders;
 using Workneering.Identity.Domain.Entities;
 using Workneering.Shared.Core.Identity.Enums;
-using Workneering.Base.Helpers.Extensions;
-using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.Identity.Domain.Builders;
 
 namespace Workneering.Identity.Infrastructure.Persistence
 {
