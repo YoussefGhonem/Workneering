@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Workneering.Shared.Core.Models;
 
 namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateCertification
@@ -12,6 +13,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateC
         public string AwardAreaOfStudy { get; set; }
         public string GivenBy { get; set; }
         public string? License { get; set; }
+        public IFormFile? CertifictionFile { get; set; }
 
     }
 }
