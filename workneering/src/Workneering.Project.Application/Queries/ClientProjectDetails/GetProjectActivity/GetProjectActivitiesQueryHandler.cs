@@ -25,8 +25,9 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjec
                 .AsQueryable()
                 .PaginateAsync(request.PageSize, request.PageNumber);
 
-            var list = activities.list.SelectMany(x => x.Proposals).ToList();
+            var list = activities.list.SelectMany(x => x.Activities).ToList().OrderByDescending(x => x.CreatedDate);
             var result = list.Adapt<List<ProjectActivitiesDto>>();
+
 
             return new PaginationResult<ProjectActivitiesDto>(result.ToList(), activities.total);
         }

@@ -59,7 +59,6 @@ namespace Workneering.Project.Domain.Entities
             _subCategories.AddRange(subCategories);
             _categories.AddRange(categories);
             _skills.AddRange(skills);
-            _activities.Add(new ProjectActivity(@$"Created Project 🎉'{projectTitle}'", @$"The Project Created on '{CreatedDate.FormatDateTimeOffset()}'"));
             _projectHourlyFromPrice = projectHourlyFromPrice;
             _projectHourlyToPrice = projectHourlyToPrice;
             _isRecommend = isRecommend;
@@ -114,7 +113,7 @@ namespace Workneering.Project.Domain.Entities
         public void SetAssginedFreelancerId(Guid? field)
         {
             _assginedFreelancerId = field;
-            _activities.Add(new ProjectActivity(@$"Accepted Freelancer 👏", @$"You assgined this project to freelancer", "color1"));
+            _activities.Add(new ProjectActivity(@$"Accepted Freelancer 👏", @$"assgined this project to freelancer", "color1"));
 
         }
         public void UpdateIsRecommend(bool? field)
@@ -161,9 +160,19 @@ namespace Workneering.Project.Domain.Entities
 
         public void UpdateProjectStatus(ProjectStatusEnum? field)
         {
-            _activities.Add(new ProjectActivity($@"Project Status Changed ✔ ", @$"project status converted into '{field.ToString()}'", "color4"));
 
             _projectStatus = field;
+
+            if (ProjectStatus == ProjectStatusEnum.Active)
+            {
+                _activities.Add(new ProjectActivity($@"Congratulations 🎉! Project Status Changed To active ✔ ", @$"project status converted into '{field.ToString()}' and you can connect to freelancer to finished your work.", "color1"));
+            }
+
+            if (ProjectStatus == ProjectStatusEnum.Rejected)
+            {
+                _activities.Add(new ProjectActivity($@"Oops 😳! Project Status Changed To rejected ❌ ", @$" You project status converted into '{field.ToString()}' From admin you can connet to our support to slove this proplem.", "color3"));
+            }
+
         }
         public void UpdateExperienceLevel(ExperienceLevelEnum? field)
         {
@@ -264,7 +273,7 @@ namespace Workneering.Project.Domain.Entities
 
             if (ProjectStatus == ProjectStatusEnum.Active)
             {
-                _activities.Add(new ProjectActivity($@"Add new Attachment 📎 ", @$"You provide a new atachment in this project: '{field.FileName}'", "color5"));
+                _activities.Add(new ProjectActivity($@"Add new Attachment 📎 ", @$"provide a new atachment in this project: '{field.FileName}'", "color5"));
 
             }
         }
@@ -274,7 +283,7 @@ namespace Workneering.Project.Domain.Entities
             _attachments.Remove(obj);
             if (ProjectStatus == ProjectStatusEnum.Active)
             {
-                _activities.Add(new ProjectActivity($@"Remove Attachment ❌", @$"You removed an atachment from this project: '{obj.ImageDetails.FileName}'", "color3"));
+                _activities.Add(new ProjectActivity($@"Delete Attachment ❌", @$"one of atachments from this project is deleted: '{obj.ImageDetails.FileName}'", "color3"));
 
             }
         }
@@ -301,8 +310,7 @@ namespace Workneering.Project.Domain.Entities
                     item.UpdateProposalStatus(ProposalStatusEnum.Achieved);
                 }
             }
-
-            _activities.Add(new ProjectActivity($@"Accept Proposal ✔", @$"Greate 🎉 you accepted proposal from freelancer", "color6"));
+            _activities.Add(new ProjectActivity($@"Accept Proposal ✔", @$"Greate 🎉 proposal accepted from freelancer", "color6"));
         }
         public void RejectedProposal(Guid proposalId)
         {

@@ -8,5 +8,6 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjec
         public string? Title { get; set; }
         public string? Description { get; set; }
         public string? ClassStyleName { get; set; }
+        public DateTimeOffset? CreatedDate { get; set; }
     }
 }
