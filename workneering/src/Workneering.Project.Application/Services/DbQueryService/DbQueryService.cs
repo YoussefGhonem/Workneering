@@ -1,5 +1,7 @@
 using Dapper;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Project.Application.Commands.CreateProject;
@@ -100,16 +102,15 @@ public class DbQueryService : IDbQueryService
         con.Open();
         var userRole = GetUserRole(userId);
 
-        dynamic data;
+        var data = new ClientInfoForProjectDetails();
         if (userRole == RolesEnum.Company.ToString())
         {
-            var sql = @$"  SELECT  f.Id, f.Name ,f.Title,f.FoundedIn,f.CompanySize,f.TitleOverview , c.Name as CountryName
+            var sql = @$"  SELECT  f.Id, f.Name ,f.Title,f.ImageDetails_Key as KeyImage,f.FoundedIn,f.CompanySize,f.TitleOverview , c.Name as CountryName
                         FROM  UserSchema.Companies f
                         INNER JOIN IdentitySchema.Users u ON f.Id = u.Id
                         LEFT JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
                         WHERE f.Id = '{userId}' ";
-            data = con
-                       .QueryFirst<ClientInfoForProjectDetails>(sql);
+            data = con.QueryFirst<ClientInfoForProjectDetails>(sql);
         }
         else
         {
@@ -121,7 +122,10 @@ public class DbQueryService : IDbQueryService
             data = con
              .QueryFirst<ClientInfoForProjectDetails>(sql);
         }
-
+        if (!string.IsNullOrEmpty(data.KeyImage))
+        {
+            data.ImageUrl = data.KeyImage.SetDownloadFileUrlByKey(_storageService);
+        }
         return data;
     }
     public string GetUserRole(Guid userId)

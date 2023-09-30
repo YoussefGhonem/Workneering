@@ -1,4 +1,5 @@
-﻿using Workneering.Project.Domain.Enums;
+﻿using StackExchange.Redis;
+using Workneering.Project.Domain.Enums;
 
 namespace Workneering.Project.Application.Queries.Project.GetProjects
 {
@@ -21,8 +22,16 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
         public List<CategoriesDto>? Categories { get; set; } = new();
         public List<SubCategoriesDto>? SubCategories { get; set; } = new();
         public List<SkillsDto>? Skills { get; set; } = new();
+        public ClientDetailsDto Client { get; set; } = new();
     }
-
+    public class ClientDetailsDto
+    {
+        public Guid? Id { get; set; }
+        public string? Name { get; set; } = null;
+        public string? Title { get; set; } = null;
+        public string? ImageUrl { get; set; } = null;
+        public string? CountryName { get; set; } = null;
+    }
     public class CategoriesDto
     {
         public Guid? CategoryId { get; set; }

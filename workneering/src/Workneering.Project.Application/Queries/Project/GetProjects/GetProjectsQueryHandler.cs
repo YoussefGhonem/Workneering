@@ -40,6 +40,7 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
 
                 var dataQuery = await query.PaginateAsync(request.PageSize, request.PageNumber);
 
+                Mapper.Mapping(_dbQueryService);
                 var result = dataQuery.list.Adapt<List<ProjectListDto>>();
 
                 if (request.IsFreelancer)
@@ -59,11 +60,6 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
 
                 throw;
             }
-
-
-
-
-
         }
     }
 }

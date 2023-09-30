@@ -4,10 +4,12 @@
     {
         public Guid Id { get; set; }
         public int? IsCompany { get; set; }
-        public string Name { get; set; }
-        public string Title { get; set; }
-        public string TitleOverview { get; set; }
-        public string CountryName { get; set; }
+        public string? Name { get; set; }
+        public string? Title { get; set; }
+        public string? TitleOverview { get; set; }
+        public string? CountryName { get; set; }
+        public string? KeyImage { get; set; }
+        public string? ImageUrl { get; set; }
         public int CompanySize { get; set; }
         public DateTimeOffset FoundedIn { get; set; }
     }
