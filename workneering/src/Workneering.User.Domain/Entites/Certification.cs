@@ -68,5 +68,15 @@ namespace Workneering.User.Domain.Entites
             _endYear = field;
         }
 
+        public void UpdateFile()
+        {
+            _certifictionFile.FileDetails.Key = null;
+        }
+
+        public void AddAttachments(CertifictionFile? file)
+        {
+            _certifictionFile = file;
+        }
+
     }
 }

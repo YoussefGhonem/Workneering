@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
 
 namespace Workneering.User.Application.Commands.Freelancer.Certification.UpdateCertification
@@ -14,5 +15,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.UpdateC
         public string AwardAreaOfStudy { get; set; }
         public string GivenBy { get; set; }
         public string? License { get; set; }
+        public IFormFile? CertifictionFile { get; set; }
+
     }
 }

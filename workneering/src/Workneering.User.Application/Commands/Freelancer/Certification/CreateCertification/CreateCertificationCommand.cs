@@ -12,7 +12,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateC
         public string AwardAreaOfStudy { get; set; }
         public string GivenBy { get; set; }
         public string? License { get; set; }
-        public IFormFile? CertifictionFile { get; set; }
+        public Microsoft.AspNetCore.Http.IFormFile? CertifictionFile { get; set; }
 
     }
 }
