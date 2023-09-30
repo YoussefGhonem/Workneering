@@ -259,7 +259,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreatePortfolioCommand(CreatePortfolioCommand command)
+        public async Task<ActionResult<Unit>> CreatePortfolioCommand([FromForm] CreatePortfolioCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
