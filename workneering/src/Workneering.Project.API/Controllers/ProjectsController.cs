@@ -13,6 +13,7 @@ using Workneering.Project.Application.Commands.Wishlist.CreateWishlist;
 using Workneering.Project.Application.Commands.Wishlist.RemoveWishlist;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProposals;
+using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectActivity;
 using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails;
 using Workneering.Project.Application.Queries.Project.GetProjects;
 using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectAttachments;
@@ -122,6 +123,18 @@ namespace Workneering.Project.API.Controllers
         #endregion
 
         #region Queries
+        [HttpGet("{id}/activities")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProjectActivitiesDto>))]
+        public async Task<ActionResult<PaginationResult<ProjectActivitiesDto>>> GetProjectActivitiesQuery(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetProjectActivitiesQuery { ProjectId = id }, CancellationToken));
+        }
+        #region Activities
+
+        #endregion
 
         #region Project 
         #region List
@@ -269,6 +282,7 @@ namespace Workneering.Project.API.Controllers
         {
             return Ok(await Mediator.Send(new GetProjectAttachmentsQuery { ProjectId = id }, CancellationToken));
         }
+
         [HttpGet("{id}/client-proposals")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

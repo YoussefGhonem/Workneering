@@ -1,0 +1,27 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace Workneering.Project.Infrastructure.Migrations
+{
+    public partial class AddActivities : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AddColumn<string>(
+                name: "ClassStyleName",
+                schema: "ProjectsSchema",
+                table: "ProjectActivities",
+                type: "nvarchar(max)",
+                nullable: true);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn(
+                name: "ClassStyleName",
+                schema: "ProjectsSchema",
+                table: "ProjectActivities");
+        }
+    }
+}
