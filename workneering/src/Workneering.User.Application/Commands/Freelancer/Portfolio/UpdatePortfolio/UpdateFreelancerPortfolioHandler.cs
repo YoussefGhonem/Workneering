@@ -1,7 +1,10 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using Workneering.Shared.Core.Models;
+using Workneering.User.Domain.Entites;
 using Workneering.User.Infrastructure.Persistence;
 
 namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio
@@ -9,19 +12,26 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
     public class UpdateFreelancerPortfolioHandler : IRequestHandler<UpdateFreelancerPortfolioCommand, Unit>
     {
         private readonly UserDatabaseContext _userDatabaseContext;
+        private readonly IStorageService _storageService;
 
-        public UpdateFreelancerPortfolioHandler(UserDatabaseContext userDatabaseContext)
+        public UpdateFreelancerPortfolioHandler(UserDatabaseContext userDatabaseContext, IStorageService storageService)
         {
             _userDatabaseContext = userDatabaseContext;
+            _storageService = storageService;
         }
         public async Task<Unit> Handle(UpdateFreelancerPortfolioCommand request, CancellationToken cancellationToken)
         {
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
                 .FirstOrDefault(x => x.Id == CurrentUser.Id);
 
+            var uploadAttatchment = await _storageService.UploadFiles(request.PortfolioFiles, cancellationToken);
+            var newAttachments = uploadAttatchment?.Adapt<List<PortfolioFile>>();
+
             var portfolioMap = request.Adapt<Domain.Entites.Portfolio>();
 
-            query!.UpdatePortfolio(request.Id, portfolioMap);
+            query!.UpdatePortfolio(request.Id, portfolioMap, newAttachments, request.ImageKyes);
+
+
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
 

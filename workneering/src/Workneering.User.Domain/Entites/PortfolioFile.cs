@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Workneering.Base.Domain.Common;
+﻿using Workneering.Base.Domain.Common;
 using Workneering.Shared.Core.Models;
 
 namespace Workneering.User.Domain.Entites
@@ -20,18 +15,8 @@ namespace Workneering.User.Domain.Entites
 
         }
         public FileDto? FileDetails { get => _fileDetails; set => _fileDetails = value; }
-        public void UpdateFile(FileDto? fileDetails)
-        {
-            _fileDetails = fileDetails;
-        }
 
-        public void UpdateFiles(List<FileDto>? fileDetails)
-        {
-            foreach (var item in fileDetails)
-            {
-                UpdateFile(item);
-            }
-        }
+
 
     }
 }

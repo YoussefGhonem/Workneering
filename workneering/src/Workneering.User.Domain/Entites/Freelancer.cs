@@ -404,7 +404,7 @@ namespace Workneering.User.Domain.Entites
             var data = _portfolios.FirstOrDefault(x => x.Id == id);
             data.MarkAsDeleted(id);
         }
-        public void UpdatePortfolio(Guid? id, Portfolio obj)
+        public void UpdatePortfolio(Guid? id, Portfolio obj, List<PortfolioFile> newFiles, List<string> keys)
         {
             var data = _portfolios.FirstOrDefault(x => x.Id == id);
             if (data is null) return;
@@ -413,6 +413,8 @@ namespace Workneering.User.Domain.Entites
             data.UpdateStartYear(obj.StartYear);
             data.UpdateEndYear(obj.EndYear);
             data.UpdateProjectTitle(obj.ProjectTitle);
+            data.AddAttachments(newFiles);
+            data.UpdateAttachments(keys);
             // list
         }
         #endregion        
