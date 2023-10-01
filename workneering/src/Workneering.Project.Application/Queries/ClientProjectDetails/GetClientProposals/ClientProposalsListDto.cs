@@ -15,10 +15,10 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
     }
     public class FreelancerInfoDto
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Title { get; set; }
-        public string CountryName { get; set; }
-        public string ImageUrl { get; set; }
+        public Guid? Id { get; set; }
+        public string? Name { get; set; }
+        public string? Title { get; set; }
+        public string? CountryName { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

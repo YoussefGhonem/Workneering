@@ -33,7 +33,7 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals
 
             foreach (var item in result.ToList())
             {
-                var userInfo = _dbQueryService.GetFreelancerInfoForProposals(item.FreelancerId);
+                var userInfo = await _dbQueryService.GetFreelancerInfoForProposals(item.FreelancerId, cancellationToken);
                 item.Freelancer.Id = userInfo.Id;
                 item.Freelancer.Name = userInfo.Name;
                 item.Freelancer.Title = userInfo.Title;

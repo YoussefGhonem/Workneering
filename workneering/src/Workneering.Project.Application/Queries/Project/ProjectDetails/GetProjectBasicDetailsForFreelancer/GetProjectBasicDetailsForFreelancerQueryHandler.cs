@@ -47,6 +47,7 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
             result.IsSaved = query.Wishlist.Any(x => x.FreelancerId == CurrentUser.Id);
             result.CreatedDateProposal = query.Proposals.FirstOrDefault(x => x.FreelancerId == CurrentUser.Id)?.CreatedDate;
             result.IsApplied = query.Proposals.Any(x => x.FreelancerId == CurrentUser.Id);
+
             var numofProjects = _context.Projects
                                     .Select(x => new { x.ProjectStatus, x.ClientId })
                                     .Where(x => x.ClientId == query.ClientId &&

@@ -55,7 +55,9 @@ namespace Workneering.Project.Application.Queries.Project.GetProjects
                         if (item.IsApplied)
                         {
                             // Load CreatedDateProposal for this project
-                            var proposal = query.SelectMany(x => x.Proposals).FirstOrDefault(p => p.FreelancerId == CurrentUser.Id);
+                            var proposal = query.Where(x => x.Id == item.Id).SelectMany(x => x.Proposals)
+                                .FirstOrDefault(p => p.FreelancerId == CurrentUser.Id);
+
                             if (proposal != null)
                             {
                                 item.CreatedDateProposal = proposal.CreatedDate;

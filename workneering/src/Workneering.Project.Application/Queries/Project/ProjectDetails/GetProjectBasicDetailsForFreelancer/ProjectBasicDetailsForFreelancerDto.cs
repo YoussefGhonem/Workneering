@@ -17,9 +17,8 @@ namespace Workneering.Project.Application.Queries.Project.ProjectDetails.GetProj
         public string? ProjectBudget { get; set; }
         public decimal? ProjectFixedBudgetPrice { get; set; }
         public decimal? ProjectHourlyFromPrice { get; set; }
-        public decimal? PprojectHourlyToPrice { get; set; }
+        public decimal? ProjectHourlyToPrice { get; set; }
         public DateTimeOffset? CreatedDateProposal { get; set; }
-
         public string? ExperienceLevel { get; set; }
         public string? DueDate { get; set; }
         public string? ProjectDescription { get; set; }

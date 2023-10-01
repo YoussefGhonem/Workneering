@@ -81,20 +81,18 @@ public class DbQueryService : IDbQueryService
 
         return data.ToList();
     }
-    public FreelancerInfoForProposalsList GetFreelancerInfoForProposals(Guid freelancerId)
+    public async Task<FreelancerInfoForProposalsList>? GetFreelancerInfoForProposals(Guid freelancerId, CancellationToken cancellationToken)
     {
         using var con = new SqlConnection(_connectionString);
-        con.Open();
-
-        var data = con
-                    .QueryFirst<FreelancerInfoForProposalsList>(
-                        @$"  SELECT  f.Id, f.Name ,f.Title , c.Name as CountryName
+        con.OpenAsync();
+        var sql = @$"  SELECT  f.Id, f.Name ,f.Title , c.Name as CountryName
                         FROM  UserSchema.Freelancers f
                         INNER JOIN IdentitySchema.Users u ON f.Id = u.Id
-                        INNER JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
-                        WHERE f.Id = '{freelancerId}' ");
+                        LEFT JOIN SettingsSchema.Countries c ON u.CountryId = c.Id
+                        WHERE f.Id = '{freelancerId}' ";
+        var data = con.QueryFirstOrDefaultAsync<FreelancerInfoForProposalsList>(sql);
 
-        return data;
+        return data.Result;
     }
     public ClientInfoForProjectDetails GetClientInfoForProjectDetails(Guid userId)
     {

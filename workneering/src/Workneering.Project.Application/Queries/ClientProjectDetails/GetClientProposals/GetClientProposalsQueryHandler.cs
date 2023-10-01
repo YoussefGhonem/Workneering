@@ -31,7 +31,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
 
             foreach (var item in result.ToList())
             {
-                var userInfo = _dbQueryService.GetFreelancerInfoForProposals(item.FreelancerId.Value);
+                var userInfo = await _dbQueryService.GetFreelancerInfoForProposals(item.FreelancerId.Value, cancellationToken);
                 var freelancerImage = await _dbQueryService.GetFreelancerImage(item.FreelancerId.Value);
                 item.FreelancerDetails.Id = userInfo.Id;
                 item.FreelancerDetails.Name = userInfo.Name;
