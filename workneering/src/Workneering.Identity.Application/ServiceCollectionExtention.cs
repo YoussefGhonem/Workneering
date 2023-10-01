@@ -86,9 +86,9 @@ public static class DependencyInjection
 
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowSpecificOrigin", builder =>
+            options.AddPolicy("AllowOrigin", builder =>
             {
-                builder.AllowAnyOrigin() // Replace with the allowed domain
+                builder.AllowAnyOrigin() // Add your Angular app's URL here
                        .AllowAnyHeader()
                        .AllowAnyMethod();
             });
@@ -98,8 +98,9 @@ public static class DependencyInjection
 
     public static WebApplication UseIdentityApplication(this WebApplication app)
     {
+        //app.UseCors(options => options.WithOrigins("http://localhost:4200").AllowAnyMethod());
         app.UseHttpsRedirection();
-        app.UseCors("AllowSpecificOrigin");
+        app.UseCors("AllowOrigin");
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();

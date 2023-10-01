@@ -22,25 +22,33 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
         }
         public async Task<Unit> Handle(UpdateFreelancerPortfolioCommand request, CancellationToken cancellationToken)
         {
-            TypeAdapterConfig<StoredFile, PortfolioFile>.NewConfig()
-                          .Map(dest => dest.FileDetails.Key, src => src.Key)
-                          .Map(dest => dest.FileDetails.Extension, src => src.Extension)
-                          .Map(dest => dest.FileDetails.FileName, src => src.FileName)
-                          .Map(dest => dest.FileDetails.FileSize, src => src.FileSize);
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
-                .FirstOrDefault(x => x.Id == CurrentUser.Id);
+            try
+            {
+                TypeAdapterConfig<StoredFile, PortfolioFile>.NewConfig()
+                              .Map(dest => dest.FileDetails.Key, src => src.Key)
+                              .Map(dest => dest.FileDetails.Extension, src => src.Extension)
+                              .Map(dest => dest.FileDetails.FileName, src => src.FileName)
+                              .Map(dest => dest.FileDetails.FileSize, src => src.FileSize);
+                var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios).ThenInclude(x => x.PortfolioFiles)
+                    .FirstOrDefault(x => x.Id == CurrentUser.Id);
 
-            var uploadAttatchment = await _storageService.UploadFiles(request.PortfolioFiles, cancellationToken);
-            var newAttachments = uploadAttatchment?.Adapt<List<PortfolioFile>>();
+                var uploadAttatchment = await _storageService.UploadFiles(request.PortfolioFiles, cancellationToken);
+                var newAttachments = uploadAttatchment?.Adapt<List<PortfolioFile>>();
 
-            var portfolioMap = request.Adapt<Domain.Entites.Portfolio>();
+                var portfolioMap = request.Adapt<Domain.Entites.Portfolio>();
 
-            query!.UpdatePortfolio(request.Id, portfolioMap, newAttachments, request.ImageKyes);
+                query!.UpdatePortfolio(request.Id, portfolioMap, newAttachments, request.ImageKyes);
 
-            _userDatabaseContext?.Freelancers.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+                _userDatabaseContext?.Freelancers.Attach(query);
+                _userDatabaseContext?.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+                return Unit.Value;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
 
 
         }

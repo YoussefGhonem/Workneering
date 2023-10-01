@@ -7,9 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Workneering.Base.API.Controllers;
 
-[EnableCors("AllowSpecificOrigin")]
+[EnableCors("AllowOrigin")]
 [ApiController]
 [Route("api/[controller]")]
+
 public abstract class BaseController : ControllerBase
 {
     private ISender _mediator = null!;

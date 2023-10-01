@@ -6,6 +6,7 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientBasicDetails;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientCategorization;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientDescription;
+using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientImage;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientWhatDoIdo;
 using Workneering.User.Application.Commands.Client.ClientBasicDetails.UpdateClientWhoIAm;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyImage;
@@ -39,7 +40,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateClientImageCommand([FromForm] UpdateCompanyImageCommand command)
+        public async Task<ActionResult<Unit>> UpdateClientImageCommand([FromForm] UpdateClientImageCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }

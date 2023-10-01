@@ -47,7 +47,7 @@ namespace Workneering.User.Domain.Entites
             foreach (var item in removeItems)
             {
                 var obj = _portfolioFiles.FirstOrDefault(x => x.FileDetails.Key == item);
-                _portfolioFiles.Remove(obj);
+                obj.MarkAsDeleted(null);
             }
         }
         public void AddAttachments(List<PortfolioFile>? files)
