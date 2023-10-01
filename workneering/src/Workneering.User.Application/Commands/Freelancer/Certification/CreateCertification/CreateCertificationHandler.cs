@@ -31,7 +31,8 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateC
                              .Include(c => c.Experiences).AsSplitQuery()
                              .Include(c => c.Categories).AsSplitQuery()
                              .Include(c => c.EmploymentHistory).AsSplitQuery()
-                             .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken) ;
+                             .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
+
             TypeAdapterConfig<StoredFile, CertifictionFile>.NewConfig()
                   .Map(dest => dest.FileDetails.Key, src => src.Key)
                   .Map(dest => dest.FileDetails.Extension, src => src.Extension)
