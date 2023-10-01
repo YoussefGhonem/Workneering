@@ -242,7 +242,7 @@ namespace Workneering.User.Domain.Entites
             if (data is null) return;
             data.MarkAsDeleted(id);
         }
-        public void UpdateCertification(Guid id, Certification employmentHistory, CertifictionFile certifictionFile)
+        public void UpdateCertification(Guid id, Certification employmentHistory, CertifictionAttachment certifictionFile)
         {
             var data = _certifications.FirstOrDefault(x => x.Id == id);
             if (data is null) return;
@@ -253,7 +253,7 @@ namespace Workneering.User.Domain.Entites
             data.UpdateGivenBy(employmentHistory.GivenBy);
             data.UpdateLicense(employmentHistory.Licence);
             data.UpdateAwardAreaOfStudy(employmentHistory.AwardAreaOfStudy);
-            data.AddAttachments(certifictionFile);
+            data.SetAttachment(certifictionFile);
         }
         #endregion
 

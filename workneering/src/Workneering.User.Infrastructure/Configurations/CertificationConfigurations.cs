@@ -10,6 +10,6 @@ public class CertificationConfigurations : IEntityTypeConfiguration<Certificatio
     {
         builder.ToTable("Certifications", "UserSchema");
 
-
+        builder.HasOne(c => c.CertifictionAttachment);
     }
 }

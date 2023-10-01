@@ -4,11 +4,11 @@ using Workneering.User.Domain.Entites;
 
 namespace Workneering.User.Infrastructure.Configurations;
 
-public class CertificationFileConfigurations : IEntityTypeConfiguration<CertifictionFile>
+public class CertificationFileConfigurations : IEntityTypeConfiguration<CertifictionAttachment>
 {
-    public void Configure(EntityTypeBuilder<CertifictionFile> builder)
+    public void Configure(EntityTypeBuilder<CertifictionAttachment> builder)
     {
-        builder.ToTable("CertifictionFiles", "UserSchema");
+        builder.ToTable("CertifictionAttachment", "UserSchema");
         builder.OwnsOne(x => x.FileDetails);
     }
 }

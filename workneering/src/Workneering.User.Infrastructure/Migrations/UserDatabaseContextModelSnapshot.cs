@@ -30,6 +30,9 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.Property<string>("AwardAreaOfStudy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("CertifictionAttachmentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -74,6 +77,8 @@ namespace Workneering.User.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CertifictionAttachmentId");
+
                     b.HasIndex("FreelancerId");
 
                     b.HasIndex("IsDeleted");
@@ -81,7 +86,7 @@ namespace Workneering.User.Infrastructure.Migrations
                     b.ToTable("Certifications", "UserSchema");
                 });
 
-            modelBuilder.Entity("Workneering.User.Domain.Entites.CertifictionFile", b =>
+            modelBuilder.Entity("Workneering.User.Domain.Entites.CertifictionAttachment", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -109,7 +114,7 @@ namespace Workneering.User.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CertifictionFiles", "UserSchema");
+                    b.ToTable("CertifictionAttachment", "UserSchema");
                 });
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Client", b =>
@@ -861,16 +866,22 @@ namespace Workneering.User.Infrastructure.Migrations
 
             modelBuilder.Entity("Workneering.User.Domain.Entites.Certification", b =>
                 {
+                    b.HasOne("Workneering.User.Domain.Entites.CertifictionAttachment", "CertifictionAttachment")
+                        .WithMany()
+                        .HasForeignKey("CertifictionAttachmentId");
+
                     b.HasOne("Workneering.User.Domain.Entites.Freelancer", null)
                         .WithMany("Certifications")
                         .HasForeignKey("FreelancerId");
+
+                    b.Navigation("CertifictionAttachment");
                 });
 
-            modelBuilder.Entity("Workneering.User.Domain.Entites.CertifictionFile", b =>
+            modelBuilder.Entity("Workneering.User.Domain.Entites.CertifictionAttachment", b =>
                 {
                     b.OwnsOne("Workneering.Shared.Core.Models.FileDto", "FileDetails", b1 =>
                         {
-                            b1.Property<Guid>("CertifictionFileId")
+                            b1.Property<Guid>("CertifictionAttachmentId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Extension")
@@ -885,12 +896,12 @@ namespace Workneering.User.Infrastructure.Migrations
                             b1.Property<string>("Key")
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.HasKey("CertifictionFileId");
+                            b1.HasKey("CertifictionAttachmentId");
 
-                            b1.ToTable("CertifictionFiles", "UserSchema");
+                            b1.ToTable("CertifictionAttachment", "UserSchema");
 
                             b1.WithOwner()
-                                .HasForeignKey("CertifictionFileId");
+                                .HasForeignKey("CertifictionAttachmentId");
                         });
 
                     b.Navigation("FileDetails");

@@ -11,15 +11,16 @@ namespace Workneering.User.Domain.Entites
         private string? _givenBy;
         private string? _description;
         private string? _licence;
-        private CertifictionFile _certifictionFile = new();
+        private CertifictionAttachment? _certifictionAttachment = new();
 
-        public Certification(string? subject, int startDate, int endDate = 0, string? awardAreaOfStudy = null, string? givenBy = null)
+        public Certification(string? subject, int startDate, int endDate = 0, string? awardAreaOfStudy = null, string? givenBy = null, CertifictionAttachment certifictionFile = null)
         {
             _name = subject;
             _startYear = startDate;
             _endYear = endDate;
             _awardAreaOfStudy = awardAreaOfStudy;
             _givenBy = givenBy;
+            _certifictionAttachment = certifictionFile;
         }
         public Certification()
         {
@@ -33,7 +34,7 @@ namespace Workneering.User.Domain.Entites
         public int EndYear { get => _endYear; private set => _endYear = value; }
         public string? AwardAreaOfStudy { get => _awardAreaOfStudy; private set => _awardAreaOfStudy = value; }
         public string? GivenBy { get => _givenBy; private set => _givenBy = value; }
-        public virtual CertifictionFile CertifictionFile => _certifictionFile;
+        public CertifictionAttachment? CertifictionAttachment => _certifictionAttachment;
 
         public void UpdatName(string? field)
         {
@@ -68,14 +69,9 @@ namespace Workneering.User.Domain.Entites
             _endYear = field;
         }
 
-        public void UpdateFile()
+        public void SetAttachment(CertifictionAttachment? file)
         {
-            _certifictionFile.FileDetails.Key = null;
-        }
-
-        public void AddAttachments(CertifictionFile? file)
-        {
-            _certifictionFile = file;
+            _certifictionAttachment = file;
         }
 
     }

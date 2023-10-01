@@ -25,7 +25,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.UpdateC
 
 
             var uploadAttatchment = await _storageService.Upload(request.CertifictionFile, cancellationToken);
-            var newAttachment = uploadAttatchment?.Adapt<CertifictionFile>();
+            var newAttachment = uploadAttatchment?.Adapt<CertifictionAttachment>();
 
             var result = request.Adapt<Domain.Entites.Certification>();
             query.UpdateCertification(request.Id, result, newAttachment);

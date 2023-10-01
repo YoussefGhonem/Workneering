@@ -3,14 +3,14 @@ using Workneering.Shared.Core.Models;
 
 namespace Workneering.User.Domain.Entites
 {
-    public record CertifictionFile : BaseEntity
+    public record CertifictionAttachment : BaseEntity
     {
         private FileDto? _fileDetails;
-        public CertifictionFile(FileDto fileDetails)
+        public CertifictionAttachment(FileDto fileDetails)
         {
             _fileDetails = fileDetails;
         }
-        public CertifictionFile()
+        public CertifictionAttachment()
         {
 
         }

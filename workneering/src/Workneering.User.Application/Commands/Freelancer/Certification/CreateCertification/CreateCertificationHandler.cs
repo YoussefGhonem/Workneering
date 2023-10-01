@@ -23,30 +23,38 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateC
         }
         public async Task<Unit> Handle(CreateCertificationCommand request, CancellationToken cancellationToken)
         {
-            var query = await _userDatabaseContext.Freelancers
-                             .Include(c => c.Portfolios).AsSplitQuery()
-                             .Include(c => c.Educations).AsSplitQuery()
-                             .Include(c => c.Certifications).AsSplitQuery()
-                             .Include(c => c.Languages).AsSplitQuery()
-                             .Include(c => c.Experiences).AsSplitQuery()
-                             .Include(c => c.Categories).AsSplitQuery()
-                             .Include(c => c.EmploymentHistory).AsSplitQuery()
-                             .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
+            try
+            {
+                var query = await _userDatabaseContext.Freelancers
+                                 .Include(c => c.Portfolios)
+                                 .Include(c => c.Educations)
+                                 .Include(c => c.Certifications)
+                                 .Include(c => c.Languages)
+                                 .Include(c => c.Experiences)
+                                 .Include(c => c.Categories)
+                                 .Include(c => c.EmploymentHistory)
+                                 .FirstOrDefaultAsync(x => x.Id == CurrentUser.Id);
+                TypeAdapterConfig<StoredFile, CertifictionAttachment>.NewConfig()
+                      .Map(dest => dest.FileDetails.Key, src => src.Key)
+                      .Map(dest => dest.FileDetails.Extension, src => src.Extension)
+                      .Map(dest => dest.FileDetails.FileName, src => src.FileName)
+                      .Map(dest => dest.FileDetails.FileSize, src => src.FileSize);
 
-            TypeAdapterConfig<StoredFile, CertifictionFile>.NewConfig()
-                  .Map(dest => dest.FileDetails.Key, src => src.Key)
-                  .Map(dest => dest.FileDetails.Extension, src => src.Extension)
-                  .Map(dest => dest.FileDetails.FileName, src => src.FileName)
-                  .Map(dest => dest.FileDetails.FileSize, src => src.FileSize);
+                var uploadAttatchment = await _storageService.Upload(request.CertifictionFile);
+                var attachmentsFileDto = uploadAttatchment?.Adapt<CertifictionAttachment>();
+                var result = request.Adapt<Domain.Entites.Certification>();
+                var certification = new Domain.Entites.Certification(request.Name, request.StartYear, request.EndYear, request.AwardAreaOfStudy, request.GivenBy, attachmentsFileDto);
+                query!.AddCertification(certification);
+                query.UpdateAllPointAndPercentage(query);
+                _userDatabaseContext.Freelancers.Attach(query);
+                await _userDatabaseContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
 
-            var uploadAttatchment = await _storageService.Upload(request.CertifictionFile, cancellationToken);
-            var attachmentsFileDto = uploadAttatchment?.Adapt<FileDto>();
-            var result = request.Adapt<Domain.Entites.Certification>();
-            result.CertifictionFile.UpdateFile(attachmentsFileDto);
-            query!.AddCertification(result);
-            query.UpdateAllPointAndPercentage(query);
-            _userDatabaseContext?.Freelancers.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+                throw;
+            }
+
             return Unit.Value;
         }
     }
