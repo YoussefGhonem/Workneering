@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Workneering.Packages.Storage.AWS3.Models;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Shared.Core.Models;
@@ -21,6 +22,11 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
         }
         public async Task<Unit> Handle(UpdateFreelancerPortfolioCommand request, CancellationToken cancellationToken)
         {
+            TypeAdapterConfig<StoredFile, PortfolioFile>.NewConfig()
+                          .Map(dest => dest.FileDetails.Key, src => src.Key)
+                          .Map(dest => dest.FileDetails.Extension, src => src.Extension)
+                          .Map(dest => dest.FileDetails.FileName, src => src.FileName)
+                          .Map(dest => dest.FileDetails.FileSize, src => src.FileSize);
             var query = _userDatabaseContext.Freelancers.Include(x => x.Portfolios)
                 .FirstOrDefault(x => x.Id == CurrentUser.Id);
 
@@ -30,7 +36,6 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
             var portfolioMap = request.Adapt<Domain.Entites.Portfolio>();
 
             query!.UpdatePortfolio(request.Id, portfolioMap, newAttachments, request.ImageKyes);
-
 
             _userDatabaseContext?.Freelancers.Attach(query);
             _userDatabaseContext?.SaveChangesAsync(cancellationToken);
