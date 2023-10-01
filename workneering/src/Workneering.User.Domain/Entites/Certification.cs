@@ -13,7 +13,7 @@ namespace Workneering.User.Domain.Entites
         private string? _licence;
         private CertifictionAttachment? _certifictionAttachment = new();
 
-        public Certification(string? subject, int startDate, int endDate = 0, string? awardAreaOfStudy = null, string? givenBy = null, CertifictionAttachment certifictionFile = null)
+        public Certification(string? licence, string? description, string? subject, int startDate, int endDate = 0, string? awardAreaOfStudy = null, string? givenBy = null, CertifictionAttachment certifictionFile = null)
         {
             _name = subject;
             _startYear = startDate;
@@ -21,6 +21,8 @@ namespace Workneering.User.Domain.Entites
             _awardAreaOfStudy = awardAreaOfStudy;
             _givenBy = givenBy;
             _certifictionAttachment = certifictionFile;
+            _description = description;
+            _licence = licence;
         }
         public Certification()
         {

@@ -306,7 +306,7 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> UpdateCertificationCommand(UpdateCertificationCommand command, Guid id)
+        public async Task<ActionResult<Unit>> UpdateCertificationCommand([FromForm] UpdateCertificationCommand command, Guid id)
         {
             command.Id = id;
             return Ok(await Mediator.Send(command, CancellationToken));

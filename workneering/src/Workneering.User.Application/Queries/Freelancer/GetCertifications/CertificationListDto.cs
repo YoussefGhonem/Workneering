@@ -10,5 +10,12 @@
         public string? AwardAreaOfStudy { get; set; }
         public string? GivenBy { get; set; }
         public string? Licence { get; set; }
+        public ImageDetailsDto? CertifictionAttachment { get; set; }
+    }
+    public class ImageDetailsDto
+    {
+        public string? Url { get; set; }
+        public string? Key { get; set; }
+        public string? FileName { get; set; }
     }
 }

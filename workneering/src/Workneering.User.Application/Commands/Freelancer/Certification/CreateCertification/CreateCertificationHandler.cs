@@ -43,7 +43,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateC
                 var uploadAttatchment = await _storageService.Upload(request.CertifictionFile);
                 var attachmentsFileDto = uploadAttatchment?.Adapt<CertifictionAttachment>();
                 var result = request.Adapt<Domain.Entites.Certification>();
-                var certification = new Domain.Entites.Certification(request.Name, request.StartYear, request.EndYear, request.AwardAreaOfStudy, request.GivenBy, attachmentsFileDto);
+                var certification = new Domain.Entites.Certification(request.Licence, request.Description, request.Name, request.StartYear, request.EndYear, request.AwardAreaOfStudy, request.GivenBy, attachmentsFileDto);
                 query!.AddCertification(certification);
                 query.UpdateAllPointAndPercentage(query);
                 _userDatabaseContext.Freelancers.Attach(query);
