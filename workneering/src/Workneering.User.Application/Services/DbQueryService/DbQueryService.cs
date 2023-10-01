@@ -1,6 +1,7 @@
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using System.Threading;
 using Workneering.Shared.Core.Identity.Enums;
 using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 using Workneering.User.Application.Services.Models;
@@ -192,5 +193,20 @@ public class DbQueryService : IDbQueryService
         var sql = $@"UPDATE IdentitySchema.Users SET  ImageKey = '{imageKey}'  WHERE Id = '{userId.ToString()}'";
 
         var data = con.Execute(sql);
+    }
+
+    public async Task<string> GetImageKey(Guid ClientId,CancellationToken cancellationToken)
+    {
+        await using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync(cancellationToken);
+
+        var data = await con
+            .QueryFirstOrDefaultAsync<string>(
+                @$"SELECT 
+                     [ImageKey]
+                FROM IdentitySchema.Users 
+                WHERE Id = '{ClientId.ToString()}'");
+
+        return data;
     }
 }

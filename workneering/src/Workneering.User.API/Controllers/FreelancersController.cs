@@ -32,12 +32,14 @@ using Workneering.User.Application.Commands.Freelancer.Language.UpdateLanguage;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.CreatePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.DeletePortfolio;
 using Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortfolio;
+using Workneering.User.Application.Queries.Client.GetClientBasicDetails;
 using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 using Workneering.User.Application.Queries.Freelancer.GetCertifications;
 using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorization;
+using Workneering.User.Application.Queries.Freelancer.GetImageUrl;
 using Workneering.User.Application.Queries.Freelancer.GetLanguages;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetPortfolioById;
@@ -451,7 +453,16 @@ namespace Workneering.User.API.Controllers
             var query = new GetEmploymentHistoryQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
-
+        [HttpGet("profile/image-url")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetImageUrlDto))]
+        public async Task<ActionResult<GetImageUrlDto>> GetImageUrlQuery()
+        {
+            var query = new GetImageUrlQuery() { ClientId = CurrentUser.Id.Value };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
 
 
         #endregion

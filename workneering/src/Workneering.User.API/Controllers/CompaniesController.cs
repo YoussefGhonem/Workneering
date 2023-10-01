@@ -10,8 +10,10 @@ using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCo
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateCompanyImage;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhatDoWeDo;
 using Workneering.User.Application.Commands.Company.CompanyBasicDetails.UpdateWhoAreWe;
+using Workneering.User.Application.Queries.Client.GetClientBasicDetails;
 using Workneering.User.Application.Queries.Company.GetCompanyBasicDetails;
 using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
+using Workneering.User.Application.Queries.Company.GetImageUrl;
 
 namespace Workneering.User.API.Controllers
 {
@@ -122,6 +124,17 @@ namespace Workneering.User.API.Controllers
         public async Task<ActionResult<CategorizationDto>> GetClientCategorizationQuery()
         {
             var query = new GetCompanyCategorizationQuery() { CompanyId = CurrentUser.Id.Value };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+
+        [HttpGet("profile/image-url")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetImageUrlDto))]
+        public async Task<ActionResult<GetImageUrlDto>> GetImageUrlQuery()
+        {
+            var query = new GetImageUrlQuery() { ClientId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         #endregion
