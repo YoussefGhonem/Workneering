@@ -13,9 +13,9 @@ public interface IDbQueryService
     public ClientInfoForProjectDetails GetClientInfoForProjectDetails(Guid clientId);
     public IndustryDetails? GetIndustryName(Guid clientId);
     public string GetUserRole(Guid userId);
-    public List<CategorizationDto> GetSkillsForProject(List<Guid> skillsIds);
-    public List<CategorizationDto> GetSupCateforiesForProject(List<Guid> suppCategoryIds);
-    public List<CategorizationDto> GetCategoriesForProject(List<Guid> categoryIds);
+    public List<CategorizationDto> GetSkillsForProject(List<Guid>? skillsIds);
+    public List<CategorizationDto> GetSupCateforiesForProject(List<Guid>? suppCategoryIds);
+    public List<CategorizationDto> GetCategoriesForProject(List<Guid>? categoryIds);
     public Task<FreelancerInfoDto> GetFreelancerInfo(Guid Id);
 
 }

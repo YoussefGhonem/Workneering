@@ -1,8 +1,7 @@
 using Dapper;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
-using System.Data;
 using System.Data.SqlClient;
+using Workneering.Base.Helpers.Extensions;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Project.Application.Commands.CreateProject;
 using Workneering.Project.Application.Services.Models;
@@ -141,9 +140,9 @@ public class DbQueryService : IDbQueryService
         return data;
     }
 
-    public List<CategorizationDto> GetCategoriesForProject(List<Guid> categoryIds)
+    public List<CategorizationDto> GetCategoriesForProject(List<Guid>? categoryIds)
     {
-
+        if (!categoryIds.AsNotNull().Any()) return null;
         using var con = new SqlConnection(_connectionString);
         con.Open();
 
@@ -160,8 +159,9 @@ public class DbQueryService : IDbQueryService
 
     }
 
-    public List<CategorizationDto> GetSupCateforiesForProject(List<Guid> suppCategoryIds)
+    public List<CategorizationDto>? GetSupCateforiesForProject(List<Guid>? suppCategoryIds)
     {
+        if (!suppCategoryIds.AsNotNull().Any()) return null;
 
         using var con = new SqlConnection(_connectionString);
         con.Open();
@@ -177,8 +177,9 @@ public class DbQueryService : IDbQueryService
 
     }
 
-    public List<CategorizationDto> GetSkillsForProject(List<Guid> skillsIds)
+    public List<CategorizationDto>? GetSkillsForProject(List<Guid>? skillsIds)
     {
+        if (!skillsIds.AsNotNull().Any()) return null;
 
         using var con = new SqlConnection(_connectionString);
         con.Open();
