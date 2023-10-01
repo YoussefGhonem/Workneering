@@ -287,10 +287,11 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ClientProposalsListDto>))]
-        public async Task<ActionResult<List<ClientProposalsListDto>>> GetClientProposalsQuery(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ClientProposalsListDto>))]
+        public async Task<ActionResult<PaginationResult<ClientProposalsListDto>>> GetClientProposalsQuery([FromQuery] GetClientProposalsQuery query, Guid id)
         {
-            return Ok(await Mediator.Send(new GetClientProposalsQuery { ProjectId = id }, CancellationToken));
+            query.ProjectId = id;
+            return Ok(await Mediator.Send(query, CancellationToken));
         }
 
         #endregion

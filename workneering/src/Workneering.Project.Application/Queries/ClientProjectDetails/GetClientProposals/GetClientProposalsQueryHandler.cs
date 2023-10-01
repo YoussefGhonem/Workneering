@@ -21,13 +21,12 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
         public async Task<PaginationResult<ClientProposalsListDto>> Handle(GetClientProposalsQuery request, CancellationToken cancellationToken)
         {
 
-            var proposals = await _context.Projects.Where(x => x.Id == request.ProjectId)
+            var proposals = _context.Projects.Where(x => x.Id == request.ProjectId)
                 .Include(x => x.Proposals)
-                .AsQueryable()
-                .PaginateAsync(request.PageSize, request.PageNumber);
+                .AsQueryable();
 
-            var list = proposals.list.SelectMany(x => x.Proposals).ToList();
-            var result = list.Adapt<List<ClientProposalsListDto>>();
+            var paginateAsync = await proposals.SelectMany(x => x.Proposals).PaginateAsync(request.PageSize, request.PageNumber);
+            var result = paginateAsync.list.Adapt<List<ClientProposalsListDto>>();
 
             foreach (var item in result.ToList())
             {
@@ -40,7 +39,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                 item.FreelancerDetails.ImageUrl = freelancerImage.Url;
             }
 
-            return new PaginationResult<ClientProposalsListDto>(result.ToList(), proposals.total);
+            return new PaginationResult<ClientProposalsListDto>(result.ToList(), paginateAsync.total);
         }
     }
 }
