@@ -11,7 +11,8 @@ namespace Workneering.User.Domain.Entites
         private string? _givenBy;
         private string? _description;
         private string? _licence;
-        // here we will add attachments
+        private CertifictionFile _certifictionFile = new();
+
         public Certification(string? subject, int startDate, int endDate = 0, string? awardAreaOfStudy = null, string? givenBy = null)
         {
             _name = subject;
@@ -32,6 +33,7 @@ namespace Workneering.User.Domain.Entites
         public int EndYear { get => _endYear; private set => _endYear = value; }
         public string? AwardAreaOfStudy { get => _awardAreaOfStudy; private set => _awardAreaOfStudy = value; }
         public string? GivenBy { get => _givenBy; private set => _givenBy = value; }
+        public virtual CertifictionFile CertifictionFile => _certifictionFile;
 
         public void UpdatName(string? field)
         {
@@ -64,6 +66,16 @@ namespace Workneering.User.Domain.Entites
         public void UpdateEndYear(int field)
         {
             _endYear = field;
+        }
+
+        public void UpdateFile()
+        {
+            _certifictionFile.FileDetails.Key = null;
+        }
+
+        public void AddAttachments(CertifictionFile? file)
+        {
+            _certifictionFile = file;
         }
 
     }
