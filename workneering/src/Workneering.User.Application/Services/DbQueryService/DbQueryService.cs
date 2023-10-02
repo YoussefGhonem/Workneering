@@ -40,17 +40,39 @@ public class DbQueryService : IDbQueryService
     {
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
-
-        var data = await con
-            .QueryFirstOrDefaultAsync<CountryDetailsDto>(
-                @$"SELECT 
+        var sql = @$"SELECT 
                      [Id],
                      [Name],
                      [Flag],
                      [Language]
                 FROM SettingsSchema.Countries 
-                WHERE Id = '{id.ToString()}'");
-
+                WHERE Id = '{id.ToString()}'";
+        var data = await con
+            .QueryFirstOrDefaultAsync<CountryDetailsDto>(sql);
+        if (data == null)
+        {
+            return new CountryDetailsDto();
+        }
+        return data;
+    }
+    public async Task<CountryDetailsDto?> GetCountryInfoByUserId(Guid userId, CancellationToken cancellationToken)
+    {
+        await using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync(cancellationToken);
+        var sql = @$"SELECT 
+                 c.[Id],
+                 c.[Name],
+                 c.[Flag],
+                 c.[Language]
+            FROM SettingsSchema.Countries c
+            INNER JOIN IdentitySchema.Users u ON c.Id = u.CountryId
+            WHERE u.Id = '{userId.ToString()}'";
+        var data = await con
+            .QueryFirstOrDefaultAsync<CountryDetailsDto>(sql);
+        if (data == null)
+        {
+            return new CountryDetailsDto();
+        }
         return data;
     }
     public async Task<List<LanguagesListDto>> GetLanguagesAsync(List<Guid>? languagesIds)

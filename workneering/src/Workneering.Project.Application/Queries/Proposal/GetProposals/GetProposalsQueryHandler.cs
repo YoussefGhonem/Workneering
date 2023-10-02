@@ -10,7 +10,7 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Project.Application.Queries.Proposal.GetProposals
 {
-    public class GetProposalsQueryHandler : IRequestHandler<GetProposalsQuery, PaginationResult<ProposalsDto>>
+    public class GetProposalsQueryHandler : IRequestHandler<GetProposalsQuery, PaginationResult<ProjectProposalsDto>>
     {
         private readonly ProjectsDbContext _context;
         private readonly IDbQueryService _dbQueryService;
@@ -20,27 +20,20 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals
             _context = context;
             _dbQueryService = dbQueryService;
         }
-        public async Task<PaginationResult<ProposalsDto>> Handle(GetProposalsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<ProjectProposalsDto>> Handle(GetProposalsQuery request, CancellationToken cancellationToken)
         {
-
-            var proposals = await _context.Projects.Where(x => x.ClientId == CurrentUser.Id)
-                .Include(x => x.Proposals)
-                .Include(x => x.Categories)
+            Mapper.Mapping(_dbQueryService);
+            var projects = await _context.Projects
+                .Include(x => x.Proposals.Where(x => x.FreelancerId == CurrentUser.Id))
                 .AsQueryable()
                 .Filter(request, _dbQueryService)
-                .PaginateAsync(request.PageSize, request.PageNumber);
-            var result = proposals.Adapt<List<ProposalsDto>>();
+                .PaginateAsync(request.PageSize, request.PageNumber, cancellationToken: cancellationToken);
 
-            foreach (var item in result.ToList())
-            {
-                var userInfo = await _dbQueryService.GetFreelancerInfoForProposals(item.FreelancerId, cancellationToken);
-                item.Freelancer.Id = userInfo.Id;
-                item.Freelancer.Name = userInfo.Name;
-                item.Freelancer.Title = userInfo.Title;
-                item.Freelancer.CountryName = userInfo.CountryName;
-            }
+            var result = projects.list.Adapt<List<ProjectProposalsDto>>();
 
-            return new PaginationResult<ProposalsDto>(result.ToList(), proposals.total);
+            var proposals = projects.list.Select(x => x.Proposals);
+
+            return new PaginationResult<ProjectProposalsDto>(result.ToList(), proposals.Count());
 
         }
     }

@@ -9,6 +9,11 @@ using Workneering.User.Infrastructure.Persistence;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancers.Filters;
 using Workneering.Packages.Storage.AWS3.Services;
+using Newtonsoft.Json.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Collections.Generic;
+using System;
+using Workneering.User.Domain.Entites;
 
 namespace Workneering.User.Application.Queries.Freelancer.GetFreelancers
 {
@@ -29,15 +34,17 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancers
             try
             {
                 var query = await _context.Freelancers
-                    .Include(x => x.Categories)
-                    .AsNoTracking()
-                    .OrderByDescending(a => a.CreatedDate)
-                    .AsQueryable()
-                    .Filter(request);
+                .Include(x => x.Categories)
+                .AsNoTracking()
+                .OrderByDescending(a => a.CreatedDate)
+                .AsQueryable()
+                .Filter(request);
 
                 var dataQuery = await query.PaginateAsync(request.PageSize, request.PageNumber, cancellationToken: cancellationToken);
                 Mapper.Mapping(_storageService, _dbQueryService, cancellationToken);
+
                 var result = dataQuery.list.Adapt<List<FreelancersListDto>>();
+
                 return new PaginationResult<FreelancersListDto>(result.ToList(), dataQuery.total);
             }
             catch (Exception ex)

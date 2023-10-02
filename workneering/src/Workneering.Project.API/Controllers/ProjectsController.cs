@@ -211,43 +211,14 @@ namespace Workneering.Project.API.Controllers
         #endregion
 
         #region Proposals
-        [HttpGet("{id}/proposals")] // for clients to get project proposals
+
+        [HttpGet("freelancer/proposals")] // for freelancer to get all proposals freelancer
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProposalsDto>))]
-        public async Task<ActionResult<PaginationResult<ProposalsDto>>> GetProposals([FromQuery] GetProposalsQuery query, Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProjectProposalsDto>))]
+        public async Task<ActionResult<PaginationResult<ProjectProposalsDto>>> GetProposalsFreelancer([FromQuery] GetProposalsQuery query)
         {
-            query.ProjectId = id;
-            query.ClientId = null;
-            query.FreelancerId = null;
-            return Ok(await Mediator.Send(query, CancellationToken));
-        }
-
-
-        [HttpGet("proposals")] // for clients to get project proposals
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProposalsDto>))]
-        public async Task<ActionResult<PaginationResult<ProposalsDto>>> GetProposals([FromQuery] GetProposalsQuery query)
-        {
-            query.FreelancerId = null;
-            query.ProjectId = null;
-            query.ClientId = CurrentUser.Id;
-            return Ok(await Mediator.Send(query, CancellationToken));
-        }
-
-        [HttpGet("proposals/freelancer")] // for freelancer to get all proposals freelancer
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProposalsDto>))]
-        public async Task<ActionResult<PaginationResult<ProposalsDto>>> GetProposalsFreelancer([FromQuery] GetProposalsQuery query)
-        {
-            query.FreelancerId = CurrentUser.Id;
-            query.ProjectId = null;
-            query.ClientId = null;
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         #endregion
