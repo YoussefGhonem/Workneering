@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateClientImage
+namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerImage
 {
     public class UpdateFreelancerImageCommandValidator : AbstractValidator<UpdateFreelancerImageCommand>
     {

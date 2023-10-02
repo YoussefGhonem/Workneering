@@ -28,12 +28,16 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
 
             var result = query?.Adapt<FreelancerBasicDetailsDto>();
             // Country Info
-            if (userservice.CountryId != Guid.Empty && userservice.CountryId != null)
+            if (userservice is not null)
             {
-                var countruservice = await _dbQueryService.GetCountryInfo(userservice.CountryId, cancellationToken);
-                result.Location.Id = countruservice?.Id;
-                result.Location.Name = countruservice?.Name;
-                result.Location.Flag = countruservice?.Flag;
+                if (userservice.CountryId != Guid.Empty && userservice.CountryId != null)
+                {
+                    var countruservice = await _dbQueryService.GetCountryInfo(userservice.CountryId, cancellationToken);
+                    result.Location.Id = countruservice?.Id;
+                    result.Location.Name = countruservice?.Name;
+                    result.Location.Flag = countruservice?.Flag;
+                }
+
             }
             // Address Info
             var userAddress = await _dbQueryService.GetAddressUser(request.FreelancerId, cancellationToken);

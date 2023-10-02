@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
+using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Freelancer.Category.UpdateCategory;
 using Workneering.User.Application.Commands.Freelancer.Certification.CreateCertification;
@@ -15,10 +16,10 @@ using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.CreateE
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.DeleteEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.EmploymentHistory.UpdateEmploymentHistory;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateAvailability;
-using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateClientImage;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateCountry;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateExperienceLevel;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerCategorization;
+using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerImage;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateGender;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateHourlyRate;
 using Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateOverviewDescription;
@@ -39,6 +40,7 @@ using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorization;
+using Workneering.User.Application.Queries.Freelancer.GetFreelancers;
 using Workneering.User.Application.Queries.Freelancer.GetImageUrl;
 using Workneering.User.Application.Queries.Freelancer.GetLanguages;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios;
@@ -373,6 +375,15 @@ namespace Workneering.User.API.Controllers
         public async Task<ActionResult<CategorizationDto>> GetClientCategorizationQuery()
         {
             var query = new GetFreelancerCategorizationnQuery() { FreelancerId = CurrentUser.Id.Value };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<FreelancersListDto>))]
+        public async Task<ActionResult<PaginationResult<FreelancersListDto>>> GetFreelancersQuery([FromQuery] GetFreelancersQuery query)
+        {
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         //[Authorize]
