@@ -6,7 +6,7 @@ using Workneering.Shared.Core.Models;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
 
-namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateClientImage
+namespace Workneering.User.Application.Commands.Freelancer.FreelancerBasicDetails.UpdateFreelancerImage
 {
     public class UpdateFreelancerImageHandler : IRequestHandler<UpdateFreelancerImageCommand, Unit>
     {
