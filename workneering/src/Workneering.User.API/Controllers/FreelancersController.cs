@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
+using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.User.Application.Commands.Freelancer.Category.UpdateCategory;
 using Workneering.User.Application.Commands.Freelancer.Certification.CreateCertification;
@@ -39,6 +40,7 @@ using Workneering.User.Application.Queries.Freelancer.GetEducations;
 using Workneering.User.Application.Queries.Freelancer.GetEmploymentHistory;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDetails;
 using Workneering.User.Application.Queries.Freelancer.GetFreelancerCategorization;
+using Workneering.User.Application.Queries.Freelancer.GetFreelancers;
 using Workneering.User.Application.Queries.Freelancer.GetImageUrl;
 using Workneering.User.Application.Queries.Freelancer.GetLanguages;
 using Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelancerPortfolios;
@@ -369,10 +371,19 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategorizationDto))]
-        public async Task<ActionResult<CategorizationDto>> GetClientCategorizationQuery()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<FreelancersListDto>))]
+        public async Task<ActionResult<PaginationResult<FreelancersListDto>>> GetClientCategorizationQuery()
         {
             var query = new GetFreelancerCategorizationnQuery() { FreelancerId = CurrentUser.Id.Value };
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategorizationDto))]
+        public async Task<ActionResult<CategorizationDto>> GetFreelancersQuery(GetFreelancersQuery query)
+        {
             return Ok(await Mediator.Send(query, CancellationToken));
         }
         //[Authorize]
