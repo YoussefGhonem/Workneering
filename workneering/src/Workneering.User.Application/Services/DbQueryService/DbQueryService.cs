@@ -23,17 +23,16 @@ public class DbQueryService : IDbQueryService
     {
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
-
-        var userBasicInfo = await con
-            .QueryFirstOrDefaultAsync<UserBasicInfo>(
-                @$"SELECT 
+        var sql = @$"SELECT 
                        [Id],
                        [CountryId]
                       ,[City]
                       ,[ZipCode]
                       ,[Address] 
                 FROM IdentitySchema.Users 
-                WHERE Id = '{userId.ToString()}'");
+                WHERE Id = '{userId.ToString()}'";
+        var userBasicInfo = await con
+            .QueryFirstOrDefaultAsync<UserBasicInfo>(sql);
 
         return userBasicInfo;
     }
