@@ -2,6 +2,7 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using System.Threading;
+using Workneering.Base.Helpers.Extensions;
 using Workneering.Shared.Core.Identity.Enums;
 using Workneering.User.Application.Queries.Company.GetCompanyCategorization;
 using Workneering.User.Application.Services.Models;
@@ -184,7 +185,27 @@ public class DbQueryService : IDbQueryService
             return result;
         }
     }
+    public async Task<CategorizationDto> GetCategoriesAsync(IEnumerable<Guid>? categoriesId, CancellationToken cancellationToken)
+    {
+        await using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync(cancellationToken);
+        string categoriesIdParametrs = categoriesId.AsNotNull().Any() ? $"'{string.Join("','", categoriesId)}'" : "null";
+        string query = @$"SELECT Id, Name From SettingsSchema.Categories AS Categories
+                            WHERE Id in ({categoriesIdParametrs}) ";
 
+        using (var multi = await con.QueryMultipleAsync(query, new
+        {
+            CategoriesIds = categoriesIdParametrs.Split(','),
+        }))
+        {
+            var result = new CategorizationDto
+            {
+                Categories = multi.Read<LookupDto>().ToList(),
+            };
+
+            return result;
+        }
+    }
     public void UpdateUserIdentityImageKey(Guid userId, string imageKey)
     {
         using var con = new SqlConnection(_connectionString);
@@ -195,7 +216,7 @@ public class DbQueryService : IDbQueryService
         var data = con.Execute(sql);
     }
 
-    public async Task<string> GetImageKey(Guid ClientId,CancellationToken cancellationToken)
+    public async Task<string> GetImageKey(Guid ClientId, CancellationToken cancellationToken)
     {
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync(cancellationToken);
@@ -209,4 +230,6 @@ public class DbQueryService : IDbQueryService
 
         return data;
     }
+
+
 }

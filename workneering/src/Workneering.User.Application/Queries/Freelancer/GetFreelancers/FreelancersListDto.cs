@@ -1,4 +1,6 @@
-﻿namespace Workneering.User.Application.Queries.Freelancer.GetFreelancers
+﻿using Workneering.User.Application.Queries.Client.GetClientCategorization;
+
+namespace Workneering.User.Application.Queries.Freelancer.GetFreelancers
 {
     public class FreelancersListDto
     {
@@ -14,6 +16,8 @@
         public decimal? HourlyRate { get; set; }
         public string? Title { get; set; }
         public string? ExperienceLevel { get; set; }
+        public List<LookupDto>? Categories { get; set; } = new();
+        public string? CountryName { get; set; }
     }
     public class ImageDetailsDto
     {

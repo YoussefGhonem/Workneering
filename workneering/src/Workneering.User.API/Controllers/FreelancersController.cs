@@ -371,18 +371,18 @@ namespace Workneering.User.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<FreelancersListDto>))]
-        public async Task<ActionResult<PaginationResult<FreelancersListDto>>> GetClientCategorizationQuery()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategorizationDto))]
+        public async Task<ActionResult<CategorizationDto>> GetClientCategorizationQuery()
         {
             var query = new GetFreelancerCategorizationnQuery() { FreelancerId = CurrentUser.Id.Value };
             return Ok(await Mediator.Send(query, CancellationToken));
         }
-        [HttpGet()]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategorizationDto))]
-        public async Task<ActionResult<CategorizationDto>> GetFreelancersQuery(GetFreelancersQuery query)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<FreelancersListDto>))]
+        public async Task<ActionResult<PaginationResult<FreelancersListDto>>> GetFreelancersQuery([FromQuery] GetFreelancersQuery query)
         {
             return Ok(await Mediator.Send(query, CancellationToken));
         }

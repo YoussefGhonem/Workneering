@@ -36,7 +36,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancers
                     .Filter(request);
 
                 var dataQuery = await query.PaginateAsync(request.PageSize, request.PageNumber, cancellationToken: cancellationToken);
-                Mapper.Mapping(_storageService);
+                Mapper.Mapping(_storageService, _dbQueryService, cancellationToken);
                 var result = dataQuery.list.Adapt<List<FreelancersListDto>>();
                 return new PaginationResult<FreelancersListDto>(result.ToList(), dataQuery.total);
             }
