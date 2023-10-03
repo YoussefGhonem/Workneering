@@ -34,9 +34,13 @@ public static class SettingsDbContextSeed
         //var items = JsonConvert.DeserializeObject<Dictionary<string, IndustryDto>>(json);
         //var languages = JsonConvert.DeserializeObject<Dictionary<string, Language>>(json);
 
-        context.Industries.Add(new Industry("Information Technology"));
-        context.Industries.Add(new Industry("Engineering"));
-        context.Industries.Add(new Industry("Financial Services"));
+        context.Industries.Add(new Industry("Engineering consultancy Company"));
+        context.Industries.Add(new Industry("Construction company"));
+        context.Industries.Add(new Industry("Contactor"));
+        context.Industries.Add(new Industry("Real state development"));
+        context.Industries.Add(new Industry("Government Authority"));
+        context.Industries.Add(new Industry("Industrial sector"));
+        context.Industries.Add(new Industry("Other"));
 
         context.SaveChanges();
     }

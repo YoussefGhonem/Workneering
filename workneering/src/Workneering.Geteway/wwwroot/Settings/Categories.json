@@ -1,90 +1,343 @@
 [
   {
-    "name": "Software Engineering",
+    "name": "Planning and Strategy",
     "subcategories": [
       {
-        "name": "Front-End Development",
+        "name": "Development Strategy Workneer",
+        "skills": []
+      },
+      {
+        "name": "Infrastructure Planning Workneer",
+        "skills": []
+      },
+      {
+        "name": "Land and Resources Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Master Planning Workneer",
+        "skills": []
+      },
+      {
+        "name": "Policy Studies and Strategy Workneer",
+        "skills": []
+      },
+      {
+        "name": "Policy Studies and Strategy Workneer",
+        "skills": []
+      },
+      {
+        "name": "Project and Place Branding Workneer",
+        "skills": []
+      },
+      {
+        "name": "Solid Waste Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Strategic Planning Workneer",
+        "skills": []
+      },
+      {
+        "name": "Sustainable Developments Workneer",
+        "skills": []
+      },
+      {
+        "name": "Transport Planning Workneer",
+        "skills": []
+      },
+      {
+        "name": "Urban Design Workneer",
+        "skills": []
+      },
+      {
+        "name": "Water Resources Planning and Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "GIS Workneer",
+        "skills": []
+      }
+    ]
+  },
+  {
+    "name": "Architecture and Design",
+    "subcategories": [
+      {
+        "name": "",
+        "skills": []
+      },
+      {
+        "name": "Architectural Design Workneer",
+        "skills": []
+      },
+      {
+        "name": "Façade Workneer",
+        "skills": []
+      },
+      {
+        "name": "Facilities Programming and Space Planning Workneer",
+        "skills": []
+      },
+      {
+        "name": "Integrated Building Design Workneer",
+        "skills": []
+      },
+      {
+        "name": "Interior Architecture Workneer",
+        "skills": []
+      },
+      {
+        "name": "Landscape Architecture Workneer",
+        "skills": []
+      },
+      {
+        "name": "Sustainable Building Design and Certifications Workneer",
+        "skills": []
+      },
+      {
+        "name": "Urban Design Workneer",
+        "skills": []
+      },
+      {
+        "name": "Way-Finding and Signage Workneer",
+        "skills": []
+      },
+      {
+        "name": "Medical Planning Workneer",
+        "skills": []
+      },
+      {
+        "name": "Architerctural Cad Operator ",
+        "skills": []
+      }
+    ]
+  },
+  {
+    "name": "Engineering",
+    "subcategories": [
+      {
+        "name": "Structure",
         "skills": [
-          { "name": "HTML/CSS" },
-          { "name": "JavaScript" },
-          { "name": "React" },
-          { "name": "Angular" }
+          { "name": "Bridge Inspection and Rehabilitation Workneer" },
+          { "name": "Structure Workneer" },
+          { "name": "Steel Structure Workneer" },
+          { "name": "Tunneling Workneer" },
+          { "name": "Cad Operator" }
         ]
       },
       {
-        "name": "Back-End Development",
+        "name": "Mechanical",
         "skills": [
-          { "name": "Node.js" },
-          { "name": "Java" },
-          { "name": "Python" },
-          { "name": "C#" }
+          { "name": "District Cooling and Heating Workneer" },
+          { "name": "Mechanical Workneer" },
+          { "name": "Pipe stress Analysis Workneer" },
+          { "name": "Plumbing & Firefighting Workneer" },
+          { "name": "Industrial Workneer" },
+          { "name": "Piping Workneer" },
+          { "name": "Health and Safety Workneer" },
+          { "name": "Instrumentation Control and Automation Workneer" },
+          { "name": "Cad Operator" }
         ]
       },
       {
-        "name": "DevOps",
+        "name": "Electrical & Telecomunication",
         "skills": [
-          { "name": "Docker" },
-          { "name": "Kubernetes" },
-          { "name": "Continuous Integration (CI/CD)" }
+          { "name": "High Voltage  Electrical Workneer" },
+          { "name": " Low Voltage  Electrical Workneer" },
+          { "name": "Telecommunications Workneer" },
+          { "name": "cathodic protection workneer" },
+          { "name": "Cad Operator" }
+        ]
+      },
+      {
+        "name": "BIM",
+        "skills": [
+          { "name": "Building Information Modeling Workneer" }
         ]
       }
     ]
   },
   {
-    "name": "IT",
+    "name": "Environmental (Civil, Dry and Wet Utilities)",
     "subcategories": [
       {
-        "name": "Network Administration",
+        "name": "Civil",
         "skills": [
-          { "name": "Routing and Switching" },
-          { "name": "Firewall Configuration" },
-          { "name": "Network Security" }
+          { "name": "Highway workneer" },
+          { "name": "Airport workneer" },
+          { "name": "Road workneer" },
+          { "name": "Transportation workneer" },
+          { "name": "Highway Cad operator" },
+          { "name": "Geological and Geotechnical Workneer" }
         ]
       },
       {
-        "name": "Database Administration",
+        "name": "Dry and Wet Utilities",
         "skills": [
-          { "name": "SQL" },
-          { "name": "Database Design" },
-          { "name": "Performance Tuning" }
-        ]
-      },
-      {
-        "name": "System Administration",
-        "skills": [
-          { "name": "Linux Administration" },
-          { "name": "Windows Server Administration" },
-          { "name": "Cloud Computing (AWS, Azure)" }
+          { "name": "Wet Utilities workneer" },
+          { "name": "Storm water workneer" },
+          { "name": "Sanitary water Workneer" },
+          { "name": "Potable water workneer" },
+          { "name": "Irrigation Water workneer" },
+          { "name": "Computational Fluid Dynamics (CFD) Workneer" },
+          { "name": "Solid Waste Management Workneer" },
+          { "name": "Coastal and Marine Workneer " },
+          { "name": "Sustainable Engineering Design Workneer" },
+          { "name": "Groundwater Management Workneer" },
+          { "name": "Surge Analysis Workneer" },
+          { "name": "Baseline Studies Workneer" },
+          { "name": "Construction Environmental Management Planning and Implementation Workneer" },
+          { "name": "Environmental and Social Impact Assessments Workneer" },
+          { "name": "Environmental and Social Management Planning; Action Planning Workneer" },
+          { "name": "Environmental Effects Monitoring Workneer" },
+          { "name": "Environmental Policy Planning and Development of Environmental Policy Frameworks Workneer" },
+          { "name": "Resettlement Actions Plans Workneer" },
+          { "name": "Strategic Environmental Assessment Workneer" },
+          { "name": "Sustainable Buildings Design and Certifications Workneer" },
+          { "name": "Sustainable Developments Workneer" },
+          { "name": "Sewer Vacuum Network workneer" },
+          { "name": "Mineralized Water Network workneer" },
+          { "name": "Wastewater Treatment Plant workneer" },
+          { "name": "Chilled Water Network workneer" },
+          { "name": "LPG & Natural Gases Network workneer" },
+          { "name": "COOLED COLD WATER NETWORK Workneer " },
+          { "name": "PUMP STATION and Lift stations workneer " },
+          { "name": "INDUSTRIAL NETWORKS workneer" },
+          { "name": "GREEN GASES NETWORKS Workneer" },
+          { "name": "TELECOM & ICT NETWORK Workneer" },
+          { "name": "STREET LIGHTING NETWORK Workneer" },
+          { "name": "LOW VOLTAGE NETWORK" },
+          { "name": "MEDIUM VOLTAGE NETWORK Workneer" },
+          { "name": "HIGH VOLTAGE NETWORK Workneer" },
+          { "name": "ELECTRICAL SUBSTATIONS workneer" }
         ]
       }
     ]
   },
   {
-    "name": "Marketing",
+    "name": "Economics",
     "subcategories": [
       {
-        "name": "Digital Marketing",
-        "skills": [
-          { "name": "Search Engine Optimization (SEO)" },
-          { "name": "Social Media Marketing" },
-          { "name": "Email Marketing" }
-        ]
+        "name": "Lead Development Delivery and Implementation Strategy Workneer",
+        "skills": []
       },
       {
-        "name": "Content Marketing",
-        "skills": [
-          { "name": "Content Strategy" },
-          { "name": "Blogging" },
-          { "name": "Video Marketing" }
-        ]
+        "name": "Development Delivery and Implementation Strategy Workneer",
+        "skills": []
       },
       {
-        "name": "Marketing Analytics",
-        "skills": [
-          { "name": "Data Analysis" },
-          { "name": "Marketing ROI Measurement" },
-          { "name": "Google Analytics" }
-        ]
+        "name": "Lead Economic Viability Workneer",
+        "skills": []
+      },
+      {
+        "name": "Economic Viability Workneer",
+        "skills": []
+      },
+      {
+        "name": "Lead Financial Feasibility Workneer",
+        "skills": []
+      },
+      {
+        "name": "Financial Feasibility Workneer",
+        "skills": []
+      },
+      {
+        "name": "Lead Strategy and Policy Workneer",
+        "skills": []
+      },
+      {
+        "name": "Strategy and Policy Workneer",
+        "skills": []
+      }
+    ]
+  },
+  {
+    "name": "Project and Construction Management",
+    "subcategories": [
+      {
+        "name": "Claims Prevention and Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Client Representation Workneer",
+        "skills": []
+      },
+      {
+        "name": "Contract Administration and Construction Supervision Workneer",
+        "skills": []
+      },
+      {
+        "name": "Contract Procurement Strategy and Contract Documentation Workneer",
+        "skills": []
+      },
+      {
+        "name": "Cost Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Design Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Design Review Workneer",
+        "skills": []
+      },
+      {
+        "name": "HSE Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Insurance Coverage Assessment Workneer",
+        "skills": []
+      },
+      {
+        "name": "O&M Program Development Workneer",
+        "skills": []
+      },
+      {
+        "name": "Prequalification and Tender Process Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Program and Project Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Project Controls Workneer",
+        "skills": []
+      },
+      {
+        "name": "Project Reviews and Audits Workneer",
+        "skills": []
+      },
+      {
+        "name": "Quality Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Quantity Surveying Workneer",
+        "skills": []
+      },
+      {
+        "name": "Risk Analysis and Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Sustainability Management Workneer",
+        "skills": []
+      },
+      {
+        "name": "Value Engineering and Constructability Review Workneer",
+        "skills": []
+      },
+      {
+        "name": "Scheduler Planner Workneer",
+        "skills": []
+      },
+      {
+        "name": "Business Analyst Workneer",
+        "skills": []
       }
     ]
   }
