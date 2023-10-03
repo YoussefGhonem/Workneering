@@ -1,0 +1,15 @@
+﻿using Workneering.Base.Domain.Common;
+using Workneering.Shared.Core.Models;
+
+namespace Workneering.Message.Domain.Entities
+{
+    public record MessageAttachments : BaseEntity
+    {
+        private FileDto _attachments = new();
+
+        public MessageAttachments()
+        {
+        }
+        public FileDto Attachments { get => _attachments; set => _attachments = value; }
+    }
+}

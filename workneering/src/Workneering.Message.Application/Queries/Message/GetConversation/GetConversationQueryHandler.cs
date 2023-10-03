@@ -6,10 +6,14 @@ using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Message.Application.Services.DbQueryService;
 using Workneering.Message.Application.Extensions;
 using Workneering.Shared.Core.Identity.CurrentUser;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Workneering.Base.Application.Common.Pagination;
+using Workneering.Base.Application.Common.Pagination.models;
+using Microsoft.Extensions.Configuration;
 
 namespace Workneering.Message.Application.Queries.Message.GetConversation
 {
-    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetConversationQuery, List<GetConversationDto>>
+    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GetConversationQuery, PaginationResult<GetConversationDto>>
     {
         private readonly MessagesDbContext _context;
         private readonly IStorageService _storageService;
@@ -21,25 +25,28 @@ namespace Workneering.Message.Application.Queries.Message.GetConversation
             _storageService = storageService;
             _dbQueryService = dbQueryService;
         }
-        public async Task<List<GetConversationDto>> Handle(GetConversationQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<GetConversationDto>> Handle(GetConversationQuery request, CancellationToken cancellationToken)
         {
             var userId = CurrentUser.Id;
 
-            var messages = await _context.Messages
-                .Where(m => m.RecipientId == userId && m.SenderId == request.RecipientId ||
-                        m.RecipientId == request.RecipientId && m.SenderId == userId)
-                        .OrderByDescending(m => m.CreatedDate).ToListAsync();
+            var (list, total) = await _context.Messages.Where(x => x.ProjectId == request.ProjectId)
+                    .AsNoTracking()
+                    .Where(x => x.Id == request.ProjectId)
+                    .Include(x => x.MessageAttachments)
+                    .OrderByDescending(x => x.CreatedDate)
+                    .PaginateForChatAsync(request.Hand, request.Next, cancellationToken);
+
+            list.Reverse();
             try
             {
                 TypeAdapterConfig<Domain.Entities.Message, GetConversationDto>.NewConfig()
-                .Map(dest => dest.RecipientPhotoUrl, src => src.RecipientId.Value.SetImageURL(_dbQueryService).Result)
-                .Map(dest => dest.SenderPhotoUrl, src => src.SenderId.Value.SetImageURL(_dbQueryService).Result)
-                .Map(dest => dest.SenderName, src => src.SenderId.Value.GetUserInfo(_dbQueryService).Result.Name)
-                .Map(dest => dest.RecipientName, src => src.RecipientId.Value.GetUserInfo(_dbQueryService).Result.Name)
-                .Map(dest => dest.SenderTitle, src => src.SenderId.Value.GetUserInfo(_dbQueryService).Result.Title)
-                .Map(dest => dest.RecipientTitle, src => src.RecipientId.Value.GetUserInfo(_dbQueryService).Result.Title);
+                .Map(dest => dest.CreatedUserPhotoUrl, src => src.CreatedUserId.SetImageURL(_dbQueryService).Result)
+                .Map(dest => dest.CreatedUserName, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Name)
+                .Map(dest => dest.CreatedUserTitle, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Title);
 
-                return messages.ToList().Adapt<List<GetConversationDto>>();
+                //return list.Adapt<List<GetConversationDto>>();
+                return new PaginationResult<GetConversationDto>(list.Adapt<List<GetConversationDto>>(), total);
+
             }
             catch (Exception ex)
             {

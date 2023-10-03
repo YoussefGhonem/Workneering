@@ -9,7 +9,7 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
         {
             CascadeMode = CascadeMode.Stop;
 
-            RuleFor(r => r.RecipientId)
+            RuleFor(r => r.ProjectId)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();

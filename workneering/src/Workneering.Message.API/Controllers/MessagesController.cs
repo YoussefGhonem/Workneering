@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Message.Application.Commands.Message.CreateMessage;
 using Workneering.Message.Application.Commands.Message.DeleteMessage;
-using Workneering.Message.Application.Commands.Message.MarkMessageAsRead;
 using Workneering.Message.Application.Queries.Message.GetConversation;
 using Workneering.Message.Application.Queries.Message.GetCountUnreadMessages;
 
@@ -21,23 +20,13 @@ namespace Workneering.Message.API.Controllers
         }
 
         #region Commands
-        [HttpPost("recipient/{recipientId}")]
+        [HttpPost("{projectId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateMessageCommand(CreateMessageCommand command, Guid recipientId)
+        public async Task<ActionResult<Unit>> CreateMessageCommand([FromForm] CreateMessageCommand command, Guid projectId)
         {
-            command.RecipientId = recipientId;
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
-        [HttpPut("read/{id}")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> MarkMessageAsReadCommand(Guid id)
-        {
-            var command = new MarkMessageAsReadCommand();
-            command.MessageId = id;
+            command.ProjectId = projectId;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
@@ -55,14 +44,14 @@ namespace Workneering.Message.API.Controllers
         #endregion
 
         #region Queries
-        [HttpGet("chat/{recipientId}")]
+        [HttpGet("{projectId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetConversationDto>))]
-        public async Task<ActionResult<List<GetConversationDto>>> GetConversationQuery(Guid recipientId)
+        public async Task<ActionResult<List<GetConversationDto>>> GetConversationQuery(Guid projectId)
         {
             var command = new GetConversationQuery();
-            command.RecipientId = recipientId;
+            command.ProjectId = projectId;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
 
