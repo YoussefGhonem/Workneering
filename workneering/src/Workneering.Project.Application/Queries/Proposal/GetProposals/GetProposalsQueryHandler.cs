@@ -24,17 +24,21 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals
         {
             Mapper.Mapping(_dbQueryService);
             var projects = await _context.Projects
-                .Include(x => x.Proposals)
-                .Filter(request, _dbQueryService)
-                .Where(p => p.Proposals.Any(p => p.FreelancerId == CurrentUser.Id))
-                .PaginateAsync(request.PageSize, request.PageNumber, cancellationToken: cancellationToken);
+           .Include(x => x.Proposals)
+           .Filter(request, _dbQueryService)
+           .Where(p => p.Proposals
+               .Any(p => p.FreelancerId == CurrentUser.Id))
+           .OrderByDescending(p => p.Proposals
+               .Where(p => p.FreelancerId == CurrentUser.Id)
+               .Max(p => p.CreatedDate))
+           .PaginateAsync(request.PageSize, request.PageNumber, cancellationToken: cancellationToken);
 
 
             var result = projects.list.Adapt<List<ProjectProposalsDto>>();
 
             var proposals = projects.list.Select(x => x.Proposals);
 
-            return new PaginationResult<ProjectProposalsDto>(result.ToList(), proposals.Count());
+            return new PaginationResult<ProjectProposalsDto>(result.ToList(), projects.total);
 
         }
     }

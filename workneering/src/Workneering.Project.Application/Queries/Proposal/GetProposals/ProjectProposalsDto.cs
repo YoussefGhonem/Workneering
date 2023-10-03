@@ -6,6 +6,7 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals
     {
         public Guid Id { get; set; }
         public string? ProjectTitle { get; set; }
+        public string? ProjectStatus { get; set; }
         public List<ProposalListDto> Proposals { get; set; } = new();
         public ClientInfo? Client { get; set; } = new();
     }
@@ -25,5 +26,6 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals
         public string Name { get; set; }
         public string Title { get; set; }
         public string CountryName { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
