@@ -13,7 +13,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancers.Filters
 
             if (filters.CategoryIds is not null)
             {
-                query = query.Where(x => x.Categories.Any(x => filters.CategoryIds.Contains(x.Id)));
+                query = query.Where(x => x.Categories.Any(x => filters.CategoryIds.Contains(x.CategoryId)));
             }
             if (filters.AvailabilityFrom is not null && filters.AvailabilityTo is not null)
             {

@@ -10,9 +10,9 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals.Filters
         {
             // Filters  
 
-            if (filters.ProposalStatus is not null)
+            if (filters.Status is not null)
             {
-                query = query.Where(x => x.Proposals.Any(x => x.ProposalStatus == filters.ProposalStatus));
+                query = query.Where(x => x.Proposals.Any(x => x.ProposalStatus == filters.Status));
             }
 
             return query;
