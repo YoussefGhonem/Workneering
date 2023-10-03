@@ -24,10 +24,11 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals
         {
             Mapper.Mapping(_dbQueryService);
             var projects = await _context.Projects
-                .Include(x => x.Proposals.Where(x => x.FreelancerId == CurrentUser.Id))
-                .AsQueryable()
+                .Include(x => x.Proposals)
                 .Filter(request, _dbQueryService)
+                .Where(p => p.Proposals.Any(p => p.FreelancerId == CurrentUser.Id))
                 .PaginateAsync(request.PageSize, request.PageNumber, cancellationToken: cancellationToken);
+
 
             var result = projects.list.Adapt<List<ProjectProposalsDto>>();
 

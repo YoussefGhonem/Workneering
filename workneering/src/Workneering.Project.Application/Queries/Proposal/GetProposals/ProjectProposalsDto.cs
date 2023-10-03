@@ -16,7 +16,8 @@ namespace Workneering.Project.Application.Queries.Proposal.GetProposals
         public string? CoverLetter { get; set; }
         public decimal? TotalBid { get; set; }
         public ProposalDurationEnum? ProposalDuration { get; set; }
-        public ProposalStatusEnum? ProposalStatus { get; set; }
+        public string? ProposalStatus { get; set; }
+        public DateTimeOffset? CreatedDate { get; set; }
     }
     public class ClientInfo
     {

@@ -8,6 +8,6 @@ public class ProposalsListFilters : BaseFilterDto
     public Guid? FreelancerId { get; set; }
     public Guid? ClientId { get; set; }
     public Guid? Id { get; set; }
-    public ProposalStatusEnum? ProposalStatus { get; set; }
+    public ProposalStatusEnum? Status { get; set; }
 }
 
