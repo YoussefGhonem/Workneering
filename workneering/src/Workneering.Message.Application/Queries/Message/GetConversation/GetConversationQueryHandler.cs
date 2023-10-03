@@ -31,7 +31,6 @@ namespace Workneering.Message.Application.Queries.Message.GetConversation
                         .OrderByDescending(m => m.CreatedDate).ToListAsync();
             try
             {
-
                 TypeAdapterConfig<Domain.Entities.Message, GetConversationDto>.NewConfig()
                 .Map(dest => dest.RecipientPhotoUrl, src => src.RecipientId.Value.SetImageURL(_dbQueryService).Result)
                 .Map(dest => dest.SenderPhotoUrl, src => src.SenderId.Value.SetImageURL(_dbQueryService).Result)
