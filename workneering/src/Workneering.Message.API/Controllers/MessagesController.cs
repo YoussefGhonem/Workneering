@@ -48,11 +48,10 @@ namespace Workneering.Message.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetConversationDto>))]
-        public async Task<ActionResult<List<GetConversationDto>>> GetConversationQuery(Guid projectId)
+        public async Task<ActionResult<List<GetConversationDto>>> GetConversationQuery([FromQuery] GetConversationQuery query, Guid projectId)
         {
-            var command = new GetConversationQuery();
-            command.ProjectId = projectId;
-            return Ok(await Mediator.Send(command, CancellationToken));
+            query.ProjectId = projectId;
+            return Ok(await Mediator.Send(query, CancellationToken));
         }
 
         [HttpGet("chat/count-unread")]

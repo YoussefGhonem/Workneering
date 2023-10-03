@@ -27,32 +27,26 @@ namespace Workneering.Message.Application.Queries.Message.GetConversation
         }
         public async Task<PaginationResult<GetConversationDto>> Handle(GetConversationQuery request, CancellationToken cancellationToken)
         {
+            TypeAdapterConfig<Domain.Entities.Message, GetConversationDto>.NewConfig()
+            .Map(dest => dest.CreatedUserPhotoUrl, src => src.CreatedUserId.SetImageURL(_dbQueryService).Result)
+            .Map(dest => dest.CreatedUserName, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Name)
+            .Map(dest => dest.CreatedUserCountryName, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.CountryName)
+            .Map(dest => dest.CreatedUserTitle, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Title);
             var userId = CurrentUser.Id;
 
             var (list, total) = await _context.Messages.Where(x => x.ProjectId == request.ProjectId)
                     .AsNoTracking()
-                    .Where(x => x.Id == request.ProjectId)
                     .Include(x => x.MessageAttachments)
                     .OrderByDescending(x => x.CreatedDate)
                     .PaginateForChatAsync(request.Hand, request.Next, cancellationToken);
 
             list.Reverse();
-            try
-            {
-                TypeAdapterConfig<Domain.Entities.Message, GetConversationDto>.NewConfig()
-                .Map(dest => dest.CreatedUserPhotoUrl, src => src.CreatedUserId.SetImageURL(_dbQueryService).Result)
-                .Map(dest => dest.CreatedUserName, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Name)
-                .Map(dest => dest.CreatedUserTitle, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Title);
+            var result = list.Adapt<List<GetConversationDto>>();
 
-                //return list.Adapt<List<GetConversationDto>>();
-                return new PaginationResult<GetConversationDto>(list.Adapt<List<GetConversationDto>>(), total);
 
-            }
-            catch (Exception ex)
-            {
+            //return list.Adapt<List<GetConversationDto>>();
+            return new PaginationResult<GetConversationDto>(result, total);
 
-                throw;
-            }
 
         }
     }
