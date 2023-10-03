@@ -5,6 +5,15 @@ namespace Workneering.Base.Application.Common.Pagination;
 public static class PaginationExtension
 {
     // tuple provides a lightweight way to retrieve multiple values from a method cal
+
+
+    public static async Task<(List<T> list, int total)> PaginateForChatAsync<T>(this IQueryable<T> query, int hand, int next,
+        CancellationToken cancellationToken = default)
+    {
+        int count = await query.CountAsync(cancellationToken);
+        var paginatedList = await query.Skip(hand).Take(next).ToListAsync(cancellationToken);
+        return (paginatedList, count);
+    }
     public static (List<T> list, int total) Paginate<T>(this IQueryable<T> query, int? pageSize, int? pageNumber)
     {
         const int maxPageSize = 20;
@@ -43,4 +52,5 @@ public static class PaginationExtension
         paginatedList = await query.Skip(pageIndex * pageSize!.Value).Take(pageSize.Value).ToListAsync(cancellationToken);
         return (paginatedList, count);
     }
+
 }
