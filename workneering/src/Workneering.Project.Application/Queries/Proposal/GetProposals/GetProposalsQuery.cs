@@ -4,7 +4,7 @@ using Workneering.Project.Application.Queries.Proposal.GetProposals.Filters;
 
 namespace Workneering.Project.Application.Queries.Proposal.GetProposals
 {
-    public class GetProposalsQuery : ProposalsListFilters, IRequest<PaginationResult<ProposalsDto>>
+    public class GetProposalsQuery : ProposalsListFilters, IRequest<PaginationResult<ProjectProposalsDto>>
     {
 
     }

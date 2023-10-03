@@ -2,18 +2,23 @@
 
 namespace Workneering.Project.Application.Queries.Proposal.GetProposals
 {
-    public class ProposalsDto
+    public class ProjectProposalsDto
     {
-        public Guid FreelancerId { get; set; }
         public Guid Id { get; set; }
+        public string? ProjectTitle { get; set; }
+        public List<ProposalListDto> Proposals { get; set; } = new();
+        public ClientInfo? Client { get; set; } = new();
+    }
+    public class ProposalListDto
+    {
+        public Guid Id { get; set; }
+        public Guid FreelancerId { get; set; }
         public string? CoverLetter { get; set; }
-        public FreelancerInfoDto? Freelancer { get; set; } = new();
-        public decimal? HourlyRate { get; set; }
         public decimal? TotalBid { get; set; }
         public ProposalDurationEnum? ProposalDuration { get; set; }
         public ProposalStatusEnum? ProposalStatus { get; set; }
     }
-    public class FreelancerInfoDto
+    public class ClientInfo
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

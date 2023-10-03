@@ -18,6 +18,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancers
         public string? ExperienceLevel { get; set; }
         public List<LookupDto>? Categories { get; set; } = new();
         public string? CountryName { get; set; }
+        public string? Flag { get; set; }
     }
     public class ImageDetailsDto
     {

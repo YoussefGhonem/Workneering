@@ -6,7 +6,8 @@ namespace Workneering.User.Application.Services.DbQueryService;
 public interface IDbQueryService
 {
     public Task<UserBasicInfo?> GetUserBasicInfo(Guid userId, CancellationToken cancellationToken);
-    public Task<CountryDetailsDto?> GetCountryInfo(Guid userId, CancellationToken cancellationToken = default);
+    public Task<CountryDetailsDto?> GetCountryInfo(Guid id, CancellationToken cancellationToken = default);
+    public Task<CountryDetailsDto?> GetCountryInfoByUserId(Guid userId, CancellationToken cancellationToken = default);
     public Task<string?> UpdateCountryUser(Guid userId, Guid? CountryId, CancellationToken cancellationToken);
     public void UpdateUserIdentityImageKey(Guid userId, string imageKey);
     public Task<UserAddressDetailsDto?> GetAddressUser(Guid userId, CancellationToken cancellationToken);

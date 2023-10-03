@@ -12,8 +12,9 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancers
         {
             TypeAdapterConfig<Domain.Entites.Freelancer, FreelancersListDto>.NewConfig()
             .Map(dest => dest.ImageDetails.Url, src => src.ImageDetails.Key.SetDownloadFileUrlByKey(_storageService))
-            .Map(dest => dest.CountryName, src => _dbQueryService.GetCountryInfo(src.Id, cancellationToken).Result.Name)
-            .Map(dest => dest.Categories, src => _dbQueryService.GetCategoriesAsync(src.Categories.AsNotNull().Any() ? src.Categories.AsNotNull().Select(x => x.Id) : null, cancellationToken).Result.Categories);
+            .Map(dest => dest.CountryName, src => _dbQueryService.GetCountryInfoByUserId(src.Id, cancellationToken).Result.Name)
+            .Map(dest => dest.Flag, src => _dbQueryService.GetCountryInfoByUserId(src.Id, cancellationToken).Result.Flag)
+            .Map(dest => dest.Categories, src => _dbQueryService.GetCategoriesAsync(src.Categories.AsNotNull().Any() ? src.Categories.AsNotNull().Select(x => x.CategoryId) : null, cancellationToken).Result.Categories);
 
 
         }
