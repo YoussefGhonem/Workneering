@@ -1,5 +1,7 @@
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using ServiceStack;
+using System.Data.Common;
 using System.Data.SqlClient;
 using Workneering.Base.Helpers.Extensions;
 using Workneering.Packages.Storage.AWS3.Services;
@@ -267,5 +269,31 @@ public class DbQueryService : IDbQueryService
             Url = key.SetDownloadFileUrlByKey(_storageService)
         };
         return result;
+    }
+    public async Task<Guid> GetRoomId(Guid clientId, Guid freelancerId)
+    {
+
+        using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync();
+
+        var sql = @$"  SELECT f.Id
+                        FROM  ChatSchema.Rooms f
+                        WHERE f.FreelancerId = '{freelancerId}' and  f.ClientId = '{clientId}'";
+
+        var roomId = await con.QueryFirstAsync<Guid>(sql);
+        if (string.IsNullOrEmpty(roomId.ToString())) return new Guid();
+
+        return roomId;
+    }
+
+    public async Task<string> AddRoom(Guid clientId, Guid freelancerId)
+    {
+        using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync();
+
+        string insertSql = "INSERT INTO ChatSchema.Rooms (FreelancerId, ClientId) VALUES (@FreelancerId, @ClientId)";
+
+        await con.ExecuteAsync(insertSql, new { FreelancerId = freelancerId, ClientId = clientId });
+        return string.Empty;
     }
 }

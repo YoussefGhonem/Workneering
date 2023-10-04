@@ -23,6 +23,7 @@ public class ProjectClientBasicDetailsDto
     public List<SubCategoriesDto>? SubCategories { get; set; } = new();
     public List<SkillsDto>? Skills { get; set; } = new();
     public List<SubmittedOffersDto> SubmittedOffers { get; set; } = new();
+    public ClientInfoDto ClientInfo { get; set; } = new();
 }
 
 public class CategoriesDto
@@ -43,6 +44,13 @@ public class SkillsDto
 public class SubmittedOffersDto
 {
     public Guid? FreelancerId { get; set; }
+    public string? Name { get; set; } = null;
+    public string? Title { get; set; } = null;
+    public string? CountryName { get; set; } = null;
+    public string? ImageUrl { get; set; } = null;
+}
+public class ClientInfoDto
+{
     public string? Name { get; set; } = null;
     public string? Title { get; set; } = null;
     public string? CountryName { get; set; } = null;

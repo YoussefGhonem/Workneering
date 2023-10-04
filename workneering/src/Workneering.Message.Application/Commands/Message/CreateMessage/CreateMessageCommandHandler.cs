@@ -1,13 +1,10 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Workneering.Message.Infrustructure.Persistence;
-using Workneering.Shared.Core.Identity.CurrentUser;
-using Workneering.Message.Domain.Entities;
-using Mapster;
-using Workneering.Packages.Storage.AWS3.Models;
-using Workneering.Project.Domain.Entities;
-using Workneering.Packages.Storage.AWS3.Services;
+﻿using Mapster;
+using MediatR;
 using Workneering.Base.Helpers.Extensions;
+using Workneering.Message.Domain.Entities;
+using Workneering.Message.Infrustructure.Persistence;
+using Workneering.Packages.Storage.AWS3.Models;
+using Workneering.Packages.Storage.AWS3.Services;
 
 namespace Workneering.Message.Application.Commands.Message.CreateMessage
 {
@@ -16,10 +13,11 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
         private readonly MessagesDbContext messagesDbContext;
         private readonly IMediator _mediator;
         private readonly IStorageService _storageService;
-        public CreateMessageCommandHandler(IMediator mediator, MessagesDbContext identityDatabase)
+        public CreateMessageCommandHandler(IMediator mediator, MessagesDbContext identityDatabase, IStorageService storageService)
         {
             messagesDbContext = identityDatabase;
             _mediator = mediator;
+            _storageService = storageService;
         }
 
         public async Task<Unit> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
@@ -33,7 +31,8 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
             var attachments = new List<StoredFile>();
             if (request.Attachments.AsNotNull().Any())
             {
-                attachments = await _storageService.UploadFiles(request.Attachments, cancellationToken);
+                var conectToUpload = await _storageService.UploadFiles(request.Attachments!.ToList(), cancellationToken);
+                attachments.AddRange(conectToUpload);
             }
             var attachmentsFileDto = attachments?.Adapt<List<MessageAttachments>>();
             var message = new Domain.Entities.Message(request.Content, request.ProjectId, attachmentsFileDto);

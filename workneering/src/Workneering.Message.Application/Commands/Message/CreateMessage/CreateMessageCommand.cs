@@ -10,6 +10,6 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
         [JsonIgnore]
         public Guid ProjectId { get; set; }
         public string Content { get; set; }
-        public List<IFormFile>? Attachments { get; set; }
+        public IEnumerable<IFormFile>? Attachments { get; set; }
     }
 }

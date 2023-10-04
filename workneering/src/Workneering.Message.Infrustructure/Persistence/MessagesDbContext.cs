@@ -18,4 +18,6 @@ public class MessagesDbContext : ApplicationDbContext
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
     public DbSet<Message.Domain.Entities.Message> Messages => Set<Message.Domain.Entities.Message>();
+    public DbSet<Message.Domain.Entities.Room> Rooms => Set<Message.Domain.Entities.Room>();
+    public DbSet<Message.Domain.Entities.GlopalChat> GlopalChat => Set<Message.Domain.Entities.GlopalChat>();
 }

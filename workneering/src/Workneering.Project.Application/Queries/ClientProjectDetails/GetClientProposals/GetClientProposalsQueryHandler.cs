@@ -5,6 +5,7 @@ using Workneering.Base.Application.Common.Pagination;
 using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Project.Application.Services.DbQueryService;
 using Workneering.Project.Infrastructure.Persistence;
+using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProposals
 {
@@ -37,6 +38,8 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                 item.FreelancerDetails.Title = userInfo.Title;
                 item.FreelancerDetails.CountryName = userInfo.CountryName;
                 item.FreelancerDetails.ImageUrl = freelancerImage.Url;
+
+                item.RoomId = await _dbQueryService.GetRoomId(CurrentUser.Id.Value, userInfo.Id);
             }
 
             return new PaginationResult<ClientProposalsListDto>(result.ToList(), paginateAsync.total);
