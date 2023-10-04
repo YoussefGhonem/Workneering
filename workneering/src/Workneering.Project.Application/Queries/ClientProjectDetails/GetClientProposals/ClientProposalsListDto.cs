@@ -5,6 +5,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
     public class ClientProposalsListDto
     {
         public Guid Id { get; set; }
+        public Guid? RoomId { get; set; }
         public FreelancerInfoDto FreelancerDetails { get; set; } = new();
         public string? CoverLetter { get; set; }
         public Guid? FreelancerId { get; set; }
