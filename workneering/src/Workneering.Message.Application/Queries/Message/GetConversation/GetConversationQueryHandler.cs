@@ -10,6 +10,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Workneering.Base.Application.Common.Pagination;
 using Workneering.Base.Application.Common.Pagination.models;
 using Microsoft.Extensions.Configuration;
+using Workneering.Shared.Core.Extention;
 
 namespace Workneering.Message.Application.Queries.Message.GetConversation
 {
@@ -32,6 +33,16 @@ namespace Workneering.Message.Application.Queries.Message.GetConversation
             .Map(dest => dest.CreatedUserName, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Name)
             .Map(dest => dest.CreatedUserCountryName, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.CountryName)
             .Map(dest => dest.CreatedUserTitle, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Title);
+
+
+            TypeAdapterConfig<Domain.Entities.MessageAttachments, MessageAttachmentsDto>.NewConfig()
+            .Map(dest => dest.Url, src => src.Attachments.Key.SetDownloadFileUrlByKey(_storageService))
+            .Map(dest => dest.Key, src => src.Attachments.Key)
+            .Map(dest => dest.FileName, src => src.Attachments.FileName)
+            .Map(dest => dest.FileSize, src => src.Attachments.FileSize);
+
+
+
             var userId = CurrentUser.Id;
 
             var (list, total) = await _context.Messages.Where(x => x.ProjectId == request.ProjectId)
