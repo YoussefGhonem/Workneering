@@ -1,7 +1,9 @@
 ﻿using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Workneering.Base.Application.Models;
 using Workneering.Project.Application.Services.DbQueryService;
+using Workneering.Project.Domain.Entities;
 using Workneering.Project.Infrastructure.Persistence;
 
 namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails
@@ -47,6 +49,15 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetProjec
                 };
                 result.SubmittedOffers.Add(submittedOffer);
             }
+            var clientData = _dbQueryService.GetClientInfoForProjectDetails(project.ClientId.Value);
+            var clientInfoDto = new ClientInfoDto
+            {
+                Name = clientData.Name,
+                CountryName = clientData.CountryName,
+                Title = clientData.Title,
+                ImageUrl = clientData.ImageUrl,
+            };
+            result.ClientInfo = clientInfoDto;
 
             result.NumberOfProposals = project.Proposals.Count;
             return result;
