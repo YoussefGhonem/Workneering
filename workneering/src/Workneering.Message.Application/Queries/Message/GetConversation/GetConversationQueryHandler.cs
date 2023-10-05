@@ -30,6 +30,8 @@ namespace Workneering.Message.Application.Queries.Message.GetConversation
             .Map(dest => dest.CreatedUserPhotoUrl, src => src.CreatedUserId.SetImageURL(_dbQueryService).Result)
             .Map(dest => dest.CreatedUserName, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Name)
             .Map(dest => dest.CreatedUserCountryName, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.CountryName)
+            .Map(dest => dest.IsRead, src => src.IsRead)
+            .Map(dest => dest.DateRead, src => src.DateRead)
             .Map(dest => dest.CreatedUserTitle, src => src.CreatedUserId.GetUserInfo(_dbQueryService).Result.Title);
 
 
