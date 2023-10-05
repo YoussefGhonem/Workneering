@@ -39,7 +39,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                 item.FreelancerDetails.CountryName = userInfo.CountryName;
                 item.FreelancerDetails.ImageUrl = freelancerImage.Url;
 
-                item.RoomId = await _dbQueryService.GetRoomId(CurrentUser.Id.Value, userInfo.Id);
+                item.RoomId = _dbQueryService.GetRoomId(CurrentUser.Id.Value, userInfo.Id).Result.Id;
             }
 
             return new PaginationResult<ClientProposalsListDto>(result.ToList(), paginateAsync.total);

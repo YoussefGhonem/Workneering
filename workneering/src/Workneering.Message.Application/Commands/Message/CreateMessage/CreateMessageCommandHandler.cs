@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MediatR;
+using ServiceStack;
 using Workneering.Base.Helpers.Extensions;
 using Workneering.Message.Domain.Entities;
 using Workneering.Message.Infrustructure.Persistence;
@@ -22,6 +23,11 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
 
         public async Task<Unit> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
+
+            if (string.IsNullOrEmpty(request.Content) && request.Attachments.AsNotNull().Any())
+            {
+                return Unit.Value;
+            }
             TypeAdapterConfig<StoredFile, MessageAttachments>.NewConfig()
                       .Map(dest => dest.Attachments.Key, src => src.Key)
                       .Map(dest => dest.Attachments.Extension, src => src.Extension)

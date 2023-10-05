@@ -26,7 +26,7 @@ namespace Workneering.Project.Application.Commands.CreateProposal
             _context.Projects.Attach(query);
             _context?.SaveChangesAsync(cancellationToken);
 
-            await _dbQueryService.AddRoom(CurrentUser.Id.Value, request.ProjectId.Value);
+            await _dbQueryService.AddRoom(CurrentUser.Id.Value, query.ClientId.Value);
             return Unit.Value;
         }
     }
