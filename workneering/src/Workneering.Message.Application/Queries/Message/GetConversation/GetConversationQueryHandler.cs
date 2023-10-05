@@ -52,6 +52,7 @@ namespace Workneering.Message.Application.Queries.Message.GetConversation
                     .PaginateForChatAsync(request.Hand, request.Next, cancellationToken);
 
             list.Reverse();
+
             var result = list.Adapt<List<GetConversationDto>>();
 
 
