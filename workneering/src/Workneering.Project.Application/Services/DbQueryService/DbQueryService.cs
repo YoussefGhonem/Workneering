@@ -270,30 +270,30 @@ public class DbQueryService : IDbQueryService
         };
         return result;
     }
-    public async Task<Guid> GetRoomId(Guid clientId, Guid freelancerId)
+    public async Task<RoomInfoDto> GetRoomId(Guid clientId, Guid freelancerId)
     {
 
         using var con = new SqlConnection(_connectionString);
         await con.OpenAsync();
 
         var sql = @$"  SELECT f.Id
-                        FROM  ChatSchema.Rooms f
+                        FROM  [ChatSchema].[Rooms] f
                         WHERE f.FreelancerId = '{freelancerId}' and  f.ClientId = '{clientId}'";
 
-        var roomId = await con.QueryFirstAsync<Guid>(sql);
-        if (string.IsNullOrEmpty(roomId.ToString())) return new Guid();
+        var room = await con.QueryFirstAsync<RoomInfoDto>(sql);
+        if (room == null) return new RoomInfoDto();
 
-        return roomId;
+        return room;
     }
 
-    public async Task<string> AddRoom(Guid clientId, Guid freelancerId)
+    public async Task<string> AddRoom(Guid freelancerId, Guid clientId)
     {
         using var con = new SqlConnection(_connectionString);
         await con.OpenAsync();
 
-        string insertSql = "INSERT INTO ChatSchema.Rooms (FreelancerId, ClientId) VALUES (@FreelancerId, @ClientId)";
+        string insertSql = "INSERT INTO ChatSchema.Rooms (Id,FreelancerId, ClientId, IsDeleted, CreatedDate) VALUES (@Id, @FreelancerId, @ClientId,@IsDeleted,@CreatedDate)";
 
-        await con.ExecuteAsync(insertSql, new { FreelancerId = freelancerId, ClientId = clientId });
+        await con.ExecuteAsync(insertSql, new { FreelancerId = freelancerId, ClientId = clientId, Id = Guid.NewGuid(), IsDeleted = false, CreatedDate = DateTimeOffset.UtcNow });
         return string.Empty;
     }
 }

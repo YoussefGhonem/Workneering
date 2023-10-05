@@ -17,7 +17,7 @@ public interface IDbQueryService
     public List<CategorizationDto> GetSupCateforiesForProject(List<Guid>? suppCategoryIds);
     public List<CategorizationDto> GetCategoriesForProject(List<Guid>? categoryIds);
     public Task<FreelancerInfoDto> GetFreelancerInfo(Guid Id);
-    public Task<string> AddRoom(Guid clientId, Guid freelancerId);
-    public Task<Guid> GetRoomId(Guid clientId, Guid freelancerId);
+    public Task<string> AddRoom(Guid freelancerId, Guid clientId);
+    public Task<RoomInfoDto> GetRoomId(Guid clientId, Guid freelancerId);
 
 }

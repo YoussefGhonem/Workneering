@@ -4,14 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Workneering.Base.Application.Common.Pagination;
 using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Message.Application.Extensions;
-using Workneering.Message.Application.Queries.GlopalChat.GeRoomsForClient;
 using Workneering.Message.Application.Services.DbQueryService;
 using Workneering.Message.Infrustructure.Persistence;
 using Workneering.Packages.Storage.AWS3.Services;
-using Workneering.Shared.Core.Extention;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
-namespace Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelancer
+namespace Workneering.Message.Application.Queries.GlopalChat.GeRooms
 {
     public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GeRoomsQuery, PaginationResult<RoomsDto>>
     {
@@ -27,14 +25,30 @@ namespace Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelance
         }
         public async Task<PaginationResult<RoomsDto>> Handle(GeRoomsQuery request, CancellationToken cancellationToken)
         {
-            TypeAdapterConfig<Domain.Entities.Room, RoomsDto>.NewConfig()
-            .Map(dest => dest.UserImageUrl, src => src.ClientId.SetImageURL(_dbQueryService).Result)
-            .Map(dest => dest.UserName, src => src.ClientId.GetUserInfo(_dbQueryService).Result.Name)
-            .Map(dest => dest.UserCountryName, src => src.ClientId.GetUserInfo(_dbQueryService).Result.CountryName)
-            .Map(dest => dest.UserTitle, src => src.ClientId.GetUserInfo(_dbQueryService).Result.Title);
 
             var isFreelancer = CurrentUser.Roles.Contains(Shared.Core.Identity.Enums.RolesEnum.Freelancer);
-            var (list, total) = await _context.Rooms.Where(x => (isFreelancer ? x.FreelancerId : x.ClientId) == CurrentUser.Id && x.IsActive)
+            if (isFreelancer)
+            {
+                TypeAdapterConfig<Domain.Entities.Room, RoomsDto>.NewConfig()
+                 .Map(dest => dest.UserImageUrl, src => src.ClientId.SetImageURL(_dbQueryService).Result)
+                 .Map(dest => dest.UserName, src => src.ClientId.GetUserInfo(_dbQueryService).Result.Name)
+                 .Map(dest => dest.UserCountryName, src => src.ClientId.GetUserInfo(_dbQueryService).Result.CountryName)
+                 .Map(dest => dest.UserTitle, src => src.ClientId.GetUserInfo(_dbQueryService).Result.Title);
+            }
+            else
+            {
+                TypeAdapterConfig<Domain.Entities.Room, RoomsDto>.NewConfig()
+                .Map(dest => dest.UserImageUrl, src => src.FreelancerId.SetImageURL(_dbQueryService).Result)
+                .Map(dest => dest.UserName, src => src.FreelancerId.GetUserInfo(_dbQueryService).Result.Name)
+                .Map(dest => dest.UserCountryName, src => src.FreelancerId.GetUserInfo(_dbQueryService).Result.CountryName)
+                .Map(dest => dest.UserTitle, src => src.FreelancerId.GetUserInfo(_dbQueryService).Result.Title);
+
+
+            }
+
+
+            var (list, total) = await _context.Rooms
+                    .Where(x => (isFreelancer ? x.FreelancerId : x.ClientId) == CurrentUser.Id && x.IsActive)
                     .AsNoTracking()
                     .OrderByDescending(x => x.CreatedDate)
                     .PaginateAsync(request.PageSize, request.PageNumber, cancellationToken);

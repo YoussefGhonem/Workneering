@@ -14,7 +14,15 @@ public static class MessageExtensions
     public static async Task<UserInfoDto?> GetUserInfo(this Guid userId, IDbQueryService _dbQueryService)
     {
         var data = await _dbQueryService.GetUserInfo(userId);
-        return data;
+        var role = _dbQueryService.GetUserRole(userId);
+        var UserInfoDto = new UserInfoDto()
+        {
+            Title = data.Title,
+            CountryName = data.CountryName,
+            Name = data.Name,
+            RoleName = role
+        };
+        return UserInfoDto;
     }
 }
 

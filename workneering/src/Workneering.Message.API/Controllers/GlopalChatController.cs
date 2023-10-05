@@ -4,18 +4,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Base.Application.Common.Pagination.models;
-using Workneering.Message.Application.Commands.Message.CreateMessage;
-using Workneering.Message.Application.Commands.Message.DeleteMessage;
-using Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelancer;
+using Workneering.Message.Application.Commands.GlopalChat.CreateGlopalChat;
+using Workneering.Message.Application.Queries.GetUserInfoForChat;
+using Workneering.Message.Application.Queries.GlopalChat.GeRooms;
 using Workneering.Message.Application.Queries.GlopalChat.GetGlopalChat;
-using Workneering.Message.Application.Queries.Message.GetConversation;
-using Workneering.Message.Application.Queries.Message.GetCountUnreadMessages;
 
 namespace Workneering.Message.API.Controllers
 {
     [ApiVersion("1.0")]
     [Authorize]
-    [Route("api/v{version:apiVersion}/glopal-chat")]
+    [Route("api/v{version:apiVersion}/chat")]
     public class GlopalChatController : BaseController
     {
         public GlopalChatController(ISender mediator) : base(mediator)
@@ -23,25 +21,23 @@ namespace Workneering.Message.API.Controllers
         }
 
         #region Commands
-        [HttpPost("{projectId}")]
+        [HttpPost("{roomId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateMessageCommand([FromForm] CreateMessageCommand command, Guid projectId)
+        public async Task<ActionResult<Unit>> CreateMessageCommand([FromForm] CreateGlopalChatCommand command, Guid roomId)
         {
-            command.ProjectId = projectId;
-            return Ok(await Mediator.Send(command, CancellationToken));
-        }
+            try
+            {
+                command.RoomId = roomId;
+                return Ok(await Mediator.Send(command, CancellationToken));
 
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> DeleteMessageCommand(Guid id)
-        {
-            var command = new DeleteMessageCommand();
-            command.MessageId = id;
-            return Ok(await Mediator.Send(command, CancellationToken));
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         #endregion
@@ -64,6 +60,15 @@ namespace Workneering.Message.API.Controllers
         public async Task<ActionResult<PaginationResult<RoomsDto>>> GeRoomsQuery()
         {
             return Ok(await Mediator.Send(new GeRoomsQuery(), CancellationToken));
+        }
+
+        [HttpGet("user-info/{roomId}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserInfoForChatDto))]
+        public async Task<ActionResult<UserInfoForChatDto>> GetUserInfoForChatQuery(Guid roomId)
+        {
+            return Ok(await Mediator.Send(new GetUserInfoForChatQuery() { RoomId = roomId }, CancellationToken));
         }
 
 

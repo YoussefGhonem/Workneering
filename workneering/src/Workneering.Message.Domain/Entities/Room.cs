@@ -7,7 +7,7 @@ namespace Workneering.Message.Domain.Entities
     {
         private Guid _clientId;
         private Guid _freelancerId;
-        private bool _isActive=false;
+        private bool _isActive = false;
 
         public Guid ClientId { get => _clientId; set => _clientId = value; }
         public Guid FreelancerId { get => _freelancerId; set => _freelancerId = value; }
@@ -21,6 +21,11 @@ namespace Workneering.Message.Domain.Entities
         public Room()
         {
 
+        }
+
+        public void SetIsActive()
+        {
+            _isActive = true;
         }
     }
 }

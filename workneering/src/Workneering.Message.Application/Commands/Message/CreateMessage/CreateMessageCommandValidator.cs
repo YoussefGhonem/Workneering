@@ -13,13 +13,6 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .NotEmpty();
-            RuleFor(r => r.Content)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty();
-
-
-
         }
 
     }

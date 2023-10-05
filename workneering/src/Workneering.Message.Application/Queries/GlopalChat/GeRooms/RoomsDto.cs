@@ -1,6 +1,6 @@
 ﻿using Workneering.Message.Domain.Entities;
 
-namespace Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelancer
+namespace Workneering.Message.Application.Queries.GlopalChat.GeRooms
 {
     public class RoomsDto
     {
