@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ServiceStack;
 using Workneering.Message.Infrustructure.Persistence;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.Shared.Core.Identity.CurrentUser;
@@ -19,7 +20,9 @@ namespace Workneering.Message.Application.Queries.Message.GetCountUnreadMessages
         {
             var userId = CurrentUser.Id;
 
-            var messages = _identityDatabase.Messages.Where(m => m.IsRead == false && m.Id == userId);
+            var messages = _identityDatabase.Messages
+                .Where(m => m.IsRead == false && m.ProjectId == request.ProjectId
+                && m.CreatedUserId != CurrentUser.Id);
             var count = messages.Count();
 
             return new CountUnreadMessagesDto() { UnreadCount = count };

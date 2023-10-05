@@ -54,16 +54,15 @@ namespace Workneering.Message.API.Controllers
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
-        [HttpGet("chat/count-unread")]
+        [HttpGet("{projectId}/count-unread")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountUnreadMessagesDto))]
-        public async Task<ActionResult<CountUnreadMessagesDto>> GetCountUnreadMessagesQuery()
+        public async Task<ActionResult<CountUnreadMessagesDto>> GetCountUnreadMessagesQuery([FromQuery] GetCountUnreadMessagesQuery query, Guid projectId)
         {
-            return Ok(await Mediator.Send(new GetCountUnreadMessagesQuery(), CancellationToken));
+            query.ProjectId = projectId;
+            return Ok(await Mediator.Send(query, CancellationToken));
         }
-
-
         #endregion
     }
 }
