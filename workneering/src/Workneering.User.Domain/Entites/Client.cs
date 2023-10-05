@@ -101,7 +101,7 @@ namespace Workneering.User.Domain.Entites
         }
         public void UpdateTitle(string? field)
         {
-            _titleOverview = field;
+            _title = field;
         }
 
         public void UpdateTitleOverview(string? field)

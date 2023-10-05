@@ -6,6 +6,7 @@ using Workneering.Base.API.Controllers;
 using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Project.Application.Commands.CreateProject;
 using Workneering.Project.Application.Commands.CreateProposal;
+using Workneering.Project.Application.Commands.DeleteProject;
 using Workneering.Project.Application.Commands.RemoveProjectAttachment;
 using Workneering.Project.Application.Commands.UpdateProject;
 using Workneering.Project.Application.Commands.UpdateStatusProposal;
@@ -68,6 +69,17 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> CreateProjectCommand([FromForm] CreateProjectCommand command)
         {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> DeleteProjectCommand(Guid id)
+        {
+            var command = new DeleteProjectCommand();
+            command.Id = id;
             return Ok(await Mediator.Send(command, CancellationToken));
         }
         [HttpPut("{id}")]
