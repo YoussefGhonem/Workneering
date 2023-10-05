@@ -13,6 +13,9 @@ public class CreateUserFactory
     private readonly string _email;
     private string? _phoneNumber;
     private bool _changePassword;
+    private string? _provider;
+    private string? _userName;
+    private string? ImageUrl;
 
     // Business
     private HashSet<UserRole> _newUserRoles = new();
@@ -30,6 +33,16 @@ public class CreateUserFactory
     public CreateUserFactory WithPhoneNumber(string? phoneNumber)
     {
         _phoneNumber = phoneNumber;
+        return this;
+    }
+    public CreateUserFactory WithProvider(string? provider)
+    {
+        _provider = provider;
+        return this;
+    }
+    public CreateUserFactory UserName(string? userName)
+    {
+        _userName = userName;
         return this;
     }
 
@@ -61,7 +74,25 @@ public class CreateUserFactory
         // User Aggregate
         var user = new User(
             _name,
-        _email
+            _email
+     );
+
+        // Roles
+        foreach (var userRole in _newUserRoles)
+        {
+            user.AddUserRole(userRole);
+        }
+
+        return user;
+    }
+    public User BuildProvider()
+    {
+        // User Aggregate
+        var user = new User(
+            _name,
+        _email,
+        _provider,
+        _userName
      );
 
         // Roles

@@ -15,6 +15,8 @@ using Workneering.Base.Application.Extensions;
 using Workneering.Shared.Core.Identity.CurrentUser;
 //using Workneering.Base.Application.Services.DbQueryService;
 using Workneering.Identity.Application.Services.DbQueryService;
+using Microsoft.Extensions.Options;
+using Workneering.Identity.Infrastructure.Helper;
 
 namespace Workneering.Identity.Application;
 
@@ -24,6 +26,18 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddSingleton<IDbQueryService, DbQueryService>();
+
+        var googleAuthSettings = new GoogleAuthSettings();
+        configuration.Bind(GoogleAuthSettings.SectionName, googleAuthSettings);
+        services.AddSingleton(Options.Create(googleAuthSettings));
+
+        var faceBookAuthSettings = new FacebookAuthSettings();
+        configuration.Bind(FacebookAuthSettings.SectionName, faceBookAuthSettings);
+        services.AddSingleton(Options.Create(faceBookAuthSettings));
+
+        var linkedInAuthSettings = new LinkedInAuthSettings();
+        configuration.Bind(LinkedInAuthSettings.SectionName, linkedInAuthSettings);
+        services.AddSingleton(Options.Create(linkedInAuthSettings));
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(Assembly.GetExecutingAssembly());

@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Identity.Application.Commands.Identity.Login;
+using Workneering.Identity.Application.Commands.Identity.LoginWithThirdPart;
 using Workneering.Identity.Application.Commands.Identity.RegisterUser;
+using Workneering.Identity.Application.Commands.Identity.RegisterWiththirdPart;
 using Workneering.Identity.Application.Commands.Identity.UpdateProfile;
 using Workneering.Identity.Application.Queries.GetProfileDetails;
 
@@ -25,6 +27,24 @@ namespace Workneering.Identity.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         public async Task<ActionResult<string>> Login(LoginCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [AllowAnonymous]
+        [HttpPost("login-with-third-part")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        public async Task<ActionResult<string>> LoginWithThirdPart(LoginWithThirdPartCommand command)
+        {
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+        [AllowAnonymous]
+        [HttpPost("register-with-third-part")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        public async Task<ActionResult<string>> LoginWithThirdPart(RegisterWiththirdPartCommand command)
         {
             return Ok(await Mediator.Send(command, CancellationToken));
         }
