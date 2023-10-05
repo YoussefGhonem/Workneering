@@ -13,7 +13,7 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelancer
 {
-    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GeRoomsForFreelancerQuery, PaginationResult<RoomsForFreelancerDto>>
+    public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<GeRoomsQuery, PaginationResult<RoomsDto>>
     {
         private readonly MessagesDbContext _context;
         private readonly IStorageService _storageService;
@@ -25,21 +25,21 @@ namespace Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelance
             _storageService = storageService;
             _dbQueryService = dbQueryService;
         }
-        public async Task<PaginationResult<RoomsForFreelancerDto>> Handle(GeRoomsForFreelancerQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<RoomsDto>> Handle(GeRoomsQuery request, CancellationToken cancellationToken)
         {
-            TypeAdapterConfig<Domain.Entities.Room, RoomsForFreelancerDto>.NewConfig()
-            .Map(dest => dest.ClientImageUrl, src => src.ClientId.SetImageURL(_dbQueryService).Result)
-            .Map(dest => dest.ClientName, src => src.ClientId.GetUserInfo(_dbQueryService).Result.Name)
-            .Map(dest => dest.ClientCountryName, src => src.ClientId.GetUserInfo(_dbQueryService).Result.CountryName)
-            .Map(dest => dest.ClientTitle, src => src.ClientId.GetUserInfo(_dbQueryService).Result.Title);
+            TypeAdapterConfig<Domain.Entities.Room, RoomsDto>.NewConfig()
+            .Map(dest => dest.UserImageUrl, src => src.ClientId.SetImageURL(_dbQueryService).Result)
+            .Map(dest => dest.UserName, src => src.ClientId.GetUserInfo(_dbQueryService).Result.Name)
+            .Map(dest => dest.UserCountryName, src => src.ClientId.GetUserInfo(_dbQueryService).Result.CountryName)
+            .Map(dest => dest.UserTitle, src => src.ClientId.GetUserInfo(_dbQueryService).Result.Title);
 
-
-            var (list, total) = await _context.Rooms.Where(x => x.ClientId == CurrentUser.Id && x.IsActive)
+            var isFreelancer = CurrentUser.Roles.Contains(Shared.Core.Identity.Enums.RolesEnum.Freelancer);
+            var (list, total) = await _context.Rooms.Where(x => (isFreelancer ? x.FreelancerId : x.ClientId) == CurrentUser.Id && x.IsActive)
                     .AsNoTracking()
                     .OrderByDescending(x => x.CreatedDate)
                     .PaginateAsync(request.PageSize, request.PageNumber, cancellationToken);
 
-            var result = list.Adapt<List<RoomsForFreelancerDto>>().OrderByDescending(x => x.LastMessageCreatedDate);
+            var result = list.Adapt<List<RoomsDto>>().OrderByDescending(x => x.LastMessageCreatedDate);
             foreach (var item in result)
             {
                 var lastMessage = _context.GlopalChat.Select(x => new { x.Id, x.CreatedDate, x.RoomId, x.Content }).AsNoTracking()
@@ -50,7 +50,7 @@ namespace Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelance
                 item.LastMessage = lastMessage?.Content;
                 item.LastMessageCreatedDate = lastMessage?.CreatedDate;
             }
-            return new PaginationResult<RoomsForFreelancerDto>(result.ToList(), total);
+            return new PaginationResult<RoomsDto>(result.ToList(), total);
         }
     }
 }
