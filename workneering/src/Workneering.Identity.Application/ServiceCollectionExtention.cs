@@ -17,6 +17,7 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 using Workneering.Identity.Application.Services.DbQueryService;
 using Microsoft.Extensions.Options;
 using Workneering.Identity.Infrastructure.Helper;
+using Workneering.Packages.SignalR;
 
 namespace Workneering.Identity.Application;
 
@@ -102,9 +103,10 @@ public static class DependencyInjection
         {
             options.AddPolicy("AllowOrigin", builder =>
             {
-                builder.AllowAnyOrigin() // Add your Angular app's URL here
+                builder.WithOrigins("http://localhost:4200", "http://workneering.com", "https://workneering.com")
                        .AllowAnyHeader()
-                       .AllowAnyMethod();
+                       .AllowAnyMethod()
+                       .AllowCredentials();
             });
         });
         return services;
@@ -117,7 +119,7 @@ public static class DependencyInjection
         app.UseCors("AllowOrigin");
         app.UseAuthentication();
         app.UseAuthorization();
-        app.MapControllers();
+        app.UseSignalRApplication();// should be after UseAuthentication / UseAuthorization
         app.UseCurrentUser();
 
         return app;

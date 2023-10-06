@@ -18,7 +18,8 @@ public static class ConfigureService
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapHub<ChatHub>("/chat");
+            app.MapControllers();
+            endpoints.MapHub<ChatHub>("/api/v1/chatHub");
         });
         return app;
     }

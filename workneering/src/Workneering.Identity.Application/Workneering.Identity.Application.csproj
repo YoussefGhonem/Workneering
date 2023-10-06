@@ -21,6 +21,7 @@
 		<ProjectReference Include="..\Workneering.Base.Application\Workneering.Base.Application.csproj" />
 		<ProjectReference Include="..\Workneering.Identity.Domain\Workneering.Identity.Domain.csproj" />
 		<ProjectReference Include="..\Workneering.Identity.Infrastructure\Workneering.Identity.Infrastructure.csproj" />
+		<ProjectReference Include="..\Workneering.Packages.SignalR\Workneering.Packages.SignalR.csproj" />
 		<ProjectReference Include="..\Workneering.User.Application\Workneering.User.Application.csproj" />
 	</ItemGroup>
 </Project>
