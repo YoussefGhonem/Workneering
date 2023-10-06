@@ -5,8 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Base.Application.Common.Pagination.models;
 using Workneering.Message.Application.Commands.GlopalChat.CreateGlopalChat;
+using Workneering.Message.Application.Commands.GlopalChat.MarkRoomAsRead;
 using Workneering.Message.Application.Queries.GetUserInfoForChat;
 using Workneering.Message.Application.Queries.GlopalChat.GeRooms;
+using Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelancer;
+using Workneering.Message.Application.Queries.GlopalChat.GetCountRoomsUnread;
+using Workneering.Message.Application.Queries.GlopalChat.GetCountUnreadRoom;
 using Workneering.Message.Application.Queries.GlopalChat.GetGlopalChat;
 
 namespace Workneering.Message.API.Controllers
@@ -40,6 +44,15 @@ namespace Workneering.Message.API.Controllers
             }
         }
 
+        [HttpPut("{roomId}/read")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<GlopalChatDto>))]
+        public async Task<ActionResult<PaginationResult<GlopalChatDto>>> MarkRoomAsReadCommand([FromBody] MarkRoomAsReadCommand query, Guid roomId)
+        {
+            query.RoomId = roomId;
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
         #endregion
 
         #region Queries
@@ -52,14 +65,48 @@ namespace Workneering.Message.API.Controllers
             query.RoomId = roomId;
             return Ok(await Mediator.Send(query, CancellationToken));
         }
+        [HttpGet("{roomId}/count-unread")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountUnreadRoomDto))]
+        public async Task<ActionResult<CountUnreadRoomDto>> GetCountUnreadRoomQuery([FromQuery] GetCountUnreadRoomQuery query, Guid roomId)
+        {
+            query.RoomId = roomId;
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
+        [HttpGet("rooms/count")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountUnreadRoomDto))]
+        public async Task<ActionResult<CountUnreadRoomDto>> GetCountRoomsUnreadQuery([FromQuery] GetCountRoomsUnreadQuery query)
+        {
+            return Ok(await Mediator.Send(query, CancellationToken));
+        }
 
-        [HttpGet("rooms")]
+        [HttpGet("rooms/client")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<RoomsDto>))]
         public async Task<ActionResult<PaginationResult<RoomsDto>>> GeRoomsQuery()
         {
             return Ok(await Mediator.Send(new GeRoomsQuery(), CancellationToken));
+        }
+        [HttpGet("rooms/company")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<RoomsDto>))]
+        public async Task<ActionResult<PaginationResult<RoomsDto>>> GeRoomsCompanyQuery()
+        {
+            return Ok(await Mediator.Send(new GeRoomsQuery(), CancellationToken));
+        }
+
+        [HttpGet("rooms/freelancer")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<RoomsDto>))]
+        public async Task<ActionResult<PaginationResult<RoomsDto>>> GeRoomsForFreelancerQuery()
+        {
+            return Ok(await Mediator.Send(new GeRoomsForFreelancerQuery(), CancellationToken));
         }
 
         [HttpGet("user-info/{roomId}")]

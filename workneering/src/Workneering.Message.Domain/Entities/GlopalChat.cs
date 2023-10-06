@@ -31,5 +31,10 @@ namespace Workneering.Message.Domain.Entities
         {
 
         }
+        public void MarkMessageAsRead()
+        {
+            _isRead = true;
+            _dateRead = DateTime.UtcNow;
+        }
     }
 }

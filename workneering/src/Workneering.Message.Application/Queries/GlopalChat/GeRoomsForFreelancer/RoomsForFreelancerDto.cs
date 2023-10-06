@@ -1,8 +1,8 @@
 ﻿using Workneering.Message.Domain.Entities;
 
-namespace Workneering.Message.Application.Queries.GlopalChat.GeRooms
+namespace Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelancer
 {
-    public class RoomsDto
+    public class FreelancerRoomsDto
     {
         public Guid? Id { get; set; }
         public Guid? UserId { get; set; }
@@ -14,4 +14,5 @@ namespace Workneering.Message.Application.Queries.GlopalChat.GeRooms
         public int UnreadCount { get; set; } = 0;
         public DateTimeOffset? LastMessageCreatedDate { get; set; }
     }
+
 }
