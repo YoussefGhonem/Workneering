@@ -22,17 +22,17 @@ namespace Workneering.Identity.Application.Commands.Identity.LoginWithThirdPart
         public readonly IDbQueryService _dbQueryService;
         private readonly HttpClient _httpClient;
         public readonly FacebookAuthSettings _facebookAuthSettings;
-        public readonly GoogleAuthSettings _googleAuthSettings;
+        //public readonly GoogleAuthSettings _googleAuthSettings;
 
 
-        public LoginWithThirdPartCommandHandler(IdentityDatabaseContext context, IConfiguration configuration, GoogleAuthSettings googleAuthSettings,
+        public LoginWithThirdPartCommandHandler(IdentityDatabaseContext context, IConfiguration configuration,
             IDbQueryService dbQueryService, IOptions<FacebookAuthSettings> facebookAuthSettings)
         {
             _context = context;
             _configuration = configuration;
             //_dbQueryService = dbQueryService;
             _dbQueryService = dbQueryService;
-            _googleAuthSettings = googleAuthSettings;
+            //_googleAuthSettings = googleAuthSettings;
             _httpClient = new HttpClient
             {
                 BaseAddress = new Uri("https://graph.facebook.com")
@@ -95,10 +95,10 @@ namespace Workneering.Identity.Application.Commands.Identity.LoginWithThirdPart
         {
             var payload = await GoogleJsonWebSignature.ValidateAsync(accessToken);
 
-            if (!payload.Audience.Equals(_googleAuthSettings.ClientId))
-            {
-                return false;
-            }
+            //if (!payload.Audience.Equals(_googleAuthSettings.ClientId))
+            //{
+            //    return false;
+            //}
             if (!payload.Issuer.Equals("accounts.google.com") && !payload.Issuer.Equals("https://accounts.google.com"))
             {
                 return false;

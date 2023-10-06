@@ -13,6 +13,7 @@ public interface IDbQueryService
     public ClientInfoForProjectDetails GetClientInfoForProjectDetails(Guid clientId);
     public IndustryDetails? GetIndustryName(Guid clientId);
     public string GetUserRole(Guid userId);
+    public Task<CountUnreadMessagesDto>? GetUnreadCount(Guid? projectId, Guid? currentUserId);
     public List<CategorizationDto> GetSkillsForProject(List<Guid>? skillsIds);
     public List<CategorizationDto> GetSupCateforiesForProject(List<Guid>? suppCategoryIds);
     public List<CategorizationDto> GetCategoriesForProject(List<Guid>? categoryIds);

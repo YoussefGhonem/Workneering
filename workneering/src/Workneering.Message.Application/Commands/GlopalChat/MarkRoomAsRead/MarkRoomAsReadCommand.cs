@@ -7,7 +7,7 @@ namespace Workneering.Message.Application.Commands.GlopalChat.MarkRoomAsRead
     {
         [JsonIgnore]
         public Guid RoomId { get; set; }
-        public List<Guid> Ids { get; set; }
+        public List<Guid>? Ids { get; set; }
 
 
     }

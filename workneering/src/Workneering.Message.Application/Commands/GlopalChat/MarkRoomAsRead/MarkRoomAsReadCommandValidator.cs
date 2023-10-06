@@ -9,10 +9,7 @@ namespace Workneering.Message.Application.Commands.GlopalChat.MarkRoomAsRead
         {
             CascadeMode = CascadeMode.Stop;
 
-            RuleFor(r => r.Ids)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty();
+
 
 
 

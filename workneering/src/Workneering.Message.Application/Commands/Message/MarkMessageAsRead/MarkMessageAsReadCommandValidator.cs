@@ -9,12 +9,6 @@ namespace Workneering.Message.Application.Commands.Message.MarkMessageAsRead
         {
             CascadeMode = CascadeMode.Stop;
 
-            RuleFor(r => r.Ids)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty();
-
-
 
 
         }

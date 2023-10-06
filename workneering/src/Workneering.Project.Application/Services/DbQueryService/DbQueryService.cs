@@ -178,6 +178,25 @@ public class DbQueryService : IDbQueryService
         return data.ToList();
 
     }
+    public async Task<CountUnreadMessagesDto>? GetUnreadCount(Guid? projectId, Guid? currentUserId)
+    {
+
+        using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync();
+        var sql = @$"SELECT COUNT(*) as UnreadCount
+                        FROM ChatSchema.Messages 
+                        WHERE IsRead = 0 
+                        AND ProjectId = '{projectId}' 
+                        AND CreatedUserId != '{currentUserId}'";
+
+        var data = con.QueryFirstAsync<CountUnreadMessagesDto>(sql);
+        if (data.Result.UnreadCount == null)
+        {
+            return new CountUnreadMessagesDto();
+        }
+        return data.Result;
+
+    }
 
     public List<CategorizationDto>? GetSkillsForProject(List<Guid>? skillsIds)
     {

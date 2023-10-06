@@ -7,7 +7,7 @@ namespace Workneering.Message.Application.Commands.Message.MarkMessageAsRead
     {
         [JsonIgnore]
         public Guid ProjectId { get; set; }
-        public List<Guid> Ids { get; set; }
+        public List<Guid>? Ids { get; set; }
 
 
     }
