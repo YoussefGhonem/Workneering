@@ -16,6 +16,7 @@ namespace Workneering.Identity.Domain.Entities
         private string? _imageAmazonKey;
         private string? _phoneNumber;
         private UserAddress? _address;
+        private string? _provider;
         // Audit
         private DateTimeOffset _createdDate;
         private Guid? _createdBy;
@@ -34,6 +35,14 @@ namespace Workneering.Identity.Domain.Entities
             Email = Guard.Against.NullOrWhiteSpace(email, nameof(email));
             UserName = Email;
 
+            MarkAsCreated(CurrentUser.Id);
+        }
+        public User(string name, string email, string provider, string userName)
+        {
+            _name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
+            Email = Guard.Against.NullOrWhiteSpace(email, nameof(email));
+            Provider = Guard.Against.NullOrWhiteSpace(provider, nameof(provider));
+            UserName = userName;
             MarkAsCreated(CurrentUser.Id);
         }
 
@@ -64,6 +73,11 @@ namespace Workneering.Identity.Domain.Entities
         {
             get => _imageAmazonKey;
             private set => _imageAmazonKey = value;
+        }
+        public string? Provider
+        {
+            get => _provider;
+            private set => _provider = value;
         }
 
         public bool IsDeleted { get; private set; }
