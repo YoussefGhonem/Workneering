@@ -31,12 +31,13 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterWiththirdPa
         //private readonly SignInManager<Workneering.Identity.Domain.Entities.User> _singManager;
         private readonly HttpClient _httpClient;
         public readonly FacebookAuthSettings _facebookAuthSettings;
+        public readonly LinkedInAuthSettings _linkedInAuthSettings;
         private readonly IMediator _mediator;
 
 
         public RegisterWiththirdPartHandler(IdentityDatabaseContext context, IConfiguration configuration, IDbQueryService dbQueryService,
             IOptions<GoogleAuthSettings> googleAuthSettings,
-            IOptions<FacebookAuthSettings> facebookAuthSettings, UserManager<Domain.Entities.User> userManager, IMediator mediator)
+            IOptions<FacebookAuthSettings> facebookAuthSettings, UserManager<Domain.Entities.User> userManager, IMediator mediator, IOptions<LinkedInAuthSettings> linkedInAuthSettings)
         {
             _context = context;
             _configuration = configuration;
@@ -52,6 +53,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterWiththirdPa
             };
             _userManager = userManager;
             _mediator = mediator;
+            _linkedInAuthSettings = linkedInAuthSettings.Value;
         }
         private async Task<bool> FacebookValidateAsync(string accessToken, string userId){
            var facebookKeys = _facebookAuthSettings.AppId + "|" + _facebookAuthSettings.AppSecret;
@@ -64,7 +66,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterWiththirdPa
         }
         private async Task<bool> GoogleValidateAsync(string accessToken, string userId)
         {
-            var payload = await GoogleJsonWebSignature.ValidateAsync(accessToken);
+            var payload = await GoogleJsonWebSignature.ValidateAsync(accessToken); 
 
             if (!payload.Audience.Equals(_googleAuthSettings.ClientId))
             {
@@ -155,10 +157,25 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterWiththirdPa
                 var token = JsonWebTokenGeneration.GenerateJwtToken(_configuration, user);
 
                 return token;
+            } else if (request.provider.Equals("linkedin"))
+            {
+                var userBuilder = new CreateUserFactory(request.name,
+               request.email)
+               .WithRoles(rolesFromDb, request.Role);
+                userBuilder.WithProvider(request.provider);
+                userBuilder.UserName(request.userId);
+                var user = userBuilder.BuildProvider();
+                var result = await _userManager.CreateAsync(user);
+                if (!result.Succeeded) throw new Exception(result.Errors.ToString());
+                await _context.SaveChangesAsync(user.Id, cancellationToken);
+                var command = new CreateUserCommand(user.Id, request.Role, request.name);
+                await _mediator.Send(command, cancellationToken);
+                var token = JsonWebTokenGeneration.GenerateJwtToken(_configuration, user);
+
+                return token;
             }
             else
             {
-
                 return null;
             }
                                
