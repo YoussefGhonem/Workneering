@@ -20,7 +20,7 @@ namespace Workneering.Message.Application.Commands.GlopalChat.MarkRoomAsRead
         public async Task<Unit> Handle(MarkRoomAsReadCommand request, CancellationToken cancellationToken)
         {
             var messages = messagesDbContext.GlopalChat
-                .Where(x => x.RoomId == request.RoomId && x.CreatedUserId != CurrentUser.Id && request.Ids.Contains(x.Id)).ToList();
+                .Where(x => x.IsRead == false && x.RoomId == request.RoomId && x.CreatedUserId != CurrentUser.Id && request.Ids.Contains(x.Id)).ToList();
 
             foreach (var item in messages)
             {
