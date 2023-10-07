@@ -22,10 +22,11 @@ namespace Workneering.Identity.Application.Commands.Identity.LoginWithThirdPart
         public readonly IDbQueryService _dbQueryService;
         private readonly HttpClient _httpClient;
         public readonly FacebookAuthSettings _facebookAuthSettings;
+        private readonly GoogleAuthSettings _googleAuthSettings;
 
 
         public LoginWithThirdPartCommandHandler(IdentityDatabaseContext context, IConfiguration configuration,
-            IDbQueryService dbQueryService, IOptions<FacebookAuthSettings> facebookAuthSettings)
+            IDbQueryService dbQueryService, IOptions<FacebookAuthSettings> facebookAuthSettings, IOptions<GoogleAuthSettings> googleAuthSettings)
         {
             _context = context;
             _configuration = configuration;
@@ -36,6 +37,7 @@ namespace Workneering.Identity.Application.Commands.Identity.LoginWithThirdPart
                 BaseAddress = new Uri("https://graph.facebook.com")
             };
             _facebookAuthSettings = facebookAuthSettings.Value;
+            _googleAuthSettings = googleAuthSettings.Value;
         }
 
         public async Task<string> Handle(LoginWithThirdPartCommand request, CancellationToken cancellationToken)
