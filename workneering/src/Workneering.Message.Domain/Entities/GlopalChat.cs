@@ -10,14 +10,14 @@ namespace Workneering.Message.Domain.Entities
         private Guid _createdUserId;
         private Guid _roomId;
         private bool _isRead = false;
-        private DateTime? _dateRead;
+        private DateTimeOffset? _dateRead;
         private List<GlopalChatAttachments>? _glopalChatAttachments = new();
 
         public string? Content { get => _content; set => _content = value; }
         public bool IsRead { get => _isRead; set => _isRead = value; }
         public Guid CreatedUserId { get => _createdUserId; set => _createdUserId = value; }
         public Guid RoomId { get => _roomId; set => _roomId = value; }
-        public DateTime? DateRead { get => _dateRead; set => _dateRead = value; }
+        public DateTimeOffset? DateRead { get => _dateRead; set => _dateRead = value; }
         public List<GlopalChatAttachments>? GlopalChatAttachments => _glopalChatAttachments;
 
         public GlopalChat(string? content, Guid roomId, List<GlopalChatAttachments>? glopalChatAttachments)
@@ -34,7 +34,7 @@ namespace Workneering.Message.Domain.Entities
         public void MarkMessageAsRead()
         {
             _isRead = true;
-            _dateRead = DateTime.UtcNow;
+            _dateRead = DateTimeOffset.Now;
         }
     }
 }
