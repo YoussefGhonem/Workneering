@@ -31,6 +31,10 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                 .OrderByDescending(x => x.CreatedDate)
                 .PaginateAsync(request.PageSize, request.PageNumber);
             var result = projects.list.ToList();
+
+            TypeAdapterConfig<Domain.Entities.Project, ClientProjectsDto>.NewConfig()
+                .Map(dest => dest.UnreadCount, src => _dbQueryService.GetUnreadCount(src.Id, CurrentUser.Id).Result.UnreadCount);
+
             var data = new List<ClientProjectsDto>();
 
             foreach (var project in projects.list)
@@ -52,7 +56,6 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
                         ImageUrl = info.Url
                     };
                 }
-
                 // Populate the proposals for the project
                 projectDto.Proposals = new List<ClientProposalsDto>();
 

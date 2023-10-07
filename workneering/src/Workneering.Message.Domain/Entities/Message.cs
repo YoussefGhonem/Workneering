@@ -14,10 +14,10 @@ namespace Workneering.Message.Domain.Entities
         private List<MessageAttachments>? _messageAttachments = new();
 
         public string? Content { get => _content; set => _content = value; }
-        public bool IsRead { get => _isRead; set => _isRead = value; }
         public Guid CreatedUserId { get => _createdUserId; set => _createdUserId = value; }
         public Guid ProjectId { get => _projectId; set => _projectId = value; }
         public DateTime? DateRead { get => _dateRead; set => _dateRead = value; }
+        public bool IsRead { get => _isRead; set => _isRead = value; }
         public List<MessageAttachments>? MessageAttachments => _messageAttachments;
 
         public Message(string? content, Guid projectId, List<MessageAttachments>? messageAttachments)
@@ -30,6 +30,11 @@ namespace Workneering.Message.Domain.Entities
         public Message()
         {
 
+        }
+        public void MarkMessageAsRead()
+        {
+            _isRead = true;
+            _dateRead = DateTime.UtcNow;
         }
     }
 }

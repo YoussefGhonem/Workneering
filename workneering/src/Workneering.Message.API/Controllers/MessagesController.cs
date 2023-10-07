@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
 using Workneering.Message.Application.Commands.Message.CreateMessage;
 using Workneering.Message.Application.Commands.Message.DeleteMessage;
+using Workneering.Message.Application.Commands.Message.MarkMessageAsRead;
 using Workneering.Message.Application.Queries.Message.GetConversation;
 using Workneering.Message.Application.Queries.Message.GetCountUnreadMessages;
 
@@ -25,6 +26,16 @@ namespace Workneering.Message.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
         public async Task<ActionResult<Unit>> CreateMessageCommand([FromForm] CreateMessageCommand command, Guid projectId)
+        {
+            command.ProjectId = projectId;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
+
+        [HttpPut("{projectId}/read")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> MarkMessageAsReadCommand([FromBody] MarkMessageAsReadCommand command, Guid projectId)
         {
             command.ProjectId = projectId;
             return Ok(await Mediator.Send(command, CancellationToken));
@@ -54,16 +65,15 @@ namespace Workneering.Message.API.Controllers
             return Ok(await Mediator.Send(query, CancellationToken));
         }
 
-        [HttpGet("chat/count-unread")]
+        [HttpGet("{projectId}/count-unread")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountUnreadMessagesDto))]
-        public async Task<ActionResult<CountUnreadMessagesDto>> GetCountUnreadMessagesQuery()
+        public async Task<ActionResult<CountUnreadMessagesDto>> GetCountUnreadMessagesQuery([FromQuery] GetCountUnreadMessagesQuery query, Guid projectId)
         {
-            return Ok(await Mediator.Send(new GetCountUnreadMessagesQuery(), CancellationToken));
+            query.ProjectId = projectId;
+            return Ok(await Mediator.Send(query, CancellationToken));
         }
-
-
         #endregion
     }
 }

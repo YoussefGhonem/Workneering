@@ -11,6 +11,8 @@ namespace Workneering.Message.Application.Queries.Message.GetConversation
         public string? CreatedUserCountryName { get; set; }
         public string? CreatedUserPhotoUrl { get; set; }
         public string? Content { get; set; }
+        public DateTime? DateRead { get; set; }
+        public bool IsRead { get; set; }
         public DateTimeOffset? CreatedDate { get; set; }
         public List<MessageAttachmentsDto>? MessageAttachments { get; set; }
 

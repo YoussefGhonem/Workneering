@@ -17,6 +17,7 @@ namespace Workneering.Project.Application.Queries.ClientProjectDetails.GetClient
         public string? ProjectStatus { get; set; }
         public string? ExperienceLevel { get; set; }
         public int NumberOfProposals { get; set; }
+        public int UnreadCount { get; set; } = 0;
         public AssginedFreelancerDto AssginedFreelancer { get; set; }
         public List<ClientProposalsDto> Proposals { get; set; } = new();
 

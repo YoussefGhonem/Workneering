@@ -42,7 +42,6 @@ namespace Workneering.Message.Application.Queries.GlopalChat.GetGlopalChat
             .Map(dest => dest.FileSize, src => src.Attachments.FileSize);
 
 
-
             var (list, total) = await _context.GlopalChat.Where(x => x.RoomId == request.RoomId)
                     .AsNoTracking()
                     .Include(x => x.GlopalChatAttachments)
