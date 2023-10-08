@@ -21,25 +21,9 @@ namespace Workneering.Identity.Application.Commands.Identity.Login
             _userManager = userManager;
             _passwordHasher = passwordHasher;
             RuleFor(r => r.provider).NotEmpty().NotNull();
-            RuleFor(r => r.userId).MustAsync(BeExistUser).WithMessage("Email is not found")
-           .NotNull().NotEmpty();
+            RuleFor(r => r.userId);
+                //.MustAsync(BeExistUser).WithMessage("Email is not found")
             RuleFor(r => r.accessToken).NotNull().NotEmpty();
-
-            //RuleFor(r => r.Email)
-            //    .Cascade(CascadeMode.Stop)
-            //    .NotNull()
-            //    .NotEmpty()
-            //    .EmailAddress()
-            //    .MustAsync(BeExistUser).WithMessage("Email is not found")
-            //    .Must(BeExistPassword).WithMessage("Please, reset your password first to be able to login")
-            //    .MustAsync((command, email, cancellationToken) => BeCorrectPassword(command.Password, cancellationToken))
-            //    .WithMessage("Password is not valid");
-
-
-            //RuleFor(p => p.Password)
-            //    .Cascade(CascadeMode.Stop)
-            //    .NotNull()
-            //    .NotEmpty();
         }
 
         private async Task<bool> BeExistUser(string userName, CancellationToken cancellation)
@@ -50,21 +34,6 @@ namespace Workneering.Identity.Application.Commands.Identity.Login
                 .Include(user => user.Claims)
                 .FirstOrDefaultAsync(cancellationToken: cancellation);
             return _user is not null;
-        }
-
-        private bool BeExistPassword(string password)
-        {
-            return _user!.PasswordHash is not null;
-        }
-
-        private async Task<bool> BeCorrectPassword(string password, CancellationToken cancellationToken)
-        {
-            var isValidPassword = _passwordHasher.VerifyHashedPassword(_user!, _user!.PasswordHash, password)
-                                  == PasswordVerificationResult.Success;
-            if (isValidPassword) return true;
-            await _userManager.AccessFailedAsync(_user);
-
-            return false;
         }
 
     }
