@@ -56,8 +56,13 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
             var userInfo = await _dbQueryService.GetUserInfo(CurrentUser.Id.Value);
             var title = @$"You have new message with '{projectInfo.ProjectTitle}'";
             var content = @$"{userInfo.Name} send you new message with '{projectInfo.ProjectTitle}'";
-            var notification = new MessegeNotifications(recieveId, title, content, request.ProjectId, null, CurrentUser.Id);
-            await messagesDbContext.Notifications.AddAsync(notification, cancellationToken);
+            var isExistMessege = messagesDbContext.Notifications
+                .Any(x => x.IsRead == false && x.ProjectId == request.ProjectId && x.RecipientId == recieveId);
+            if (!isExistMessege)
+            {
+                var notification = new MessegeNotifications(recieveId, title, content, request.ProjectId, null, CurrentUser.Id);
+                await messagesDbContext.Notifications.AddAsync(notification, cancellationToken);
+            }
 
             await messagesDbContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;

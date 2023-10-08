@@ -34,7 +34,7 @@ public record MessegeNotifications : BaseEntity
     public bool IsRead { get => _isRead; set => _isRead = value; }
     public DateTimeOffset? DateRead { get => _dateRead; set => _dateRead = value; }
 
-    public void MarkMessageAsRead()
+    public void MarkAsRead()
     {
         _isRead = true;
         _dateRead = DateTimeOffset.Now;

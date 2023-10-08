@@ -58,8 +58,15 @@ namespace Workneering.Message.Application.Commands.GlopalChat.CreateGlopalChat
             var userInfo = await _dbQueryService.GetUserInfo(CurrentUser.Id.Value);
             var title = @$"You have new message from '{userInfo.Name}'";
             var content = @$"{userInfo.Name} send you new message";
-            var notification = new MessegeNotifications(recieveId, title, content, null, request.RoomId, CurrentUser.Id);
-            await _messagesDbContext.Notifications.AddAsync(notification, cancellationToken);
+
+
+            var isExistMessege = _messagesDbContext.Notifications
+                .Any(x => x.IsRead == false && x.RoomId == request.RoomId && x.RecipientId == recieveId);
+            if (!isExistMessege)
+            {
+                var notification = new MessegeNotifications(recieveId, title, content, null, request.RoomId, CurrentUser.Id);
+                await _messagesDbContext.Notifications.AddAsync(notification, cancellationToken);
+            }
 
             await _messagesDbContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
