@@ -78,7 +78,7 @@ namespace Workneering.Identity.Application.Commands.Identity.LoginWithThirdPart
                 var resultLinkedIn = new UserBaseData()
                 {
                     WengazPercentage = UserDataLinkedIn.Result.WengazPercentage,
-                    WengazPoint = UserDataLinkedIn.Result.WengazPoint,
+                    WengazPoint = UserDataLinkedIn.Result.WengazPoint
                 };
 
                 var tokenLinkedIn = JsonWebTokenGeneration.GenerateJwtToken(_configuration, userLinkedIn, resultLinkedIn);
@@ -101,7 +101,7 @@ namespace Workneering.Identity.Application.Commands.Identity.LoginWithThirdPart
             var result = new UserBaseData()
             {
                 WengazPercentage = UserData.Result.WengazPercentage,
-                WengazPoint = UserData.Result.WengazPoint,
+                WengazPoint = UserData.Result.WengazPoint
             };
 
             var token = JsonWebTokenGeneration.GenerateJwtToken(_configuration, user, result);

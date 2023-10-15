@@ -24,6 +24,7 @@ namespace Workneering.Identity.Application.Commands.Identity.Login
             claims.AddClaim(ClaimKeys.Email, user.Email);
             claims.AddClaim(ClaimKeys.FirstName, user.GetClaimValue(ClaimKeys.FirstName));
             claims.AddClaim(ClaimKeys.LastName, user.GetClaimValue(ClaimKeys.LastName));
+            claims.AddClaim(ClaimKeys.Provider, user.Provider ?? "");
             claims.AddClaim("WengazPoint", userBaseData?.WengazPoint.ToString() ?? "");
             claims.AddClaim("WengazPercentage", userBaseData?.WengazPercentage.ToString() ?? "");
             claims.AddRange(user.UserRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Role.Name)));

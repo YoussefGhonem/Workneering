@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
+using Workneering.Identity.Application.Commands.Identity.ChangePassword;
 using Workneering.Identity.Application.Commands.Identity.Login;
 using Workneering.Identity.Application.Commands.Identity.LoginWithThirdPart;
 using Workneering.Identity.Application.Commands.Identity.RegisterUser;
 using Workneering.Identity.Application.Commands.Identity.RegisterWiththirdPart;
 using Workneering.Identity.Application.Commands.Identity.UpdateProfile;
 using Workneering.Identity.Application.Queries.GetProfileDetails;
+using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Identity.API.Controllers
 {
@@ -80,17 +82,17 @@ namespace Workneering.Identity.API.Controllers
         //    return Ok(await Mediator.Send(new ForgetPasswordCommand(email), CancellationToken));
         //}
 
-        //[Authorize]
-        //[HttpPut("change-password")]
-        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        //public async Task<ActionResult<Unit>> ChangeMyPassword(ChangePasswordCommand command)
-        //{
-        //    command.UserId = CurrentUser.Id ?? Guid.Empty;
-        //    return Ok(await Mediator.Send(command, CancellationToken));
-        //}
+        [Authorize]
+        [HttpPut("change-password")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
+        public async Task<ActionResult<Unit>> ChangeMyPassword(ChangePasswordCommand command)
+        {
+            command.UserId = CurrentUser.Id ?? Guid.Empty;
+            return Ok(await Mediator.Send(command, CancellationToken));
+        }
 
         #endregion
 
@@ -100,8 +102,9 @@ namespace Workneering.Identity.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetProfileDetailsDto))]
-        public async Task<ActionResult<GetProfileDetailsDto>> GetProfileDetailsQuery(GetProfileDetailsQuery command)
+        public async Task<ActionResult<GetProfileDetailsDto>> GetProfileDetailsQuery()
         {
+            var command = new GetProfileDetailsQuery();
             return Ok(await Mediator.Send(command, CancellationToken));
         }
         #endregion
