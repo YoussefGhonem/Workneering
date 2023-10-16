@@ -7,7 +7,7 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
     {
         public string? WebsiteLink { get; set; }
         public string? TitleOverview { get; set; }
-        public string? Title { get; set; }
+     //   public string? Title { get; set; }
         public DateTimeOffset? FoundedIn { get; set; }
         public CompanySizeEnum? CompanySize { get; set; }
         public Guid? CategoryId { get; set; }

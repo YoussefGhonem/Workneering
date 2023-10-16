@@ -13,10 +13,10 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
                 .NotNull()
                 .NotEmpty();
 
-            RuleFor(r => r.Title)
-                .Cascade(CascadeMode.Stop)
-                .NotNull()
-                .NotEmpty();
+            //RuleFor(r => r.Title)
+            //    .Cascade(CascadeMode.Stop)
+            //    .NotNull()
+            //    .NotEmpty();
 
             RuleFor(r => r.TitleOverview)
                 .Cascade(CascadeMode.Stop)

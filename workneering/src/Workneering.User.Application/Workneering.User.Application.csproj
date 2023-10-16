@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Workneering.Base.Application\Workneering.Base.Application.csproj" />
 		<ProjectReference Include="..\Workneering.Packages.Storage.AWS3\Workneering.Packages.Storage.AWS3.csproj" />
+		<ProjectReference Include="..\Workneering.Settings.Application\Workneering.Settings.Application.csproj" />
 		<ProjectReference Include="..\Workneering.User.Domain\Workneering.User.Domain.csproj" />
 		<ProjectReference Include="..\Workneering.User.Infrastructure\Workneering.User.Infrastructure.csproj" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0" />

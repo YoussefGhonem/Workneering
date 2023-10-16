@@ -24,6 +24,8 @@ namespace Workneering.User.Application.Queries.Company.GetCompanyBasicDetails
         public DateTimeOffset? FoundedIn { get; set; }
         public CompanySizeEnum? CompanySize { get; set; }
         public Guid? CategoryId { get; set; }
+        public Guid? IndustryId { get; set; }
+        public string? IndustryName { get; set; }
         public int WengazPercentage { get; set; }
         public int ProfilePoint { get; set; }
         public int MonthPoint { get; set; }
