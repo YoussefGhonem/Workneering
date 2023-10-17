@@ -3,10 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
-using Workneering.Base.Application.Common.Pagination.models;
-using Workneering.Message.Application.Commands.Notification.MarkNotificationAsRead;
-using Workneering.Message.Application.Queries.Notifications.GeNotifications;
-using Workneering.Message.Application.Queries.Notifications.GetUnreadNotificationsCount;
 
 namespace Workneering.Message.API.Controllers
 {
@@ -25,11 +21,10 @@ namespace Workneering.Message.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> MarkNotificationAsReadCommand(Guid id)
+        public async Task<ActionResult<Unit>> CreateMessageCommand(Guid id)
         {
-            var query = new MarkNotificationAsReadCommand();
-            query.Id = id;
-            return Ok(await Mediator.Send(query, CancellationToken));
+            return Ok();
+
         }
         #endregion
 
@@ -37,22 +32,21 @@ namespace Workneering.Message.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<MessageNotificationsDto>))]
-        public async Task<ActionResult<PaginationResult<MessageNotificationsDto>>> GeNotificationsQuery([FromQuery] GeNotificationsQuery query)
+        public async Task<ActionResult<Unit>> CreateMessageCssommand()
         {
+            return Ok();
 
-            return Ok(await Mediator.Send(query, CancellationToken));
         }
 
         [HttpGet("count")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UnreadNotificationsCountDto))]
-        public async Task<ActionResult<UnreadNotificationsCountDto>> GetUnreadNotificationsCountQuery([FromQuery] GetUnreadNotificationsCountQuery query)
+        public async Task<ActionResult<Unit>> CreateMesddsageCssommand()
         {
+            return Ok();
 
-            return Ok(await Mediator.Send(query, CancellationToken));
         }
+
 
 
         #endregion

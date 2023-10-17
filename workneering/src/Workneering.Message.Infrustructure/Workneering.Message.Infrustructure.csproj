@@ -14,6 +14,5 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Workneering.Base.Helpers\Workneering.Base.Helpers.csproj" />
 		<ProjectReference Include="..\Workneering.Base.Infrastructure\Workneering.Base.Infrastructure.csproj" />
-		<ProjectReference Include="..\Workneering.Message.Domain\Workneering.Message.Domain.csproj" />
 	</ItemGroup>
 </Project>

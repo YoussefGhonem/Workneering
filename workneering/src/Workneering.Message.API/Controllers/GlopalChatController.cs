@@ -3,15 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Workneering.Base.API.Controllers;
-using Workneering.Base.Application.Common.Pagination.models;
-using Workneering.Message.Application.Commands.GlopalChat.CreateGlopalChat;
-using Workneering.Message.Application.Commands.GlopalChat.MarkRoomAsRead;
-using Workneering.Message.Application.Queries.GetUserInfoForChat;
-using Workneering.Message.Application.Queries.GlopalChat.GeRooms;
-using Workneering.Message.Application.Queries.GlopalChat.GeRoomsForFreelancer;
-using Workneering.Message.Application.Queries.GlopalChat.GetCountRoomsUnread;
-using Workneering.Message.Application.Queries.GlopalChat.GetCountUnreadRoom;
-using Workneering.Message.Application.Queries.GlopalChat.GetGlopalChat;
 
 namespace Workneering.Message.API.Controllers
 {
@@ -29,29 +20,19 @@ namespace Workneering.Message.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Unit))]
-        public async Task<ActionResult<Unit>> CreateMessageCommand([FromForm] CreateGlopalChatCommand command, Guid roomId)
+        public async Task<ActionResult<Unit>> CreateMessageCommand(Guid roomId)
         {
-            try
-            {
-                command.RoomId = roomId;
-                return Ok(await Mediator.Send(command, CancellationToken));
+            return Ok();
 
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
         }
 
         [HttpPut("{roomId}/read")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<GlopalChatDto>))]
-        public async Task<ActionResult<PaginationResult<GlopalChatDto>>> MarkRoomAsReadCommand([FromBody] MarkRoomAsReadCommand query, Guid roomId)
+        public async Task<ActionResult> MarkRoomAsReadCommand(Guid roomId)
         {
-            query.RoomId = roomId;
-            return Ok(await Mediator.Send(query, CancellationToken));
+            return Ok();
+
         }
         #endregion
 
@@ -59,64 +40,66 @@ namespace Workneering.Message.API.Controllers
         [HttpGet("{roomId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<GlopalChatDto>))]
-        public async Task<ActionResult<PaginationResult<GlopalChatDto>>> GetGlopalChat([FromQuery] GetGlopalChatQuery query, Guid roomId)
+        public async Task<ActionResult> MarkRoomAsReadComman2d(Guid roomId)
         {
-            query.RoomId = roomId;
-            return Ok(await Mediator.Send(query, CancellationToken));
+            return Ok();
+
         }
         [HttpGet("{roomId}/count-unread")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountUnreadRoomDto))]
-        public async Task<ActionResult<CountUnreadRoomDto>> GetCountUnreadRoomQuery([FromQuery] GetCountUnreadRoomQuery query, Guid roomId)
+        public async Task<ActionResult> MarkRoomAsReadCommandd(Guid roomId)
         {
-            query.RoomId = roomId;
-            return Ok(await Mediator.Send(query, CancellationToken));
+            return Ok();
+
         }
         [HttpGet("rooms/count")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountUnreadRoomDto))]
-        public async Task<ActionResult<CountUnreadRoomDto>> GetCountRoomsUnreadQuery([FromQuery] GetCountRoomsUnreadQuery query)
+        public async Task<ActionResult> MarkRoomAsRedadCommand()
         {
-            return Ok(await Mediator.Send(query, CancellationToken));
+            return Ok();
+
         }
 
         [HttpGet("rooms/client")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<RoomsDto>))]
-        public async Task<ActionResult<PaginationResult<RoomsDto>>> GeRoomsQuery()
+        public async Task<ActionResult> MarkRoomAsReddadCommand()
         {
-            return Ok(await Mediator.Send(new GeRoomsQuery(), CancellationToken));
+            return Ok();
+
         }
+
         [HttpGet("rooms/company")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<RoomsDto>))]
-        public async Task<ActionResult<PaginationResult<RoomsDto>>> GeRoomsCompanyQuery()
+        public async Task<ActionResult> MarkRoomAsRedadComdmand(Guid roomId)
         {
-            return Ok(await Mediator.Send(new GeRoomsQuery(), CancellationToken));
+            return Ok();
+
         }
+
 
         [HttpGet("rooms/freelancer")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<RoomsDto>))]
-        public async Task<ActionResult<PaginationResult<RoomsDto>>> GeRoomsForFreelancerQuery()
+        public async Task<ActionResult> MarkRoomAsReddadCommand(Guid roomId)
         {
-            return Ok(await Mediator.Send(new GeRoomsForFreelancerQuery(), CancellationToken));
+            return Ok();
+
         }
+
 
         [HttpGet("user-info/{roomId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserInfoForChatDto))]
-        public async Task<ActionResult<UserInfoForChatDto>> GetUserInfoForChatQuery(Guid roomId)
+        public async Task<ActionResult> MarkRoomAsReddadffCommand(Guid roomId)
         {
-            return Ok(await Mediator.Send(new GetUserInfoForChatQuery() { RoomId = roomId }, CancellationToken));
+            return Ok();
+
         }
+
 
 
         #endregion

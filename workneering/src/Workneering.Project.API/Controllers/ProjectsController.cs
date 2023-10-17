@@ -12,14 +12,9 @@ using Workneering.Project.Application.Commands.UpdateProject;
 using Workneering.Project.Application.Commands.UpdateStatusProposal;
 using Workneering.Project.Application.Commands.Wishlist.CreateWishlist;
 using Workneering.Project.Application.Commands.Wishlist.RemoveWishlist;
-using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProjects;
-using Workneering.Project.Application.Queries.ClientProjectDetails.GetClientProposals;
-using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectActivity;
-using Workneering.Project.Application.Queries.ClientProjectDetails.GetProjectClientBasicDetails;
 using Workneering.Project.Application.Queries.Project.GetProjects;
 using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectAttachments;
 using Workneering.Project.Application.Queries.Project.ProjectDetails.GetProjectBasicDetailsForFreelancer;
-using Workneering.Project.Application.Queries.Proposal.GetProposals;
 using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Project.API.Controllers
@@ -139,14 +134,11 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProjectActivitiesDto>))]
-        public async Task<ActionResult<PaginationResult<ProjectActivitiesDto>>> GetProjectActivitiesQuery(Guid id)
+        public async Task<ActionResult> GetProjectActivitiesQuery(Guid id)
         {
-            return Ok(await Mediator.Send(new GetProjectActivitiesQuery { ProjectId = id }, CancellationToken));
+            return Ok();
         }
-        #region Activities
 
-        #endregion
 
         #region Project 
         #region List
@@ -231,7 +223,7 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ProjectProposalsDto>))]
         public async Task<ActionResult<PaginationResult<ProjectProposalsDto>>> GetProposalsFreelancer([FromQuery] GetProposalsQuery query)
         {
-            return Ok(await Mediator.Send(query, CancellationToken));
+            return Ok();
         }
         #endregion
 
@@ -243,7 +235,7 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProjectClientBasicDetailsDto))]
         public async Task<ActionResult<ProjectClientBasicDetailsDto>> GetProjectClientBasicDetails(Guid id)
         {
-            return Ok(await Mediator.Send(new GetProjectClientBasicDetailsQuery { ProjectId = id }, CancellationToken));
+            return Ok();
         }
         [HttpGet("client")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -252,7 +244,7 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ClientProjectsDto>))]
         public async Task<ActionResult<ProjectClientBasicDetailsDto>> GetClientProjectsQuery([FromQuery] GetClientProjectsQuery query)
         {
-            return Ok(await Mediator.Send(query, CancellationToken));
+            return Ok();
         }
         #endregion
 
@@ -271,10 +263,10 @@ namespace Workneering.Project.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResult<ClientProposalsListDto>))]
-        public async Task<ActionResult<PaginationResult<ClientProposalsListDto>>> GetClientProposalsQuery([FromQuery] GetClientProposalsQuery query, Guid id)
+        public async Task<ActionResult> GetClientProposalsQuery([FromQuery] GetClientProposalsQuery query, Guid id)
         {
-            query.ProjectId = id;
-            return Ok(await Mediator.Send(query, CancellationToken));
+            return Ok();
+
         }
 
         #endregion
