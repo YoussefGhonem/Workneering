@@ -1,6 +1,7 @@
 ﻿using Workneering.Base.Domain.Common;
 using Workneering.Base.Helpers.Enums;
 using Workneering.Shared.Core.Models;
+using Workneering.User.Domain.Events;
 using Workneering.User.Domain.Helpr;
 using Workneering.User.Domain.valueobjects;
 
@@ -112,6 +113,7 @@ namespace Workneering.User.Domain.Entites
         public void UpdateOverviewDescription(string? field)
         {
             _overviewDescription = field;
+            RaiseDomainEvent(new SendEmailAfterUpdatedEvent());
         }
         private decimal CalculateNullValue()
         {

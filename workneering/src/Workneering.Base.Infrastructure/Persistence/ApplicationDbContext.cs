@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Workneering.Base.Domain.Interfaces;
@@ -13,11 +14,14 @@ public class ApplicationDbContext : DbContext
     //{
     //    _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     //}
+    private readonly IMediator _mediator;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ApplicationDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options)
+    public ApplicationDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor, IMediator mediator = default) : base(options)
     {
         _httpContextAccessor = httpContextAccessor;
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
     }
     #region override methods
     //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -30,7 +34,6 @@ public class ApplicationDbContext : DbContext
     //    // B) Right AFTER committing data (EF SaveChanges) into the DB. This makes
     //    // multiple transactions. You will need to handle eventual consistency and
     //    // compensatory actions in case of failures.
-    //    // await _mediator.DispatchDomainEventsAsync(this);
 
     //    // After this line runs, all the changes (from the Command Handler and Domain
     //    // event handlers) performed through the DbContext will be committed
@@ -91,8 +94,10 @@ public class ApplicationDbContext : DbContext
     #endregion
 
     #region Helper Methods
-    private void CheckAndUpdateEntities(Guid? userId = null)
+    private async Task CheckAndUpdateEntities(Guid? userId = null)
     {
+        await _mediator.DispatchDomainEvents(this);
+
         ChangeTracker
             .Entries<ICreatedAuditableEntity>()
             .Where(e => e.State == EntityState.Added)

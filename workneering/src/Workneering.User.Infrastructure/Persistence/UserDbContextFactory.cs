@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -7,6 +8,13 @@ namespace Workneering.User.Infrastructure.Persistence;
 
 public class UserDbContextFactory : IDesignTimeDbContextFactory<UserDatabaseContext>
 {
+    private readonly IMediator _mediator;
+
+    public UserDbContextFactory(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     public UserDatabaseContext CreateDbContext(string[] args)
     {
         var configBuilder = new ConfigurationBuilder();
@@ -16,6 +24,6 @@ public class UserDbContextFactory : IDesignTimeDbContextFactory<UserDatabaseCont
         var optionsBuilder = new DbContextOptionsBuilder<UserDatabaseContext>();
         optionsBuilder.UseSqlServer(connectionString);
         var httpContextAccessor = new HttpContextAccessor();
-        return new UserDatabaseContext(optionsBuilder.Options, httpContextAccessor);
+        return new UserDatabaseContext(optionsBuilder.Options, httpContextAccessor, _mediator);
     }
 }

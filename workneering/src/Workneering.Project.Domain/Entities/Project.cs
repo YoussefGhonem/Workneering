@@ -1,6 +1,7 @@
 ﻿using Workneering.Base.Domain.Common;
 using Workneering.Base.Helpers.Extensions;
 using Workneering.Project.Domain.Enums;
+using Workneering.Project.Domain.Events;
 using Workneering.Shared.Core.Models;
 
 namespace Workneering.Project.Domain.Entities
@@ -62,6 +63,8 @@ namespace Workneering.Project.Domain.Entities
             _projectHourlyFromPrice = projectHourlyFromPrice;
             _projectHourlyToPrice = projectHourlyToPrice;
             _isRecommend = isRecommend;
+            RaiseDomainEvent(new AfterProjectCreatedEvent());
+
         }
         private void AddCategorization()
         {
@@ -188,7 +191,6 @@ namespace Workneering.Project.Domain.Entities
         }
         #endregion
 
-
         #region categorization
         public void UpdateCategory(List<ProjectCategory>? categories)
         {
@@ -250,7 +252,6 @@ namespace Workneering.Project.Domain.Entities
                 data.MarkAsDeleted(null);
             }
         }
-
         #endregion
 
         #region Wishlist

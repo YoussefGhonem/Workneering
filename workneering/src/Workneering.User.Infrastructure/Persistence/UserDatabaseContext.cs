@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Workneering.Base.Infrastructure.Persistence;
@@ -8,7 +9,8 @@ namespace Workneering.User.Infrastructure.Persistence;
 
 public class UserDatabaseContext : ApplicationDbContext
 {
-    public UserDatabaseContext(DbContextOptions<UserDatabaseContext> options, IHttpContextAccessor httpContextAccessor) : base(options, httpContextAccessor)
+
+    public UserDatabaseContext(DbContextOptions<UserDatabaseContext> options, IHttpContextAccessor httpContextAccessor, IMediator mediator) : base(options, httpContextAccessor, mediator)
     {
     }
 

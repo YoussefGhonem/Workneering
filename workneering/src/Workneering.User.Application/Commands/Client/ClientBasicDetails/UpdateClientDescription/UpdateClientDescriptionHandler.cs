@@ -15,21 +15,13 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
         }
         public async Task<Unit> Handle(UpdateClientDescriptionCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var query = await _userDatabaseContext.Clients.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
-                query!.UpdateOverviewDescription(request.OverviewDescription);
-                query!.UpdateAllPointAndPercentage();
-                _userDatabaseContext.Clients.Attach(query);
-                _userDatabaseContext?.SaveChangesAsync(cancellationToken);
-                return Unit.Value;
-            }
-            catch (Exception e)
-            {
-                return Unit.Value;
-            }
 
-
+            var query = await _userDatabaseContext.Clients.FirstOrDefaultAsync(x => x.Id == CurrentUser.Id, cancellationToken: cancellationToken);
+            query!.UpdateOverviewDescription(request.OverviewDescription);
+            query!.UpdateAllPointAndPercentage();
+            _userDatabaseContext.Clients.Attach(query);
+            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            return Unit.Value;
 
         }
     }
