@@ -79,7 +79,13 @@ public class ApplicationDbContext : DbContext
     {
 
         CheckAndUpdateEntities();
+
         var result = base.SaveChangesAsync(cancellationToken);
+        if (result.IsCompleted)
+        {
+            await _mediator.DispatchDomainEvents(this);
+
+        }
         return await result;
     }
 
