@@ -20,7 +20,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Education.UpdateEduca
             var result = request.Adapt<Domain.Entites.Education>();
             query.UpdateEducation(request.Id, result);
             _userDatabaseContext.Freelancers.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

@@ -27,7 +27,7 @@ public class GetFreelancerEducationDetailsQueryHandler : IRequestHandler<UpdateE
         query!.UpdateExperienceLevel(request.ExperienceLevel);
         query.UpdateAllPointAndPercentage(query);
         _userDatabaseContext.Freelancers.Attach(query);
-        _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+        await _userDatabaseContext.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }

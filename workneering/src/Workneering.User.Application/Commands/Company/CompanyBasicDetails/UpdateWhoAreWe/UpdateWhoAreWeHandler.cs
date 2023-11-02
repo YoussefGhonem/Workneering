@@ -20,7 +20,7 @@ namespace Workneering.User.Application.Commands.Company.CompanyBasicDetails.Upda
             query!.UpdateWhoAreWe(request.WhoAreWe);
             query!.UpdateAllPointAndPercentage();
             _userDatabaseContext.Companies.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

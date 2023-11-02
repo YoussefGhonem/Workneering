@@ -29,7 +29,7 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Cre
             query!.AddEmploymentHistory(result);
             query.UpdateAllPointAndPercentage(query);
             _userDatabaseContext?.Freelancers.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

@@ -77,7 +77,7 @@ public class DbQueryService : IDbQueryService
         }
         return data;
     }
-    public async Task<List<LanguagesListDto>> GetLanguagesAsync(List<Guid>? languagesIds)
+    public async Task<List<LanguagesListDto>> GetLanguagesAsync(List<Guid?> languagesIds)
     {
         if (languagesIds is null || !languagesIds.Any())
         {

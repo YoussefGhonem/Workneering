@@ -20,7 +20,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Language.UpdateLangua
             var result = request.Adapt<Domain.Entites.Language>();
             query!.UpdateLanguage(result.Id, result);
             _userDatabaseContext?.Freelancers.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

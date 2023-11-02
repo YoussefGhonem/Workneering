@@ -26,7 +26,7 @@ public class UpdateGenderCommandHandler : IRequestHandler<UpdateGenderCommand>
         user.UpdateGender(request.Gender);
         user.UpdateAllPointAndPercentage(user);
         _userDatabaseContext.Freelancers.Attach(user);
-        _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+        await _userDatabaseContext.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }
 }
