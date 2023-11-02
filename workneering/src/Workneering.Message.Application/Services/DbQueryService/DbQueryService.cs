@@ -1,4 +1,5 @@
 using Dapper;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Workneering.Message.Application.Services.Models;
@@ -83,5 +84,20 @@ public class DbQueryService : IDbQueryService
             Url = key.SetDownloadFileUrlByKey(_storageService)
         };
         return result;
+    }
+
+    public async Task<ProjectInfoDto> GeProjectInfo(Guid id)
+    {
+        using var con = new SqlConnection(_connectionString);
+        await con.OpenAsync();
+
+
+        var sql = @$"  SELECT  f.Id, f.ProjectTitle , f.AssginedFreelancerId , f.ClientId
+                        FROM  [ProjectsSchema].[Projects] f
+                        WHERE f.Id = '{id}' ";
+
+        var data = await con.QueryFirstAsync<ProjectInfoDto>(sql);
+
+        return data;
     }
 }

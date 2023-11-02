@@ -5,6 +5,7 @@ namespace Workneering.Message.Application.Services.DbQueryService;
 public interface IDbQueryService
 {
     public Task<UserInfoDto> GetUserInfo(Guid Id);
+    public Task<ProjectInfoDto> GeProjectInfo(Guid Id);
     public Task<ImageDetailsDto> GetUserImage(Guid freelancerId);
     public string GetUserRole(Guid userId);
 }

@@ -17,6 +17,7 @@ namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelance
         public string? Url { get; set; }
         public string? Key { get; set; }
         public string? FileName { get; set; }
+        public string? Extension { get; set; }
     }
 
     public class PortfolioFileDto

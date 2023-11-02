@@ -30,7 +30,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Language.CreateLangua
             query!.AddLanguage(result);
             query.UpdateAllPointAndPercentage(query);
             _userDatabaseContext?.Freelancers.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

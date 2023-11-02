@@ -6,6 +6,8 @@ using Workneering.Message.Domain.Entities;
 using Workneering.Message.Infrustructure.Persistence;
 using Workneering.Packages.Storage.AWS3.Models;
 using Workneering.Packages.Storage.AWS3.Services;
+using Workneering.Message.Application.Services.DbQueryService;
+using Workneering.Shared.Core.Identity.CurrentUser;
 
 namespace Workneering.Message.Application.Commands.Message.CreateMessage
 {
@@ -14,11 +16,13 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
         private readonly MessagesDbContext messagesDbContext;
         private readonly IMediator _mediator;
         private readonly IStorageService _storageService;
-        public CreateMessageCommandHandler(IMediator mediator, MessagesDbContext identityDatabase, IStorageService storageService)
+        private readonly IDbQueryService _dbQueryService;
+        public CreateMessageCommandHandler(IMediator mediator, MessagesDbContext identityDatabase, IStorageService storageService, IDbQueryService dbQueryService)
         {
             messagesDbContext = identityDatabase;
             _mediator = mediator;
             _storageService = storageService;
+            _dbQueryService = dbQueryService;
         }
 
         public async Task<Unit> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
@@ -44,6 +48,22 @@ namespace Workneering.Message.Application.Commands.Message.CreateMessage
             var attachmentsFileDto = attachments?.Adapt<List<MessageAttachments>>();
             var message = new Domain.Entities.Message(request.Content, request.ProjectId, attachmentsFileDto);
             await messagesDbContext.Messages.AddAsync(message, cancellationToken);
+
+            // add notification
+            var isFreelancer = CurrentUser.Roles.Contains(Shared.Core.Identity.Enums.RolesEnum.Freelancer);
+            var projectInfo = await _dbQueryService.GeProjectInfo(request.ProjectId);
+            var recieveId = isFreelancer ? projectInfo.ClientId.Value : projectInfo.AssginedFreelancerId.Value;
+            var userInfo = await _dbQueryService.GetUserInfo(CurrentUser.Id.Value);
+            var title = @$"You have new message with '{projectInfo.ProjectTitle}'";
+            var content = @$"{userInfo.Name} send you new message with '{projectInfo.ProjectTitle}'";
+            var isExistMessege = messagesDbContext.Notifications
+                .Any(x => x.IsRead == false && x.ProjectId == request.ProjectId && x.RecipientId == recieveId);
+            if (!isExistMessege)
+            {
+                var notification = new MessegeNotifications(recieveId, title, content, request.ProjectId, null, CurrentUser.Id);
+                await messagesDbContext.Notifications.AddAsync(notification, cancellationToken);
+            }
+
             await messagesDbContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
