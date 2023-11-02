@@ -30,7 +30,9 @@ namespace Workneering.User.Application.Queries.Freelancer.Portfolio.GetFreelance
 
             TypeAdapterConfig<PortfolioFile, ImageDetailsDto>.NewConfig()
                           .Map(dest => dest.Key, src => src.FileDetails.Key)
-                          .Map(dest => dest.FileName, src => src.FileDetails);
+                          .Map(dest => dest.Extension, src => src.FileDetails.Extension)
+                          .Map(dest => dest.Url, src => src.FileDetails.SetDownloadFileUrl(_storageService))
+                          .Map(dest => dest.FileName, src => src.FileDetails.FileName);
 
             var result = query!.Portfolios.Adapt<List<FreelancerPortfolioDto>>();
             var PortfolioFiles = result!.SelectMany(x => x.PortfolioFiles);
