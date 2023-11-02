@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Workneering.Packages.Storage.AWS3.Services;
 using Workneering.User.Application.Services.DbQueryService;
 using Workneering.User.Infrastructure.Persistence;
@@ -22,7 +23,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
         public async Task<FreelancerBasicDetailsDto> Handle(GetFreelancerBasicDetailsQuery request, CancellationToken cancellationToken)
         {
 
-            var query = _userDatabaseContext.Freelancers.FirstOrDefault(x => x.Id == request.FreelancerId);
+            var query = _userDatabaseContext.Freelancers.Include(x => x.Certifications).FirstOrDefault(x => x.Id == request.FreelancerId);
 
             var userservice = await _dbQueryService.GetUserBasicInfo(request.FreelancerId, cancellationToken);
 
@@ -46,6 +47,7 @@ namespace Workneering.User.Application.Queries.Freelancer.GetFreelancerBasicDeta
             result.Address.ZipCode = userAddress?.ZipCode;
             var storedFiles = await _storageService.DownloadFileUrl(query!.ImageDetails?.Key);
             result.ImageUrl = storedFiles;
+            result.NumberOfCertification = query.Certifications.Count;
             return result;
         }
     }
