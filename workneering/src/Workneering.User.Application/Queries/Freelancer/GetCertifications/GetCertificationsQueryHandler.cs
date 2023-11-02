@@ -21,11 +21,14 @@ namespace Workneering.User.Application.Queries.Freelancer.GetCertifications
         public async Task<List<CertificationListDto>> Handle(GetCertificationsQuery request, CancellationToken cancellationToken)
         {
 
-
             TypeAdapterConfig<CertifictionAttachment, ImageDetailsDto>.NewConfig()
                               .Map(dest => dest.Key, src => src.FileDetails.Key)
                               .Map(dest => dest.FileName, src => src.FileDetails.FileName);
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Certifications).ThenInclude(x => x.CertifictionAttachment).FirstOrDefault(x => x.Id == request.FreelancerId);
+            var query = _userDatabaseContext.Freelancers
+                .Include(x => x.Certifications)
+                .ThenInclude(x => x.CertifictionAttachment)
+                .AsSplitQuery()
+                .FirstOrDefault(x => x.Id == request.FreelancerId);
             var result = query!.Certifications.Adapt<List<CertificationListDto>>();
             foreach (var item in result)
             {

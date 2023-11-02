@@ -16,7 +16,9 @@ namespace Workneering.User.Application.Commands.Freelancer.Education.UpdateEduca
         }
         public async Task<Unit> Handle(UpdateEducationCommand request, CancellationToken cancellationToken)
         {
-            var query = _userDatabaseContext.Freelancers.Include(x => x.Educations).FirstOrDefault(x => x.Id == CurrentUser.Id);
+            var query = _userDatabaseContext.Freelancers
+                .Include(x => x.Educations)
+                .FirstOrDefault(x => x.Id == CurrentUser.Id);
             var result = request.Adapt<Domain.Entites.Education>();
             query.UpdateEducation(request.Id, result);
             _userDatabaseContext.Freelancers.Attach(query);
