@@ -9,19 +9,19 @@ public static class ServiceCollectionExtension
 {
     public static WebApplicationBuilder AddSerilog(this WebApplicationBuilder builder, ILoggingBuilder loggingBuilder)
     {
-        var logger = new LoggerConfiguration()
-             .ReadFrom.Configuration(builder.Configuration)
-             .Enrich.FromLogContext()
 
+
+        var logger = new LoggerConfiguration()
+          .ReadFrom.Configuration(builder.Configuration)
+          .Enrich.FromLogContext()
           .CreateLogger();
-        builder.Host.UseSerilog();
-        loggingBuilder.ClearProviders();
-        loggingBuilder.AddSerilog(logger);
+        builder.Logging.ClearProviders();
+        builder.Logging.AddSerilog(logger);
         return builder;
     }
-    public static WebApplication UseHealthCheckApplication(this WebApplication app)
+    public static WebApplication UseSerilog(this WebApplication app)
     {
-        app.UseSerilogRequestLogging();
+        // app.UseSerilogRequestLogging();
         return app;
     }
 }
