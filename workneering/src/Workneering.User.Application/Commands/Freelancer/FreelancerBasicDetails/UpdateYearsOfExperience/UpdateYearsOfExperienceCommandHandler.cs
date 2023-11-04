@@ -27,7 +27,7 @@ public class UpdateYearsOfExperienceCommandHandler : IRequestHandler<UpdateYears
         query!.UpdateYearsOfExperience(request.YearsOfExperience);
         query.UpdateAllPointAndPercentage(query);
         _userDatabaseContext.Freelancers.Attach(query);
-        _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+        await _userDatabaseContext.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }

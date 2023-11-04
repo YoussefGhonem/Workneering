@@ -60,8 +60,8 @@ namespace Workneering.Identity.Application.Services.DbQueryService
         {
             await using var con = new SqlConnection(_connectionString);
             await con.OpenAsync(cancellationToken);
-
-            var sql = $@"UPDATE UserSchema.{tableName}s SET  Name = '{name}'  WHERE Id = '{id.ToString()}'";
+            var table = tableName == "Company" ? "Companie" : tableName;
+            var sql = $@"UPDATE UserSchema.{table}s SET  Name = '{name}'  WHERE Id = '{id.ToString()}'";
 
             var data = con.Execute(sql);
         }

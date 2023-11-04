@@ -28,7 +28,7 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
             await _dbQueryService!.UpdateCountryUser(CurrentUser.Id!.Value, request.CountryId, cancellationToken);
             query!.UpdateAllPointAndPercentage();
             _userDatabaseContext.Clients.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

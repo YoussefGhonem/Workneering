@@ -40,7 +40,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Portfolio.UpdatePortf
                 query!.UpdatePortfolio(request.Id, portfolioMap, newAttachments, request.ImageKyes);
 
                 _userDatabaseContext?.Freelancers.Attach(query);
-                _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+                await _userDatabaseContext.SaveChangesAsync(cancellationToken);
 
                 return Unit.Value;
             }

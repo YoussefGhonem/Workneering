@@ -27,7 +27,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Language.DeleteLangua
             query.RemoveLanguage(request.Id);
             query.UpdateAllPointAndPercentage(query);
             _userDatabaseContext.Freelancers.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }
