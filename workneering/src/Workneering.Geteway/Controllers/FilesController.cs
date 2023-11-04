@@ -27,5 +27,14 @@ namespace Workneering.Geteway.Controllers
             var result = await _storageService.DownloadFileUrl(id);
             return result;
         }
+
+        [HttpGet("test")]
+        public async Task<string> Test()
+        {
+            object someObject = "123";
+            int result = (int)someObject;
+
+            return string.Empty;
+        }
     }
 }

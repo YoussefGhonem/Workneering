@@ -1,10 +1,10 @@
+using Serilog;
 using Workneering.Geteway.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.ConfigureServices(builder);
-
 var app = builder.Build();
 
 app.Configure(app.Environment);

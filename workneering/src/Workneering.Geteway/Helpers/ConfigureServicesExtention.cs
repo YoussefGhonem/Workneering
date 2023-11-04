@@ -10,6 +10,7 @@ using Workneering.Project.API;
 using Workneering.Packages.Storage.AWS3;
 using Workneering.Message.API;
 using Workneering.Packages.SignalR;
+using Workneering.Base.API.ServiceCollections.Serilog;
 
 namespace Workneering.Geteway.Helpers;
 public static class ConfigureServicesExtention
@@ -36,6 +37,8 @@ public static class ConfigureServicesExtention
         services.AddHttpContextAccessor();
         services.AddHealthChecksUI()
                 .AddInMemoryStorage();
+        builder.AddSerilog(builder.Logging);
+
         #endregion
 
         #region Base 

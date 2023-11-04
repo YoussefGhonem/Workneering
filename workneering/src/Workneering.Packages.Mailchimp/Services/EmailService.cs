@@ -9,7 +9,6 @@ using MailChimp.Net.Core;
 using MailChimp.Net.Interfaces;
 using MailChimp.Net.Models;
 using Microsoft.Extensions.Configuration;
-using TicketManagement.Base.Email.SendGrid.Extensions;
 using Workneering.Packages.Mailchimp.Config;
 using Workneering.Packages.Mailchimp.Models;
 

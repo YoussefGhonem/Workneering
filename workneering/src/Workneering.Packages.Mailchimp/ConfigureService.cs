@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Workneering.Packages.Mailchimp.Config;
 
-namespace TicketManagement.Base.Email.SendGrid.Extensions;
+namespace Workneering.Packages.Mailchimp;
 
 public static class ConfigureService
 {
