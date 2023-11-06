@@ -2,9 +2,11 @@
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Workneering.Identity.Application.Services.Models;
+using Workneering.Identity.Domain.Entities;
 
 namespace Workneering.Identity.Application.Services.DbQueryService
 {
+
     public class DbQueryService : IDbQueryService
     {
         private readonly string _connectionString;
@@ -52,6 +54,16 @@ namespace Workneering.Identity.Application.Services.DbQueryService
                 return userBasicData;
             }
             return new UserBaseData();
+        }
+
+        public async Task UpdateUserName(Guid id, string name, string tableName, CancellationToken cancellationToken)
+        {
+            await using var con = new SqlConnection(_connectionString);
+            await con.OpenAsync(cancellationToken);
+            var table = tableName == "Company" ? "Companie" : tableName;
+            var sql = $@"UPDATE UserSchema.{table}s SET  Name = '{name}'  WHERE Id = '{id.ToString()}'";
+
+            var data = con.Execute(sql);
         }
     }
 }

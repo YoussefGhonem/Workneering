@@ -1,5 +1,7 @@
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using ServiceStack;
+using System;
 using System.Data.SqlClient;
 using System.Threading;
 using Workneering.Base.Helpers.Extensions;
@@ -75,17 +77,24 @@ public class DbQueryService : IDbQueryService
         }
         return data;
     }
-    public async Task<List<LanguagesListDto>> GetLanguagesAsync(List<Guid>? languagesIds)
+    public async Task<List<LanguagesListDto>> GetLanguagesAsync(List<Guid?> languagesIds)
     {
         if (languagesIds is null || !languagesIds.Any())
         {
             return default!;
         }
         string parameterList = string.Join(',', languagesIds.Select(id => id.ToString()));
+        string[] uuids = parameterList.Split(',');
+        for (int i = 0; i < uuids.Length; i++)
+        {
+            uuids[i] = $"'{uuids[i]}'";
+        }
+
+        string result = string.Join(",", uuids);
 
         await using var con = new SqlConnection(_connectionString);
         await con.OpenAsync();
-        var query = $@"SELECT Id, Name FROM SettingsSchema.Languages WHERE Id IN ('{parameterList}')";
+        var query = $@"SELECT Id, Name FROM SettingsSchema.Languages WHERE Id IN ({result})";
         var languages = await con.QueryAsync<LanguagesListDto>(query);
 
         return languages.ToList();

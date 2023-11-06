@@ -17,15 +17,15 @@ namespace Workneering.User.Application.Queries.Freelancer.GetLanguages
         }
         public async Task<List<LanguagesListDto>> Handle(GetLanguagesQuery request, CancellationToken cancellationToken)
         {
-            var query = _userDatabaseContext.Freelancers
-                .Include(x => x.Languages).FirstOrDefault(x => x.Id == request.FreelancerId);
-
-            var languages = await _dbQueryService.GetLanguagesAsync(query.Languages.Select(x => x.Id).ToList());
+            var query = await _userDatabaseContext.Freelancers
+                .Include(x => x.Languages).FirstOrDefaultAsync(x => x.Id == request.FreelancerId);
+            var ids = query.Languages.Select(x => x.LanguageId).ToList();
+            var languages = await _dbQueryService.GetLanguagesAsync(ids);
 
             var result = query!.Languages.Adapt<List<LanguagesListDto>>();
             result.ForEach(r =>
             {
-                r.Name = languages.Find(x => x.Id == r.Id)?.Name;
+                r.Name = languages.Find(x => x.Id == r.LanguageId)?.Name;
             });
             return result;
         }

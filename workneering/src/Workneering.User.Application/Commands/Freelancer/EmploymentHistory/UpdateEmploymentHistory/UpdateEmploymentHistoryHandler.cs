@@ -21,7 +21,7 @@ namespace Workneering.User.Application.Commands.Freelancer.EmploymentHistory.Upd
 
             query.UpdateEmploymentHistory(request.Id, result);
             _userDatabaseContext.Freelancers.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

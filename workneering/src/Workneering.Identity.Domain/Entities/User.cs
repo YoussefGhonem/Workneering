@@ -136,10 +136,13 @@ namespace Workneering.Identity.Domain.Entities
             _address = field;
         }
 
-        public void UpdatePhoneNumber(string phoneNumber, string name)
+        public void UpdatePhoneNumber(string phoneNumber)
+        {
+            _phoneNumber = phoneNumber;
+        }
+        public void UpdateName(string name)
         {
             _name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
-            _phoneNumber = phoneNumber;
         }
 
         public void MarkAsModified(Guid? userId)

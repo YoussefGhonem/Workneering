@@ -18,7 +18,7 @@ namespace Workneering.User.Application.Commands.Freelancer.Category.UpdateCatego
             var query = _userDatabaseContext.Freelancers.Include(x => x.Category).FirstOrDefault(x => x.Id == CurrentUser.Id);
             query!.UpdateCategory(request.CategoryId);
             _userDatabaseContext?.Freelancers.Attach(query);
-            _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+            await _userDatabaseContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

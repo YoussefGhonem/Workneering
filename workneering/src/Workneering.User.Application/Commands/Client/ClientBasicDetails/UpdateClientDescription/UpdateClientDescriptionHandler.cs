@@ -21,7 +21,7 @@ namespace Workneering.User.Application.Commands.Client.ClientBasicDetails.Update
                 query!.UpdateOverviewDescription(request.OverviewDescription);
                 query!.UpdateAllPointAndPercentage();
                 _userDatabaseContext.Clients.Attach(query);
-                _userDatabaseContext?.SaveChangesAsync(cancellationToken);
+                await _userDatabaseContext.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }
             catch (Exception e)
