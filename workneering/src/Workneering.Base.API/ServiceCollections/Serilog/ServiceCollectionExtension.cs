@@ -10,9 +10,10 @@ public static class ServiceCollectionExtension
         var logger = new LoggerConfiguration()
              .ReadFrom.Configuration(builder.Configuration)
              .Enrich.FromLogContext()
+             .WriteTo.Console()
           .CreateLogger();
         // builder.Host.UseSerilog();
-        loggingBuilder.ClearProviders();
+        //loggingBuilder.ClearProviders();
         loggingBuilder.AddSerilog(logger);
         return builder;
     }
