@@ -83,7 +83,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Message.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Message.Infrustructure", "src\Workneering.Message.Infrustructure\Workneering.Message.Infrustructure.csproj", "{B76149E5-ECC1-4DAA-83A7-6FB0441A4C0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workneering.Packages.Mailchimp", "src\Workneering.Packages.Mailchimp\Workneering.Packages.Mailchimp.csproj", "{235CF5E2-730E-459E-8630-7C26E3A44C74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workneering.Packages.Mailchimp", "src\Workneering.Packages.Mailchimp\Workneering.Packages.Mailchimp.csproj", "{235CF5E2-730E-459E-8630-7C26E3A44C74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ocelot.Gateway", "src\Ocelot.Gateway\Ocelot.Gateway.csproj", "{BFFFCEAA-8880-46B8-A252-6DCAF14E73CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -219,6 +221,10 @@ Global
 		{235CF5E2-730E-459E-8630-7C26E3A44C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{235CF5E2-730E-459E-8630-7C26E3A44C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{235CF5E2-730E-459E-8630-7C26E3A44C74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFFFCEAA-8880-46B8-A252-6DCAF14E73CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFFFCEAA-8880-46B8-A252-6DCAF14E73CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFFFCEAA-8880-46B8-A252-6DCAF14E73CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFFFCEAA-8880-46B8-A252-6DCAF14E73CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

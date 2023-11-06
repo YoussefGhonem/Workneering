@@ -1,0 +1,17 @@
+{
+  // Security
+  "Routes": [
+    // login
+    {
+      "DownstreamPathTemplate": "/bondPublicAPI/api/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "dev.pheuristic.com"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/login",
+      "UpstreamHttpMethod": [ "POST" ]
+    }
+  ]
+}
