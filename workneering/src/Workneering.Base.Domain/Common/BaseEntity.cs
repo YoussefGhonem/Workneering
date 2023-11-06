@@ -45,10 +45,10 @@ public record BaseEntity : ISoftDelete, ICreatedAuditableEntity, IModifiedAudita
     }
 
     // domain event
-    public readonly List<BaseEvent> _domainEvents = new();
+    public readonly List<IDomainEvent> _domainEvents = new();
     [NotMapped]
-    public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
-    public void RemoveDomainEvent(BaseEvent domainEvent)
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public void RemoveDomainEvent(IDomainEvent domainEvent)
     {
         _domainEvents.Remove(domainEvent);
     }
@@ -56,6 +56,10 @@ public record BaseEntity : ISoftDelete, ICreatedAuditableEntity, IModifiedAudita
     public void ClearDomainEvents()
     {
         _domainEvents.Clear();
+    }
+    public void RaiseDomainEvent(IDomainEvent domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
     }
 
 }

@@ -25,7 +25,7 @@ using Workneering.Shared.Core.Identity.CurrentUser;
 namespace Workneering.Project.API.Controllers
 {
     [ApiVersion("1.0")]
-    [Authorize]
+    //[Authorize]
     [Route("api/v{version:apiVersion}/projects")]
     public class ProjectsController : BaseController
     {
