@@ -84,7 +84,7 @@ public sealed class ExceptionHandlingMiddleware : IMiddleware
                     detail = exception.Message
                 };
                 break;
-            case CustomValidationException:
+            case FluentValidationException:
                 statusCode = StatusCodes.Status400BadRequest;
                 response = new
                 {
@@ -115,7 +115,7 @@ public sealed class ExceptionHandlingMiddleware : IMiddleware
     {
         IReadOnlyDictionary<string, string[]> errors = new Dictionary<string, string[]>();
 
-        if (exception is CustomValidationException validationException)
+        if (exception is FluentValidationException validationException)
         {
             errors = validationException.ErrorsDictionary;
         }

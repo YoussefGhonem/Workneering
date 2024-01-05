@@ -10,7 +10,7 @@ namespace Workneering.Base.Application.GlobalExceptions;
 
 
 // The 'CustomValidationException' class is a custom exception class used to represent validation errors in an application.
-public sealed class CustomValidationException : ApplicationException
+public sealed class FluentValidationException : ApplicationException
 {
 
     // This property allows access to the dictionary passed in through the constructor, providing information about the validation errors.
@@ -20,11 +20,11 @@ public sealed class CustomValidationException : ApplicationException
 
     // It accepts an IReadOnlyDictionary<string, string[]> as a parameter, storing it in the ErrorsDictionary property
     // This allows the exception to carry information about the validation errors that occurred.
-    public CustomValidationException(IReadOnlyDictionary<string, string[]> errorsDictionary)
+    public FluentValidationException(IReadOnlyDictionary<string, string[]> errorsDictionary)
             : base()
             => ErrorsDictionary = errorsDictionary;
 
-    public CustomValidationException(string error)
+    public FluentValidationException(string error)
             : base()
     {
         IReadOnlyDictionary<string, string[]> errors = new Dictionary<string, string[]>();
@@ -48,7 +48,7 @@ public sealed class CustomValidationException : ApplicationException
         ErrorsDictionary = updatedErrors;
     }
 
-    public CustomValidationException(IList<ValidationFailure> validationFailures) : base()
+    public FluentValidationException(IList<ValidationFailure> validationFailures) : base()
     {
         ErrorsDictionary = validationFailures
          .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
