@@ -132,8 +132,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterWiththirdPa
                     return null;
                 }
                 var userFaceook = await VerifyFacebookAccessToken(request.accessToken);
-                var userBuilder = new CreateUserFactory(userFaceook.name,
-               $"{request.userId}@{request.provider}.com")
+                var userBuilder = new CreateUserFactory(userFaceook.name,request.email+' '+request.provider)
                .WithRoles(rolesFromDb, request.Role);
                 userBuilder.WithProvider(request.provider);
                 userBuilder.UserName(request.userId);
@@ -155,7 +154,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterWiththirdPa
                     return null;
                 }
                 var userBuilder = new CreateUserFactory(request.name,
-               request.email)
+               request.email + ' ' + request.provider)
                .WithRoles(rolesFromDb, request.Role);
                 userBuilder.WithProvider(request.provider);
                 userBuilder.UserName(request.userId);
@@ -174,7 +173,7 @@ namespace Workneering.Identity.Application.Commands.Identity.RegisterWiththirdPa
                 if (DecodeToken != null) 
                 {
                     var userBuilder = new CreateUserFactory(DecodeToken.Claims["name"],
-                   DecodeToken.Claims["email"])
+                   DecodeToken.Claims["email"] + ' ' + request.provider)
                    .WithRoles(rolesFromDb, request.Role);
                     userBuilder.WithProvider(request.provider);
                     userBuilder.UserName(DecodeToken.Claims["sub"]);

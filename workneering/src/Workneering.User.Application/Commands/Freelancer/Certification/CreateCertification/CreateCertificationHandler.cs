@@ -40,14 +40,14 @@ namespace Workneering.User.Application.Commands.Freelancer.Certification.CreateC
                       .Map(dest => dest.FileDetails.FileName, src => src.FileName)
                       .Map(dest => dest.FileDetails.FileSize, src => src.FileSize);
 
-                var uploadAttatchment = await _storageService.Upload(request.CertifictionFile);
+                var uploadAttatchment =  await _storageService.Upload(request.CertifictionFile!);
                 var attachmentsFileDto = uploadAttatchment?.Adapt<CertifictionAttachment>();
                 var result = request.Adapt<Domain.Entites.Certification>();
                 var certification = new Domain.Entites.Certification(request.Licence, request.Description, request.Name, request.StartYear, request.EndYear, request.AwardAreaOfStudy, request.GivenBy, attachmentsFileDto);
                 query!.AddCertification(certification);
                 query.UpdateAllPointAndPercentage(query);
-                _userDatabaseContext.Freelancers.Attach(query);
-                await _userDatabaseContext.SaveChangesAsync();
+                _userDatabaseContext?.Freelancers.Attach(query);
+                _userDatabaseContext?.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
             {
