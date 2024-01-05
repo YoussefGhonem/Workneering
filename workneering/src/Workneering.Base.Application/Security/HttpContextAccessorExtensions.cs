@@ -59,7 +59,7 @@ public static class HttpContextAccessorExtensions
             errors
         };
         if (accessor?.HttpContext == null || accessor.HttpContext.Response.HasStarted)
-            throw new CustomValidationException(errors ?? new Dictionary<string, string[]>());
+            throw new FluentValidationException(errors ?? new Dictionary<string, string[]>());
         await accessor.HttpContext.SetResponseAndAbort(StatusCodes.Status400BadRequest,
             JsonSerializer.Serialize(response));
     }
